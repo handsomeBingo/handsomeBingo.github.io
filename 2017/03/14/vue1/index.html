@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>vue从入门到掉进坑里（一） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;学习vue好一阵子了，是从一个爱炫耀的同事开始的。说到vue，我只想说：太坑了；无论文档还是某些人博客，都写的很晦涩。这让我很不解，我觉得这和打码是一样的。就不能写的通俗一些？说喜欢分享来着，结果分享的东西晦涩的不得了。我称这些博客和文档为：打码的文章。说到这个我又想起我一个同事问我的一个问题：什么样的">
+<meta name="keywords" content="Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue从入门到掉进坑里（一）">
+<meta property="og:url" content="http://yoursite.com/2017/03/14/vue1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;学习vue好一阵子了，是从一个爱炫耀的同事开始的。说到vue，我只想说：太坑了；无论文档还是某些人博客，都写的很晦涩。这让我很不解，我觉得这和打码是一样的。就不能写的通俗一些？说喜欢分享来着，结果分享的东西晦涩的不得了。我称这些博客和文档为：打码的文章。说到这个我又想起我一个同事问我的一个问题：什么样的">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-24T15:04:49.165Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue从入门到掉进坑里（一）">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;学习vue好一阵子了，是从一个爱炫耀的同事开始的。说到vue，我只想说：太坑了；无论文档还是某些人博客，都写的很晦涩。这让我很不解，我觉得这和打码是一样的。就不能写的通俗一些？说喜欢分享来着，结果分享的东西晦涩的不得了。我称这些博客和文档为：打码的文章。说到这个我又想起我一个同事问我的一个问题：什么样的">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-vue1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/14/vue1/" class="article-date">
+  <time datetime="2017-03-14T12:20:04.000Z" itemprop="datePublished">2017-03-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vue从入门到掉进坑里（一）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学习vue好一阵子了，是从一个爱炫耀的同事开始的。说到vue，我只想说：太坑了；无论文档还是某些人博客，都写的很晦涩。这让我很不解，我觉得这和打码是一样的。就不能写的通俗一些？说喜欢分享来着，结果分享的东西晦涩的不得了。我称这些博客和文档为：打码的文章。说到这个我又想起我一个同事问我的一个问题：什么样的人算大牛？我当时想了半天也说不清，我想coding能力强的人大抵就是大牛了。他的答案让我很意外，原话引用“写出来谁都看不懂的，不算大牛；写出来谁都看得懂的，也不是大牛；只有那些你看了能看懂，但是看完就拍大腿：我怎么就没想到呢？这些才是大牛。”我以此自砺，也送给那些给文章打码的人。</p>
+<h2 id="vue基础"><a href="#vue基础" class="headerlink" title="vue基础"></a>vue基础</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果你有angular 1.xx的基础就足够了。但是作为一个还在坑边上歇息的人告诉你，别拿着angular的思想去衡量vue的问题，尤其是 2.0以后的版本。基础不多说直接引用官网的教程：</p>
+<blockquote>
+<p>hello world</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/*html*/</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &#123;&#123; message &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">/*JS*/</span><br><span class="line">var exampleData = &#123;</span><br><span class="line">    message: &apos;hello world!&apos;</span><br><span class="line">&#125;;</span><br><span class="line">new Vue(&#123;</span><br><span class="line">    el: &apos;#app&apos;,</span><br><span class="line">    data: exampleData</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>使用Vue的过程即定义MVVM各个组成部分的过程。<br>     *   1.定义View<br>     *   2.定义Model<br>     *   3.创建一个Vue实例或’ViewModel’，它用于连接View和Model；在创建Vue实例时，需要传入一个选项对象，选项对象可以包含数据、挂载元素、方法、模拟生命周期钩子等等。<br>     *   示例讲解：<br>     *       在这个示例中，选项对象的el属性指向View，el:’#app’，表示将Vue示例挂载到  &lt;div id = ‘app’&gt;&lt;/div&gt;元素上；<br>     *       data属性：指向Model，data:exampleData表示我们的Model是exampleData对象；<br>     *       Vue.js有多种数据绑定的语法，最基础的形式是文本差值，使用一对大括号语法,mustache风格绑定；</p>
+<blockquote>
+<p>双向动态绑定</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/*html*/</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p&gt;&#123;&#123;message&#125;&#125;&lt;/p&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model=&quot;message&quot; /&gt;  &lt;!--v-model和ng-model类似是vue双向数据绑定用的--&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">/*js*/</span><br><span class="line">&lt;script src=&quot;../vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    exampleData = &#123;</span><br><span class="line">        message: &apos;hello world!hello everyone,I am the vue.js,which is the most fierce technology to ZhuangB!&apos;</span><br><span class="line">    &#125;;</span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: &apos;#app&apos;,</span><br><span class="line">        data:exampleData</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>绑定是双向绑定的，不同于angular 1.xx数据是挂载在作用域$scope上，vue的开发将数据都集成在了vue实例化的参数对象的data属性中，这一点无比的方便，我们推崇vue，但是拒绝装B，尤其是那些以vue牛逼，自己也牛逼起来的人。</p>
+<blockquote>
+<p>vue常用指令 v-*</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line">1.v-if</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVif&quot;&gt;</span><br><span class="line">    &lt;h1&gt;Hello Vue.js&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;yes&quot;&gt;Yes!&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;no&quot;&gt;No!&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;age &gt;= 25&quot;&gt;Age:&#123;&#123;age&#125;&#125;&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;name.indexOf(&apos;jack&apos;) &gt;= 0&quot;&gt;Name:&#123;&#123;name&#125;&#125;&lt;/h1&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVif = new Vue(&#123;</span><br><span class="line">    el: &apos;#appVif&apos;,</span><br><span class="line">    data: &#123;</span><br><span class="line">        yes: true,</span><br><span class="line">        no: false,</span><br><span class="line">        age: 26,</span><br><span class="line">        name: &apos;keep fool,keep aware&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">2.v-show</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVshow&quot;&gt;  &lt;!--v-show同ng-show都是通过设置不可见，而v-if是dom的增删--&gt;</span><br><span class="line">    &lt;h1&gt;Hello Vue.js&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-show=&quot;yes&quot;&gt;Yes!&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-show=&quot;no&quot;&gt;No!&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-show=&quot;age &gt;= 25&quot;&gt;Age:&#123;&#123;age&#125;&#125;&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-show=&quot;name.indexOf(&apos;jack&apos;) &gt;= 0&quot;&gt;Name:&#123;&#123;name&#125;&#125;&lt;/h1&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVshow = new Vue(&#123;</span><br><span class="line">    el: &apos;#appVshow&apos;,</span><br><span class="line">    data: &#123;</span><br><span class="line">        yes: true,</span><br><span class="line">        no: false,</span><br><span class="line">        age: 26,</span><br><span class="line">        name: &apos;keep fool,keep calm&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">3.v-for</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVfor&quot;&gt;</span><br><span class="line">    &lt;table&gt;</span><br><span class="line">        &lt;thead&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;Name&lt;/th&gt;</span><br><span class="line">            &lt;th&gt;Age&lt;/th&gt;</span><br><span class="line">            &lt;th&gt;Sex&lt;/th&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">        &lt;/thead&gt;</span><br><span class="line">        &lt;tbody&gt;</span><br><span class="line">            &lt;tr v-for=&quot;person in people&quot;&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123; person.name &#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123; person.age &#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123; person.sex &#125;&#125;&lt;/td&gt;</span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">        &lt;/tbody&gt;</span><br><span class="line">    &lt;/table&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVfor = new Vue(&#123;</span><br><span class="line">       el: &apos;#appVfor&apos;,</span><br><span class="line">       data: &#123;</span><br><span class="line">           people :[</span><br><span class="line">               &#123;</span><br><span class="line">                   name: &apos;jack&apos;,</span><br><span class="line">                   age: 24,</span><br><span class="line">                   sex: &apos;Male&apos;</span><br><span class="line">               &#125;,</span><br><span class="line">               &#123;</span><br><span class="line">                   name: &apos;Bill&apos;,</span><br><span class="line">                   age: 25,</span><br><span class="line">                   sex: &apos;Male&apos;</span><br><span class="line">               &#125;,</span><br><span class="line">               &#123;</span><br><span class="line">                   name: &apos;Julia&apos;,</span><br><span class="line">                   age: 17,</span><br><span class="line">                   sex: &apos;Female&apos;</span><br><span class="line">               &#125;</span><br><span class="line">           ]</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">4.v-bind</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVbind&quot;&gt; &lt;!--ng-bind可以简写成一个(冒号) : --&gt; &lt;!--v-bind有大用处，后面的动态class和动态绑定的props都离不开v-bind--&gt;</span><br><span class="line">    &lt;ul class=&quot;pagination&quot;&gt;</span><br><span class="line">        &lt;li v-for=&quot;n in pageCount&quot;&gt;</span><br><span class="line">            &lt;a href=&quot;javascript:void 0;&quot; :class=&quot;activeNumber === n ? &apos;active&apos;:&apos;&apos;&quot;&gt;&#123;&#123;n&#125;&#125;&lt;/a&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVbind = new Vue(&#123;</span><br><span class="line">        el: &apos;#appVbind&apos;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            pageCount: 10,</span><br><span class="line">            activeNumber: 1</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">5.v-on</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVon&quot;&gt; &lt;!--v-on可以简写成一个at符(@)--&gt;</span><br><span class="line">    &lt;p&gt;&lt;input type=&quot;text&quot; v-model=&quot;message&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">        &lt;!--click事件直接绑定一个方法--&gt;</span><br><span class="line">        &lt;button @click=&quot;greet&quot;&gt;Greet&lt;/button&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">        &lt;!--click事件使用内联语句：注意事件触发的方法要写在Vue实例化参数methods属性中--&gt;</span><br><span class="line">        &lt;button @click=&quot;say(&apos;Hi&apos;)&quot;&gt;Hi&lt;/button&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVon = new Vue(&#123;</span><br><span class="line">   el: &apos;#appVon&apos;,</span><br><span class="line">   data: &#123;</span><br><span class="line">       message: &apos;Hello, world!&apos;</span><br><span class="line">   &#125;,</span><br><span class="line">   methods: &#123;</span><br><span class="line">        greet: function ()&#123;</span><br><span class="line">            alert(this.message);</span><br><span class="line">        &#125;,</span><br><span class="line">        say: function (msg)&#123;</span><br><span class="line">            alert(msg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>综合例子</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;fieldset&gt;</span><br><span class="line">        &lt;legend&gt;</span><br><span class="line">            Create New Person</span><br><span class="line">        &lt;/legend&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label &gt;Name&lt;/label&gt;</span><br><span class="line">            &lt;input type=&quot;text&quot; v-model=&quot;newPerson.name&quot;/&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label&gt;Age:&lt;/label&gt;</span><br><span class="line">            &lt;input type=&quot;text&quot; v-model=&quot;newPerson.age&quot; /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label&gt;Sex:&lt;/label&gt;</span><br><span class="line">            &lt;select v-model=&quot;newPerson.sex&quot;&gt;</span><br><span class="line">                &lt;option value=&quot;Male&quot;&gt;Male&lt;/option&gt;</span><br><span class="line">                &lt;option value=&quot;Female&quot;&gt;Female&lt;/option&gt;</span><br><span class="line">            &lt;/select&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label&gt;&lt;/label&gt;</span><br><span class="line">            &lt;button @click=&quot;createPerson&quot;&gt;Create&lt;/button&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/fieldset&gt;</span><br><span class="line">    &lt;table&gt;</span><br><span class="line">        &lt;thead&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;th&gt;Name&lt;/th&gt;</span><br><span class="line">                &lt;th&gt;Age&lt;/th&gt;</span><br><span class="line">                &lt;th&gt;Sex&lt;/th&gt;</span><br><span class="line">                &lt;th&gt;Delete&lt;/th&gt;</span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">        &lt;/thead&gt;</span><br><span class="line">        &lt;tbody&gt;</span><br><span class="line">            &lt;tr v-for=&quot;(person,index) in people&quot;&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;person.name&#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;person.age&#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;person.sex&#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&lt;button @click=&quot;deletePerson(index)&quot;&gt;Delete&lt;/button&gt;&lt;/td&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">        &lt;/tbody&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/table&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vm = new Vue(&#123;</span><br><span class="line">        el: &apos;#app&apos;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            newPerson : &#123;</span><br><span class="line">                name: &apos;&apos;,</span><br><span class="line">                age: 0,</span><br><span class="line">                sex: &apos;Male&apos;</span><br><span class="line">            &#125;,</span><br><span class="line">            people: [</span><br><span class="line">                &#123;</span><br><span class="line">                    name: &apos;jack&apos;,</span><br><span class="line">                    age: 30,</span><br><span class="line">                    sex: &apos;Male&apos;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    name: &apos;bill&apos;,</span><br><span class="line">                    age: 34,</span><br><span class="line">                    sex: &apos;Male&apos;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    name: &apos;cindy&apos;,</span><br><span class="line">                    age: 24,</span><br><span class="line">                    sex: &apos;female&apos;</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line"></span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            createPerson : function ()&#123;</span><br><span class="line">                this.people.push(this.newPerson);</span><br><span class="line">                this.newPerson = &#123;name: &apos;&apos;, age: 0,sex: &apos;Male&apos;&#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            deletePerson : function (index)&#123;</span><br><span class="line">                this.people.splice(index, 1)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;基础教程就先上这么多，其他的基础教程请参看官网，有了这些你就能听懂后面的东西了，如果你还没有框架基础，这可能有点困难，我不是想打码，但是建议你学习一下angular v1.xx，因为现在框架，以指令(html行内属性)解决问题的，angular是师祖，是基础，我虽然讨厌angular的古板，但是对于初学者，能更好的体会框架的基础的东西，vue好用就是因为很多东西被封装了，但是对于初学者这将是黑盒的。在学习vue之前，与我而言，框架都有优劣，没必要因为哪个框架好参与撕逼，你开心就好。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck1ri96rm000klkpppjr3l746" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/05/vue2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          vue从入门到掉进坑里(二)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/14/requirejs/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">三分钟带你入门RequireJs</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/15/JavaScript基础教程1/">JavaScript 基础教程 1 JS 数据类型和变量</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

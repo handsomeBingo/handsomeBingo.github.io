@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>vueRender函数（1） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。从本节开始，将用3篇的篇幅学习一下vue的render函数。初期的学习和使用vue的时候都未使用Vue的这个特性。后来帮朋友调试bug的时候发现必须使用render函数，这才把之前的坑填平。 学习render函数需要vue的其他知识做基础，其中比较重要的是实例属性，本节将系统的描述一些实例属性。 vm.$data描述： 类型：O">
+<meta name="keywords" content="Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vueRender函数（1）">
+<meta property="og:url" content="http://yoursite.com/2017/10/02/vueRender函数（1）/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。从本节开始，将用3篇的篇幅学习一下vue的render函数。初期的学习和使用vue的时候都未使用Vue的这个特性。后来帮朋友调试bug的时候发现必须使用render函数，这才把之前的坑填平。 学习render函数需要vue的其他知识做基础，其中比较重要的是实例属性，本节将系统的描述一些实例属性。 vm.$data描述： 类型：O">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-24T15:06:11.205Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vueRender函数（1）">
+<meta name="twitter:description" content="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。从本节开始，将用3篇的篇幅学习一下vue的render函数。初期的学习和使用vue的时候都未使用Vue的这个特性。后来帮朋友调试bug的时候发现必须使用render函数，这才把之前的坑填平。 学习render函数需要vue的其他知识做基础，其中比较重要的是实例属性，本节将系统的描述一些实例属性。 vm.$data描述： 类型：O">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-vueRender函数（1）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/02/vueRender函数（1）/" class="article-date">
+  <time datetime="2017-10-02T13:32:59.000Z" itemprop="datePublished">2017-10-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vueRender函数（1）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。"><a href="#声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。" class="headerlink" title="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。"></a>声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。</h6><p>从本节开始，将用3篇的篇幅学习一下vue的render函数。初期的学习和使用vue的时候都未使用Vue的这个特性。后来帮朋友调试bug的时候发现必须使用render函数，这才把之前的坑填平。</p>
+<p>学习render函数需要vue的其他知识做基础，其中比较重要的是实例属性，本节将系统的描述一些实例属性。</p>
+<h3 id="vm-data"><a href="#vm-data" class="headerlink" title="vm.$data"></a>vm.$data</h3><h4 id="描述："><a href="#描述：" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：Object</li>
+<li>Vue实例观察的数据对象。Vue实例代理了对其data对象属性的访问。（其实就是通过这个访问器可以访问注册组件时的data对象。）</li>
+</ul>
+<h3 id="vm-props"><a href="#vm-props" class="headerlink" title="vm.$props"></a>vm.$props</h3><h4 id="描述：-1"><a href="#描述：-1" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：Object</li>
+<li>当前组件接收到的props对象。Vue实例代理了对其props对象属性的访问。（注册组件时设置的props对象）</li>
+</ul>
+<h3 id="vm-el"><a href="#vm-el" class="headerlink" title="vm.$el"></a>vm.$el</h3><h4 id="描述：-2"><a href="#描述：-2" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：HTMLElement（原生的DOM对象）</li>
+<li>只读</li>
+<li>Vue实例使用的根DOM元素</li>
+</ul>
+<h3 id="vm-options"><a href="#vm-options" class="headerlink" title="vm.$options"></a>vm.$options</h3><h4 id="描述：-3"><a href="#描述：-3" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：Object</li>
+<li>只读</li>
+<li>当前Vue实例初始化的选项（new Vue({这个对象就是options})）。需要在选项中自定义属性时，可以在Vue实例完成实例化时访问到自定义属性。</li>
+</ul>
+<h3 id="vm-parent"><a href="#vm-parent" class="headerlink" title="vm.$parent"></a>vm.$parent</h3><h4 id="描述：-4"><a href="#描述：-4" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：Object</li>
+<li>只读</li>
+<li>父实例（如果当前组件的有的话）。（就是该组件的父组件，可以借此访问父组件的的数据）</li>
+</ul>
+<h3 id="vm-root"><a href="#vm-root" class="headerlink" title="vm.$root"></a>vm.$root</h3><h4 id="描述：-5"><a href="#描述：-5" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：Vue instance</li>
+<li>只读</li>
+<li>当前组件数的根组件。如果当前组件没有父组件，此实例将会是其自身。</li>
+</ul>
+<h3 id="vm-children"><a href="#vm-children" class="headerlink" title="vm.$children"></a>vm.$children</h3><h3 id="描述：-6"><a href="#描述：-6" class="headerlink" title="描述："></a>描述：</h3><ul>
+<li>类型：Array &lt; Vue instance &gt;</li>
+<li>只读</li>
+<li>当前实例的直接子组件（子级而非子代）。需要注意，$children并不保证顺序，也不是响应式的。如果你发现自己正在尝试使用$children来进行数据绑定，考虑使用一个数组配合 v-for来生成子组件，并且使用Array作为真的数据源。（这段话的我猜应该是不让用$children来绑定数据，而要使用Array作为数据源。就是说不能再组件里v-for $children 来生成组件，因为这个玩意儿不是响应式的）</li>
+</ul>
+<h3 id="vm-slots"><a href="#vm-slots" class="headerlink" title="vm.$slots"></a>vm.$slots</h3><h4 id="描述：-7"><a href="#描述：-7" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：{name: string}: ? Array &lt;VNode&gt;}</li>
+<li>只读</li>
+<li>用来方位被插槽分发的内容。每个具名插槽有其相应的属性（例如：slot=foo 中的内容将会在 vm.$slots.foo 中找到）。<br>default属性包括了所有没有被包含在具名插槽中的节点。</li>
+<li>在使用render函数书写一个组件时，访问vm.$slots最有帮助</li>
+</ul>
+<h3 id="vm-scopedSlots"><a href="#vm-scopedSlots" class="headerlink" title="vm.$scopedSlots"></a>vm.$scopedSlots</h3><h4 id="描述：-8"><a href="#描述：-8" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>2.1.0新增</li>
+<li>类型：{[name: string]: props =&gt; VNode | Array&lt;VNode&gt;}</li>
+<li>只读</li>
+<li>用来访问作用域插槽。对于包括默认slot在内的每一个插槽，该对象都包含一个返回相应的VNode的函数。{name: (props) =&gt; {return VNode}同理，vm.$scopedSlots在使用render函数开发一个组件时特别有用</li>
+</ul>
+<h3 id="vm-refs"><a href="#vm-refs" class="headerlink" title="vm.$refs"></a>vm.$refs</h3><h4 id="描述：-9"><a href="#描述：-9" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：Object{name: DOM}</li>
+<li>只读</li>
+<li>一个对象，持有已注册过ref的所有子组件。</li>
+</ul>
+<h3 id="vm-isServer"><a href="#vm-isServer" class="headerlink" title="vm.$isServer"></a>vm.$isServer</h3><h4 id="描述：-10"><a href="#描述：-10" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：类型：boolean</li>
+<li>只读</li>
+<li>当前Vue实例是否运行于服务器</li>
+</ul>
+<h3 id="vm-attrs"><a href="#vm-attrs" class="headerlink" title="vm.$attrs"></a>vm.$attrs</h3><h4 id="描述：-11"><a href="#描述：-11" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：{[key:string]: string}</li>
+<li>只读</li>
+<li>包含了父作用域中不作为prop被识别（且获取）的特性绑定（class和style除外）。当一个组件没有声明任何prop时，这里会包含所有父作用域的绑定（class和style除外）[就是说当组件不显式声明props时，仍然可以通过vm.$attrs来获取组件被引用时获得的行内属性]，并且可以通过 v-bind=”$attrs” 传入内部组件 —— 在创建更高层次的组件时非常有用。props和attrs是由区别的，虽仍然这二者都是行内的属性，但是要想成为props的属性，还需要在Vue实例初始化的时候在选项对象的props中声明一下。</li>
+</ul>
+<h3 id="vm-listener"><a href="#vm-listener" class="headerlink" title="vm.$listener"></a>vm.$listener</h3><h4 id="描述：-12"><a href="#描述：-12" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：类型：{[key:string]: Function | &lt;Function&gt;}</li>
+<li>只读</li>
+<li>包含了父作用域中的（不含.native修饰器）v-on事件监听器。它可以通过v-on=&quot;$listener&quot;传入内部组件——在创建更高层次的组件时非常有用。就是说在使用该组件时，看子组件监听的所有不含.native修饰器事件。</li>
+</ul>
+<p>以上就是Vue实例的属性，本节中丝毫没提及render函数，别心急，如果你不掌握好这些，后面你会很困惑。在后面的render函数中将重点使用slots，如果你还不是很懂slots的api，请阅读下面一篇文章。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/10/02/vueRender函数（1）/" data-id="ck1ri96ru000plkppxzf9mw6d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/24/vueRender函数（2）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          vueRender函数（2）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/15/node-js拼接sql查询语句神器/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">node.js拼接sql查询语句神器</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/15/JavaScript基础教程1/">JavaScript 基础教程 1 JS 数据类型和变量</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

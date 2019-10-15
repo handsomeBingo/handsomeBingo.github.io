@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>node.js拼接sql查询语句神器 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前一阵子被迫分享了一次node.JS，在写sql时真是恼火的不得了。之前写php的时候发现php真是机智，php的双引号是可以识别变量的，而js就惨了，当写sql查询时，写变量得拼字符串，然后sql里本身就有不少的字符串，js的字符串还要单双循环。我真是欲哭无泪啊，写一个稍稍复杂点sql，就要改好几次。从网上找了半天，最后果断写一个。目前只支持增删改查，适合给用nodejs做后台写个小demo的玩">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node.js拼接sql查询语句神器">
+<meta property="og:url" content="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前一阵子被迫分享了一次node.JS，在写sql时真是恼火的不得了。之前写php的时候发现php真是机智，php的双引号是可以识别变量的，而js就惨了，当写sql查询时，写变量得拼字符串，然后sql里本身就有不少的字符串，js的字符串还要单双循环。我真是欲哭无泪啊，写一个稍稍复杂点sql，就要改好几次。从网上找了半天，最后果断写一个。目前只支持增删改查，适合给用nodejs做后台写个小demo的玩">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-24T15:16:29.714Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node.js拼接sql查询语句神器">
+<meta name="twitter:description" content="前一阵子被迫分享了一次node.JS，在写sql时真是恼火的不得了。之前写php的时候发现php真是机智，php的双引号是可以识别变量的，而js就惨了，当写sql查询时，写变量得拼字符串，然后sql里本身就有不少的字符串，js的字符串还要单双循环。我真是欲哭无泪啊，写一个稍稍复杂点sql，就要改好几次。从网上找了半天，最后果断写一个。目前只支持增删改查，适合给用nodejs做后台写个小demo的玩">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-node-js拼接sql查询语句神器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/15/node-js拼接sql查询语句神器/" class="article-date">
+  <time datetime="2017-08-15T13:31:37.000Z" itemprop="datePublished">2017-08-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      node.js拼接sql查询语句神器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前一阵子被迫分享了一次node.JS，在写sql时真是恼火的不得了。之前写php的时候发现php真是机智，php的双引号是可以识别变量的，而js就惨了，当写sql查询时，写变量得拼字符串，然后sql里本身就有不少的字符串，js的字符串还要单双循环。我真是欲哭无泪啊，写一个稍稍复杂点sql，就要改好几次。从网上找了半天，最后果断写一个。目前只支持增删改查，适合给用nodejs做后台写个小demo的玩家。</p>
+<p>上源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line">var sqlJoin = (function () &#123;</span><br><span class="line">    var whereResolve = function (type, whereSwitch) &#123;</span><br><span class="line">        if (whereSwitch.where) &#123;</span><br><span class="line">            type += &apos; WHERE &apos;;</span><br><span class="line">        &#125;</span><br><span class="line">        var keyAry = (whereSwitch &amp;&amp; whereSwitch.whereProp) ? whereSwitch.whereProp : [];</span><br><span class="line">        if (keyAry.length) &#123;</span><br><span class="line"></span><br><span class="line">            for (let i = 0; i &lt; keyAry.length; i++) &#123;</span><br><span class="line">                let c = keyAry[i];</span><br><span class="line">                if (typeof c == &apos;object&apos;) &#123;</span><br><span class="line">                    for (var key in c) &#123;</span><br><span class="line">                        if (key != &apos;operator&apos;) type += &apos;`&apos; + key + &apos;`&apos; + (c[&apos;operator&apos;] ? c[&apos;operator&apos;] : &apos;=&apos;) + &apos;&apos; + &quot;&apos;&quot; + c[key] + &quot;&apos;&quot;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; else if (/(AND)?(OR)?/.test(c)) &#123;</span><br><span class="line">                    type += &apos; &apos; + c + &apos; &apos;;</span><br><span class="line">                &#125; else if (/(\()?(\))?/.test(c)) &#123;</span><br><span class="line">                    type += c;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        var likeKeyArr = whereSwitch.likeProp ? Object.keys(whereSwitch.likeProp) : [];</span><br><span class="line">        if (likeKeyArr.length) &#123;</span><br><span class="line">            if (likeKeyArr.length &gt; 1) &#123;</span><br><span class="line">                for (let j = 0; j &lt; likeKeyArr.length; j++) &#123;</span><br><span class="line">                    let cur = likeKeyArr[j];</span><br><span class="line">                    if (j == likeKeyArr.length - 1) &#123;</span><br><span class="line">                        type += cur + &apos; LIKE &apos; + &quot;&apos;%&quot; + whereSwitch.likeProp[cur] + &quot;%&apos;&quot;;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        type += cur + &apos; LIKE &apos; + &quot;&apos;%&quot; + whereSwitch.likeProp[cur] + &quot;%&apos;&quot; + &apos; AND &apos;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                for (let key in whereSwitch.likeProp) &#123;</span><br><span class="line">                    type += key + &apos; LIKE &apos; + &quot;&apos;%&quot; + whereSwitch.likeProp[key] + &quot;%&apos;&quot;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return type;</span><br><span class="line">    &#125;;</span><br><span class="line">    /**</span><br><span class="line">     * @param sqlType Object query type-&gt; &apos;INSERT&apos; &apos;DELETE&apos; &apos;UPDATE&apos; &apos;SELECT&apos;</span><br><span class="line">     * @param tableName String the name of the enqueried table</span><br><span class="line">     * @param whereSwitch [,Object] config the WHERE sentence</span><br><span class="line">     * @param limitSwitch [,Object] config the LIMIT sentence</span><br><span class="line">     * @returns String the sql query string joined by sqlJoin function</span><br><span class="line"></span><br><span class="line">    var sqlJoin = function (sqlType, tableName, whereSwitch, limitSwitch) &#123;</span><br><span class="line">        var SELECT = &apos;&apos;,</span><br><span class="line">            UPDATE = &apos;&apos;,</span><br><span class="line">            DELETE = &apos;&apos;,</span><br><span class="line">            INSERT = &apos;&apos;;</span><br><span class="line">        switch (sqlType.type) &#123;</span><br><span class="line">            case &apos;SELECT&apos;:</span><br><span class="line">                SELECT = &apos;SELECT &apos;;</span><br><span class="line">                if (sqlType.distinct) &#123;</span><br><span class="line">                    SELECT += &apos; DISTINCT &apos;</span><br><span class="line">                &#125;</span><br><span class="line">                sqlType.prop = sqlType.prop ? sqlType.prop : [];</span><br><span class="line">                if (sqlType.prop &amp;&amp; sqlType.prop.length) &#123;</span><br><span class="line">                    for (let i = 0; i &lt; sqlType.prop.length; i++) &#123;</span><br><span class="line">                        var cur = sqlType.prop[i];</span><br><span class="line">                        if (i == sqlType.prop.length - 1) &#123;</span><br><span class="line">                            SELECT += &apos;`&apos; + cur + &apos;`&apos;;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            SELECT += &apos;`&apos; + cur + &apos;`,&apos;;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    SELECT += &apos; *&apos;</span><br><span class="line">                &#125;</span><br><span class="line">                SELECT += &apos; FROM &apos; + &apos;`&apos; + tableName + &apos;`&apos;;</span><br><span class="line">                if (whereSwitch) &#123;</span><br><span class="line">                    SELECT = whereResolve(SELECT, whereSwitch);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                var orderArr = sqlType.orderProp ? Object.keys(sqlType.orderProp) : [];</span><br><span class="line">                if (orderArr.length) &#123;</span><br><span class="line">                    SELECT += &apos; ORDER BY &apos;;</span><br><span class="line">                    for (let m = 0; m &lt; orderArr.length; m++) &#123;</span><br><span class="line">                        let c = orderArr[m];</span><br><span class="line">                        if (m == orderArr.length - 1) &#123;</span><br><span class="line">                            if (sqlType.orderProp[c]) &#123;</span><br><span class="line">                                SELECT += c + &apos; ASC&apos;</span><br><span class="line">                            &#125; else &#123;</span><br><span class="line">                                SELECT += c + &apos; DESC&apos;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            if (sqlType.orderProp[c]) &#123;</span><br><span class="line">                                SELECT += c + &apos; ASC, &apos;</span><br><span class="line">                            &#125; else &#123;</span><br><span class="line">                                SELECT += c + &apos; DESC, &apos;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                if (limitSwitch &amp;&amp; limitSwitch.limit) &#123;</span><br><span class="line">                    SELECT += &apos; LIMIT &apos; + limitSwitch.num;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                break;</span><br><span class="line">            case &apos;UPDATE&apos;:</span><br><span class="line">                UPDATE = &apos;UPDATE &apos;;</span><br><span class="line">                UPDATE += tableName + &apos; SET &apos;;</span><br><span class="line">                var updatekeys = Object.keys(sqlType.prop);</span><br><span class="line">                for (let i = 0; i &lt; updatekeys.length; i++) &#123;</span><br><span class="line">                    var cur = updatekeys[i];</span><br><span class="line">                    if (i == updatekeys.length - 1) &#123;</span><br><span class="line">                        UPDATE += &apos;`&apos; + cur + &apos;` =&apos; + &quot;&apos;&quot; + sqlType.prop[cur] + &quot;&apos;&quot;;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        UPDATE += &apos;`&apos; + cur + &apos;` =&apos; + &quot;&apos;&quot; + sqlType.prop[cur] + &quot;&apos;, &quot;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                if (whereSwitch &amp;&amp; whereSwitch.where) &#123;</span><br><span class="line">                    UPDATE = whereResolve(UPDATE, whereSwitch);</span><br><span class="line">                &#125;</span><br><span class="line">                if (limitSwitch &amp;&amp; limitSwitch.limit) &#123;</span><br><span class="line">                    UPDATE += &apos; LIMIT &apos; + limitSwitch.num;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            case &apos;DELETE&apos;:</span><br><span class="line">                DELETE = &apos;DELETE FROM &apos; + tableName;</span><br><span class="line">                if (whereSwitch &amp;&amp; whereSwitch.where) &#123;</span><br><span class="line">                    DELETE = whereResolve(DELETE, whereSwitch);</span><br><span class="line">                &#125;</span><br><span class="line">                if (limitSwitch &amp;&amp; limitSwitch.limit) &#123;</span><br><span class="line">                    DELETE += &apos; LIMIT &apos; + limitSwitch.num;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            case &apos;INSERT&apos;:</span><br><span class="line">                INSERT = &apos;INSERT INTO &apos; + tableName;</span><br><span class="line">                var insertProp = Object.keys(sqlType.prop);</span><br><span class="line">                if (insertProp.length) &#123;</span><br><span class="line">                    for (let i = 0, len = insertProp.length; i &lt; len; i++) &#123;</span><br><span class="line">                        var cur = insertProp[i];</span><br><span class="line">                        if (i == 0) &#123;</span><br><span class="line">                            INSERT += &apos;(`&apos; + cur;</span><br><span class="line">                        &#125; else if (i == len - 1) &#123;</span><br><span class="line">                            INSERT += &apos;`&apos; + cur + &apos;`)&apos;;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            INSERT += &apos;`, `&apos; + cur + &apos;`, &apos;;</span><br><span class="line"></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    INSERT += &apos; VALUES &apos;;</span><br><span class="line">                    for (let j = 0, leng = insertProp.length; j &lt; leng; j++) &#123;</span><br><span class="line">                        var curr = insertProp[j];</span><br><span class="line">                        if (j == 0) &#123;</span><br><span class="line">                            INSERT += &quot;(&apos;&quot; + sqlType.prop[curr];</span><br><span class="line">                        &#125; else if (j == leng - 1) &#123;</span><br><span class="line">                            INSERT += &quot;&apos;&quot; + sqlType.prop[curr] + &quot;&apos;)&quot;;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            INSERT += &quot;&apos;,&apos;&quot; + sqlType.prop[curr] + &quot;&apos;, &quot;;</span><br><span class="line"></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">        return &#123;SELECT, UPDATE, DELETE, INSERT&#125;[sqlType.type];</span><br><span class="line">    &#125;;</span><br><span class="line">    return sqlJoin</span><br><span class="line">&#125;)();</span><br><span class="line">exports.sqlJoin = sqlJoin;</span><br></pre></td></tr></table></figure>
+
+<h2 id="用法示例："><a href="#用法示例：" class="headerlink" title="用法示例："></a>用法示例：</h2><ul>
+<li>新增</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;INSERT&apos;, prop: &#123;mNum: 7570, mName: &apos;晓鑫&apos;, points: 14&#125;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;limit: true, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //INSERT INTO members(`mNum`, `mName`, `points`) VALUES (&apos;7570&apos;,&apos;晓鑫&apos;, &apos;14&apos;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;DELETE&apos;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;where: true, whereProp: [&#123;mId: 67&#125;]&#125;,</span><br><span class="line">     &#123;limit: true, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //DELETE FROM members WHERE `mId`=&apos;67&apos; LIMIT 1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;UPDATE&apos;, prop: &#123;points: 14&#125;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&#123;mId: 24&#125;]&#125;,</span><br><span class="line">    &#123;limit: true, num: 1&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//UPDATE members SET `points` =&apos;14&apos; WHERE `mId`=&apos;24&apos; LIMIT 1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询—— %</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;SELECT&apos;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;where: true, likeProp: &#123;mNum: 75, mName: &apos;刘&apos;, points: 12&#125;&#125;,</span><br><span class="line">     &#123;limit: false, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //SELECT  * FROM `members` WHERE mNum LIKE &apos;%75%&apos; AND mName LIKE &apos;%刘%&apos; AND points LIKE &apos;%12%&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询—— % + AND/OR</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;SELECT&apos;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;where: true, whereProp: [&#123;&apos;mNum&apos;: 7501, operator: &apos;=&apos;&#125;,&apos;OR&apos;, &#123;mName: &apos;刘想&apos;,operator: &apos;=&apos;&#125;, &apos;AND&apos;,&#123;points: 5, operator: &apos;&gt;&apos;&#125;]&#125;,</span><br><span class="line">     &#123;limit: false, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //SELECT  * FROM `members` WHERE `mNum`=&apos;7501&apos; OR `mName`=&apos;刘想&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询——  % + AND+OR</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&apos;(&apos;, &#123;&apos;mNum&apos;: 7501, operator: &apos;=&apos;&#125;,&apos;OR&apos;, &#123;mName: &apos;刘想&apos;,operator: &apos;=&apos;&#125;,&apos;)&apos;, &apos;AND&apos;,&#123;points: 5, operator: &apos;&gt;&apos;&#125;]&#125;,</span><br><span class="line">    &#123;limit: false, num: 1&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT * FROM `members` WHERE ( `mNum`=&apos;7501&apos; OR `mName`=&apos;刘想&apos; ) AND `points`&gt;&apos;5&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询——DESC/ASC</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//true: ASC,false: DESC</span><br><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;, orderProp: &#123;points:false&#125;&#125;,</span><br><span class="line">    &apos;members&apos;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT  * FROM `members` ORDER BY points DESC</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询——WHERE</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;, prop: [&apos;mName&apos;,&apos;points&apos;,&apos;mNum&apos;], orderProp: &#123;points: true&#125;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&#123;mId: 2, operator: &apos;&gt;&apos;&#125;]&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT `mName`,`points`,`mNum` FROM `members` WHERE `mId`=&apos;24&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询——distinct</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;, distinct: true, prop: [&apos;points&apos;], orderProp: &#123;points: true&#125;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&#123;mId: 2, operator: &apos;&gt;&apos;&#125;]&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT  DISTINCT `points` FROM `members` WHERE `mId`&gt;&apos;2&apos; ORDER BY points ASC</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck1ri96ra000dlkpp6jfihlz8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/10/02/vueRender函数（1）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          vueRender函数（1）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/12/flex布局/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">flex布局</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/15/JavaScript基础教程1/">JavaScript 基础教程 1 JS 数据类型和变量</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-vue2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/05/vue2/" class="article-date">
+  <time datetime="2017-04-05T14:20:43.000Z" itemprop="datePublished">2017-04-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/05/vue2/">vue从入门到掉进坑里(二)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上篇文章写了一点vue基础的例子，顺便给例子加了一些注释，如果你在看我的文章，代码中的注释请仔细阅读，这些数据才是真正的精华，是个点睛的代码。大家肯定很意外我为什么撕那些写文章分享的人，我不是撕他们的文章。爱分享固然是好事，我还撕人家，显得我不地道。各位读者，你有没有想过，专家会读我们写的博客吗？大牛需要读我们这个档次的博文吗？我们的博文，说好了是一篇文章，读者大多和我们一样的初学者。写给初学者的文章，将自己的逼格定义甚高，初学者读不懂，这篇文章的意义何在？所以我撕他们，反对那些因自己水平不高，反而为了装的有水平而写的晦涩难懂的人。说着说着又撕上了。。。。<br></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这篇文章本来打算讲一个VUE-CLI例子，但是大家可以先看看这篇博客，强烈建议按照博客代码敲上一遍。这个例子图文并茂，是我在学vue-cli的时候见到的最好的教程。上链接  <a href="http://www.jianshu.com/p/1626b8643676" target="_blank" rel="noopener">史上最全入坑教程</a>。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这篇文章说说组件开发，我理解的组件开发，我们习惯一开始就先钻进代码里，迫不及待的看代码。大神自是心领神会，对于一些事情根本不需要说出来，这些大神没有说出来的，正是阻碍我们前进的障碍。所谓组件开发，是一种“拆”的思想或者说是“拼”，是把一个页面，按照某种规则，一般按照功能、复用性，UI样式等规则拆分成若干部分，最不理想的拆还可以掐头去尾留中间。。。。这份工作首先是切图，按照一个完整的网页，把图切好，然后拆成一块一块的，然后由不同的人开发，这就是最通俗的讲法。和拼图或者积木一类的很像。但是拆法是仁者见仁智者见智的时候，从这里能看出水平。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我第一次接触VUE-CLI这个脚手架的时候，眼前一亮，但是同时初次接触vue，这么多 *.vue的文件直接让我懵逼了。现在我走过来了，今天就可以说说这些玩意儿了。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一个让我困惑的问题是父子组件的问题；每一个.vue的文件都是一个组件，在组件中被import的相对于该.vue而言就是子组件（后面须注册）。在学习VUE初期，我对于父子组件一直感到很困惑，因为在VUE中，父子组件和Angular中的父子组件完全不同，Angular的作用域是和DOM平齐的，而父子组件也会因为DOM嵌套关系而天然形成，而VUE组件的父子关系与嵌套无关，而是与注册关系决定的，习惯了这一思路后，我着实是在这里困惑了好久，如果眼前的你也是这样的话，那就赶紧出来吧。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面代码是 <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">point.vue</span> 组件的代码（部分），其中point.vue相对于common-header和mask-layer是父组件，而common-header和mask-layer是子组件。</p>
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+    &lt;template lang="html"&gt;
+        &lt;common-header :isNotLogin="isNotLogin" :theActive="active"&gt;&lt;/common-header&gt;
+        &lt;mask-layer &gt;&lt;/mask-layer&gt;
+      &lt;/div&gt;
+    &lt;/template&gt;
+</code>
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    &lt;script&gt;
+      import CommonHeader from '../common/CommonHeader' //导入子组件
+      import MaskLayer from '../common/MaskLayer' //导入子组件
+      export default {
+        name: 'pointOperate',
+        data () {
+          return {
+            newMember: {
+              mName: '',
+              mNum: '',
+              point: ''
+            }
+        },
+        methods: {},
+        components: {
+          CommonHeader, //注册子组件
+          MaskLayer //注册子组件
+        }
+      }
+    &lt;/script&gt;
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另一个困惑我很久的问题是如何在VUE-CLI中引入自己的静态资源文件，如bootstrap.min.css。写完这些基础内容后，我将分享一个完整的例子，而且，这个例子已经投入使用了（这个积分管理系统是给我女友的奶茶店用的积分管理），现在不多说，继续写基础内容。引入VUE-CLI后，脚手架将自动为我们打包应用，并将打包后的文件自动注入到index.html中，正由于这一操作，如果我们不按照正确的操作方式，我们自己引入的静态文件将失效。正确的做法是：在index.html同级新建一个static文件夹，将我们自己的静态文件放入其中，在index.html中使用相对路径引入即可。下面是<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">index.html</span>的代码：</p>
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+在head标签中引入index.css和bootstrap.min.css等静态文件
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;admin&lt;/title&gt;
+        &lt;meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"&gt;
+        &lt;title&gt;index首页&lt;/title&gt;
+        &lt;link rel="stylesheet" href="./static/bootstrap/dist/css/bootstrap.min.css"&gt;
+        &lt;link rel="shotcut icon" href="./static/favicon.ico"&gt;
+        &lt;link rel="stylesheet" href="./static/index.css"&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;div id="app"&gt;&lt;/div&gt;
+        &lt;!-- built files will be auto injected --&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+</code>
+</pre>
+
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+目录结构
+--|project
+    --|build/
+    --|config/
+    --|dist/
+    --|node_modules/
+    --|src/
+    --|static/
+        --|bootstrap/ ==>bootstrap.min.css所在文件夹
+            --|dis/
+            --|fonts/
+            --|...
+        --|index.css
+    --|.babelrc
+    --|.editorconfig
+    --|.gitignore
+    --|.postcsssrc.js
+    --|index.html
+    --|package.json
+    --|README.md
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第三个让我困惑的问题是关于数据驱动。在写这个系统的时候，我需要一个bootstrap的modal框，这个框用于确认、提示用，在bootstrap中用jquery操作点击事件来实现modal框的显隐，在vue虽然也可以操作dom，但是我最终选择了放弃这一做法，如果这样做了，那还算用框架么？我困惑了很久，其实现在想来特别简单，只需要设置modal框的v-show即可。想通了自然很简单，当时也是初学vue，根本不知道从何入手，初学vue容易只见树木不见森林，我们纠结语法和API，忽略了指导性的核心思想——数据驱动。我们想要实现某个功能时，我们思考的方向是改变某个（些）值（数据）来达到。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck1ri96rp000mlkpp37x5i9u3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-vue1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/14/vue1/" class="article-date">
+  <time datetime="2017-03-14T12:20:04.000Z" itemprop="datePublished">2017-03-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/14/vue1/">vue从入门到掉进坑里（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学习vue好一阵子了，是从一个爱炫耀的同事开始的。说到vue，我只想说：太坑了；无论文档还是某些人博客，都写的很晦涩。这让我很不解，我觉得这和打码是一样的。就不能写的通俗一些？说喜欢分享来着，结果分享的东西晦涩的不得了。我称这些博客和文档为：打码的文章。说到这个我又想起我一个同事问我的一个问题：什么样的人算大牛？我当时想了半天也说不清，我想coding能力强的人大抵就是大牛了。他的答案让我很意外，原话引用“写出来谁都看不懂的，不算大牛；写出来谁都看得懂的，也不是大牛；只有那些你看了能看懂，但是看完就拍大腿：我怎么就没想到呢？这些才是大牛。”我以此自砺，也送给那些给文章打码的人。</p>
+<h2 id="vue基础"><a href="#vue基础" class="headerlink" title="vue基础"></a>vue基础</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果你有angular 1.xx的基础就足够了。但是作为一个还在坑边上歇息的人告诉你，别拿着angular的思想去衡量vue的问题，尤其是 2.0以后的版本。基础不多说直接引用官网的教程：</p>
+<blockquote>
+<p>hello world</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/*html*/</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &#123;&#123; message &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">/*JS*/</span><br><span class="line">var exampleData = &#123;</span><br><span class="line">    message: &apos;hello world!&apos;</span><br><span class="line">&#125;;</span><br><span class="line">new Vue(&#123;</span><br><span class="line">    el: &apos;#app&apos;,</span><br><span class="line">    data: exampleData</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>使用Vue的过程即定义MVVM各个组成部分的过程。<br>     *   1.定义View<br>     *   2.定义Model<br>     *   3.创建一个Vue实例或’ViewModel’，它用于连接View和Model；在创建Vue实例时，需要传入一个选项对象，选项对象可以包含数据、挂载元素、方法、模拟生命周期钩子等等。<br>     *   示例讲解：<br>     *       在这个示例中，选项对象的el属性指向View，el:’#app’，表示将Vue示例挂载到  &lt;div id = ‘app’&gt;&lt;/div&gt;元素上；<br>     *       data属性：指向Model，data:exampleData表示我们的Model是exampleData对象；<br>     *       Vue.js有多种数据绑定的语法，最基础的形式是文本差值，使用一对大括号语法,mustache风格绑定；</p>
+<blockquote>
+<p>双向动态绑定</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/*html*/</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p&gt;&#123;&#123;message&#125;&#125;&lt;/p&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model=&quot;message&quot; /&gt;  &lt;!--v-model和ng-model类似是vue双向数据绑定用的--&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">/*js*/</span><br><span class="line">&lt;script src=&quot;../vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    exampleData = &#123;</span><br><span class="line">        message: &apos;hello world!hello everyone,I am the vue.js,which is the most fierce technology to ZhuangB!&apos;</span><br><span class="line">    &#125;;</span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: &apos;#app&apos;,</span><br><span class="line">        data:exampleData</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>绑定是双向绑定的，不同于angular 1.xx数据是挂载在作用域$scope上，vue的开发将数据都集成在了vue实例化的参数对象的data属性中，这一点无比的方便，我们推崇vue，但是拒绝装B，尤其是那些以vue牛逼，自己也牛逼起来的人。</p>
+<blockquote>
+<p>vue常用指令 v-*</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line">1.v-if</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVif&quot;&gt;</span><br><span class="line">    &lt;h1&gt;Hello Vue.js&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;yes&quot;&gt;Yes!&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;no&quot;&gt;No!&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;age &gt;= 25&quot;&gt;Age:&#123;&#123;age&#125;&#125;&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;name.indexOf(&apos;jack&apos;) &gt;= 0&quot;&gt;Name:&#123;&#123;name&#125;&#125;&lt;/h1&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVif = new Vue(&#123;</span><br><span class="line">    el: &apos;#appVif&apos;,</span><br><span class="line">    data: &#123;</span><br><span class="line">        yes: true,</span><br><span class="line">        no: false,</span><br><span class="line">        age: 26,</span><br><span class="line">        name: &apos;keep fool,keep aware&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">2.v-show</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVshow&quot;&gt;  &lt;!--v-show同ng-show都是通过设置不可见，而v-if是dom的增删--&gt;</span><br><span class="line">    &lt;h1&gt;Hello Vue.js&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-show=&quot;yes&quot;&gt;Yes!&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-show=&quot;no&quot;&gt;No!&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-show=&quot;age &gt;= 25&quot;&gt;Age:&#123;&#123;age&#125;&#125;&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-show=&quot;name.indexOf(&apos;jack&apos;) &gt;= 0&quot;&gt;Name:&#123;&#123;name&#125;&#125;&lt;/h1&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVshow = new Vue(&#123;</span><br><span class="line">    el: &apos;#appVshow&apos;,</span><br><span class="line">    data: &#123;</span><br><span class="line">        yes: true,</span><br><span class="line">        no: false,</span><br><span class="line">        age: 26,</span><br><span class="line">        name: &apos;keep fool,keep calm&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">3.v-for</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVfor&quot;&gt;</span><br><span class="line">    &lt;table&gt;</span><br><span class="line">        &lt;thead&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;Name&lt;/th&gt;</span><br><span class="line">            &lt;th&gt;Age&lt;/th&gt;</span><br><span class="line">            &lt;th&gt;Sex&lt;/th&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">        &lt;/thead&gt;</span><br><span class="line">        &lt;tbody&gt;</span><br><span class="line">            &lt;tr v-for=&quot;person in people&quot;&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123; person.name &#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123; person.age &#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123; person.sex &#125;&#125;&lt;/td&gt;</span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">        &lt;/tbody&gt;</span><br><span class="line">    &lt;/table&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVfor = new Vue(&#123;</span><br><span class="line">       el: &apos;#appVfor&apos;,</span><br><span class="line">       data: &#123;</span><br><span class="line">           people :[</span><br><span class="line">               &#123;</span><br><span class="line">                   name: &apos;jack&apos;,</span><br><span class="line">                   age: 24,</span><br><span class="line">                   sex: &apos;Male&apos;</span><br><span class="line">               &#125;,</span><br><span class="line">               &#123;</span><br><span class="line">                   name: &apos;Bill&apos;,</span><br><span class="line">                   age: 25,</span><br><span class="line">                   sex: &apos;Male&apos;</span><br><span class="line">               &#125;,</span><br><span class="line">               &#123;</span><br><span class="line">                   name: &apos;Julia&apos;,</span><br><span class="line">                   age: 17,</span><br><span class="line">                   sex: &apos;Female&apos;</span><br><span class="line">               &#125;</span><br><span class="line">           ]</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">4.v-bind</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVbind&quot;&gt; &lt;!--ng-bind可以简写成一个(冒号) : --&gt; &lt;!--v-bind有大用处，后面的动态class和动态绑定的props都离不开v-bind--&gt;</span><br><span class="line">    &lt;ul class=&quot;pagination&quot;&gt;</span><br><span class="line">        &lt;li v-for=&quot;n in pageCount&quot;&gt;</span><br><span class="line">            &lt;a href=&quot;javascript:void 0;&quot; :class=&quot;activeNumber === n ? &apos;active&apos;:&apos;&apos;&quot;&gt;&#123;&#123;n&#125;&#125;&lt;/a&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVbind = new Vue(&#123;</span><br><span class="line">        el: &apos;#appVbind&apos;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            pageCount: 10,</span><br><span class="line">            activeNumber: 1</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">5.v-on</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVon&quot;&gt; &lt;!--v-on可以简写成一个at符(@)--&gt;</span><br><span class="line">    &lt;p&gt;&lt;input type=&quot;text&quot; v-model=&quot;message&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">        &lt;!--click事件直接绑定一个方法--&gt;</span><br><span class="line">        &lt;button @click=&quot;greet&quot;&gt;Greet&lt;/button&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">        &lt;!--click事件使用内联语句：注意事件触发的方法要写在Vue实例化参数methods属性中--&gt;</span><br><span class="line">        &lt;button @click=&quot;say(&apos;Hi&apos;)&quot;&gt;Hi&lt;/button&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVon = new Vue(&#123;</span><br><span class="line">   el: &apos;#appVon&apos;,</span><br><span class="line">   data: &#123;</span><br><span class="line">       message: &apos;Hello, world!&apos;</span><br><span class="line">   &#125;,</span><br><span class="line">   methods: &#123;</span><br><span class="line">        greet: function ()&#123;</span><br><span class="line">            alert(this.message);</span><br><span class="line">        &#125;,</span><br><span class="line">        say: function (msg)&#123;</span><br><span class="line">            alert(msg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>综合例子</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;fieldset&gt;</span><br><span class="line">        &lt;legend&gt;</span><br><span class="line">            Create New Person</span><br><span class="line">        &lt;/legend&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label &gt;Name&lt;/label&gt;</span><br><span class="line">            &lt;input type=&quot;text&quot; v-model=&quot;newPerson.name&quot;/&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label&gt;Age:&lt;/label&gt;</span><br><span class="line">            &lt;input type=&quot;text&quot; v-model=&quot;newPerson.age&quot; /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label&gt;Sex:&lt;/label&gt;</span><br><span class="line">            &lt;select v-model=&quot;newPerson.sex&quot;&gt;</span><br><span class="line">                &lt;option value=&quot;Male&quot;&gt;Male&lt;/option&gt;</span><br><span class="line">                &lt;option value=&quot;Female&quot;&gt;Female&lt;/option&gt;</span><br><span class="line">            &lt;/select&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label&gt;&lt;/label&gt;</span><br><span class="line">            &lt;button @click=&quot;createPerson&quot;&gt;Create&lt;/button&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/fieldset&gt;</span><br><span class="line">    &lt;table&gt;</span><br><span class="line">        &lt;thead&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;th&gt;Name&lt;/th&gt;</span><br><span class="line">                &lt;th&gt;Age&lt;/th&gt;</span><br><span class="line">                &lt;th&gt;Sex&lt;/th&gt;</span><br><span class="line">                &lt;th&gt;Delete&lt;/th&gt;</span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">        &lt;/thead&gt;</span><br><span class="line">        &lt;tbody&gt;</span><br><span class="line">            &lt;tr v-for=&quot;(person,index) in people&quot;&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;person.name&#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;person.age&#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;person.sex&#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&lt;button @click=&quot;deletePerson(index)&quot;&gt;Delete&lt;/button&gt;&lt;/td&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">        &lt;/tbody&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/table&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vm = new Vue(&#123;</span><br><span class="line">        el: &apos;#app&apos;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            newPerson : &#123;</span><br><span class="line">                name: &apos;&apos;,</span><br><span class="line">                age: 0,</span><br><span class="line">                sex: &apos;Male&apos;</span><br><span class="line">            &#125;,</span><br><span class="line">            people: [</span><br><span class="line">                &#123;</span><br><span class="line">                    name: &apos;jack&apos;,</span><br><span class="line">                    age: 30,</span><br><span class="line">                    sex: &apos;Male&apos;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    name: &apos;bill&apos;,</span><br><span class="line">                    age: 34,</span><br><span class="line">                    sex: &apos;Male&apos;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    name: &apos;cindy&apos;,</span><br><span class="line">                    age: 24,</span><br><span class="line">                    sex: &apos;female&apos;</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line"></span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            createPerson : function ()&#123;</span><br><span class="line">                this.people.push(this.newPerson);</span><br><span class="line">                this.newPerson = &#123;name: &apos;&apos;, age: 0,sex: &apos;Male&apos;&#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            deletePerson : function (index)&#123;</span><br><span class="line">                this.people.splice(index, 1)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;基础教程就先上这么多，其他的基础教程请参看官网，有了这些你就能听懂后面的东西了，如果你还没有框架基础，这可能有点困难，我不是想打码，但是建议你学习一下angular v1.xx，因为现在框架，以指令(html行内属性)解决问题的，angular是师祖，是基础，我虽然讨厌angular的古板，但是对于初学者，能更好的体会框架的基础的东西，vue好用就是因为很多东西被封装了，但是对于初学者这将是黑盒的。在学习vue之前，与我而言，框架都有优劣，没必要因为哪个框架好参与撕逼，你开心就好。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck1ri96rm000klkpppjr3l746" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-requirejs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/14/requirejs/" class="article-date">
+  <time datetime="2017-02-14T13:20:59.000Z" itemprop="datePublished">2017-02-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/14/requirejs/">三分钟带你入门RequireJs</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="三分钟带你入门RequireJs"><a href="#三分钟带你入门RequireJs" class="headerlink" title="三分钟带你入门RequireJs"></a>三分钟带你入门RequireJs</h1><h3 id="require-js是什么"><a href="#require-js是什么" class="headerlink" title="require.js是什么"></a>require.js是什么</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/datura-lj/RequireJS_demo" target="_blank" rel="noopener">RequireJS</a>遵循AMD，相对于AMD的是CMD通用模块定义的SeaJs。</p>
+<h3 id="为什么要模块化"><a href="#为什么要模块化" class="headerlink" title="为什么要模块化"></a>为什么要模块化</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在不使用模块化之前，文件依赖要手动添加，而且各个依赖顺序不能错乱，一旦顺序错乱将引发错误。其次，模块化有利于团队的协同开发，同时提高了代码的可复用性和可维护性。使用require.js可以为我们带来哪些改变？</p>
+<ol>
+<li>解决文件之间依赖</li>
+<li>自动引入js</li>
+<li>也可以解决命名冲突</li>
+</ol>
+<h3 id="如何使用RequireJs"><a href="#如何使用RequireJs" class="headerlink" title="如何使用RequireJs"></a>如何使用RequireJs</h3><p>1.在html中引入RequireJS。在HTML中，添加这样的 &lt;script&gt; 标签：</p>
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+&lt;script type="text/javascript" src="require.min.js" data-main="main"&gt;&lt;/script&gt;
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们如果使用RequireJs的话，不需要我们显式地引入其他依赖的js文件，这些工作交给RequireJs去做，这也正是使用它的重要意义。注意，在我们引入require.js的script标签里有一个data-main属性，requirejs提供的这种功能叫做“主数据”的功能，我们首先创建一个main.js，然后在页面中使用<script data-main="js/main" src="js/require.js"></script>，这个script标签中加入了data-main属性，这个属性指定的js将在加载require.js之后处理，我们把require.config的配置加入到data-main后，就可以使每一个页面都使用这个配置，然后页面中就可以直接使用require来加载所有的短模块名。data-main 还有一个重要的功能，script标签指定data-main属性时，require会默认的data-main指定的js为根路径，即如上面的data-main=’js/main’ 设定后，我们在使用require([‘jquery’])后（不配置jquery的paths），require会自动加载js/jquery.js文件，而不是jquery.js，相当于默认配置了baseUrl（如下示例）：</p>
+<p>全局配置文件的作用：</p>
+<p>1.配置RequireJs项目中用到的其他模块<br>2.引入其他模块的基础路径（baseUrl）</p>
+<p><span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">main.js</span>的代码（部分）</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    require.config({
+        paths:{
+            'jquery':['http:libs/baidu.com/jquery/2.0.3/jquery','jquery'],
+            'a':'a'
+        }
+    });
+     require.config({
+         baseUrl:'js'
+     });
+</code>
+</pre>
+<p>2.定义模块；requirejs通过define()方法定义一个模块，在需要的地方通过require()方法加载即可；</p>
+<p>定义不存在依赖的模块<br><span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">fun1.js</span></p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  define(function (){
+      function fun1(){
+          alert('it works');
+      }
+      fun1();
+  });
+</code>
+</pre>
+
+<p>存在依赖的函数式定义<br>如果模块存在依赖：则第一个参数是依赖的名称数组，第二个参数是函数，在模块的所有依赖加载完毕后，该函数会被调用来定义该模块，因此该模块应该返回一个定义了本模块的object。依赖关系会以参数的形式注入到该函数上，参数列表与依赖名称列表一一对应。<br><span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">cart.js</span></p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    define(['./cart','./inventory'],function (cart, inventory){
+        return {
+            color: 'blue',
+            size: 'large',
+            addToCart: function (){
+                inventory.decrement(this);
+                cart.add(this);
+            }
+        }
+    });
+</code>
+</pre>
+
+<p>使用第三方模块<br>//通过require加载的模块一般都需要符合AMD规范，即使用define方法来声明模块，但是有的时候需要加载非AMD规范的js，这时候就需要用到另一个功能：shim，shim本意为‘垫’，其实大概也就是一个垫的作用。目前这个方法有两方面的应用：</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    //1、非AMD模块输出，将非标准的AMD模块垫成可以应用的模块，例如：在老版本的jquery中，是没有继承AMD规范的，所以不能直接require['jquery']，这时候就需要shim，比如我要是用underscore类库，但是他并没有实现AMD规范，那我们可以这样配置
+    require.config({
+        shim:{
+            'underscore':{
+                export : '_'
+            }
+        }
+    });
+    //经过上面配置，我们就可以在其他模块中引用underscore模块：
+    require(['underscore'],function (_){
+        //_表示加载underscore后，自动注入到后面的回调中，在回调中使用_就是underscore，和jquery 的$ 类似
+        _.each([1,2,3],alert);
+    });
+
+    //插件形式的非AMD模块，我们经常会用到jquer插件，而且这些插件基本都不符合AMD规范，比如jquery.form插件，这时候就需要将form插件'垫'到jquery中：
+    require.config({
+        shim:{
+            'underscore':{
+                exports:'_'
+            },
+            'jquery.form':{
+                deps:['jquery']//deps  depends 依赖
+            }
+        }
+    });
+
+    //简写
+    require.config({
+        shim:{
+
+            'underscore' : {
+                deps: ['angular'],
+                export: '_'
+            },
+            'jquery.form' : ['jquery']
+        }
+    });
+
+    //这样配置之后我们就可以使用加载插件之后的jquery了
+    require(['jquery','jquery.form'],function (){
+        $(function (){
+            $('#form').ajaxSubmit({});
+        });
+    });
+</code>
+</pre>
+
+<h3 id="来个例子"><a href="#来个例子" class="headerlink" title="来个例子"></a>来个例子</h3><p>1.引入require.js<br>2.定义模块<br>定义<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">function1.js</span></p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    define(function(){
+        return {
+            rnd:function (m,n) {
+                return parseInt(Math.random()*(m-n)+m);
+            }
+        }
+    });
+</code>
+</pre>
+
+<p>定义<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">str.js</span></p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  define(function(){
+      return '我是一个简单的字符串';
+  });
+</code>
+</pre>
+
+<p>3.定义<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">main.js</span>文件</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+   require.config({
+       baseUrl:'js'
+   });
+   require(['./function1', './str'], function(function1, str){
+       return {
+            test1: alert(str),
+            test2: console.log(function1(1, 100))
+       }
+   })
+</code>
+</pre>
+
+<p>结果效果：弹窗弹出字符串，控制台（console）输出一个随机数。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/14/requirejs/" data-id="ck1ri96rj000hlkppzezwgvge" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-LESSS入门教程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/15/LESSS入门教程/" class="article-date">
+  <time datetime="2017-01-15T14:21:34.000Z" itemprop="datePublished">2017-01-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/15/LESSS入门教程/">LESS入门教程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="LESS入门教程"><a href="#LESS入门教程" class="headerlink" title="LESS入门教程"></a>LESS入门教程</h1><h3 id="为什么学习LESS"><a href="#为什么学习LESS" class="headerlink" title="为什么学习LESS"></a>为什么学习LESS</h3><p>　　说实话，起初我特别反感写LESS这种需要编译的东西，因此一直心怀抵触，但这过程中我没放弃学习这些技术，原因很简单，辩证来看，这种技术如果真像我厌恶的样子它怎么会流行？我厌恶，说明是我还没真正窥见她的美。当你讨厌的时候，你有数不清的理由，但是你爱上她，你发现根本没有理由。<br><br>　　我的leader就用LESS开发，也要求过我用，我一直反对，直到后来一些我未曾预见的问题找上门——官网改版，新老版共存，CSS类名经常发生冲突，让我异常崩溃；我的leader再次推荐LESS，我才正式的运用这项技术。我才发现LESS写出的css样式代码真的很美，分享这项技术我觉得不一定是重点，重点是心路历程。一项技术的诞生都是为了解决一些问题或者能够提升开发效率。</p>
+<hr>
+<div id="backToTop"></div>
+
+<h3 id="初学LESS我们需要掌握什么"><a href="#初学LESS我们需要掌握什么" class="headerlink" title="初学LESS我们需要掌握什么"></a>初学LESS我们需要掌握什么</h3><p>　　首先，我们需要知道它就是css样式代码。但是初学，我们需要了解只有以下几点</p>
+<ul>
+<li><a href="#installation">安装</a></li>
+<li><a href="#variety">变量思想</a> 【块级作用域（变量查找机制）】</li>
+<li><a href="#levelAndNested">层级与嵌套</a> 【后代则直接嵌套、&amp;与伪类】</li>
+<li><a href="#function">函数化css</a>【函数调用样式、@arguments、默认值、Mixin、继承样式、复用子级样式】</li>
+</ul>
+<hr>
+<div id="installation">
+<h3>安装LESS</h3>
+这里推荐使用<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">NODEJS + LESS</span>的学习方式；<br>
+1.安装nodejs<br>
+2.安装LESS <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">npm install -g less</span>
+
+</div>
+
+<hr>
+<div id="variety">
+<h3>LESS变量</h3>
+　　LESS的变量思想类似JS的变量（值类型变量）。LESS的变量只能是值类型，可以使色值、字体等等；<br>
+　　LESS声明变量使用<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">@</span>符号<br>
+　　LESS的变量和JS的变量很类似，存在作用域和作用域链机制。在LESS中，选择器后面的花括号即块级作用域（私有作用域），所以，未在选择器后的花括号内声明的变量都是全局变量，可以在任何的位置访问，在选择器后的花括号内声明的变量都是私有变量，只能在当前块级作用域中使用；<br>
+　　块级作用域是一个命名空间——场景-当我们拥有了大量的选择器的时候，特别是团队协同开发时，如何保证选择器之间重名问题：LESS采用了命名空间的方法来来避免重名问题；
+
+
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+@width: 900px;//全局变量
+@bgColor: blue;//全局变量
+.contentHeart {
+    @bgColor: #00b38a;
+    width: @width;
+    background:  @bgColor;//使用私有变量，在LESS中，变量查找也是采取就近原则，如果当前作用域中存在该变量，则直接取该作用域下的值，如果没有则向上查找
+}
+//编译之后的css样式
+.contentHeart {
+    width: 900px;
+    background: #00b38a;
+}
+</code>
+</pre>
+<p><a href="#backToTop">回顶部</a></p>
+</div>
+
+<div id="levelAndNested">
+<h3>设置嵌套HTML结构样式</h3>
+　　在LESS中如果设置被嵌套的样式，则直接在父级元素样式的花括号内继续写欲设置的子级元素的选择器样式，示例：
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+//html
+&lt;div id="home" &gt;
+    &lt;div id="top"&gt;top&lt;/div&gt;
+    &lt;div id="center">
+        &lt;div id="left">left&lt;/div&gt;
+        &lt;div id="right">right&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+<p>//LESS样式，在LESS中，关于HTML嵌套，我们采用从外到内的选择器嵌套定义，要么采用给特定元素加class或id<br>#home {//父级<br>  color: blue;<br>  width: 600px;<br>  height: 500px;<br>  border: outset;<br>  #top {//子级<br>    border: outset;<br>    width: 90%;<br>  }<br>  #center {//子级<br>    border: outset;<br>    height: 300px;<br>    width: 90%;<br>    #left {//子级的子级<br>      border: outset;<br>      float: left;<br>      width: 40%<br>    }<br>    #right {//子级的子级<br>      border: outset;<br>      float: left;<br>      width: 40%;<br>    }<br>  }<br>}<br>//编译之后的css样式<br>#home {<br>  color: blue;<br>  width: 600px;<br>  height: 500px;<br>  border: outset;<br>}<br>#home #top {<br>  border: outset;<br>  width: 90%;<br>}<br>#home #center {<br>  border: outset;<br>  height: 300px;<br>  width: 90%;<br>}<br>#home #center #left {<br>  border: outset;<br>  float: left;<br>  width: 40%;<br>}<br>#home #center #right {<br>  border: outset;<br>  float: left;<br>  width: 40%;<br>}<br></p></code><br></pre><p></p>
+<p>如果你要复用div#home下的div#top的样式，只需要在其他选择器中这样写：</p>
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+.copyStyle {
+    #home>#top;
+}
+</code>
+</pre>
+
+<p>在嵌套中最值得一提的是伪类，在嵌套中 有 <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">&amp;</span>时解析的是同一个元素或此元素的伪类；没有 <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">&amp;</span> 时，解析的是后代元素；示例：</p>
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+//设置a：hover样式
+a {
+  color: red;
+  text-decoration: none;
+  &:hover { //有 & 时解析的是同一个元素或此元素的伪类；没有 & 时，解析的是后代元素
+    color: #000;
+    text-decoration: underline;
+  }
+}
+//编译后的样式
+a {
+  color: red;
+  text-decoration: none;
+}
+a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+</code>
+</pre>
+<p><a href="#backToTop">回顶部</a></p>
+</div>
+
+<hr>
+<div id="function">
+<h3>在LESS中使用函数</h3>
+LESS还有一个更为强大的功能——函数；这里我们不讨论LESS支持的表达式及色值的计算函数；只是类似JS函数的一种用法；<br>
+Mixins——Mixins其实是一种嵌套，它允许将一个类嵌入到另外一个类中使用，被嵌入的类也可以称作变量，简单的讲，Mixins其实是规则级别的复用。说通俗一些，就是直接把一个选择器直接放到新的块级作用域中即可；
+Mixins还有一种形式叫做ParametricMixins（混入参数），Less也支持这一特性
+示例：
+
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+//定义一个样式选择器选择器函数
+.roundedCorners(@radius: 5px) {// 5px是一个默认值
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+//在另外的样式选择器中使用
+#header {
+  .roundedCorners;//不传参，则使用默认值5px；同时这也是一个Mixins
+}
+#footer {
+  .roundedCorners(10px);//传参则使用实参10px；同时这也是带参数的Mixins
+}
+
+//编译后代码
+#header {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+#footer {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+</code>
+</pre>
+
+<p>@arguments——在LESS的函数中，同样也有一个类似JS函数中arguments的东东，就是@arguments，他同样包含着函数所有的参数，与JS的arguments不同的是，@arguments是值的传递；示例：</p>
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+//定义一个函数，这个函数参数众多
+.boxShadow(@x: 0, @y: 0, @blur: 1px, @color: #000) {
+  -webkit-box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+
+//使用
+#header {
+  .boxShadow(2px, 2px, 3px, #f36);
+}
+
+//编译后的样式代码
+#header {
+  -webkit-box-shadow: 2px 2px 3px #f36;
+  -moz-box-shadow: 2px 2px 3px #f36;
+  box-shadow: 2px 2px 3px #f36;
+}
+
+</code>
+</pre>
+<p><a href="#backToTop">回顶部</a></p>
+</div>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/01/15/LESSS入门教程/" data-id="ck1ri96ql0001lkppe5q27660" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-gulp进阶（gulp中的插件的使用）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/23/gulp进阶（gulp中的插件的使用）/" class="article-date">
+  <time datetime="2016-11-23T14:40:19.000Z" itemprop="datePublished">2016-11-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/23/gulp进阶（gulp中的插件的使用）/">gulp进阶（gulp中的插件的使用）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在上一篇文章中简单介绍了gulp的基础知识，gulp提供了一些很实用的接口，但本身并不能做太多的事情 可以读取文件、写入文件以及监控文件等一少部分功能 其它实用的功能都是依靠插件来进行扩展的 这些插件可以实现比如<br>编译 Sass：gulp-sass<br>编译 Less：gulp-less<br>合并文件：gulp-concat<br>压缩文件：gulp-uglify<br>重命名js文件：gulp-rename<br>优化图像大小：gulp-imagemin<br>压缩css 文件：gulp-minify-css<br>创建本地服务器：gulp-connect<br>实时预览 gulp-connect<br>1、 使用插件步骤<br>npm install xxx –save-dev 安装插件<br>在 gulpfile.js 顶部引入此插件<br>在创建任务的时候使用此插件<br>2、 gulp-load-plugins<br>这个插件能自动帮你加载package.json文件里的gulp插件。 例如假设你的package.json文件里的依赖是这样的:<br>    “devDependencies”: {<br>       “gulp”: “^3.9.0”,<br>       “gulp-concat”: “^2.6.0”,<br>       “gulp-connect”: “^2.2.0”<br>     }<br>然后我们可以在gulpfile.js中使用gulp-load-plugins来帮我们加载插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">var $ = require(&apos;gulp-load-plugins&apos;)();</span><br></pre></td></tr></table></figure>
+
+<p>然后我们要使用gulp-concat和gulp-connect这两个插件的时候， 就可以使用$.concat和$.connect来代替了,也就是原始插件名去掉gulp-前缀，之后再转换为驼峰命名。<br>3、插件的使用<br>1）less<br>less插件可以把less文件编译成css</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$    npm install gulp-less --save-dev</span><br><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">    var less = require(&apos;gulp-less&apos;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;less&apos;,function()&#123;</span><br><span class="line">        return gulp.src(&apos;app/less/*.less&apos;)</span><br><span class="line">        .pipe(less())</span><br><span class="line">        .pipe(gulp.dest(&apos;dist/css&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;default&apos;,[&apos;less&apos;]);</span><br></pre></td></tr></table></figure>
+
+<p>2） gulp-concat<br>这个插件可以把几个文件合并到一块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$    npm install gulp-concat --save-dev</span><br><span class="line">  var gulp = require(&apos;gulp&apos;);</span><br><span class="line">  var concat = require(&apos;gulp-concat&apos;);</span><br><span class="line"></span><br><span class="line">  gulp.task(&apos;concat&apos;,function()&#123;</span><br><span class="line">      return gulp.src(\[&apos;app/js/*.js&apos;,&apos;!app/js/*.tmp.js&apos;])//指定要合并的文件glob</span><br><span class="line">          .pipe(concat(&apos;app.js&apos;))//进行合并并指定合并后的文件名</span><br><span class="line">          .pipe(gulp.dest(&apos;dist/js&apos;));//输出到目标路径</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  gulp.task(&apos;default&apos;,\[&apos;concat&apos;]);</span><br></pre></td></tr></table></figure>
+
+<p>3） gulp-uglify<br>合并后我们可以对JS文件进行压缩,最小化处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$  npm install gulp-uglify --save-dev</span><br><span class="line">    var gulp = require(&apos;gulp&apos;);</span><br><span class="line">    var concat = require(&apos;gulp-concat&apos;);</span><br><span class="line">    var uglify = require(&apos;gulp-uglify&apos;)</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;uglify&apos;,function()&#123;</span><br><span class="line">        return gulp.src([&apos;app/js/*.js&apos;,&apos;!app/js/*.tmp.js&apos;])</span><br><span class="line">            .pipe(concat(&apos;app.js&apos;)) //把多个JS文件合并成一个文件</span><br><span class="line">            .pipe(uglify()) //对合并后的app.js文件进行压缩</span><br><span class="line">            .pipe(gulp.dest(&apos;dist/js&apos;)); //输出到目的地</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;default&apos;,[&apos;uglify&apos;]);</span><br></pre></td></tr></table></figure>
+
+<p>4） gulp-rename<br>在把处理好的文件存放到指定的位置之前，我们可以先去重新命名一下它</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ npm install gulp-rename --save-dev</span><br><span class="line">    var gulp = require(&apos;gulp&apos;);</span><br><span class="line">    var concat = require(&apos;gulp-concat&apos;);</span><br><span class="line">    var uglify = require(&apos;gulp-uglify&apos;);</span><br><span class="line">    var rename = require(&apos;gulp-rename&apos;);</span><br><span class="line">    gulp.task(&apos;uglify&apos;,function()&#123;</span><br><span class="line">        return gulp.src([&apos;app/js/*.js&apos;,&apos;!app/js/*.tmp.js&apos;])//指定要处理的文件</span><br><span class="line">            .pipe(concat(&apos;app.js&apos;))//合并成一个文件</span><br><span class="line">            .pipe(gulp.dest(&apos;dist/js&apos;))//保存此文件</span><br><span class="line">            .pipe(uglify())//进行压缩</span><br><span class="line">            .pipe(rename(&apos;app.min.js&apos;))//对此文件进行重命名</span><br><span class="line">            .pipe(gulp.dest(&apos;dist/js&apos;));//再输出一次</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;default&apos;,[&apos;uglify&apos;]);</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">5） gulp-minify-css</span><br><span class="line">压缩css</span><br></pre></td></tr></table></figure>
+
+<p>$    npm install gulp-minify-css –save-dev<br>   var gulp = require(‘gulp’);<br>    var less = require(‘gulp-less’);<br>    var minify = require(‘gulp-minify-css’);//在文件的顶部去包含这个插件，起个名字，叫做 minify<br>    var rename = require(‘gulp-rename’);<br>    gulp.task(‘minify’,function(){<br>        return gulp.src(‘app/less/page.less’)//指定 less文件<br>            .pipe(less())//把less编译成css<br>            .pipe(gulp.dest(‘dist/css’))//输出到目的地<br>            .pipe(minify())//对 css再进行压缩<br>            .pipe(rename(‘page.min.css’))//重命名<br>            .pipe(gulp.dest(‘dist/css’));//输出到目的地<br>    });</p>
+<pre><code>gulp.task(&apos;default&apos;,[&apos;less&apos;]);</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">6） gulp-minify-html</span><br><span class="line">html文件压缩</span><br></pre></td></tr></table></figure>
+
+<p>$ npm install gulp-minify-html –save-dev<br>    var gulp = require(‘gulp’),<br>        minifyHtml = require(“gulp-minify-html”);</p>
+<pre><code>gulp.task(&apos;minify-html&apos;, function () {
+    gulp.src(&apos;src/*.html&apos;) // 要压缩的html文件
+    .pipe(minifyHtml())    //压缩
+    .pipe(gulp.dest(&apos;dist/html&apos;));//输出到目的地
+});</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">7） gulp-imagemin</span><br><span class="line">如果要想在保证不改变图像质量的情况下，让图像文件的体积变得更小一点,我们可以使用gulp-imagemin</span><br></pre></td></tr></table></figure>
+
+<p>$ npm install gulp-imagemin –save-dev<br> var gulp = require(‘gulp’);<br> var imagemin = require(‘gulp-imagemin’);</p>
+<p> gulp.task(‘copy-images’,function(){<br>     return gulp.src(‘app/imgs/<em>*/</em>.{jpg,png}’)//指定要压缩的图片<br>         .pipe(imagemin()) //进行图片压缩<br>         .pipe(gulp.dest(‘dist’));//输出目的地<br> });</p>
+<p>  gulp.task(‘default’,[‘copy-images’]);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">8） gulp-connect</span><br><span class="line">有些时候我们需要把文件放到本地服务器上去预览，gulp-connect可以帮我们创建一个本地服务器去运行我们的项目</span><br></pre></td></tr></table></figure>
+
+<pre><code> npm install gulp-connect --save-dev
+var gulp = require(&apos;gulp&apos;);
+var connect = require(&apos;gulp-connect&apos;);
+
+gulp.task(&apos;server&apos;,function(){
+   connect.server({
+       root:&apos;dist&apos;,//服务器的根目录
+       port:8080 //服务器的地址，没有此配置项默认也是 8080
+   });
+});
+
+gulp.task(&apos;default&apos;,[&apos;server&apos;]); //运行此任务的时候会在8080上启动服务器，</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">9） 自动刷新</span><br><span class="line">我们希望当文件变化的时候浏览器可以自动刷新，这样我们就不需要文件修改后手动去刷新浏览器了</span><br></pre></td></tr></table></figure>
+
+<pre><code>var gulp = require(&apos;gulp&apos;);
+var connect = require(&apos;gulp-connect&apos;);
+
+gulp.task(&apos;copy-html&apos;,function(){
+     gulp.src(&apos;app/index.html&apos;)//指定源文件
+         .pipe(gulp.dest(&apos;dist&apos;))//拷贝到dist目录
+         .pipe(connect.reload());//通知浏览器重启
+});
+
+gulp.task(&apos;watch&apos;,function(){
+    gulp.watch(&apos;app/index.html&apos;,[&apos;copy-html&apos;]);//当index.html文件变化时执行copy-html任务
+});
+
+gulp.task(&apos;server&apos;,function(){
+    connect.server({
+        root:&apos;dist&apos;,//服务器的根目录
+        port:8080, //服务器的地址，没有此配置项默认也是 8080
+        livereload:true//启用实时刷新的功能
+    });
+});</code></pre><p>gulp.task(‘default’,[‘server’,’watch’]);//运行此任务的时候会在8080上启动服务器；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10）gulp-inject </span><br><span class="line">自动向html中插入经过gulp编译、压缩、合并后的js、css文件，这个功能需要在html中写注释配合才行</span><br><span class="line">html中注释：（格式和内容是写死的）；</span><br><span class="line">注入css：</span><br></pre></td></tr></table></figure>
+
+<!--inject:css-->;
+<!--endinject-->;
+<p>注入js：</p>
+<!--inject:js-->;
+<!--endinject-->;
+<p>gulp代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var gulp=require(“gulp”);</span><br><span class="line">var inject=require(“gulp- inject”);</span><br><span class="line">gulp.task(“inject”,function()&#123;</span><br><span class="line">var target=gulp.src(“app/index.html”), /target指定向哪个文件中插入css和js</span><br><span class="line"></span><br><span class="line">	source=gulp.src([“dist/css/all.min.css”,”dist/js/all.min.js”]);// //source是向指定的html插入什么文件</span><br><span class="line">target.pipe(inject(source,&#123;ignorePaht:”/dist/”,addRootSlash:false&#125;)&#125;).pipe(gulp.dest(“dist”));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>注意：inject的第二参数：<br>ignorePath：因在定义这个任务时，gulp.src方法都是参照gulpfile.js为参照物去寻找文件，但是css和js插入到html的link和script标签中的时候，这时候的相对路径的参照物就应该是html了，所以在给插入到html中的css和js文件拼接路径时要将一段路径去掉；<br>addRootSlash:在拼接路径的时候，gulp默认会在link的href和script的src的路径中添加一个默认根目录的/，但是这不是我们想要的，一般不用；</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/23/gulp进阶（gulp中的插件的使用）/" data-id="ck1ri96r50009lkppttcz41jt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-gulp入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/22/gulp入门/" class="article-date">
+  <time datetime="2016-11-22T13:12:20.000Z" itemprop="datePublished">2016-11-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/22/gulp入门/">gulp入门</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&#160; &#160; &#160; &#160;用gulp有一段时间了，有个朋友让我给他说说gulp，所以今天就写一篇关于gulp的文章做做分享。<br>在我的文章中，我在介绍一个东西之前都会说一说这个东西诞生的背景，亦或者说这个东西诞生是为了解决什么问题。每次技术的进步都是从未知到已知，从发现问题，到认识问题，最后解决问题的，我之所以介绍这些背景，其实是在理顺这些思路，是在为后面的逻辑铺路，在学习一门新的技术的时候，我们也应该是这样一种思路：这门技术是解决什么问题的，这门技术又是如何解决的这个问题。所以说每当遇到问题时，要想清楚到底是哪里出了问题，只有这样，靶向解决问题才能指标治本。当然，在解决问题时，难的不是解决，时发现问题的根源所在！我记得我在学习这门语言的时候，我遇到过很多困惑的地方，老师问我到底是哪里不懂，我说：“如果我能说出我哪里不懂，其实距离懂只差一层窗户纸额的距离。”很显然，发现问题的根源远比解决问题更难，希望大家在学习技术的时候，遇到问题，不能理解的时候，或者觉得和自己“以为”的不一样时，千万记得找出你心里的疑惑究竟是在哪儿，只有把这个疑惑解决了，问题才算是真正解决了；好了，说了一大堆，还是回来说说gulp吧。<br>1、    什么是gulp？<br>gulp是可以自动化执行任务的工具 在平时开发的流程里面,一定有一些任务需要手工重复得执行，比如:<br>&#160; &#160; &#160; &#160;    把文件从开发目录拷贝到生产目录<br>&#160; &#160; &#160; &#160;    把多个 JS 或者 CSS 文件合并成一个文件<br>&#160; &#160; &#160; &#160;    对JS文件和CSS进行压缩<br>&#160; &#160; &#160; &#160;    把sass或者less文件编译成CSS<br>&#160; &#160; &#160; &#160;    压缩图像文件<br>&#160; &#160; &#160; &#160;只要你觉得有些动作是要重复去做的,就可以把这些动作创建成一个gulp任务 然后在指定的条件下自动执行 比如在less源文件发生改变后自动编译成css文件；但是这些改变时建立在监视基础之上的，下面将会讲述这一特殊的机制。<br>gulp是基于node.js的，建议大家在阅读这篇文章的时候，对nodejs有一定的了解，如果你还不是很了解，建议阅读前面的有关nodejs基础和node.js进阶的一些知识，因为gulp大多是文件的IO操作，大家在看node.js的基础的时候，重点记忆有关于fs模块、fs中的流。<br>2、gulp的特点<br>&#160; &#160; &#160; &#160;利用 node.js 流的威力，你可以快速构建项目并减少频繁的 IO 操作。前一级的输出，直接变成后一级的输入，使得在操作上非常简单。此外gulp还提供了高质量的插件， Gulp 严格的插件指南确保插件如你期望的那样简洁地工作。<br>这里要提出注意的地方是gulp的流（Stream）又和node.js中的流（Stream）不大一样，因为node中的流逝二进制流，gulp的流是文件流，文件流不仅仅包含了文件的内容，还包含了文件的的文件名和路径。但是这两种流都是分为可读流和可写流；<br>此外，gulp最大的优势在于其类似jquery的链式写法，上一级操作的输出，直接变成下一级的输入，后面将为大家展示。<br>3、实现思路：<br>&#160; &#160; &#160; &#160;gulp的核心原理就是先创建一个可读流，然后通过pipe方法导出，然乎经过各个插件的加工，最后创建一个可写流，写入硬盘；<br>4、gulp的核心API<br>&#160; &#160; &#160; &#160;gulp只有四个核心API，也正是这四个方法使得原来的复杂的任务简化起来，也正是由于其API简单，所以很易学。但是插件的API又是五花八门的，当然，只有需要使用插件的地方，我们在引入插件；</p>
+<p>1）、<br>gulp.src(glob,[,options]);创建一个可读流<br>参数：<br>&#160; &#160; &#160; &#160;•    globs 参数是文件匹配模式(类似正则表达式)，用来匹配文件路径(包括文件名)，当然这里也可以直接指定某个具体的文件路径。当有多个匹配模式时，该参数可以为一个数组；<br>&#160; &#160; &#160; &#160;•    options 为可选参数。通常情况下我们不需要用到<br>2）、<br>gulp.dest(path[,options]) 是用来向硬盘写入文件的；<br>&#160; &#160; &#160; &#160;•    path 为写入文件的路径<br>&#160; &#160; &#160; &#160;•    options 为一个可选的参数对象，通常我们不需要用到<br>&#160; &#160; &#160; &#160;要想使用好gulp.dest()这个方法，就要理解给它传入的路径参数与最终生成的文件的关系。gulp.dest()传入的路径参数只能用来指定要生成的文件的目录,而不能指定生成文件的文件名 它生成文件的文件名使用的是导入到它的文件流自身的文件名 所以生成的文件名是由导入到它的文件流决定的<br>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">  gulp.src(&apos;script/jquery.js&apos;)</span><br><span class="line">  .pipe(gulp.dest(&apos;dist/jquery.js&apos;));</span><br><span class="line">//最终生成的文件路径为 dist/jquery.js/jquery.js,而不是dist/jquery.js</span><br></pre></td></tr></table></figure>
+
+
+<p>3）、gulp.task(name[, deps], fn);gulp.task方法用来定义任务;<br>&#160; &#160; &#160; &#160;•    name 为任务名称<br>&#160; &#160; &#160; &#160;•    deps 是当前定义的任务需要依赖的其他任务，为一个数组。当前定义的任务会在所有依赖的任务执行完毕后才开始执行。如果没有依赖，则可省略这个参数<br>•    fn 为任务定义函数，我们把任务要执行的代码都写在里面。该参数也是可选的。<br>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&apos;mytask&apos;, \[&apos;array&apos;, &apos;of&apos;, &apos;task&apos;, &apos;names&apos;\],</span><br><span class="line">function() &#123; //定义一个有依赖的任务</span><br><span class="line">      // Do something</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>如果某个任务所依赖的任务是异步的，就要注意了，gulp并不会等待那个所依赖的异步任务完成，而是会接着执行后续的任务<br>//two任务虽然依赖于one任务,但并不会等到one任务中的异步操作完成后再执行；<br>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&apos;one&apos;,function()&#123;</span><br><span class="line">      //one是一个异步执行的任务</span><br><span class="line">      setTimeout(function()&#123;</span><br><span class="line">        console.log(&apos;one is done&apos;)</span><br><span class="line">      &#125;,5000);</span><br><span class="line">    &#125;);</span><br><span class="line"> gulp.task(&apos;two&apos;,[&apos;one&apos;],function()&#123;</span><br><span class="line">      console.log(&apos;two is done&apos;);</span><br><span class="line">    &#125;);</span><br><span class="line">//先打印two is done然后打印one is done；</span><br></pre></td></tr></table></figure>
+
+<p>4）、 gulp.watch(glob[, opts], tasks);//用来监视文件的变化，当文件发生变化后，我们可以利用它来执行相应的任务，例如文件拷贝等。<br>•    glob 为要监视的文件匹配模式，规则和用法与gulp.src()方法中的 glob 相同。<br>•    opts 为一个可选的配置对象，通常不需要用到<br>•    tasks 为文件变化后要执行的任务，为一个数组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&apos;uglify&apos;,function()&#123;</span><br><span class="line">    //do something</span><br><span class="line">  &#125;);</span><br><span class="line">gulp.task(&apos;reload&apos;,function()&#123;</span><br><span class="line">    //do something</span><br><span class="line">&#125;);</span><br><span class="line"> gulp.watch(&apos;js/\*\*/\*.js&apos;, \[&apos;uglify&apos;,&apos;reload&apos;\]);</span><br></pre></td></tr></table></figure>
+
+<p>另外一种使用方式：<br>    gulp.watch(glob[, opts, cb])<br>•    glob和 opts 参数与第一种用法相同<br>•    cb参数为一个函数。每当监视的文件发生变化时，就会调用这个函数,并且会给它传入一个对象，该对象包含了文件变化的一些信息 type属性为变化的类型，可以是 added、changed、deleted和path属性为发生变化的文件的路径<br>  gulp.watch(‘js/**/*.js’, function(event){<br>    //变化类型 added为新增,deleted为删除，changed为改变<br>    console.log(event.type);<br>   //变化的文件的路径<br>    console.log(event.path);<br>  });<br>练习：<br>1）写一个复制单个文件的方法；<br>//实现逻辑：先获取一个可读流（调用gulp.src()方法），通过管道（可读流的pipe()方法）输送到一个可写流中（调用gulp.dest()方法）；<br>代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var gulp=require(“gulp”);</span><br><span class="line">gulp.task(“copy”,function()&#123;</span><br><span class="line">gulp.src(“./app/index.html”).pipe(gulp.dest(“dist/html”))&#125;);</span><br><span class="line">//打开命令窗口输入 gulp copy 回车；即可执行任务；此时的dist/html目录下多出一个index.html文件，该方法便成功了；</span><br></pre></td></tr></table></figure>
+
+<p>2）写一个复制多个文件的方法，练习glob语法中的* **</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var gulp=require(“gulp”);</span><br><span class="line">gulp.task(“copy-imgs”,function()&#123;</span><br><span class="line">gulp.src(“app/img/*.&#123;jpg,png&#125;”)</span><br><span class="line">.pipe(gulp.dest(“dist/img”));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>//1、{}可以指定多个拓展名；<br>//2、* 可以匹配除路径分隔符 /以外的所有字符，“app/img/<em>.{jpg,png}”表示app/img第一级目录下的所有拓展名为jpg和png的文件；app/img/*</em>/.{jpg,png} 表示app/img/下所有目录（含子孙目录）中所有的拓展名为jpg和png的文件；</p>
+<p>3）组合任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">gulp.task(&apos;copy-html&apos;,function()&#123;</span><br><span class="line">   return gulp.src(&apos;app/index.html&apos;).pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(&apos;copy-images&apos;,function()&#123;</span><br><span class="line">   return gulp.src(&apos;app/imgs/**/*.&#123;jpg,png&#125;&apos;).pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(&apos;copy-other&apos;,function()&#123;</span><br><span class="line">    return gulp.src([&apos;app/css/*.css&apos;,&apos;app/js/*.js&apos;,&apos;app/js/*.tmp.js&apos;],&#123;base:&apos;app&apos;&#125;)</span><br><span class="line">.pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(&apos;default&apos;,[&apos;copy-html&apos;,&apos;copy-images&apos;,&apos;copy-other&apos;],function()&#123;</span><br><span class="line">    console.log(&apos;全部拷贝任务执行完毕!&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>4） 监听任务<br>使用 gulp 的 watch 这个方法，我们可以去监视一些文件，当这些文件发生变化的时候，立即去执行一些指定的任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;copy-html&apos;,function()&#123;</span><br><span class="line">        return gulp.src(&apos;app/index.html&apos;)</span><br><span class="line">        .pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;copy-images&apos;,function()&#123;</span><br><span class="line">        return gulp.src(&apos;app/imgs/**/*.&#123;jpg,png&#125;&apos;,&#123;base:&apos;app&apos;&#125;)</span><br><span class="line">        .pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;copy-other&apos;,function()&#123;</span><br><span class="line">        return gulp.src([&apos;app/css/*.css&apos;,&apos;app/js/*.js&apos;</span><br><span class="line">        ,&apos;app/js/*.tmp.js&apos;],&#123;base:&apos;app&apos;&#125;).pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    //在执行watch的时候会监控index.html文件的变化，发生变化后可以执行拷贝html的任务</span><br><span class="line">    gulp.task(&apos;default&apos;,function()&#123;</span><br><span class="line">        gulp.watch(&apos;app/index.html&apos;,[&apos;copy-html&apos;]);</span><br><span class="line">        gulp.watch(&apos;app/imgs/**/*.&#123;jpg,png&#125;&apos;,[&apos;copy-images&apos;]);</span><br><span class="line">        gulp.watch([&apos;app/css/*.css&apos;,&apos;app/js/*.js&apos;</span><br><span class="line">        ,&apos;app/js/*.tmp.js&apos;],[&apos;copy-other&apos;]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/22/gulp入门/" data-id="ck1ri96r8000blkppb184rt2k" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-浅析js中常用的四种检测数据类型的方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/22/浅析js中常用的四种检测数据类型的方法/" class="article-date">
+  <time datetime="2016-10-21T16:00:59.000Z" itemprop="datePublished">2016-10-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/22/浅析js中常用的四种检测数据类型的方法/">浅析js中常用的四种检测数据类型的方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&#160; &#160; &#160; &#160;在js中常用的检测数据类型的方法有四种，在项目开发中，数据类型穿插在每个重要的环节中，如果巧用数据类型检测，常常会起到意想不到的效果。在bug调试过程中，当山穷水尽的时候，如果尝试检测数据类型，往往会有柳暗花明的效果。尤其在nodejs的bug调试中十分有效，因为node在io操作时常常进行数据类型的转换，可以说屡试不爽。<br>&#160; &#160; &#160; &#160;之所以在这篇文章中才讲述，数据类型的检测，是因为数据类型的检测的方法和面向对象有着千丝万缕的联系，如果你有空可以看看前面三篇文章，相信能对数据类型检测有更深的体会，正所谓磨刀不费砍柴功。闲言少叙，奔正题。<br>1、    typeof<br>typeof的应用场景大多是检测基本数据类型或者不需要具体细分的对象数据类型检测亦或者是区分基本数据类型和引用数据类型。<br>typeof的返回值是字符串包裹的被检值对应的数据类型，一共有6个，”number”、”string”、”boolean”、”undefined”、”function”、”null”、”object”。示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">console.log(typeof 	5);//”number”</span><br><span class="line">console.log(typeof 	“binary”);//”string”</span><br><span class="line">console.log(typeof 	true);//”boolean”</span><br><span class="line">console.log(typeof 	undefined);//” undefined”</span><br><span class="line">console.log(typeof  function ()&#123;&#125;);//”function”</span><br><span class="line">console.log(typeof 	null);//” object”</span><br><span class="line">console.log(typeof 	&#123;&#125;);//” object”</span><br><span class="line">console.log(typeof 	[]);//” object”</span><br><span class="line">console.log(typeof  /^\d+$/);//” object”</span><br><span class="line">………..</span><br></pre></td></tr></table></figure>
+
+<p>从上面的例子中不难看出typeof有局限性，具体体现在：<br>1）    检测null的时候返回object<br>2）    不能具体细分对象数据类型<br>3）    函数本身不是一种数据类型，但是因为函数有许多特殊之处，这里typeof一个函数时返回一个function也是有道理的<br>2、    instanceof：<br>instanceof操作符是检测某个实例是否属于一个类，检测结果是布尔值，是，则返回true，否则返回false；<br>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var ary=[1m,2m,23];</span><br><span class="line">console.log(ary instanceof Array);//true</span><br><span class="line">console.log(ary instanceof Object);//true</span><br><span class="line">var num=12；</span><br><span class="line">var num2=new Number(12);</span><br><span class="line">console.log(num instanceof Number);//false</span><br><span class="line">console.log(num2  instanceof  Number);//true</span><br></pre></td></tr></table></figure>
+
+<p>但是instanceof也有其局限性，<br>1）    不能检测用字面临创建的基本数据类型的值，这是由于js是弱类型的语言，从这个角度讲，实例创建和字面量创建还是有区别的，只有通过实例创建的才算是对象；<br>2）    只要当前被检值在当前类的原型链上，检测结果就是true；<br>3）    在使用类的继承后，检测结果将不够准确；<br>3、    constructor:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">constructor是来弥补instanceof的不能检测字面量创建的数据的；</span><br><span class="line">var num=12；</span><br><span class="line">console.log(num.constructor===Number);//true</span><br><span class="line">var ary=[1,2,3];</span><br><span class="line">console.log(ary.constructor===Array);//true;</span><br><span class="line">console.log(ary.constructor===Object);//false;</span><br></pre></td></tr></table></figure>
+
+<p>constructor虽然弥补了一部分instanceof的不足，但是其缺点仍然不可忽视:当类的原型被重写时，其原型的constructor很可能被修改，导致检测结果不准确；<br>4、    Object.prototype.toString.call();方法<br>每一种数据类型都自带一个toString()方法，但是功用却不尽相同，如数组的toString是转化成字符串的，而对象的toString是检测数据类型的。该方法返回值是一个字符串，如”[object  数据所属类]“。示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var num=24;</span><br><span class="line">console.log(Object.prototype.toString.call(num));//”[object Number]”;</span><br><span class="line">var ary=[1,2,3];</span><br><span class="line">console.log(Object.prototype.toString.call(ary));//”[object Array]”;</span><br><span class="line">var reg=/^\w+$/g;</span><br><span class="line">console.log(Object.prototype.toString.call(reg));//”[object RegExp]”</span><br><span class="line">………..</span><br></pre></td></tr></table></figure>
+
+<p>如果要求检测结果精准时推荐使用最后一种方法。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/22/浅析js中常用的四种检测数据类型的方法/" data-id="ck1ri96s3000wlkppp2gq9lza" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-浅析js中的面向对象（三）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/04/浅析js中的面向对象（三）/" class="article-date">
+  <time datetime="2016-10-04T09:41:13.000Z" itemprop="datePublished">2016-10-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/04/浅析js中的面向对象（三）/">浅析js中的面向对象（三）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&#160; &#160; &#160; &#160;前面两篇文章，我们介绍了对象的一些特性以及面向对象的常见的封装方式，今天我们来继续讨论另外两个的关于面向对象中的重点:继承和多态；<br>继承是所有面向对象语言津津乐道的概念，后面讲述的继承方式大多基于原型模式、构造函数模式的，如果想更好的了解继承的概念，还希望大家好好看看上一篇文章中有关原型模式的论述。<br>&#160; &#160; &#160; &#160;本篇文章重点讨论几种常用的继承方式，并尝试从每种继承方式的优缺点，及继承之后父类的方法归属的角度探讨；</p>
+<ul>
+<li>原型继承：<br>&#160; &#160; &#160; &#160;原型继承的实现原理，子类的原型指向父类的一个实例；这样父类公有和私有的方法和属性都成为了子类公有的方法和属性；<br>示例：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function Super()&#123;//父类</span><br><span class="line">    this.delete=functinon(item)&#123;&#125;</span><br><span class="line">&#125;   </span><br><span class="line">Super.prototype.edit=function()&#123;&#125;;</span><br><span class="line">function Sub()&#123;//子类&#125;</span><br><span class="line"></span><br><span class="line">子类想调用父类的delete和edit方法，只需要将子类的原型指向父类的实例；</span><br><span class="line">Sub.prototype=new Super();//继承实现的核心代码</span><br></pre></td></tr></table></figure>
+
+<p> &#160; &#160; 原型继承虽然操作很简单，但是应该注意以下问题；</p>
+<ul>
+<li><p>1、原型继承并非复制一份父类的公有和私有的属性及方法，而是让子类和父类有了原型链上的联系，实现继承之后，子类的实例的<strong>proto</strong>属性指向了父类的实例，而这个实例的<strong>proto</strong>又指向父类的原型，是这样实现的继承；</p>
+</li>
+<li><p>2、通过原型链来实现继承时，子类的原型实际上是变成了另一个类的实例，原来父类实例的属性顺理成章的成为了子类原型的上的属性，这是我们不可改变的；</p>
+</li>
+<li><p>3、通过原型继承后，子类的原型是被更换了（有人习惯称之为“修改子类原型的指向”，但是我觉得说“更换”更为形象），这样一来子类原型上的Constructor（构造函数）属性的值便成为父类的构造函数，这也是我们不愿意看到的，因此在实现继承之后，我们要手动的修改子类的构造函数属性；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sub.prototype.constructor=Sub;//手动修改子类的构造函数指向；</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>call继承：<br>&#160; &#160; &#160; &#160;原型继承中，是将父类的公有和私有的方法都继承到了子类的公有的，但有时我们并不希望都继承了，很多场景下我们只需要继承某个类私有的方法即可，这时候就要用到call继承了。<br>&#160; &#160; &#160; &#160;call继承的实现原理，call方法是用来this关键字的方法，而在构造函数中的this都是当前类的实例，所以在子类的构造函数中call执行父类的构造函数（不通过new关键字），把父类构造函数中的this关键字修改为子类构造函数中的this，这样，父类实例的私有属性和方法都随着父类构造函数的执行继承到了子类的的实例身上。示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function Super()&#123;//父类</span><br><span class="line">  this.delete=functinon(item)&#123;&#125;</span><br><span class="line">&#125;;   </span><br><span class="line">  Super.prototype.edit=function()&#123;&#125;;</span><br><span class="line">function Sub()&#123;//子类</span><br><span class="line">  this.generation=son;</span><br><span class="line">  Super.call(this);//call继承的实现的核心代码</span><br><span class="line">&#125;;</span><br><span class="line">```  </span><br><span class="line">- 混合继承：</span><br><span class="line">&amp;#160; &amp;#160; &amp;#160; &amp;#160;原型继承是将父类的私有和公有的都变成子类的公有的，而call继承是将父类私有的变成子类私有的，那么有没有一种继承，让父类公有的变成子类公有的，父类私有的变成子类私有的?混合继承就解决了这个问题；</span><br><span class="line">&amp;#160; &amp;#160; &amp;#160; &amp;#160;混合继承是原型继承和call继承混合，如此一来类公有的变成子类公有的，父类私有的变成子类私有。但是在子类的公有中多了一份父类私有的，但是原型查找机制是先查找子类私有，瑕不掩瑜，混合继承的优势还是很突出的。示例：</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>function Super(){//父类<br>  this.delete=functinon(item){}<br>};<br>Super.prototype.edit=function(){};<br>Sub.prototype=new Super();//原型继承核心代码<br>Sub.prototype.contructor=Sub;//修改constructor指向<br>function Sub(){//子类<br>   this.generation=son;<br>   Super.call(this);//call继承的实现的核心代码<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 中间件继承：</span><br><span class="line">&amp;#160; &amp;#160; &amp;#160; &amp;#160;中间件继承的实现依赖于__proto__属性，子类原型上的__proto__默认是指向Object的原型的，我们在在__proto__指向Object.prototype之前插入父类的原型。中间件继承其实是延长了子类的原型链，中间件继承是将父类公有的继承到了子类公有的。示例：</span><br></pre></td></tr></table></figure>
+
+<p>function Super(){//父类<br>  this.delete=functinon(item){<br>  }<br>};<br>Super.prototype.edit=function(){};<br>function Sub(){//子类<br>    this.generation=son;<br>}<br>Sub.prototype.<strong>proto</strong>=Super.prototype;//中间件继承核心代码 </p>
+<p>值得注意的是，.<strong>proto</strong>在ie下不兼容，所以慎重使用；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 扩展：</span><br><span class="line">巧用Object.create(proObj)方法实现继承（from珠峰培训周啸天）</span><br><span class="line">该继承方式很巧妙，利用的是这个方法的返回值是一个以proObj为原型的对象，其实现原理和中间件继承是一样的。但是在IE8- 不兼容。示例：</span><br></pre></td></tr></table></figure>
+
+<p>function Super(){//父类<br>  this.delete=functinon(item){};<br>};<br>Super.prototype.edit=function(){};<br>function Sub(){//子类<br>   this.generation=son;<br>};<br>Sub.prototype. = Object.create(Super.prototype);//核心代码<br>虽然该方法不兼容，我尝试了简单模拟Object.create方法，代码如下<br>function(obj){<br>  function Fn(){};<br>  Fn.prototype=obj;<br>  return new Fn();<br>};</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&amp;#160; &amp;#160; &amp;#160; &amp;#160;以上是有关于面向对象的继承，最后在说说js中面向对象的多态，多态包括重载和重写；在这里重点强调，js中不能像传统的面向对象那样实现重载，在其他语言中(如java)中，可以为一个函数编写两个定义，只要这两个定义的签名不同即可。（这句话是说，在java等后台语言中，可以定义两个同名函数，只要这两个函数的参数的类型或个数不同即可），当调用时，根据传递参数的不同，机制会自动调用方法。但是，在js中，如果定义多个同名函数，在预解释阶段就会被覆盖，以最后一个为准；在js中有一个现象类似于重载，但是绝不是重载；示例：</span><br></pre></td></tr></table></figure>
+
+<p>function sum(num){<br>    if(typeof num===”undefined”){<br>         return 0<br>}<br>return num++;<br>}</p>
+<pre><code>&amp;#160; &amp;#160; &amp;#160; &amp;#160;在上面的例子中，虽然参数传与不传时结果不同，但是请大家注意中重点，重载是定义**多个**同名方法，当参数不同时自动调用对应方法执行，而这里是虽然参数不同，但是调用的始终都是**一个**sum方法；
+
+
+
+
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/04/浅析js中的面向对象（三）/" data-id="ck1ri96s80010lkpp1wh2z9nu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-浅析js中的面向对象（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/25/浅析js中的面向对象（二）/" class="article-date">
+  <time datetime="2016-09-25T09:13:59.000Z" itemprop="datePublished">2016-09-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/25/浅析js中的面向对象（二）/">浅析js中的面向对象（二）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&#160; &#160; &#160; &#160; 在上一篇文章中我从一个更深的层次介绍了对象（注：建议阅读 浅析js中的面向对象（一）），了解了对象属性的属性。那么今天我们开启第二个阶段，面向对象的封装。封装是真正意义上的面向对象实际功能的实现。在上一篇文章中，我们说过面向对象最大的优势就在于降低代码的非必要重复，提高代码的可维护性，降低服务器的压力。<br>&#160; &#160; &#160; &#160;面向对象有很多种封装方式，这里我们只探讨常用的，具有代表性的。如单例模式、工厂模式、构造函数模式以及基于构造函数的原型模式。</p>
+<ul>
+<li>单例模式：所谓单例模式就是把描述同一个事物（同一个效果或者方法）的属性和方法放在一个对象当中。单例模式作用是起到了分组的作用，这样一来，不同事物之间的属性或者方法即使名字相同(属性名和方法名)，也不会互相感染，种分组编写代码的方式称为单例模式。单例模式是项目开发过程中最为常用的开发方式，也是实现模块化开发的最简便的方式。我们来看看单例模式：<br>&#160; &#160; &#160; &#160;例如我们要实现一个编辑的方法：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var edit=&#123;</span><br><span class="line">	copy:function(source,target)&#123;&#125;,</span><br><span class="line">	delete:function(target)&#123;&#125;,</span><br><span class="line">	back:function()&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>&#160; &#160; &#160; &#160;这些方法只需要定义一次，当我们需要使用edit中的方法时，我们只需要edit.copy(a,b);edit.delte(c)…即可，我们不需要重复定义copy和delete方法，这样便降低了代码的耦合度，而且在Node和Angular中，自定义模块导出时也常用单例模式。单例模式结合js高阶编程技巧中的惰性思想可以十分方便的封装一些小的方法库；这里简单示例：<br>&#160; &#160; &#160; &#160;例如我们要培养FE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">var tools=(function()&#123;</span><br><span class="line">	var isStandarBrowser = &quot;getComputedStyle&quot; in window;</span><br><span class="line"></span><br><span class="line">    function jsonParse(jsonStr) &#123;</span><br><span class="line">        return &quot;JSON&quot; in window ? JSON.parse(jsonStr) : eval(&quot;(&quot; + jsonStr + &quot;)&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function listToAry(likeAry) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            return Array.prototype.slice.call(likeAry, 0);</span><br><span class="line">        &#125; catch (e) &#123;</span><br><span class="line">            var ary = [];</span><br><span class="line">            for (var i = 0; i &lt; likeAry.length; i++) &#123;</span><br><span class="line">            ary.push(likeAry[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        return ary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getRandom(n, m) &#123;</span><br><span class="line">        n = Number(n);</span><br><span class="line">        m = Number(m);</span><br><span class="line">        if (isNaN(n) || isNaN(m)) &#123;</span><br><span class="line">            return Math.random();</span><br><span class="line">        &#125;</span><br><span class="line">        if (n &gt; m) &#123;</span><br><span class="line">            var tem = m;</span><br><span class="line">            m = n;</span><br><span class="line">            n = tem;</span><br><span class="line">        &#125;</span><br><span class="line">        return Math.round(Math.random() * (m - n) + n);</span><br><span class="line">    &#125;</span><br><span class="line">	    return &#123;</span><br><span class="line">		    getRandom: getRandom,</span><br><span class="line">		    listToAry: listToAry,</span><br><span class="line">		    jsonParse：jsonParse</span><br><span class="line">		&#125;</span><br><span class="line"> &#125;)();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>工厂模式：单例模式虽然有了命名空间，但是他是一个写死的对象，如果我们要创建一个包含方法的单例，单例就做不到了。所以工厂模式应运而生。不同于单例模式，工厂模式是把实现一个事物的代码封装到一个函数中，每当我们需要实现这个事物时，只需执行这个函数即可；示例：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function developeFE(student,skill)&#123;</span><br><span class="line">	    var objFE=&#123;&#125;;</span><br><span class="line">	    objFE.name=student;</span><br><span class="line">	    objFE.skill=skill;</span><br><span class="line">      return objFE；</span><br><span class="line">&#125;;</span><br><span class="line">   frontEngineer=developeFE(Binary, angular)；//将Binary培养成一个会angular的前端工程师</span><br><span class="line">   console.log(frontEngineer);//&#123;name:Binary,skill:angular&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>构造函数模式：工厂模式虽然解决了创建多个相似的对象的问题，但是却没有解决对象识别的问题，（即我们不知道对象是哪个类的实例）；这时候构造函数模式应运而生；构造函数是自定义一个类，并且通过new 运算符创建这个自定义类的实例；并且实现了实例识别，通过new A创建的实例，是A类的实例，通过new B创建的实例是B类的实例；【这里有必要强调一下，js中的类都是函数数据类型的，只不过他通过new执行是成为了一个类，但是他是一个函数的本质从未改变】；示例 </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function DevelopFE(stu,skill)&#123;</span><br><span class="line">	this.name=stu;</span><br><span class="line">	this.skill=skill;</span><br><span class="line">	this.saySkill=function()&#123;alert(this.skill)&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">var FE=new DevelopFE(Binary,nodejs);//FE是DevelopFE的一个实例；</span><br><span class="line">console.log(FE);//&#123;name:Binary,skill:nodejs, saySkill: function()&#123;alert(this.skill)&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>  构造函数中的注意事项：<br>      构造函数区别于工厂模式，首先我们不需要自己创建空对象，第二也不需要我们手动return，第三，向实例添加属性使用this关键字；通过this关键字添加的属性，默认都是enumerable（可枚举）的；<br>      构造函数创建一个实例，必须使用new操作符；使用new操作符实际是经历了四步：<br>  &#160; &#160; &#160; &#160;&lt;1&gt;创建一个新对象；<br>  &#160; &#160; &#160; &#160;&lt;2&gt;将this指向这个新对象<br>  &#160; &#160; &#160; &#160;&lt;3&gt;执行构造函数中的代码<br>  &#160; &#160; &#160; &#160;&lt;4&gt;将新对象返回<br>      构造函数中的this是当前构造函数的实例，这是实例识别的实现原理；<br>      构造函数中许可以随意return，如果return一个基本数据类型的值，实例不会改变，如果return一个引用数据类型，实例将会被返回值所替代；<br>      使用this关键字添加给实例的属性是实例的私有属性，是受命名空间的保护的，与其他实例（含当前类的实例）无关；检测私有属性的方法obj.hasOwnProperty(key);返回值是布尔值，true表示是该实例的私有属性，false则不是；</p>
+<ul>
+<li><p>原型模式<br>&#160; &#160; &#160; &#160;原型模式:构造函数在工作中也很常用，构造函数很完美，也很方便，但是他也不是没有缺点的，比如说在前面构造函数的例子中，每一个FE都应该具备saySkill的方法，所以这应该是一个共用的方法，没有必要每个实例身上都有一份，这说明一个问题呢?说明构造函数模式虽然解决了工厂模式的实例识别的问题，但是并没有实现面向对象中公有方法共用；这时候基于构造函数的原型模式诞生了；其实，从逻辑上来讲，我们也应该能想到：既然要方法共用，那就不应该放在实例上，应该在构造函数身上找一个公共的地方来存放这些方法，而这个公共的地方需满足实例能访问，构造函数可以访问的要求；这个地方就是原型prototype，原型定义在构造函数身上，构造函数可以通过 . 访问，实例通过<strong>proto</strong>访问；<br>如果想理解原型模式及原型链，请将下面的段落熟读5遍；<br>&#160; &#160; &#160; &#160;    每一个函数数据类型（普通函数、类），都有一个天生自带的属性prototype（原型，下称原型），并且他是一个对象数据类型的【公共的地方，定义在构造函数上】；<br>&#160; &#160; &#160; &#160;    并且在prototype上天生自带constructor(构造函数)属性，constructor的值是当前原型的类本身；<br>&#160; &#160; &#160; &#160;    每一个对象数据类型(原型，实例，普通对象)都有一个<strong>proto</strong>属性，该属性的值是一个指针，指向该实例（对象）所属类的prototype。【实例也可以找得到】<br>&#160; &#160; &#160; &#160;示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function DevelopFE(stu,skill)&#123;</span><br><span class="line">	this.name=stu;</span><br><span class="line">	this.skill=skill;</span><br><span class="line">&#125;;</span><br><span class="line">DevelopeFE.prototype.saySkill=function()&#123;alert(this.skill)&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>&#160; &#160; &#160; &#160;原型的逻辑就是这样，但是实例又是怎样访问原型的呢?这里就引入了“原型链”，原型链和作用域链很相似，都是链式查找的；<br>&#160; &#160; &#160; &#160;原型链机制：当我们调用实例的方法或者读取实例的属性时，机制会现在私有属性中查找，如果找到就读取调用；如果找不到，会读取<strong>proto</strong>的属性值，通过<strong>proto</strong>指向去实例所属类的原型上查找，找到就读取调用，如果还没找到，就通过这个类的<strong>proto</strong>指向的原型找，一直找到Object上，Objcet是所有类的基类，通俗说就是找到头了。因Object是基类，他没有<strong>proto</strong>。这里很多人可能很疑惑，类怎么也有<strong>proto</strong>，请大家不要忘记，在js中大到DOM、BOM小到key都是一个对象，所谓js中万物皆对象；<br>原型模式的注意事项：<br>&#160; &#160; &#160; &#160;    在IE中为避免我们修改原型上的属性或者方法，<strong>proto</strong>被禁用，如果我们想修改，只能用 .prototype 的方式来修改；<br>&#160; &#160; &#160; &#160;    constructor问题，在我们手动更换类的原型的时候，constructor指向也可能改变，示例</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var obj=&#123;</span><br><span class="line">	this.sayExprience=function(years)&#123;alert(years)&#125;</span><br><span class="line">&#125;</span><br><span class="line">console.log(DevelopeFE.prototype.contructor)// DevelopeFE</span><br><span class="line">DevelopeFE. prototype=obj;</span><br><span class="line">console.log(DevelopeFE.prototype.contructor)// Object</span><br><span class="line">这并不是我们想要的，如果此时我们用constructor检测数据类型，这时结果就会出现偏差；所以如果更好原型，记得修改constructor指向；</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/25/浅析js中的面向对象（二）/" data-id="ck1ri96sy001blkpp057rgqxz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-浅析js中的面向对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/10/浅析js中的面向对象/" class="article-date">
+  <time datetime="2016-09-10T13:23:22.000Z" itemprop="datePublished">2016-09-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/10/浅析js中的面向对象/">浅析js中的面向对象（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> &#160; &#160; &#160; &#160; 相信大家在学习js的初期都听说过一句话：js中万物皆对象；想想初期的我，还真的不是能理解，但是许多的问题如果用对象来解释就很容易理解。包括后面的angular、node.js、express都是对对象有了更为深层次应用，从这个角度阐述，我们可以理解对象究竟有多重要这里不再过多叙述，后面我还会继续分享有关angular、node.js、express的学习心得。<br> &#160; &#160; &#160; &#160; 想要面向对象，首先搞清楚，面向对象的概念是怎么提出的。面向对象是相对于以往的的面向过程变成提出的。面向过程中，为实现一个功能和效果，我们只是顺着业务逻辑写代码，不考虑代码的复用和封装的，如此一来造成页面中的代码非必要的重复，既增加了代码运行的压力，也降低了代码的可维护性。就在这样一个背景下，js中的面向对象应运而生。面向对象并不是js的专利，其他服务端语言都有这样一个概念。不同于后台的语言，由于js中没有类的概念（ES6中已经明确了类的概念，这里不阐述ES6），所以js的面向对象有有着自身十分独特的一面。<br> &#160; &#160; &#160; &#160; 前面们已经阐述过面向对象产生的背景及其意义，对象是什么？对象是一个由无序的键值对（key:value）组成的。接下来我们从更深层次认识一下对象，作为一个刚刚淌过这条小河的人来说，这十分有助于我们后面更好的理解面向对象的其他含义。<br>首先要从创建一个对象说起。创建一个对象有字面量和实例两种创建方式：</p>
+<ul>
+<li><p>1）字面量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var person=&#123;</span><br><span class="line">    name:&quot;Binary&quot;,</span><br><span class="line">    age:24,</span><br><span class="line">    job:&quot;FE&quot;,</span><br><span class="line">    say:function()&#123;console.log(this.name)&#125;</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2）实例创建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var person=new Object();</span><br><span class="line">person.name=&quot;Binary&quot;;</span><br><span class="line">person.age=24;</span><br><span class="line">person.job=&quot;FE&quot;;</span><br><span class="line">person.say=function()&#123;console.log(this.name)&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>在js中以上两种创建方式是相同的。<br> &#160; &#160; &#160; &#160; 第二，属性的类型，也可以说成是属性的属性。在对象中，每一个key不是孤零零的，在其身后也有许许多多的属性在跟随他，而他背后的这些属性规定了，是key的本质属性；key背后的属性又分成了数据属性和访问器属性；</p>
+<ul>
+<li>数据属性：</li>
+</ul>
+<ul>
+<li>1）Configurable:表示能否通过delete删除该key，能否修改这个key，默认值是true；如果将该属性置位false，表示该属性不可以被删除，如果删除，在非严格模式下被忽略，严格模式下将报错。而且这个属性只能修改一次，例如，这次将age的configurable置位false，有一天你想删除它，再次将其置位true，但是同样无法删除，该操作在非严格模式下被忽略，严格模式下将报错。</li>
+<li>2）Enumerable：表示该key是否可以通过for-in循环遍历到，【这个属性重点记忆】，默认值是true</li>
+<li>3）Writable：表示该属性能否修改key对应的value，默认值true；当该属性置位false后，person的age属性为只读，如果修改，在非严格模式下被忽略，严格模式下将报错。</li>
+<li>4）Value：包含这个属性的数据值，读取key值的时候，从这个位置读取，给key赋值的时候保存在这里；<br>  设置key的数据属性：Object.defineProperty()方法，该方法需要三个参数：第一个，key所在的对象；第二个：欲修改属性的key；第三个，描述key的对象，这个对象中的属性就是key背后的属性；示例</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Object.defineProperty(person,&quot;age&quot;,&#123;</span><br><span class="line">    configurable:true,</span><br><span class="line">    enumerable:true,</span><br><span class="line">    writable:false,</span><br><span class="line">    value:24</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>访问器属性：<br>访问器，又称get、set器，访问器属性是不包含数据值的，get器其实就是getter函数，set器就是setter函数，那么这两个两个方法是干嘛的呢？当我们读取对象的属性值的时候，会默认调用getter函数，获取key对应的value；当我们设置值的时候，又会调用setter函数，完成设置；访问器同样也有四个属性</li>
+</ul>
+<ul>
+<li>1）Configurable:表示能否通过delete删除该key，能否修改这个key，默认值是true；</li>
+<li>2）Enumerable：表示该key是否可以通过for-in循环遍历到，默认值是true；</li>
+<li>3）Get:读取属性时调用的函数，默认值undefined；</li>
+<li>4）Set:设置属性时调用的函数，默认值undefined；</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">var person=&#123;</span><br><span class="line">    name:&quot;Binary&quot;,</span><br><span class="line">    age:24,</span><br><span class="line">    year:1992,</span><br><span class="line">    job:&quot;FE&quot;,</span><br><span class="line">    say:function()&#123;console.log(this.name)&#125;</span><br><span class="line">&#125;;</span><br><span class="line">Object.defineProperty(person,&quot;age&quot;,&#123;</span><br><span class="line">     configurable:true,</span><br><span class="line">     enumerable:true,</span><br><span class="line">     get:function()&#123;</span><br><span class="line">        return this.age</span><br><span class="line">     &#125;,</span><br><span class="line">     set:function(newVal)&#123;//通过这个方法可以在修改age的同时，让year跟着自动改变。</span><br><span class="line">        if(newVal&gt;this.age)&#123;</span><br><span class="line">            this.age=newVal;</span><br><span class="line">            this.year-=newVal+24</span><br><span class="line">        &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;);</span><br><span class="line">person.age=25;</span><br><span class="line">console.log(person.year);//1991;</span><br></pre></td></tr></table></figure>
+
+<p> &#160; &#160; &#160; &#160; 以上是深层次的了解了一个对象，当然了，一般情况下工作中我们用不到这些高阶的功能，在我的印象中，只在一个node开发时用到一次get、set器，之所以写这些是为了以后更好的理解面向对象。在后面的文章中，定义一个对象的数据属性十分常用，例如enumerable属性，在后面的有关继承、构造函数模式实例识别中都有着重要意义。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/10/浅析js中的面向对象/" data-id="ck1ri96s5000xlkppibf0ymzn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/15/JavaScript基础教程1/">JavaScript 基础教程 1 JS 数据类型和变量</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

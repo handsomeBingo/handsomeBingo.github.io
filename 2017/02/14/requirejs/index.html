@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>三分钟带你入门RequireJs | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="三分钟带你入门RequireJsrequire.js是什么&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;RequireJS遵循AMD，相对于AMD的是CMD通用模块定义的SeaJs。 为什么要模块化&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在不使用模块化之前，文件依赖要手动添加，而且各个依赖顺序">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三分钟带你入门RequireJs">
+<meta property="og:url" content="http://yoursite.com/2017/02/14/requirejs/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="三分钟带你入门RequireJsrequire.js是什么&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;RequireJS遵循AMD，相对于AMD的是CMD通用模块定义的SeaJs。 为什么要模块化&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在不使用模块化之前，文件依赖要手动添加，而且各个依赖顺序">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-10-10T13:26:21.212Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="三分钟带你入门RequireJs">
+<meta name="twitter:description" content="三分钟带你入门RequireJsrequire.js是什么&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;RequireJS遵循AMD，相对于AMD的是CMD通用模块定义的SeaJs。 为什么要模块化&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在不使用模块化之前，文件依赖要手动添加，而且各个依赖顺序">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-requirejs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/14/requirejs/" class="article-date">
+  <time datetime="2017-02-14T13:20:59.000Z" itemprop="datePublished">2017-02-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      三分钟带你入门RequireJs
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="三分钟带你入门RequireJs"><a href="#三分钟带你入门RequireJs" class="headerlink" title="三分钟带你入门RequireJs"></a>三分钟带你入门RequireJs</h1><h3 id="require-js是什么"><a href="#require-js是什么" class="headerlink" title="require.js是什么"></a>require.js是什么</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/datura-lj/RequireJS_demo" target="_blank" rel="noopener">RequireJS</a>遵循AMD，相对于AMD的是CMD通用模块定义的SeaJs。</p>
+<h3 id="为什么要模块化"><a href="#为什么要模块化" class="headerlink" title="为什么要模块化"></a>为什么要模块化</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在不使用模块化之前，文件依赖要手动添加，而且各个依赖顺序不能错乱，一旦顺序错乱将引发错误。其次，模块化有利于团队的协同开发，同时提高了代码的可复用性和可维护性。使用require.js可以为我们带来哪些改变？</p>
+<ol>
+<li>解决文件之间依赖</li>
+<li>自动引入js</li>
+<li>也可以解决命名冲突</li>
+</ol>
+<h3 id="如何使用RequireJs"><a href="#如何使用RequireJs" class="headerlink" title="如何使用RequireJs"></a>如何使用RequireJs</h3><p>1.在html中引入RequireJS。在HTML中，添加这样的 &lt;script&gt; 标签：</p>
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+&lt;script type="text/javascript" src="require.min.js" data-main="main"&gt;&lt;/script&gt;
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们如果使用RequireJs的话，不需要我们显式地引入其他依赖的js文件，这些工作交给RequireJs去做，这也正是使用它的重要意义。注意，在我们引入require.js的script标签里有一个data-main属性，requirejs提供的这种功能叫做“主数据”的功能，我们首先创建一个main.js，然后在页面中使用<script data-main="js/main" src="js/require.js"></script>，这个script标签中加入了data-main属性，这个属性指定的js将在加载require.js之后处理，我们把require.config的配置加入到data-main后，就可以使每一个页面都使用这个配置，然后页面中就可以直接使用require来加载所有的短模块名。data-main 还有一个重要的功能，script标签指定data-main属性时，require会默认的data-main指定的js为根路径，即如上面的data-main=’js/main’ 设定后，我们在使用require([‘jquery’])后（不配置jquery的paths），require会自动加载js/jquery.js文件，而不是jquery.js，相当于默认配置了baseUrl（如下示例）：</p>
+<p>全局配置文件的作用：</p>
+<p>1.配置RequireJs项目中用到的其他模块<br>2.引入其他模块的基础路径（baseUrl）</p>
+<p><span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">main.js</span>的代码（部分）</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    require.config({
+        paths:{
+            'jquery':['http:libs/baidu.com/jquery/2.0.3/jquery','jquery'],
+            'a':'a'
+        }
+    });
+     require.config({
+         baseUrl:'js'
+     });
+</code>
+</pre>
+<p>2.定义模块；requirejs通过define()方法定义一个模块，在需要的地方通过require()方法加载即可；</p>
+<p>定义不存在依赖的模块<br><span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">fun1.js</span></p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  define(function (){
+      function fun1(){
+          alert('it works');
+      }
+      fun1();
+  });
+</code>
+</pre>
+
+<p>存在依赖的函数式定义<br>如果模块存在依赖：则第一个参数是依赖的名称数组，第二个参数是函数，在模块的所有依赖加载完毕后，该函数会被调用来定义该模块，因此该模块应该返回一个定义了本模块的object。依赖关系会以参数的形式注入到该函数上，参数列表与依赖名称列表一一对应。<br><span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">cart.js</span></p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    define(['./cart','./inventory'],function (cart, inventory){
+        return {
+            color: 'blue',
+            size: 'large',
+            addToCart: function (){
+                inventory.decrement(this);
+                cart.add(this);
+            }
+        }
+    });
+</code>
+</pre>
+
+<p>使用第三方模块<br>//通过require加载的模块一般都需要符合AMD规范，即使用define方法来声明模块，但是有的时候需要加载非AMD规范的js，这时候就需要用到另一个功能：shim，shim本意为‘垫’，其实大概也就是一个垫的作用。目前这个方法有两方面的应用：</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    //1、非AMD模块输出，将非标准的AMD模块垫成可以应用的模块，例如：在老版本的jquery中，是没有继承AMD规范的，所以不能直接require['jquery']，这时候就需要shim，比如我要是用underscore类库，但是他并没有实现AMD规范，那我们可以这样配置
+    require.config({
+        shim:{
+            'underscore':{
+                export : '_'
+            }
+        }
+    });
+    //经过上面配置，我们就可以在其他模块中引用underscore模块：
+    require(['underscore'],function (_){
+        //_表示加载underscore后，自动注入到后面的回调中，在回调中使用_就是underscore，和jquery 的$ 类似
+        _.each([1,2,3],alert);
+    });
+
+    //插件形式的非AMD模块，我们经常会用到jquer插件，而且这些插件基本都不符合AMD规范，比如jquery.form插件，这时候就需要将form插件'垫'到jquery中：
+    require.config({
+        shim:{
+            'underscore':{
+                exports:'_'
+            },
+            'jquery.form':{
+                deps:['jquery']//deps  depends 依赖
+            }
+        }
+    });
+
+    //简写
+    require.config({
+        shim:{
+
+            'underscore' : {
+                deps: ['angular'],
+                export: '_'
+            },
+            'jquery.form' : ['jquery']
+        }
+    });
+
+    //这样配置之后我们就可以使用加载插件之后的jquery了
+    require(['jquery','jquery.form'],function (){
+        $(function (){
+            $('#form').ajaxSubmit({});
+        });
+    });
+</code>
+</pre>
+
+<h3 id="来个例子"><a href="#来个例子" class="headerlink" title="来个例子"></a>来个例子</h3><p>1.引入require.js<br>2.定义模块<br>定义<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">function1.js</span></p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    define(function(){
+        return {
+            rnd:function (m,n) {
+                return parseInt(Math.random()*(m-n)+m);
+            }
+        }
+    });
+</code>
+</pre>
+
+<p>定义<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">str.js</span></p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  define(function(){
+      return '我是一个简单的字符串';
+  });
+</code>
+</pre>
+
+<p>3.定义<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">main.js</span>文件</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+   require.config({
+       baseUrl:'js'
+   });
+   require(['./function1', './str'], function(function1, str){
+       return {
+            test1: alert(str),
+            test2: console.log(function1(1, 100))
+       }
+   })
+</code>
+</pre>
+
+<p>结果效果：弹窗弹出字符串，控制台（console）输出一个随机数。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/14/requirejs/" data-id="ck1ri96rj000hlkppzezwgvge" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/14/vue1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          vue从入门到掉进坑里（一）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/15/LESSS入门教程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">LESS入门教程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/15/JavaScript基础教程1/">JavaScript 基础教程 1 JS 数据类型和变量</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

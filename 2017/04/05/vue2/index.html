@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>vue从入门到掉进坑里(二) | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;上篇文章写了一点vue基础的例子，顺便给例子加了一些注释，如果你在看我的文章，代码中的注释请仔细阅读，这些数据才是真正的精华，是个点睛的代码。大家肯定很意外我为什么撕那些写文章分享的人，我不是撕他们的文章。爱分享固然是好事，我还撕人家，显得我不地道。各位读者，你有没有想过，专家会读我们写的博客吗？大牛需">
+<meta name="keywords" content="Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue从入门到掉进坑里(二)">
+<meta property="og:url" content="http://yoursite.com/2017/04/05/vue2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;上篇文章写了一点vue基础的例子，顺便给例子加了一些注释，如果你在看我的文章，代码中的注释请仔细阅读，这些数据才是真正的精华，是个点睛的代码。大家肯定很意外我为什么撕那些写文章分享的人，我不是撕他们的文章。爱分享固然是好事，我还撕人家，显得我不地道。各位读者，你有没有想过，专家会读我们写的博客吗？大牛需">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-24T15:04:44.319Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue从入门到掉进坑里(二)">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;上篇文章写了一点vue基础的例子，顺便给例子加了一些注释，如果你在看我的文章，代码中的注释请仔细阅读，这些数据才是真正的精华，是个点睛的代码。大家肯定很意外我为什么撕那些写文章分享的人，我不是撕他们的文章。爱分享固然是好事，我还撕人家，显得我不地道。各位读者，你有没有想过，专家会读我们写的博客吗？大牛需">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-vue2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/05/vue2/" class="article-date">
+  <time datetime="2017-04-05T14:20:43.000Z" itemprop="datePublished">2017-04-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vue从入门到掉进坑里(二)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上篇文章写了一点vue基础的例子，顺便给例子加了一些注释，如果你在看我的文章，代码中的注释请仔细阅读，这些数据才是真正的精华，是个点睛的代码。大家肯定很意外我为什么撕那些写文章分享的人，我不是撕他们的文章。爱分享固然是好事，我还撕人家，显得我不地道。各位读者，你有没有想过，专家会读我们写的博客吗？大牛需要读我们这个档次的博文吗？我们的博文，说好了是一篇文章，读者大多和我们一样的初学者。写给初学者的文章，将自己的逼格定义甚高，初学者读不懂，这篇文章的意义何在？所以我撕他们，反对那些因自己水平不高，反而为了装的有水平而写的晦涩难懂的人。说着说着又撕上了。。。。<br></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这篇文章本来打算讲一个VUE-CLI例子，但是大家可以先看看这篇博客，强烈建议按照博客代码敲上一遍。这个例子图文并茂，是我在学vue-cli的时候见到的最好的教程。上链接  <a href="http://www.jianshu.com/p/1626b8643676" target="_blank" rel="noopener">史上最全入坑教程</a>。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这篇文章说说组件开发，我理解的组件开发，我们习惯一开始就先钻进代码里，迫不及待的看代码。大神自是心领神会，对于一些事情根本不需要说出来，这些大神没有说出来的，正是阻碍我们前进的障碍。所谓组件开发，是一种“拆”的思想或者说是“拼”，是把一个页面，按照某种规则，一般按照功能、复用性，UI样式等规则拆分成若干部分，最不理想的拆还可以掐头去尾留中间。。。。这份工作首先是切图，按照一个完整的网页，把图切好，然后拆成一块一块的，然后由不同的人开发，这就是最通俗的讲法。和拼图或者积木一类的很像。但是拆法是仁者见仁智者见智的时候，从这里能看出水平。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我第一次接触VUE-CLI这个脚手架的时候，眼前一亮，但是同时初次接触vue，这么多 *.vue的文件直接让我懵逼了。现在我走过来了，今天就可以说说这些玩意儿了。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一个让我困惑的问题是父子组件的问题；每一个.vue的文件都是一个组件，在组件中被import的相对于该.vue而言就是子组件（后面须注册）。在学习VUE初期，我对于父子组件一直感到很困惑，因为在VUE中，父子组件和Angular中的父子组件完全不同，Angular的作用域是和DOM平齐的，而父子组件也会因为DOM嵌套关系而天然形成，而VUE组件的父子关系与嵌套无关，而是与注册关系决定的，习惯了这一思路后，我着实是在这里困惑了好久，如果眼前的你也是这样的话，那就赶紧出来吧。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面代码是 <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">point.vue</span> 组件的代码（部分），其中point.vue相对于common-header和mask-layer是父组件，而common-header和mask-layer是子组件。</p>
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+    &lt;template lang="html"&gt;
+        &lt;common-header :isNotLogin="isNotLogin" :theActive="active"&gt;&lt;/common-header&gt;
+        &lt;mask-layer &gt;&lt;/mask-layer&gt;
+      &lt;/div&gt;
+    &lt;/template&gt;
+</code>
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    &lt;script&gt;
+      import CommonHeader from '../common/CommonHeader' //导入子组件
+      import MaskLayer from '../common/MaskLayer' //导入子组件
+      export default {
+        name: 'pointOperate',
+        data () {
+          return {
+            newMember: {
+              mName: '',
+              mNum: '',
+              point: ''
+            }
+        },
+        methods: {},
+        components: {
+          CommonHeader, //注册子组件
+          MaskLayer //注册子组件
+        }
+      }
+    &lt;/script&gt;
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另一个困惑我很久的问题是如何在VUE-CLI中引入自己的静态资源文件，如bootstrap.min.css。写完这些基础内容后，我将分享一个完整的例子，而且，这个例子已经投入使用了（这个积分管理系统是给我女友的奶茶店用的积分管理），现在不多说，继续写基础内容。引入VUE-CLI后，脚手架将自动为我们打包应用，并将打包后的文件自动注入到index.html中，正由于这一操作，如果我们不按照正确的操作方式，我们自己引入的静态文件将失效。正确的做法是：在index.html同级新建一个static文件夹，将我们自己的静态文件放入其中，在index.html中使用相对路径引入即可。下面是<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">index.html</span>的代码：</p>
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+在head标签中引入index.css和bootstrap.min.css等静态文件
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;admin&lt;/title&gt;
+        &lt;meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"&gt;
+        &lt;title&gt;index首页&lt;/title&gt;
+        &lt;link rel="stylesheet" href="./static/bootstrap/dist/css/bootstrap.min.css"&gt;
+        &lt;link rel="shotcut icon" href="./static/favicon.ico"&gt;
+        &lt;link rel="stylesheet" href="./static/index.css"&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;div id="app"&gt;&lt;/div&gt;
+        &lt;!-- built files will be auto injected --&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+</code>
+</pre>
+
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+目录结构
+--|project
+    --|build/
+    --|config/
+    --|dist/
+    --|node_modules/
+    --|src/
+    --|static/
+        --|bootstrap/ ==>bootstrap.min.css所在文件夹
+            --|dis/
+            --|fonts/
+            --|...
+        --|index.css
+    --|.babelrc
+    --|.editorconfig
+    --|.gitignore
+    --|.postcsssrc.js
+    --|index.html
+    --|package.json
+    --|README.md
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第三个让我困惑的问题是关于数据驱动。在写这个系统的时候，我需要一个bootstrap的modal框，这个框用于确认、提示用，在bootstrap中用jquery操作点击事件来实现modal框的显隐，在vue虽然也可以操作dom，但是我最终选择了放弃这一做法，如果这样做了，那还算用框架么？我困惑了很久，其实现在想来特别简单，只需要设置modal框的v-show即可。想通了自然很简单，当时也是初学vue，根本不知道从何入手，初学vue容易只见树木不见森林，我们纠结语法和API，忽略了指导性的核心思想——数据驱动。我们想要实现某个功能时，我们思考的方向是改变某个（些）值（数据）来达到。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck1ri96rp000mlkpp37x5i9u3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/12/es6-1-let-cosnt/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ES6(1) let和const
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/14/vue1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">vue从入门到掉进坑里（一）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/15/JavaScript基础教程1/">JavaScript 基础教程 1 JS 数据类型和变量</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

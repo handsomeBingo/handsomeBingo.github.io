@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>vueRender函数（3） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前面两篇造势造了那么久，终于主角该出场了，他就是我们的render函数，他的厉害之处就不多说了。vue官网对它有一句非常高的评价——完全发挥javascript的编程能力。一些很大的名头或者说描述的过大的使用场景往往会让初学者难以理解。简单来说render函数就是用来替换注册组件时的配置对象中的template属性的。 不说了，从一个例子开始： 12345678910111213141516171">
+<meta name="keywords" content="Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vueRender函数（3）">
+<meta property="og:url" content="http://yoursite.com/2017/12/07/vueRender函数（3）/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前面两篇造势造了那么久，终于主角该出场了，他就是我们的render函数，他的厉害之处就不多说了。vue官网对它有一句非常高的评价——完全发挥javascript的编程能力。一些很大的名头或者说描述的过大的使用场景往往会让初学者难以理解。简单来说render函数就是用来替换注册组件时的配置对象中的template属性的。 不说了，从一个例子开始： 12345678910111213141516171">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-24T15:02:06.825Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vueRender函数（3）">
+<meta name="twitter:description" content="前面两篇造势造了那么久，终于主角该出场了，他就是我们的render函数，他的厉害之处就不多说了。vue官网对它有一句非常高的评价——完全发挥javascript的编程能力。一些很大的名头或者说描述的过大的使用场景往往会让初学者难以理解。简单来说render函数就是用来替换注册组件时的配置对象中的template属性的。 不说了，从一个例子开始： 12345678910111213141516171">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-vueRender函数（3）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/07/vueRender函数（3）/" class="article-date">
+  <time datetime="2017-12-07T13:34:02.000Z" itemprop="datePublished">2017-12-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vueRender函数（3）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前面两篇造势造了那么久，终于主角该出场了，他就是我们的render函数，他的厉害之处就不多说了。vue官网对它有一句非常高的评价——完全发挥javascript的编程能力。一些很大的名头或者说描述的过大的使用场景往往会让初学者难以理解。简单来说render函数就是用来替换注册组件时的配置对象中的template属性的。</p>
+<p>不说了，从一个例子开始：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/x-template&quot; id=&quot;anchored-heading-template&quot;&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;level === 1&quot;&gt;</span><br><span class="line">        &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/h1&gt;</span><br><span class="line">    &lt;h2 v-else-if=&quot;level === 2&quot;&gt;</span><br><span class="line">        &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/h2&gt;</span><br><span class="line">    &lt;h3 v-else-if=&quot;level === 3&quot;&gt;</span><br><span class="line">        &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/h3&gt;</span><br><span class="line">    &lt;h4 v-else-if=&quot;level === 4&quot;&gt;</span><br><span class="line">        &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/h4&gt;</span><br><span class="line">    &lt;h5 v-else-if=&quot;level === 5&quot;&gt;</span><br><span class="line">        &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/h5&gt;</span><br><span class="line">    &lt;h6 v-else-if=&quot;level === 6&quot;&gt;</span><br><span class="line">        &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/h6&gt;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    Vue.component(&apos;anchored-heading&apos;, &#123;</span><br><span class="line">        template: &apos;#anchored-heading-template&apos;,</span><br><span class="line">        props: &#123;</span><br><span class="line">            level: &#123;</span><br><span class="line">                type: Number,</span><br><span class="line">                required: true</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &apos;#app&apos;</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在这种场景中使用template并不是最好的选择：首先代码冗长，为了在不同级别的标题中插入锚点元素，我么你需要重复使用&lt;slot&gt;。虽然模板在大多数组件中都非常的好用，但是在这里他就不是很简洁的了。那么，我们来尝试使用render函数重写上面的例子。</p>
+<p>换成render函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&apos;anchored-heading&apos;, &#123;</span><br><span class="line">       render: function (createElement) &#123;</span><br><span class="line">           return createElement(</span><br><span class="line">                   &apos;h&apos; + this.level, //tag name 标签名，当this.level为1的时候，标签：&lt;h1/&gt;</span><br><span class="line">                   this.$slots.default//这个应该是上面标签中包裹的内容</span><br><span class="line">           )</span><br><span class="line">       &#125;,</span><br><span class="line">       props: &#123;</span><br><span class="line">           level: &#123;</span><br><span class="line">               type: Number,</span><br><span class="line">               required: true</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这样写简单了很多，但是要求是作者需要对VUE的实例属性很熟悉，在这个例子中，你需要知道当不使用<slot>向组件中传递内容更时， 如 anchored-heading 中的a标签，这些子元素被存储在组件实例的$slots.default中，这是匿名slot，如果是具名的，那么则是 $slots.name了。</slot></p>
+<h2 id="render函数深入解析"><a href="#render函数深入解析" class="headerlink" title="render函数深入解析"></a>render函数深入解析</h2><p>render函数中发挥作用的是render函数的参数——crateElement，createElement也是一个函数，这个函数通过render的参数注入到render函数中发挥作用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&#123;</span><br><span class="line">  render: function(createElement) &#123;</span><br><span class="line">    return createElement(</span><br><span class="line">      //&#123;String | Object | Function&#125;</span><br><span class="line">      //一个HTML标签字符串，组件选项对象，或者一个返回值类型为String/Object的函数，必要参数。</span><br><span class="line">      &apos;div&apos;,</span><br><span class="line"></span><br><span class="line">      //&#123;Object&#125;</span><br><span class="line">      //一个包含模板相关属性的数据对象</span><br><span class="line">      //这样，您可以在template中使用这些属性，可选参数</span><br><span class="line">      &#123;</span><br><span class="line">          //我们成称这个对象为data对象，其属性下面详述</span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line">      //&#123;String | Array&#125;</span><br><span class="line">      //子节点（VNodes）由createElement()构建而成，或使用字符串来生成文本节点。 可选参数</span><br><span class="line"></span><br><span class="line">      [</span><br><span class="line">          &apos;先写一些文字&apos;,</span><br><span class="line">          createElement(&apos;h1&apos;, &apos;一则头条&apos;),</span><br><span class="line">          createElement(MyComponent, &#123;</span><br><span class="line">              props: &#123;</span><br><span class="line">                  someProp: &apos;footerbar&apos;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;)</span><br><span class="line">      ]</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="深入data对象"><a href="#深入data对象" class="headerlink" title="深入data对象"></a>深入data对象</h2><p>有一件事要注意：正如在模板语法中，v-bind:class 和 v-bind:style，会被特别对待一样，在VNode数据对象中。下列属性名是级别最高的字段。该对象也允许你绑定普通的HTML特性，就想DOM属性一样，比如innerHTML(这会取代v-html指令)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"> &#123;</span><br><span class="line">    //和v-bind:class一样的API</span><br><span class="line">    class: &#123;</span><br><span class="line">        foo: true,</span><br><span class="line">        bar: false</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //和v-bind:style一样的API</span><br><span class="line">    style: &#123;</span><br><span class="line">        color: &apos;red&apos;,</span><br><span class="line">        fontSize: &apos;14px&apos;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //正常的HTML特性</span><br><span class="line">    attrs: &#123;</span><br><span class="line">        id: &apos;foo&apos;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //组件的props</span><br><span class="line">    props: &#123;</span><br><span class="line">        myProp: &apos;bar&apos;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //DOM属性</span><br><span class="line">    domProps: &#123;</span><br><span class="line">        innerHTML: &apos;baz&apos;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //事件监听器基于on，所以不再支持v-on:keyup.enter 修饰器，需要手动配置keyCode</span><br><span class="line">    on: &#123;</span><br><span class="line">        click: this.clickHandler</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //仅对于组件，监听原生事件，而不是组件内部使用vm.$emit触发的自定义事件</span><br><span class="line"></span><br><span class="line">    nativeOn: &#123;</span><br><span class="line">        click: this.nativeClickHandler</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //自定义指令。注意，你无法对binding中的oldValue赋值，因为Vue已经自动为你进行了同步。</span><br><span class="line"></span><br><span class="line">    directives: [</span><br><span class="line">        &#123;</span><br><span class="line">            name: &apos;my-custom-directive&apos;,</span><br><span class="line">            value: &apos;2&apos;,</span><br><span class="line">            expression: &apos;1 + 1&apos;,</span><br><span class="line">            arg: &apos;foo&apos;,</span><br><span class="line">            modifiers: &#123;</span><br><span class="line">                bar: true</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    //Scoped slots in the form of &#123;name: props =&gt; VNode | Array&lt;VNode&gt;&#125;</span><br><span class="line"></span><br><span class="line">    scopedSlots: &#123;</span><br><span class="line">        default: function (props) &#123;</span><br><span class="line">            return createElement(&apos;span&apos;, props.text)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //如果子组件是其他组件的子组件，需要为插槽指定名</span><br><span class="line">    slot: &apos;name-of-slot&apos;,</span><br><span class="line"></span><br><span class="line">    //其他特殊顶层属性</span><br><span class="line">    key: &apos;myKey&apos;,</span><br><span class="line">    ref: &apos;myRef&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完整例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;renderFunsExample&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;anchored-heading :level=&quot;1&quot;&gt;</span><br><span class="line">        hello world</span><br><span class="line">        &lt;span slot=&quot;haha&quot;&gt;这里是被分发的内容！&lt;/span&gt;</span><br><span class="line">    &lt;/anchored-heading&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script src=&quot;../third/vue.js&quot;&gt;这里要换成你本地的Vue.js文件路径或者Vue.js的CDN地址！！！！！！！！！！！&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"></span><br><span class="line">    var getChildrenTextContent = function (children) &#123;</span><br><span class="line">        return children.map(function (node) &#123;</span><br><span class="line"></span><br><span class="line">            return node.children</span><br><span class="line">                    ? getChildrenTextContent(node.children)</span><br><span class="line">                    : node.text</span><br><span class="line"></span><br><span class="line">        &#125;).join(&apos;&apos;);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    Vue.component(&apos;anchored-heading&apos;, &#123;</span><br><span class="line">        render: function (createElement) &#123;</span><br><span class="line">            //create kebabCase id</span><br><span class="line">            var headingId = getChildrenTextContent(this.$slots.default)</span><br><span class="line">                    .toLowerCase()</span><br><span class="line">                    .replace(/\W+/g, &apos;-&apos;)</span><br><span class="line">                    .replace(/^\-|\-$/g, &apos;&apos;);</span><br><span class="line"></span><br><span class="line">            return createElement(</span><br><span class="line">                    &apos;h&apos; + this.level,</span><br><span class="line">                    &#123;</span><br><span class="line">                        attrs: &#123;</span><br><span class="line">                            test: &apos;1111&apos;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    [</span><br><span class="line">                            createElement(&apos;a&apos;, &#123;</span><br><span class="line">                                attrs: &#123;</span><br><span class="line">                                    name: headingId,</span><br><span class="line">                                    href: &apos;#&apos; + headingId</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;, this.$slots.default),</span><br><span class="line">                            createElement(</span><br><span class="line">                                    &apos;div&apos;,</span><br><span class="line">                                    &#123;</span><br><span class="line">                                        class: &#123;</span><br><span class="line">                                            foo: true,</span><br><span class="line">                                            bar: false</span><br><span class="line">                                        &#125;</span><br><span class="line">                                    &#125;,</span><br><span class="line">                                    this.$slots.haha</span><br><span class="line">                            )</span><br><span class="line">                    ]</span><br><span class="line">            )</span><br><span class="line">        &#125;,</span><br><span class="line">        props: &#123;</span><br><span class="line">            level: &#123;</span><br><span class="line">                type: Number,</span><br><span class="line">                required: true</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    new Vue().$mount(&apos;#app&apos;);</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其实render函数就是一个返回VNode的函数，说白了就是生成template的，只不过，render函数的参数是一个函数而已——createElement， createElement是一个注入到render的函数，createElement函数的参数可以有三个：</p>
+<p>第一个是必选的，其实第一个就是这个组件的根节点元素，可以是一个html标签字符串（如div、h1、span）或者是一个对象（这个对象没理解啥意思）或者是一个返回对象或html标签字符串的函数；</p>
+<p>第二个是可选的，是一个配置对象，见下面的“深入data对象” 。这个对象是干什么的呢？这个对象是一个配置前面第一个参数的，这里面涵盖了class、style、attrs、事件、指令、slot插槽设置、ref、key之类的；</p>
+<p>第三个参数（如果没有上面写的第二个，这个参数就是第二个）也是可选的，这个参数是干嘛的呢？这个参数是创建第一个参数（组件根节点）的子节点用的。可以是dom节点字符串，也可以是数组，数组项是createElement生成子节点</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/07/vueRender函数（3）/" data-id="ck1ri96s0000ulkppzadeohu9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/10/15/JavaScript基础教程1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          JavaScript 基础教程 1 JS 数据类型和变量
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/11/24/vueRender函数（2）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">vueRender函数（2）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/15/JavaScript基础教程1/">JavaScript 基础教程 1 JS 数据类型和变量</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

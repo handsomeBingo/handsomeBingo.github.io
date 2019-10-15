@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>ES6(3) 字符串扩展 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;字符串数据类型新增了很多功能，其中对Unicode进行了大幅度的增强，新增了若干方法，同时引进了模板字符串，本节只讨论模板字符串的部分功能。 字符的Unicode表示法增强。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;javascript允许采用\ux">
+<meta name="keywords" content="es6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6(3) 字符串扩展">
+<meta property="og:url" content="http://yoursite.com/2017/06/01/es6-3-StringExt/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;字符串数据类型新增了很多功能，其中对Unicode进行了大幅度的增强，新增了若干方法，同时引进了模板字符串，本节只讨论模板字符串的部分功能。 字符的Unicode表示法增强。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;javascript允许采用\ux">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-24T15:08:06.289Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6(3) 字符串扩展">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;字符串数据类型新增了很多功能，其中对Unicode进行了大幅度的增强，新增了若干方法，同时引进了模板字符串，本节只讨论模板字符串的部分功能。 字符的Unicode表示法增强。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;javascript允许采用\ux">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-es6-3-StringExt" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/01/es6-3-StringExt/" class="article-date">
+  <time datetime="2017-06-01T13:33:16.000Z" itemprop="datePublished">2017-06-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ES6(3) 字符串扩展
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;字符串数据类型新增了很多功能，其中对Unicode进行了大幅度的增强，新增了若干方法，同时引进了模板字符串，本节只讨论模板字符串的部分功能。</p>
+<h2 id="字符的Unicode表示法增强。"><a href="#字符的Unicode表示法增强。" class="headerlink" title="字符的Unicode表示法增强。"></a>字符的Unicode表示法增强。</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;javascript允许采用\uxxxx形式表示一个字符，其中xxxx表示字符Unicode码点。\u0061’ == ‘a’;但是这种表示法只限于码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必输用两个双字节的形式表示。如，’\uD842\uDFB7’ =&gt;  𠮷,  ‘\u20BB7’ =&gt; 7。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  '\uD842\uDFB7' //  𠮷
+  '\u20BB7' // 7
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上面代码表示，如果直接在\u后面跟上超过0xFFFF的数值（如\u20BB7），javascript会理解成\u20BB + 7，由于\u20BB 是一个不可打印字符，只会显示一个空格，后面跟着一个7。ES6对此进行了改进，只要将码点放入大括号，就能正确解读该字符。示例</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  "\u{20BB7}"  //"𠮷"
+
+  "\u{41}\u{42}\u{43}"  //"ABC"
+
+  let hello = 123;
+  hell\u{6F}  //123
+
+  '\u{1F680}' === '\uD83D\uDE80'
+   //true
+</code>
+</pre>
+
+<h2 id="codePointAt"><a href="#codePointAt" class="headerlink" title="codePointAt()"></a>codePointAt()</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;javascript内部，字符以UTF-16的格式存储，每个字符固定为2个字节。对于那些需要4个字节存储的字符（Unicode码点大于0xFFFF），javascript会认为他们是两个字符。codePointAt()方法用于正确处理4个字节存储的字符，返回一个字符的码点。示例：</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let s = '𠮷a';
+
+    s.codePointAt(0).toString(16) // "20bb7"
+    s.codePointAt(2).toString(16) // "61"
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编码的问题是解决了，但是codePointAt方法的参数还是不正确，要解决这个问题需要for of循环</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let s = '𠮷a';
+    for (let ch of s) {
+        console.log(ch.codePointAt(0).toString(16));
+    }
+    // 20bb7
+    // 61
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;codePointAt方法是测试一个字符由两个字节还是由四个字节组成的最简单方法。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    function is32Bit(c) {
+        return c.codePointAt(0) > 0xFFFF;
+    }
+
+    is32Bit("𠮷") // true
+    is32Bit("a") // false
+</code>
+</pre>
+
+
+<h2 id="String-fromCodePoint"><a href="#String-fromCodePoint" class="headerlink" title="String.fromCodePoint()"></a>String.fromCodePoint()</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ES5提供String.fromCharCode方法，用于从码点返回对应字符，但是这个方法不能识别32位的UTF-16字符（Unicode编号大于0xFFFF）。因此String.fromCodePoint方法可以弥补这一点，其实就是将16进制的码点转换成字符，且可以识别4个字节字符</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    String.fromCodePoint(0x20BB7)
+    // "𠮷"
+    String.fromCodePoint(0x78, 0x1f680, 0x79) === 'x\uD83D\uDE80y'
+    // true
+</code>
+</pre>
+
+<h2 id="字符串的遍历器接口"><a href="#字符串的遍历器接口" class="headerlink" title="字符串的遍历器接口"></a>字符串的遍历器接口</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    //1.字符串添加了遍历器接口，使得字符串可以for of 循环遍历：示例
+    for (let basic of 'JavaScript') {
+        console.log(basic);
+    }
+    //J a v a S c r i p t
+</code>
+</pre>
+
+<h2 id="at-方法"><a href="#at-方法" class="headerlink" title="at()方法"></a>at()方法</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ES5 对字符串对象提供charAt方法，返回字符串给定位置的字符。该方法不能识别码点大于0xFFFF的字符。at方法作用同charAt()方法作用相同，返回参数位置的字符，且可以识别码点大于 0xFFFF的字符。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+   'abc'.at(0) // "a"
+   '𠮷'.at(0) // "𠮷"
+</code>
+</pre>
+
+<h2 id="normalize-方法"><a href="#normalize-方法" class="headerlink" title="normalize()方法"></a>normalize()方法</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;许多欧洲语言有语调符号，为了表示它们，Unicode提供了两种方法。一种是直接提供带符号的字符，比如Ǒ（\u01D1）。另一种是提供合成字符，即两个字符合成一个带符号的字符，O（\u004F）和ˇ（\u030C）合成Ǒ（\u004F\u030C）。这两种方法在视觉和语义上都等价，但是JavaScript不能识别，es6解决了这个问题，es6的normalize方法，用来将字符串的不同表示方法统一为永阳的形式，这称为Unicode正规化。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  '\u01D1'.normalize() === '\u004F\u030C'.normalize()
+  // true
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normalize()方法可以接受一个参数，表示normalize的方式，参数的四个可选值如下</p>
+<p> NFC，默认参数，表示“标准等价合成”（Normalization Form Canonical Composition），返回多个简单字符的合成字符。所谓“标准等价”指的是视觉和语义上的等价。<br> NFD，表示“标准等价分解”（Normalization Form Canonical Decomposition），即在标准等价的前提下，返回合成字符分解的多个简单字符。<br> NFKC，表示“兼容等价合成”（Normalization Form Compatibility Composition），返回合成字符。所谓“兼容等价”指的是语义上存在等价，但视觉上不等价，比如“囍”和“喜喜”。（这只是用来举例，normalize方法不能识别中文。）<br> NFKD，表示“兼容等价分解”（Normalization Form Compatibility Decomposition），即在兼容等价的前提下，返回合成字符分解的多个简单字符。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  '\u004F\u030C'.normalize('NFC').length // 1
+  '\u004F\u030C'.normalize('NFD').length // 2
+</code>
+</pre>
+
+<h2 id="includes-startsWith-endsWith"><a href="#includes-startsWith-endsWith" class="headerlink" title="includes()/startsWith()/endsWith()"></a>includes()/startsWith()/endsWith()</h2><p> includes(); 返回布尔值，表示是否找到了参数字符串；<br> startsWith();返回布尔值，表示参数字符串是否在原字符串的头部；<br> endsWith();返回布尔值，表示参数字符串是否在源字符串的尾部；</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以上三个方法均支持第二个参数，表示搜索开始的位置；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let  strOpApi = 'Hello world';
+    var isStartWith = strOpApi.startsWith('Hello');
+    var isIn = strOpApi.includes('llo');
+    var isEndWith = strOpApi.endsWith('ld');
+    console.log(isStartWith); //true
+    console.log(isIn); //true
+    console.log(isEndWith); //true
+</code>
+</pre>
+
+<h2 id="repeat"><a href="#repeat" class="headerlink" title="repeat()"></a>repeat()</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;repeat()方法返回一个新的字符串，表示将源字符串重复n次。参数是一个数字，int，如果写小数会自动取整；如果是负数或者infinity则会报错；<a href="区间">-1,0</a>被视为0，NaN视为0；如果传递字符串，则默认会把字符串转化成数字；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    var xAfterRepeat = 'x'.repeat(3);
+    console.log(xAfterRepeat);
+</code>
+</pre>
+
+<h2 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;模板字符串使用``反引号包裹(如果要在模板字符串中使用反引号，需要转义)，无须拼接，如果模板字符串中欲使用变量，要使用 ${变量} 写在数据的位置，大括号内可以放入任意的js表达式，可以进行运算，以及引用对象的属性，模板字符串中还可以调用函数。<br> 模板字符串还可以嵌套：<br> 使用模板字符串，所有的空格和缩进都会保留在输出中；如果不想要他们，可以用trim方法消除他们；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let obj = {
+        a: 'a',
+        b: 'b',
+        c: 'c'
+    };
+    var str2 = `
+        &lt;div&gt;
+            &lt;h2&gt;
+                这是模板字符串，感觉这么像PHP的界定符？
+            &lt;/h2&gt;
+            &lt;ul&gt;
+                &lt;li&gt;${obj.a}&lt;/li&gt;
+                &lt;li&gt;${obj.b}&lt;/li&gt;
+                &lt;li&gt;${obj.c}&lt;/li&gt;
+                &lt;li&gt;heheheheheh&lt;/li&gt;
+            &lt;/ul&gt;
+        
+    `;
+    $('body').append(str2);
+</code>
+</pre>
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;除以上扩展了原来字符串功能外，模板字符串还有标签模板功能；所谓标签模板是指模板字符串紧跟在一个函数名后面，该函数被调用来处理这个模板字符串（tagged template）。标签模板其实不是模板，而是函数调用的一种特殊形式。“标签”指的是函数，紧跟在后面的模板字符串就是它的参数。但是，如果模板字符里面有变量，就不是简单地调用了，而是会将模板字符串先处理成多个参数，再调用函数。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;标签模板是将模板字符串转换成一种特殊格式的参数传进函数，也就是说如果你想用标签模板调用函数，那么在编写函数的时候就需要考虑到这种特殊格式；传入函数的参数由：一个数组，和编译替换后的变量，示例：</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    alert`123`;//等同于alert('123');
+    function tag(strAry, value1, value2, value3){
+        console.log(arguments);
+    }
+    var a = 10, b = 5;
+    tag`hello ${ a + b } world ${ a  b }`;
+    //上面调用tag函数后的返回结果；
+    //  "Hello "
+    //  " world "
+    //  ""
+    //  15
+    // 50
+    // "OK"
+
+     实际传入函数的参数是样的：(形参定义的时候得个数和下面的结果个数对应)
+     0: [//这个数组中装的是不需要翻译的字符串
+          hello,
+          world,
+          heheda,
+          ""
+     ]//这个数组之外的值都是经过编译和替换后的变量值
+     1:15
+     2:50
+     3:5
+
+
+    function tag(s, v1, v2){
+        console.log(s[0]);
+        console.log(s[1]);
+        console.log(s[2]);
+        console.log(v1);
+        console.log(v2);
+
+        return 'ok';
+    }
+    var total = 30;
+    var msg = passThru`The total is ${total}(${total  1.05}with tax)`;
+    //上面这个msg例子展示了，如何将各个参数按照原来的位置拼合回去。
+
+    function passThru(literals, value1, value2) {
+        console.log(arguments);
+        var result = '';
+        var i = 0;
+        while (i &lt; literals.length) {
+            result += literals[i++];
+            if (i &lt; arguments.length) {
+                result += arguments[i];
+            }
+        }
+        return result;
+    }
+    console.log(msg);
+</code>
+</pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck1ri96qw0005lkppccrlldu4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/24/prettierOptions/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          prettier的配置选项（参数）官网直译
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/20/es6-2-destructing/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">es6(2)destructing</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/15/JavaScript基础教程1/">JavaScript 基础教程 1 JS 数据类型和变量</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

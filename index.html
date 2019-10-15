@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-JavaScript基础教程1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/10/15/JavaScript基础教程1/" class="article-date">
+  <time datetime="2019-10-15T06:54:07.000Z" itemprop="datePublished">2019-10-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/15/JavaScript基础教程1/">JavaScript 基础教程 1 JS 数据类型和变量</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="js引入方式"><a href="#js引入方式" class="headerlink" title="js引入方式"></a>js引入方式</h2><ul>
+<li><p>行内式：通过向html元素行内添加一些js代码，如给div绑定点击事件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">"alert('这是js代码')"</span>&gt;</span>这是一个div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>内嵌式：在html文档中写一个script标签，把我们的js带写在script标签内</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    alert('这是内嵌式js代码')</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>外链式：在html文档中写一个script标签，并且设置src属性，src的属性值引用一个js文件资源，而js代码写在js文件中；</li>
+</ul>
+<blockquote>
+<p>使用外链式引入js文件时，script标签里面不能再写js代码了，即使写了也不会执行。</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/1-for.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>无论是内嵌式还是外链式，都建议把script标签写在body结束标签的前面。</p>
+<h2 id="一、-浅谈前端发展史"><a href="#一、-浅谈前端发展史" class="headerlink" title="一、 浅谈前端发展史"></a>一、 浅谈前端发展史</h2><p>第一阶段：C/S （client server） -&gt; B / S （browser server）网页制作<br>技术栈：PhotoShop、HTML、CSS</p>
+<p>第二阶段：从静态到动态，从后端到前端 前端开发工程师<br>    前后端分离：<br>        后端：完成数据的分析和业务逻辑的编写（包含API接口编写）<br>        前端：网页制作、JS交互效果、数据的交互和绑定<br>    技术栈：JavaScript 、 Ajax（以及jsonp等跨域技术）、jQuery …<br>第三阶段：从前端到全端（从PC端到移动端）<br>    技术栈：H5、CSS3、响应式布局开发，Zepto、HybridApp（混合app开发）微信小程序…</p>
+<p>第四阶段：从全端到全栈<br>    全栈开发：前后端都可以开发（严格意义讲，一种语言完成前端后开发）<br>    技术栈：NODE（基于js编程语言开发服务器端程序）、Express/Koa…</p>
+<hr>
+<h2 id="二、关于浏览器的内核和引擎"><a href="#二、关于浏览器的内核和引擎" class="headerlink" title="二、关于浏览器的内核和引擎"></a>二、关于浏览器的内核和引擎</h2><p>webkit（v8引擎）：大部分浏览器<br>gecko：火狐<br>trident：IE<br>…</p>
+<p>W3C：万维网联盟，制定编程语言的规范与标准<br>   开发者按照规范编写代码，浏览器开发商也会开发一套按照规范把代码渲染成页面的东西（这个东西就是内核或者引擎）</p>
+<p>   浏览器内核的作用：按照一定的规范，把代码基于GPU（显卡）绘制出对应的图形和页面等；</p>
+<p>   为啥会出现浏览器兼容：<br>    1. 部分浏览器会提前开发一些更好的功能，后期这些功能会被收录到W3C规范中，但是再收录之前，会存在一定的兼容性<br>    2. 各个浏览器厂商，为了突出自己的独特性，用其他方法实现W3C规范<br>    …</p>
+<hr>
+<h2 id="三、JavaScript"><a href="#三、JavaScript" class="headerlink" title="三、JavaScript"></a>三、JavaScript</h2><p>JS：轻量级的客户端脚本编程语言</p>
+<ol>
+<li>编程语言<br>HTML+CSS 是标记语言<br>编程语言是具备一定逻辑的，拥有自己的编程思想（面向对象【oop】、面向过程编程）</li>
+</ol>
+<ul>
+<li><p>面向对象</p>
+<ul>
+<li>C++</li>
+<li>JAVA</li>
+<li>PHP</li>
+<li>C#</li>
+<li>JS</li>
+<li>…</li>
+</ul>
+</li>
+<li><p>面向过程：</p>
+<ul>
+<li>C</li>
+</ul>
+</li>
+</ul>
+<p>2.目前的JS已经不是客户端语言了，基于NODE可以做服务器端程序，所以JS是全栈编程语言</p>
+<ol start="3">
+<li>学习JS，我们学习它的几部分组成<ul>
+<li>ECMAScript（ES）: js的核心语法</li>
+<li>DOM: Document Object Model文档对象模型，提供各种API（属性和方法）让JS可以获取或者操作页面中的HTML元素（DOM元素）</li>
+<li>BOM：Browser Object Model 浏览器对象模型，提供各种API让js可以操作浏览器</li>
+</ul>
+</li>
+</ol>
+<h2 id="四、ECMAScript"><a href="#四、ECMAScript" class="headerlink" title="四、ECMAScript"></a>四、ECMAScript</h2><p>它是JS的语法规范，JS中的变量、数据类型、语法规范、操作语句，设计模式等等都是ES规定的；</p>
+<p>值得注意的是js的注释方式：注释是一项备注内容，给人看的，代码执行时会忽略注释内容。<br>    + 单行注释： // 两个单斜线<br>    + 多行注释：/<em>多行注释内容写在两个星号之间</em>/</p>
+<hr>
+<h2 id="五、变量（variable）"><a href="#五、变量（variable）" class="headerlink" title="五、变量（variable）"></a>五、变量（variable）</h2><p>它不是具体的值，只是一个用来代表某个值的标识符，因为它表示的值可以改变，所以称为变量。</p>
+<p>基于ES语法规范，在JS中创建变量有以下方式：</p>
+<ul>
+<li>var（ES3) 创建普通变量</li>
+<li>function （ES3）创建函数（函数名也是变量，只不过存储的值是函数类型而已）</li>
+<li>let （ES6）声明变量</li>
+<li>const （ES6）创建常量（常量就是不变的值，如光速就是常量）</li>
+<li>import （ES6）基于ES6的模块规范导出需要的信息</li>
+<li>class （ES6） 基于ES6创建 类</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 语法：</span></span><br><span class="line"><span class="comment">* var 变量名 = 值</span></span><br><span class="line"><span class="comment">* let 变量名 = 值</span></span><br><span class="line"><span class="comment">* const 变量名 = 值</span></span><br><span class="line"><span class="comment">* function 函数名 () &#123;</span></span><br><span class="line"><span class="comment">*  // 函数体</span></span><br><span class="line"><span class="comment">* &#125;</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">13</span>;</span><br><span class="line">n = <span class="number">15</span>;</span><br><span class="line">alert(n + <span class="number">10</span>); <span class="comment">// =&gt; 弹出来25 此时的N代表15</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> m = <span class="number">100</span>;</span><br><span class="line">m = <span class="number">200</span>; <span class="comment">// Uncaught TypeError: Assignment to constant variable (常量存储的值不能被修改，能够被修改的就是变量了)</span></span><br></pre></td></tr></table></figure>
+
+<p>创建变量，命名的时候要遵循一些规范</p>
+<ul>
+<li>严格区分大小写</li>
+<li>遵循驼峰命名法：按照数字、字母、下划线或者$来命名（数字不能作为开头），命名的时候基于英文单词拼接成一个名字（第一个单词字母小写，其余每一个有意义单词的首字母都大写）</li>
+<li>不能使用关键字和保留字：在js中有特殊含义的叫做关键字，未来都可能成为关键字的叫做保留字</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> N = <span class="number">12</span>; <span class="comment">// 变量n和变量N不是同一个变量</span></span><br><span class="line"><span class="keyword">var</span> studentInfo = <span class="string">'xyz'</span>; <span class="comment">// 驼峰命名法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 变量要具有语义化</span></span><br><span class="line">add / create / insert</span><br><span class="line">del (<span class="keyword">delete</span>) / update / remove(rm)</span><br><span class="line">info / detail</span><br><span class="line">log</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、数据类型"><a href="#六、数据类型" class="headerlink" title="六、数据类型"></a>六、数据类型</h2><p>数据类型是一门语言进行生产的材料，JS中包含的值有以下这些类型：</p>
+<ul>
+<li>基本类型：<ul>
+<li>数字 number</li>
+<li>字符串 string</li>
+<li>布尔 boolean</li>
+<li>null</li>
+<li>undefined</li>
+<li>Symbol 表示一个唯一值（ES6新增）</li>
+</ul>
+</li>
+<li>引用数据类型：<ul>
+<li>对象object<ul>
+<li>普通对象</li>
+<li>数组对象</li>
+<li>正则对象</li>
+<li>日期对象</li>
+<li>…</li>
+</ul>
+</li>
+<li>函数function</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [基本数据类型]</span></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">13</span>; <span class="comment">// =&gt; 0 1 -13 13.2都是数字， 此时变量n存储的就是一个数字；中有一个特殊的值：NaN(not a number)，表示不是一个有效的数字，但是仍然是一个数字类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> s = <span class="string">''</span>; <span class="comment">// =&gt;如 '' '13' "13" "name" "age" JS中所有用单引号或者双引号包裹起来的都是字符串，字符串表示的值是当前引号中包裹的值（一个字符串由零到多个字符串组成）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span>  b = <span class="literal">true</span>; <span class="comment">// =&gt; 布尔类型只有两个值 true 真 false表示假</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> empty = <span class="literal">null</span>; <span class="comment">// =&gt; 变量empty表示null空</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> notDefined = <span class="literal">undefined</span>; <span class="comment">// 变量notDefined表示undefined（undefined这个单词的意思就是未定义）；</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Symbol: 用来创建一个唯一值，和谁都不会重复。下面等号右侧虽然长的一样，但是s1和s2变量代表两个不同的值。</span></span><br><span class="line"><span class="keyword">var</span> s1 = <span class="built_in">Symbol</span>(<span class="string">'珠峰'</span>);</span><br><span class="line"><span class="keyword">var</span> s2 = <span class="built_in">Symbol</span>(<span class="string">'珠峰'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// [引用数据类型]</span></span><br><span class="line"><span class="comment">// =&gt; 对象</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">name</span>: <span class="string">'珠峰培训'</span>, <span class="attr">age</span>: <span class="number">9</span>&#125;; <span class="comment">// =&gt; 普通对象：由大括号包裹起来，里面包含多组属性名和属性值（name和age叫做属性名（又称键，英文名key），而 '珠峰培训'/9叫做属性值（又称值，英文名value），所以对象又叫做键值对集合或者key/value集合）</span></span><br><span class="line"><span class="keyword">var</span> obj2 = &#123;&#125;; <span class="comment">// =&gt; 变量obj2表示空对象；</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; 数组</span></span><br><span class="line"><span class="keyword">var</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]; <span class="comment">// =&gt; 数组对象：用中括号包裹起来，包含0到多项内容，每一项之间用逗号(英文逗号)分隔。</span></span><br><span class="line"><span class="keyword">var</span> ary2 = []; <span class="comment">// =&gt; 变量ary2表示一个空数组</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; 正则：用来匹配字符串的规则</span></span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^abc$/</span>;  <span class="comment">// =&gt; 两个斜线中间的叫做元字符</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; 函数：需要多次重复使用的代码或者有特定功能的代码可以封装成一个函数；</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;<span class="comment">// =&gt; 函数体&#125;</span></span><br><span class="line"><span class="comment">// function 叫做关键字，用于声明函数变量</span></span><br><span class="line"><span class="comment">// fn 叫做函数名，函数名也需要满足变量声明的条件（本质上函数名也是变量名，只不过这个变量名代表的是一个函数数据类型的值）</span></span><br><span class="line"><span class="comment">// () 【声明函数时】fn后面的这个小括号表示的是形参入口</span></span><br><span class="line"><span class="comment">// &#123;&#125; 写在函数中的&#123;&#125;表示函数体，这里面写需要执行的代码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ....</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、JS代码运行及常用输出方式"><a href="#七、JS代码运行及常用输出方式" class="headerlink" title="七、JS代码运行及常用输出方式"></a>七、JS代码运行及常用输出方式</h2><ul>
+<li>alert方法(函数): 在浏览器中通过弹窗的方式输出（浏览器提示框）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">12</span>;</span><br><span class="line">alert(num); <span class="comment">// alert() 读作：alert方法执行【写在方法名后面的“()”读作 “执行” ，就是把alert函数里面的代码执行一遍】。把想输出的东西放在小括号里；</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> course = <span class="string">'珠峰培训js基础课程'</span>;</span><br><span class="line">alert(course);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>console.log方法：在浏览器控制台输出日志。console是浏览器的开发者工具的一个页卡（在浏览器中按下F12按键【部分电脑需要按下Fn和F12】）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// console.log() 读作console.log方法执行，把想要输出的变量或者内容放在小括号里。</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">'珠峰培训-马宾'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(name);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>innerHTML/innerText属性； 修改元素中的HTML或者文本；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> box = <span class="built_in">document</span>.getElementById(<span class="string">'box'</span>); <span class="comment">// =&gt; 在document（整个HTML文档中）下通查找id为box的元素。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 语法：元素对象.innerHTML/innerText = '想要显示的内容'; 【想要显示的内容必须是一个字符串类型的值】</span></span><br><span class="line">box.innerHTML = <span class="string">'&lt;h1&gt;珠峰培训js基础课程第一周&lt;/h1&gt;'</span>;</span><br><span class="line">box.innerText = <span class="string">'&lt;h1&gt;珠峰培训js基础课程第一周&lt;/h1&gt;'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// box.innerHTML/box.innerText = '字符串' 读作：将box的innerHTML或innerText修改为 '字符串'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; 我们发现同样是包在字符串里面的内容，通过innerHTML的方式浏览器会将&lt;h1&gt;识别成HTML内容；但是innerText不能识别，而是你字符串里面写什么，页面就输出什么；</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="八、有效数字检测、数据类型转换、数据类型检测"><a href="#八、有效数字检测、数据类型转换、数据类型检测" class="headerlink" title="八、有效数字检测、数据类型转换、数据类型检测"></a>八、有效数字检测、数据类型转换、数据类型检测</h2><h3 id="有效数字检测"><a href="#有效数字检测" class="headerlink" title="有效数字检测"></a>有效数字检测</h3><ol>
+<li>有效数字检测 isNaN() 方法；非有效数字：NaN(not a number)</li>
+</ol>
+<p>isNaN(需要检测的值)：检测当前是否是一个有效数字，如果是一个有效数字，isNaN执行后就会得到一个false，否则isNaN执行后得到一个true；（我们得到的这个false或者true称为isNaN函数的返回值【就“结果”的意思】）<br>语法：isNaN(需要检测的值)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> result1 = <span class="built_in">isNaN</span>(<span class="number">12</span>); <span class="comment">// -&gt; 检测num变量存储的值是否为非有效数字，12是数字，所以isNaN执行后得到一个false；</span></span><br><span class="line"><span class="keyword">var</span> result2 = <span class="built_in">isNaN</span>(<span class="string">'13'</span>); <span class="comment">// -&gt; false</span></span><br><span class="line"><span class="keyword">var</span> result3 = <span class="built_in">isNaN</span>(<span class="string">'珠峰'</span>); <span class="comment">// -&gt; true 因为汉字不是数字</span></span><br><span class="line"><span class="keyword">var</span> result4 = <span class="built_in">isNaN</span>(<span class="literal">false</span>); <span class="comment">// -&gt; false</span></span><br><span class="line"><span class="keyword">var</span> result5 = <span class="built_in">isNaN</span>(<span class="literal">null</span>); <span class="comment">// -&gt; false;</span></span><br><span class="line"><span class="keyword">var</span> result6 = <span class="built_in">isNaN</span>(<span class="literal">undefined</span>); <span class="comment">// -&gt; true</span></span><br><span class="line"><span class="keyword">var</span> result7 = <span class="built_in">isNaN</span>(&#123;<span class="attr">name</span>: <span class="string">'珠峰培训'</span>&#125;); <span class="comment">// -&gt; true</span></span><br><span class="line"><span class="keyword">var</span> result8 = <span class="built_in">isNaN</span>([<span class="number">12</span>, <span class="number">23</span>]); <span class="comment">// -&gt; true</span></span><br><span class="line"><span class="keyword">var</span> result9 = <span class="built_in">isNaN</span>([<span class="number">12</span>]); <span class="comment">// -&gt; false</span></span><br><span class="line"><span class="keyword">var</span> result10 = <span class="built_in">isNaN</span>(<span class="regexp">/^$/</span>); <span class="comment">// -&gt; true</span></span><br><span class="line"><span class="keyword">var</span> result11 = <span class="built_in">isNaN</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;); <span class="comment">// -&gt; true</span></span><br></pre></td></tr></table></figure>
+
+<p>思考：为啥小括号里洗的不是数字也能得到结果？这是isNaN的检测机制：</p>
+<p>1、首先验证当前要检测的值是否为数字类型的，如果不是，浏览器会默认的把值转换为数字类型</p>
+<pre><code>把非数字类型的值转换为数字：
+- 其他基本类型转换为数字：内部隐式调用Number方法
+
+Number(需要转换的值); 是强制转换
+[字符串转数字]：如果字符串里面都是数字，那么返回这个数字，如果有非数字的因素会返回NaN.
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="string">'13'</span>) <span class="comment">// -&gt; 13</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="string">'13px'</span>) <span class="comment">// NaN 字符串中px不是数字</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="string">'13.5'</span>) <span class="comment">// 13.5 可以识别小数点</span></span><br></pre></td></tr></table></figure>
+
+[布尔值转数字]
+Number(true); // -&gt; 1
+Number(false); // -&gt; 0
+
+[null、undefined转数字]
+Number(null); // 0
+Number(undefined); // NaN
+
+- 引用数据类型转数字：先调用引用数据类型值的toString方法将引用数据类型转化为字符串，然后再将字符串转换为数字。
+
+[对象转数字]
+Number({}) // NaN; 其内部机制：({}).toString() -&gt; &apos;[object Object]&apos; -&gt; Number(&apos;[object Object]&apos;) -&gt; NaN
+
+[数组转数字]
+Number([12, 23]) // NaN; 内部机制：[12, 23].toString() -&gt; &apos;12, 23&apos; -&gt; Number(&apos;12, 23&apos;) -&gt; NaN
+
+[正则]
+Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos; -&gt; Number(&apos;/^\d$/&apos;) -&gt; NaN</code></pre><p>2、当前检测的值已经是数字类型，是有效数字就得到一个false，不是就会得到一个true；（在数字类型中只有NaN不是有效数字，其余的都是有效数字）<br>    Number(1); // false<br>    Number(NaN); // true</p>
+<p>3、NaN的比较</p>
+<p>NaN == NaN // 返回false；（ == 是比较运算符，一个等号是赋值；）<br>这是因为啥呢？因为NaN只是表示非数字，字符串 ‘a’ 是非数字，’张三’也是非数字。但是 a 和 张三不相等。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">Number</span>(num) == <span class="literal">NaN</span>) &#123;</span><br><span class="line">    <span class="comment">// if 是js中用来做判断的语言结构，小括号里表示条件，如果条件成立就执行花括号里面的代码</span></span><br><span class="line">    alert(<span class="string">'珠峰10年，专注前端'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上面花括号里面的代码永远不会执行，因为Number方法得到的结果只有两种情况，要么是数字，要么是NaN。如果得到一个数字，数字和NaN不相等，如果是NaN，NaN和NaN也不相等。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据类型转换（parseInt、parseFloat方法）"><a href="#数据类型转换（parseInt、parseFloat方法）" class="headerlink" title="数据类型转换（parseInt、parseFloat方法）"></a>数据类型转换（parseInt、parseFloat方法）</h3><blockquote>
+<p>作用和Number方法相似，都是把非数字类型值转换为数字，区别在于Number方法是强制转换，即要求被转字符串中必须都是数字，如果不满足这一条件直接得到NaN，而parseInt和parseFloat则是非强制转换。</p>
+</blockquote>
+<blockquote>
+<p>parseInt：把一个字符串中的整数解析出来<br>parseFloat：把一个字符串中整数和小数包含小数点都解析出来</p>
+</blockquote>
+<p>parseInt(‘13.5’) // 13<br>parseFloat(‘13.5’) // 13.5</p>
+<p>parseInt(‘width: 13.5px’); // NaN<br>parseFloat(‘width: 13.5px’); // NaN</p>
+<p>注意：无论是parseInt还是parseFloat都是从字符串的最左边开始查找有效数字，直到遇到第一个非有效数字字符就停止查找，如果第一个就不是有效数字，那么直接回返回NaN，并且停止查找。</p>
+<h3 id="数据类型检测："><a href="#数据类型检测：" class="headerlink" title="数据类型检测："></a>数据类型检测：</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/10/15/JavaScript基础教程1/" data-id="ck1ri96qf0000lkpp3yn7qgun" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-vueRender函数（3）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/07/vueRender函数（3）/" class="article-date">
+  <time datetime="2017-12-07T13:34:02.000Z" itemprop="datePublished">2017-12-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前面两篇造势造了那么久，终于主角该出场了，他就是我们的render函数，他的厉害之处就不多说了。vue官网对它有一句非常高的评价——完全发挥javascript的编程能力。一些很大的名头或者说描述的过大的使用场景往往会让初学者难以理解。简单来说render函数就是用来替换注册组件时的配置对象中的template属性的。</p>
+<p>不说了，从一个例子开始：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/x-template&quot; id=&quot;anchored-heading-template&quot;&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;level === 1&quot;&gt;</span><br><span class="line">        &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/h1&gt;</span><br><span class="line">    &lt;h2 v-else-if=&quot;level === 2&quot;&gt;</span><br><span class="line">        &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/h2&gt;</span><br><span class="line">    &lt;h3 v-else-if=&quot;level === 3&quot;&gt;</span><br><span class="line">        &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/h3&gt;</span><br><span class="line">    &lt;h4 v-else-if=&quot;level === 4&quot;&gt;</span><br><span class="line">        &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/h4&gt;</span><br><span class="line">    &lt;h5 v-else-if=&quot;level === 5&quot;&gt;</span><br><span class="line">        &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/h5&gt;</span><br><span class="line">    &lt;h6 v-else-if=&quot;level === 6&quot;&gt;</span><br><span class="line">        &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/h6&gt;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    Vue.component(&apos;anchored-heading&apos;, &#123;</span><br><span class="line">        template: &apos;#anchored-heading-template&apos;,</span><br><span class="line">        props: &#123;</span><br><span class="line">            level: &#123;</span><br><span class="line">                type: Number,</span><br><span class="line">                required: true</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &apos;#app&apos;</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在这种场景中使用template并不是最好的选择：首先代码冗长，为了在不同级别的标题中插入锚点元素，我么你需要重复使用&lt;slot&gt;。虽然模板在大多数组件中都非常的好用，但是在这里他就不是很简洁的了。那么，我们来尝试使用render函数重写上面的例子。</p>
+<p>换成render函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&apos;anchored-heading&apos;, &#123;</span><br><span class="line">       render: function (createElement) &#123;</span><br><span class="line">           return createElement(</span><br><span class="line">                   &apos;h&apos; + this.level, //tag name 标签名，当this.level为1的时候，标签：&lt;h1/&gt;</span><br><span class="line">                   this.$slots.default//这个应该是上面标签中包裹的内容</span><br><span class="line">           )</span><br><span class="line">       &#125;,</span><br><span class="line">       props: &#123;</span><br><span class="line">           level: &#123;</span><br><span class="line">               type: Number,</span><br><span class="line">               required: true</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这样写简单了很多，但是要求是作者需要对VUE的实例属性很熟悉，在这个例子中，你需要知道当不使用<slot>向组件中传递内容更时， 如 anchored-heading 中的a标签，这些子元素被存储在组件实例的$slots.default中，这是匿名slot，如果是具名的，那么则是 $slots.name了。</slot></p>
+<h2 id="render函数深入解析"><a href="#render函数深入解析" class="headerlink" title="render函数深入解析"></a>render函数深入解析</h2><p>render函数中发挥作用的是render函数的参数——crateElement，createElement也是一个函数，这个函数通过render的参数注入到render函数中发挥作用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&#123;</span><br><span class="line">  render: function(createElement) &#123;</span><br><span class="line">    return createElement(</span><br><span class="line">      //&#123;String | Object | Function&#125;</span><br><span class="line">      //一个HTML标签字符串，组件选项对象，或者一个返回值类型为String/Object的函数，必要参数。</span><br><span class="line">      &apos;div&apos;,</span><br><span class="line"></span><br><span class="line">      //&#123;Object&#125;</span><br><span class="line">      //一个包含模板相关属性的数据对象</span><br><span class="line">      //这样，您可以在template中使用这些属性，可选参数</span><br><span class="line">      &#123;</span><br><span class="line">          //我们成称这个对象为data对象，其属性下面详述</span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line">      //&#123;String | Array&#125;</span><br><span class="line">      //子节点（VNodes）由createElement()构建而成，或使用字符串来生成文本节点。 可选参数</span><br><span class="line"></span><br><span class="line">      [</span><br><span class="line">          &apos;先写一些文字&apos;,</span><br><span class="line">          createElement(&apos;h1&apos;, &apos;一则头条&apos;),</span><br><span class="line">          createElement(MyComponent, &#123;</span><br><span class="line">              props: &#123;</span><br><span class="line">                  someProp: &apos;footerbar&apos;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;)</span><br><span class="line">      ]</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="深入data对象"><a href="#深入data对象" class="headerlink" title="深入data对象"></a>深入data对象</h2><p>有一件事要注意：正如在模板语法中，v-bind:class 和 v-bind:style，会被特别对待一样，在VNode数据对象中。下列属性名是级别最高的字段。该对象也允许你绑定普通的HTML特性，就想DOM属性一样，比如innerHTML(这会取代v-html指令)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"> &#123;</span><br><span class="line">    //和v-bind:class一样的API</span><br><span class="line">    class: &#123;</span><br><span class="line">        foo: true,</span><br><span class="line">        bar: false</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //和v-bind:style一样的API</span><br><span class="line">    style: &#123;</span><br><span class="line">        color: &apos;red&apos;,</span><br><span class="line">        fontSize: &apos;14px&apos;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //正常的HTML特性</span><br><span class="line">    attrs: &#123;</span><br><span class="line">        id: &apos;foo&apos;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //组件的props</span><br><span class="line">    props: &#123;</span><br><span class="line">        myProp: &apos;bar&apos;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //DOM属性</span><br><span class="line">    domProps: &#123;</span><br><span class="line">        innerHTML: &apos;baz&apos;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //事件监听器基于on，所以不再支持v-on:keyup.enter 修饰器，需要手动配置keyCode</span><br><span class="line">    on: &#123;</span><br><span class="line">        click: this.clickHandler</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //仅对于组件，监听原生事件，而不是组件内部使用vm.$emit触发的自定义事件</span><br><span class="line"></span><br><span class="line">    nativeOn: &#123;</span><br><span class="line">        click: this.nativeClickHandler</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //自定义指令。注意，你无法对binding中的oldValue赋值，因为Vue已经自动为你进行了同步。</span><br><span class="line"></span><br><span class="line">    directives: [</span><br><span class="line">        &#123;</span><br><span class="line">            name: &apos;my-custom-directive&apos;,</span><br><span class="line">            value: &apos;2&apos;,</span><br><span class="line">            expression: &apos;1 + 1&apos;,</span><br><span class="line">            arg: &apos;foo&apos;,</span><br><span class="line">            modifiers: &#123;</span><br><span class="line">                bar: true</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    //Scoped slots in the form of &#123;name: props =&gt; VNode | Array&lt;VNode&gt;&#125;</span><br><span class="line"></span><br><span class="line">    scopedSlots: &#123;</span><br><span class="line">        default: function (props) &#123;</span><br><span class="line">            return createElement(&apos;span&apos;, props.text)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    //如果子组件是其他组件的子组件，需要为插槽指定名</span><br><span class="line">    slot: &apos;name-of-slot&apos;,</span><br><span class="line"></span><br><span class="line">    //其他特殊顶层属性</span><br><span class="line">    key: &apos;myKey&apos;,</span><br><span class="line">    ref: &apos;myRef&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完整例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;renderFunsExample&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;anchored-heading :level=&quot;1&quot;&gt;</span><br><span class="line">        hello world</span><br><span class="line">        &lt;span slot=&quot;haha&quot;&gt;这里是被分发的内容！&lt;/span&gt;</span><br><span class="line">    &lt;/anchored-heading&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script src=&quot;../third/vue.js&quot;&gt;这里要换成你本地的Vue.js文件路径或者Vue.js的CDN地址！！！！！！！！！！！&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"></span><br><span class="line">    var getChildrenTextContent = function (children) &#123;</span><br><span class="line">        return children.map(function (node) &#123;</span><br><span class="line"></span><br><span class="line">            return node.children</span><br><span class="line">                    ? getChildrenTextContent(node.children)</span><br><span class="line">                    : node.text</span><br><span class="line"></span><br><span class="line">        &#125;).join(&apos;&apos;);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    Vue.component(&apos;anchored-heading&apos;, &#123;</span><br><span class="line">        render: function (createElement) &#123;</span><br><span class="line">            //create kebabCase id</span><br><span class="line">            var headingId = getChildrenTextContent(this.$slots.default)</span><br><span class="line">                    .toLowerCase()</span><br><span class="line">                    .replace(/\W+/g, &apos;-&apos;)</span><br><span class="line">                    .replace(/^\-|\-$/g, &apos;&apos;);</span><br><span class="line"></span><br><span class="line">            return createElement(</span><br><span class="line">                    &apos;h&apos; + this.level,</span><br><span class="line">                    &#123;</span><br><span class="line">                        attrs: &#123;</span><br><span class="line">                            test: &apos;1111&apos;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    [</span><br><span class="line">                            createElement(&apos;a&apos;, &#123;</span><br><span class="line">                                attrs: &#123;</span><br><span class="line">                                    name: headingId,</span><br><span class="line">                                    href: &apos;#&apos; + headingId</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;, this.$slots.default),</span><br><span class="line">                            createElement(</span><br><span class="line">                                    &apos;div&apos;,</span><br><span class="line">                                    &#123;</span><br><span class="line">                                        class: &#123;</span><br><span class="line">                                            foo: true,</span><br><span class="line">                                            bar: false</span><br><span class="line">                                        &#125;</span><br><span class="line">                                    &#125;,</span><br><span class="line">                                    this.$slots.haha</span><br><span class="line">                            )</span><br><span class="line">                    ]</span><br><span class="line">            )</span><br><span class="line">        &#125;,</span><br><span class="line">        props: &#123;</span><br><span class="line">            level: &#123;</span><br><span class="line">                type: Number,</span><br><span class="line">                required: true</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    new Vue().$mount(&apos;#app&apos;);</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其实render函数就是一个返回VNode的函数，说白了就是生成template的，只不过，render函数的参数是一个函数而已——createElement， createElement是一个注入到render的函数，createElement函数的参数可以有三个：</p>
+<p>第一个是必选的，其实第一个就是这个组件的根节点元素，可以是一个html标签字符串（如div、h1、span）或者是一个对象（这个对象没理解啥意思）或者是一个返回对象或html标签字符串的函数；</p>
+<p>第二个是可选的，是一个配置对象，见下面的“深入data对象” 。这个对象是干什么的呢？这个对象是一个配置前面第一个参数的，这里面涵盖了class、style、attrs、事件、指令、slot插槽设置、ref、key之类的；</p>
+<p>第三个参数（如果没有上面写的第二个，这个参数就是第二个）也是可选的，这个参数是干嘛的呢？这个参数是创建第一个参数（组件根节点）的子节点用的。可以是dom节点字符串，也可以是数组，数组项是createElement生成子节点</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/07/vueRender函数（3）/" data-id="ck1ri96s0000ulkppzadeohu9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-vueRender函数（2）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/24/vueRender函数（2）/" class="article-date">
+  <time datetime="2017-11-24T13:33:11.000Z" itemprop="datePublished">2017-11-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。"><a href="#声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。" class="headerlink" title="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。"></a>声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。</h6><p>前面一篇介绍了Vue的实例属性，在结尾处我们谈及了slot特性。首先提一下，slot不是Vue独有的，如果你属性angular.js的话，你很快就会发现这其实和ng-transclude有异曲同工之妙。如果你属性这个属性，你可以快速浏览便可以通晓，余下的时间，赶快阅读下一篇文章吧，下一站才是render函数的真面目。</p>
+<p>在使用组件的时候，我们经常需要以一个组件（标签）包裹其他组件（标签），或者说是一个组件在渲染完成后，希望保留组件标签原来包裹的内容，甚至这些内容还可以访问这个组件的的作用域。这个时候就需要用到插槽了。vue使用特殊的&lt;slot&gt;元素作为内容的插槽（插槽，插槽，顾名思义就是说有些东西要插入到这个位置，大家先记住这句话，后面将会有更通俗的解释）。除非子组件模板中至少有一个&lt;slot&gt;插口，否则被包裹在这个组件中的内容将会被丢弃。</p>
+<p>注意两点：</p>
+<ul>
+<li>&lt;app&gt;组件不知道他会收到什么内容。这是app的父组件决定的。</li>
+<li>&lt;app&gt;组件很有可能有自己的模板。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;app&gt;</span><br><span class="line"> &lt;app-header&gt;&lt;/app-header&gt;</span><br><span class="line"> &lt;app-footer&gt;&lt;/app-footer&gt;</span><br><span class="line">&lt;/app&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="单个插槽"><a href="#单个插槽" class="headerlink" title="单个插槽"></a>单个插槽</h2><p>当子组件模板中中只有一个没有属性的插槽元素时，父组件传入的整个内容片段将插入到DOM所在位置，并替换掉插槽标签本身。示例：</p>
+<p>my-component组件有如下模板。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h2&gt;我是子组件标题&lt;/h2&gt;</span><br><span class="line">  &lt;slot&gt;</span><br><span class="line">    我只在没有要分发的内容时才显示</span><br><span class="line">  &lt;/slot&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>父组件模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h1&gt;我是父组件的标题&lt;/h1&gt;</span><br><span class="line">  &lt;my-component&gt;</span><br><span class="line">    &lt;p&gt;这是一些初始内容&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;这是更多的初始内容&lt;/p&gt;</span><br><span class="line">  &lt;/my-component&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>渲染结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h1&gt;我是父组件的标题&lt;/h1&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h2&gt;我是子组件的标题&lt;/h2&gt;</span><br><span class="line">    &lt;p&gt;这是一些初始内容&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;这是更多的初始内容&lt;/p&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>值得一提的是，上面的这个单个插槽，可以在子组件的实例属性vm.$slots中获得。</p>
+<h2 id="具名插槽"><a href="#具名插槽" class="headerlink" title="具名插槽"></a>具名插槽</h2><p>&lt;slot&gt;元素可以用一个特殊的属性 name 来进一步配置分发的规则。多个插槽可以有不同的名字，具名差早将匹配内容片段中有slot特性的元素。通俗的说带有slot=a内容，要插入到&lt;slot name=a&gt;&lt;/slot&gt;插槽里。示例：</p>
+<p>例如，假定我们有一个 app-layout 组件，它的模板为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">  &lt;header&gt;</span><br><span class="line">    &lt;slot name=&quot;header&quot;&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/header&gt;</span><br><span class="line">  &lt;main&gt;</span><br><span class="line">    &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/main&gt;</span><br><span class="line">  &lt;footer&gt;</span><br><span class="line">    &lt;slot name=&quot;footer&quot;&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/footer&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>父组件模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;app-layout&gt;</span><br><span class="line">  &lt;h1 slot=&quot;header&quot;&gt;这里可能是一个页面标题&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">  &lt;p&gt;主要内容的一个段落。&lt;/p&gt;</span><br><span class="line">  &lt;p&gt;另一个主要段落。&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">  &lt;p slot=&quot;footer&quot;&gt;这里有一些联系信息&lt;/p&gt;</span><br><span class="line">&lt;/app-layout&gt;</span><br></pre></td></tr></table></figure>
+
+<p>渲染结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">  &lt;header&gt;</span><br><span class="line">    &lt;h1&gt;这里可能是一个页面标题&lt;/h1&gt;</span><br><span class="line">  &lt;/header&gt;</span><br><span class="line">  &lt;main&gt;</span><br><span class="line">    &lt;p&gt;主要内容的一个段落。&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;另一个主要段落。&lt;/p&gt;</span><br><span class="line">  &lt;/main&gt;</span><br><span class="line">  &lt;footer&gt;</span><br><span class="line">    &lt;p&gt;这里有一些联系信息&lt;/p&gt;</span><br><span class="line">  &lt;/footer&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="作用域插槽"><a href="#作用域插槽" class="headerlink" title="作用域插槽"></a>作用域插槽</h2><ul>
+<li>2.1.0 新增</li>
+</ul>
+<p>作用域插槽是一种特殊类型的插槽，用作一个（能被传递数据的）可重用模板，来代替已经渲染好的元素。</p>
+<p>在子组件中，只需要将数据传递到插槽，就像你将prop传递给组件一样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;child&quot;&gt;</span><br><span class="line">  &lt;slot text=&quot;hello from child&quot;&gt;&lt;/slot&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在父级中，具有特殊属性的slot-scope的template元素必须存在，表示他是作用域插槽的模板。slot-scope的值将被用于一个临时变量名，此变量接收从子组件传递过来的prop对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">  &lt;child&gt;</span><br><span class="line">    &lt;template slot-scope=&quot;props&quot;&gt;</span><br><span class="line">      &lt;span&gt;hello from parent&lt;/span&gt;</span><br><span class="line">      &lt;span&gt;&#123;&#123; props.text &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">  &lt;/child&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>渲染结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;child&quot;&gt;</span><br><span class="line">    &lt;span&gt;hello from parent&lt;/span&gt;</span><br><span class="line">    &lt;span&gt;hello from child&lt;/span&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在2.5.0+，slot-scope能被用在任何元素或组件中而不再局限于&lt;template&gt;。示例：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-awesome-list :items=&quot;items&quot;&gt;</span><br><span class="line">  &lt;!-- 作用域插槽也可以是具名的 --&gt;</span><br><span class="line">  &lt;li</span><br><span class="line">    slot=&quot;item&quot;</span><br><span class="line">    slot-scope=&quot;props&quot;</span><br><span class="line">    class=&quot;my-fancy-item&quot;&gt;</span><br><span class="line">    &#123;&#123; props.text &#125;&#125;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">&lt;/my-awesome-list&gt;</span><br></pre></td></tr></table></figure>
+
+<p>myAweSomeList组件的模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;slot name=&quot;item&quot;</span><br><span class="line">    v-for=&quot;item in items&quot;</span><br><span class="line">    :text=&quot;item.text&quot;&gt;</span><br><span class="line">    &lt;!-- 这里写入备用内容 --&gt;</span><br><span class="line">  &lt;/slot&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+
+<p>回顾一下，上面一共讲述了三种插槽，所谓插槽就是保存组件（标签）所包裹内容的一种机制。具体实施是通过在子组件模板中写&lt;slot&gt;元素作为预留插槽，当使用该组件，且该组件包裹了html片段，这些html片段将会插入到子组件刚刚预留的&lt;slot&gt;的位置，同时该&lt;slot&gt;元素也会被替换。</p>
+<p>本篇文章也没有提及render函数，但是这也是学习render函数必不可省的知识，别心急，下面一篇文章将会讲述render函数了。加油吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/24/vueRender函数（2）/" data-id="ck1ri96rx000rlkppgisagukz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-vueRender函数（1）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/02/vueRender函数（1）/" class="article-date">
+  <time datetime="2017-10-02T13:32:59.000Z" itemprop="datePublished">2017-10-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。"><a href="#声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。" class="headerlink" title="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。"></a>声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。</h6><p>从本节开始，将用3篇的篇幅学习一下vue的render函数。初期的学习和使用vue的时候都未使用Vue的这个特性。后来帮朋友调试bug的时候发现必须使用render函数，这才把之前的坑填平。</p>
+<p>学习render函数需要vue的其他知识做基础，其中比较重要的是实例属性，本节将系统的描述一些实例属性。</p>
+<h3 id="vm-data"><a href="#vm-data" class="headerlink" title="vm.$data"></a>vm.$data</h3><h4 id="描述："><a href="#描述：" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：Object</li>
+<li>Vue实例观察的数据对象。Vue实例代理了对其data对象属性的访问。（其实就是通过这个访问器可以访问注册组件时的data对象。）</li>
+</ul>
+<h3 id="vm-props"><a href="#vm-props" class="headerlink" title="vm.$props"></a>vm.$props</h3><h4 id="描述：-1"><a href="#描述：-1" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：Object</li>
+<li>当前组件接收到的props对象。Vue实例代理了对其props对象属性的访问。（注册组件时设置的props对象）</li>
+</ul>
+<h3 id="vm-el"><a href="#vm-el" class="headerlink" title="vm.$el"></a>vm.$el</h3><h4 id="描述：-2"><a href="#描述：-2" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：HTMLElement（原生的DOM对象）</li>
+<li>只读</li>
+<li>Vue实例使用的根DOM元素</li>
+</ul>
+<h3 id="vm-options"><a href="#vm-options" class="headerlink" title="vm.$options"></a>vm.$options</h3><h4 id="描述：-3"><a href="#描述：-3" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：Object</li>
+<li>只读</li>
+<li>当前Vue实例初始化的选项（new Vue({这个对象就是options})）。需要在选项中自定义属性时，可以在Vue实例完成实例化时访问到自定义属性。</li>
+</ul>
+<h3 id="vm-parent"><a href="#vm-parent" class="headerlink" title="vm.$parent"></a>vm.$parent</h3><h4 id="描述：-4"><a href="#描述：-4" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：Object</li>
+<li>只读</li>
+<li>父实例（如果当前组件的有的话）。（就是该组件的父组件，可以借此访问父组件的的数据）</li>
+</ul>
+<h3 id="vm-root"><a href="#vm-root" class="headerlink" title="vm.$root"></a>vm.$root</h3><h4 id="描述：-5"><a href="#描述：-5" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：Vue instance</li>
+<li>只读</li>
+<li>当前组件数的根组件。如果当前组件没有父组件，此实例将会是其自身。</li>
+</ul>
+<h3 id="vm-children"><a href="#vm-children" class="headerlink" title="vm.$children"></a>vm.$children</h3><h3 id="描述：-6"><a href="#描述：-6" class="headerlink" title="描述："></a>描述：</h3><ul>
+<li>类型：Array &lt; Vue instance &gt;</li>
+<li>只读</li>
+<li>当前实例的直接子组件（子级而非子代）。需要注意，$children并不保证顺序，也不是响应式的。如果你发现自己正在尝试使用$children来进行数据绑定，考虑使用一个数组配合 v-for来生成子组件，并且使用Array作为真的数据源。（这段话的我猜应该是不让用$children来绑定数据，而要使用Array作为数据源。就是说不能再组件里v-for $children 来生成组件，因为这个玩意儿不是响应式的）</li>
+</ul>
+<h3 id="vm-slots"><a href="#vm-slots" class="headerlink" title="vm.$slots"></a>vm.$slots</h3><h4 id="描述：-7"><a href="#描述：-7" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：{name: string}: ? Array &lt;VNode&gt;}</li>
+<li>只读</li>
+<li>用来方位被插槽分发的内容。每个具名插槽有其相应的属性（例如：slot=foo 中的内容将会在 vm.$slots.foo 中找到）。<br>default属性包括了所有没有被包含在具名插槽中的节点。</li>
+<li>在使用render函数书写一个组件时，访问vm.$slots最有帮助</li>
+</ul>
+<h3 id="vm-scopedSlots"><a href="#vm-scopedSlots" class="headerlink" title="vm.$scopedSlots"></a>vm.$scopedSlots</h3><h4 id="描述：-8"><a href="#描述：-8" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>2.1.0新增</li>
+<li>类型：{[name: string]: props =&gt; VNode | Array&lt;VNode&gt;}</li>
+<li>只读</li>
+<li>用来访问作用域插槽。对于包括默认slot在内的每一个插槽，该对象都包含一个返回相应的VNode的函数。{name: (props) =&gt; {return VNode}同理，vm.$scopedSlots在使用render函数开发一个组件时特别有用</li>
+</ul>
+<h3 id="vm-refs"><a href="#vm-refs" class="headerlink" title="vm.$refs"></a>vm.$refs</h3><h4 id="描述：-9"><a href="#描述：-9" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：Object{name: DOM}</li>
+<li>只读</li>
+<li>一个对象，持有已注册过ref的所有子组件。</li>
+</ul>
+<h3 id="vm-isServer"><a href="#vm-isServer" class="headerlink" title="vm.$isServer"></a>vm.$isServer</h3><h4 id="描述：-10"><a href="#描述：-10" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：类型：boolean</li>
+<li>只读</li>
+<li>当前Vue实例是否运行于服务器</li>
+</ul>
+<h3 id="vm-attrs"><a href="#vm-attrs" class="headerlink" title="vm.$attrs"></a>vm.$attrs</h3><h4 id="描述：-11"><a href="#描述：-11" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：{[key:string]: string}</li>
+<li>只读</li>
+<li>包含了父作用域中不作为prop被识别（且获取）的特性绑定（class和style除外）。当一个组件没有声明任何prop时，这里会包含所有父作用域的绑定（class和style除外）[就是说当组件不显式声明props时，仍然可以通过vm.$attrs来获取组件被引用时获得的行内属性]，并且可以通过 v-bind=”$attrs” 传入内部组件 —— 在创建更高层次的组件时非常有用。props和attrs是由区别的，虽仍然这二者都是行内的属性，但是要想成为props的属性，还需要在Vue实例初始化的时候在选项对象的props中声明一下。</li>
+</ul>
+<h3 id="vm-listener"><a href="#vm-listener" class="headerlink" title="vm.$listener"></a>vm.$listener</h3><h4 id="描述：-12"><a href="#描述：-12" class="headerlink" title="描述："></a>描述：</h4><ul>
+<li>类型：类型：{[key:string]: Function | &lt;Function&gt;}</li>
+<li>只读</li>
+<li>包含了父作用域中的（不含.native修饰器）v-on事件监听器。它可以通过v-on=&quot;$listener&quot;传入内部组件——在创建更高层次的组件时非常有用。就是说在使用该组件时，看子组件监听的所有不含.native修饰器事件。</li>
+</ul>
+<p>以上就是Vue实例的属性，本节中丝毫没提及render函数，别心急，如果你不掌握好这些，后面你会很困惑。在后面的render函数中将重点使用slots，如果你还不是很懂slots的api，请阅读下面一篇文章。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/10/02/vueRender函数（1）/" data-id="ck1ri96ru000plkppxzf9mw6d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-node-js拼接sql查询语句神器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/15/node-js拼接sql查询语句神器/" class="article-date">
+  <time datetime="2017-08-15T13:31:37.000Z" itemprop="datePublished">2017-08-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前一阵子被迫分享了一次node.JS，在写sql时真是恼火的不得了。之前写php的时候发现php真是机智，php的双引号是可以识别变量的，而js就惨了，当写sql查询时，写变量得拼字符串，然后sql里本身就有不少的字符串，js的字符串还要单双循环。我真是欲哭无泪啊，写一个稍稍复杂点sql，就要改好几次。从网上找了半天，最后果断写一个。目前只支持增删改查，适合给用nodejs做后台写个小demo的玩家。</p>
+<p>上源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line">var sqlJoin = (function () &#123;</span><br><span class="line">    var whereResolve = function (type, whereSwitch) &#123;</span><br><span class="line">        if (whereSwitch.where) &#123;</span><br><span class="line">            type += &apos; WHERE &apos;;</span><br><span class="line">        &#125;</span><br><span class="line">        var keyAry = (whereSwitch &amp;&amp; whereSwitch.whereProp) ? whereSwitch.whereProp : [];</span><br><span class="line">        if (keyAry.length) &#123;</span><br><span class="line"></span><br><span class="line">            for (let i = 0; i &lt; keyAry.length; i++) &#123;</span><br><span class="line">                let c = keyAry[i];</span><br><span class="line">                if (typeof c == &apos;object&apos;) &#123;</span><br><span class="line">                    for (var key in c) &#123;</span><br><span class="line">                        if (key != &apos;operator&apos;) type += &apos;`&apos; + key + &apos;`&apos; + (c[&apos;operator&apos;] ? c[&apos;operator&apos;] : &apos;=&apos;) + &apos;&apos; + &quot;&apos;&quot; + c[key] + &quot;&apos;&quot;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; else if (/(AND)?(OR)?/.test(c)) &#123;</span><br><span class="line">                    type += &apos; &apos; + c + &apos; &apos;;</span><br><span class="line">                &#125; else if (/(\()?(\))?/.test(c)) &#123;</span><br><span class="line">                    type += c;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        var likeKeyArr = whereSwitch.likeProp ? Object.keys(whereSwitch.likeProp) : [];</span><br><span class="line">        if (likeKeyArr.length) &#123;</span><br><span class="line">            if (likeKeyArr.length &gt; 1) &#123;</span><br><span class="line">                for (let j = 0; j &lt; likeKeyArr.length; j++) &#123;</span><br><span class="line">                    let cur = likeKeyArr[j];</span><br><span class="line">                    if (j == likeKeyArr.length - 1) &#123;</span><br><span class="line">                        type += cur + &apos; LIKE &apos; + &quot;&apos;%&quot; + whereSwitch.likeProp[cur] + &quot;%&apos;&quot;;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        type += cur + &apos; LIKE &apos; + &quot;&apos;%&quot; + whereSwitch.likeProp[cur] + &quot;%&apos;&quot; + &apos; AND &apos;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                for (let key in whereSwitch.likeProp) &#123;</span><br><span class="line">                    type += key + &apos; LIKE &apos; + &quot;&apos;%&quot; + whereSwitch.likeProp[key] + &quot;%&apos;&quot;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return type;</span><br><span class="line">    &#125;;</span><br><span class="line">    /**</span><br><span class="line">     * @param sqlType Object query type-&gt; &apos;INSERT&apos; &apos;DELETE&apos; &apos;UPDATE&apos; &apos;SELECT&apos;</span><br><span class="line">     * @param tableName String the name of the enqueried table</span><br><span class="line">     * @param whereSwitch [,Object] config the WHERE sentence</span><br><span class="line">     * @param limitSwitch [,Object] config the LIMIT sentence</span><br><span class="line">     * @returns String the sql query string joined by sqlJoin function</span><br><span class="line"></span><br><span class="line">    var sqlJoin = function (sqlType, tableName, whereSwitch, limitSwitch) &#123;</span><br><span class="line">        var SELECT = &apos;&apos;,</span><br><span class="line">            UPDATE = &apos;&apos;,</span><br><span class="line">            DELETE = &apos;&apos;,</span><br><span class="line">            INSERT = &apos;&apos;;</span><br><span class="line">        switch (sqlType.type) &#123;</span><br><span class="line">            case &apos;SELECT&apos;:</span><br><span class="line">                SELECT = &apos;SELECT &apos;;</span><br><span class="line">                if (sqlType.distinct) &#123;</span><br><span class="line">                    SELECT += &apos; DISTINCT &apos;</span><br><span class="line">                &#125;</span><br><span class="line">                sqlType.prop = sqlType.prop ? sqlType.prop : [];</span><br><span class="line">                if (sqlType.prop &amp;&amp; sqlType.prop.length) &#123;</span><br><span class="line">                    for (let i = 0; i &lt; sqlType.prop.length; i++) &#123;</span><br><span class="line">                        var cur = sqlType.prop[i];</span><br><span class="line">                        if (i == sqlType.prop.length - 1) &#123;</span><br><span class="line">                            SELECT += &apos;`&apos; + cur + &apos;`&apos;;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            SELECT += &apos;`&apos; + cur + &apos;`,&apos;;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    SELECT += &apos; *&apos;</span><br><span class="line">                &#125;</span><br><span class="line">                SELECT += &apos; FROM &apos; + &apos;`&apos; + tableName + &apos;`&apos;;</span><br><span class="line">                if (whereSwitch) &#123;</span><br><span class="line">                    SELECT = whereResolve(SELECT, whereSwitch);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                var orderArr = sqlType.orderProp ? Object.keys(sqlType.orderProp) : [];</span><br><span class="line">                if (orderArr.length) &#123;</span><br><span class="line">                    SELECT += &apos; ORDER BY &apos;;</span><br><span class="line">                    for (let m = 0; m &lt; orderArr.length; m++) &#123;</span><br><span class="line">                        let c = orderArr[m];</span><br><span class="line">                        if (m == orderArr.length - 1) &#123;</span><br><span class="line">                            if (sqlType.orderProp[c]) &#123;</span><br><span class="line">                                SELECT += c + &apos; ASC&apos;</span><br><span class="line">                            &#125; else &#123;</span><br><span class="line">                                SELECT += c + &apos; DESC&apos;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            if (sqlType.orderProp[c]) &#123;</span><br><span class="line">                                SELECT += c + &apos; ASC, &apos;</span><br><span class="line">                            &#125; else &#123;</span><br><span class="line">                                SELECT += c + &apos; DESC, &apos;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                if (limitSwitch &amp;&amp; limitSwitch.limit) &#123;</span><br><span class="line">                    SELECT += &apos; LIMIT &apos; + limitSwitch.num;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                break;</span><br><span class="line">            case &apos;UPDATE&apos;:</span><br><span class="line">                UPDATE = &apos;UPDATE &apos;;</span><br><span class="line">                UPDATE += tableName + &apos; SET &apos;;</span><br><span class="line">                var updatekeys = Object.keys(sqlType.prop);</span><br><span class="line">                for (let i = 0; i &lt; updatekeys.length; i++) &#123;</span><br><span class="line">                    var cur = updatekeys[i];</span><br><span class="line">                    if (i == updatekeys.length - 1) &#123;</span><br><span class="line">                        UPDATE += &apos;`&apos; + cur + &apos;` =&apos; + &quot;&apos;&quot; + sqlType.prop[cur] + &quot;&apos;&quot;;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        UPDATE += &apos;`&apos; + cur + &apos;` =&apos; + &quot;&apos;&quot; + sqlType.prop[cur] + &quot;&apos;, &quot;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                if (whereSwitch &amp;&amp; whereSwitch.where) &#123;</span><br><span class="line">                    UPDATE = whereResolve(UPDATE, whereSwitch);</span><br><span class="line">                &#125;</span><br><span class="line">                if (limitSwitch &amp;&amp; limitSwitch.limit) &#123;</span><br><span class="line">                    UPDATE += &apos; LIMIT &apos; + limitSwitch.num;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            case &apos;DELETE&apos;:</span><br><span class="line">                DELETE = &apos;DELETE FROM &apos; + tableName;</span><br><span class="line">                if (whereSwitch &amp;&amp; whereSwitch.where) &#123;</span><br><span class="line">                    DELETE = whereResolve(DELETE, whereSwitch);</span><br><span class="line">                &#125;</span><br><span class="line">                if (limitSwitch &amp;&amp; limitSwitch.limit) &#123;</span><br><span class="line">                    DELETE += &apos; LIMIT &apos; + limitSwitch.num;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            case &apos;INSERT&apos;:</span><br><span class="line">                INSERT = &apos;INSERT INTO &apos; + tableName;</span><br><span class="line">                var insertProp = Object.keys(sqlType.prop);</span><br><span class="line">                if (insertProp.length) &#123;</span><br><span class="line">                    for (let i = 0, len = insertProp.length; i &lt; len; i++) &#123;</span><br><span class="line">                        var cur = insertProp[i];</span><br><span class="line">                        if (i == 0) &#123;</span><br><span class="line">                            INSERT += &apos;(`&apos; + cur;</span><br><span class="line">                        &#125; else if (i == len - 1) &#123;</span><br><span class="line">                            INSERT += &apos;`&apos; + cur + &apos;`)&apos;;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            INSERT += &apos;`, `&apos; + cur + &apos;`, &apos;;</span><br><span class="line"></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    INSERT += &apos; VALUES &apos;;</span><br><span class="line">                    for (let j = 0, leng = insertProp.length; j &lt; leng; j++) &#123;</span><br><span class="line">                        var curr = insertProp[j];</span><br><span class="line">                        if (j == 0) &#123;</span><br><span class="line">                            INSERT += &quot;(&apos;&quot; + sqlType.prop[curr];</span><br><span class="line">                        &#125; else if (j == leng - 1) &#123;</span><br><span class="line">                            INSERT += &quot;&apos;&quot; + sqlType.prop[curr] + &quot;&apos;)&quot;;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            INSERT += &quot;&apos;,&apos;&quot; + sqlType.prop[curr] + &quot;&apos;, &quot;;</span><br><span class="line"></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">        return &#123;SELECT, UPDATE, DELETE, INSERT&#125;[sqlType.type];</span><br><span class="line">    &#125;;</span><br><span class="line">    return sqlJoin</span><br><span class="line">&#125;)();</span><br><span class="line">exports.sqlJoin = sqlJoin;</span><br></pre></td></tr></table></figure>
+
+<h2 id="用法示例："><a href="#用法示例：" class="headerlink" title="用法示例："></a>用法示例：</h2><ul>
+<li>新增</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;INSERT&apos;, prop: &#123;mNum: 7570, mName: &apos;晓鑫&apos;, points: 14&#125;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;limit: true, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //INSERT INTO members(`mNum`, `mName`, `points`) VALUES (&apos;7570&apos;,&apos;晓鑫&apos;, &apos;14&apos;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;DELETE&apos;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;where: true, whereProp: [&#123;mId: 67&#125;]&#125;,</span><br><span class="line">     &#123;limit: true, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //DELETE FROM members WHERE `mId`=&apos;67&apos; LIMIT 1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;UPDATE&apos;, prop: &#123;points: 14&#125;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&#123;mId: 24&#125;]&#125;,</span><br><span class="line">    &#123;limit: true, num: 1&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//UPDATE members SET `points` =&apos;14&apos; WHERE `mId`=&apos;24&apos; LIMIT 1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询—— %</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;SELECT&apos;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;where: true, likeProp: &#123;mNum: 75, mName: &apos;刘&apos;, points: 12&#125;&#125;,</span><br><span class="line">     &#123;limit: false, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //SELECT  * FROM `members` WHERE mNum LIKE &apos;%75%&apos; AND mName LIKE &apos;%刘%&apos; AND points LIKE &apos;%12%&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询—— % + AND/OR</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;SELECT&apos;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;where: true, whereProp: [&#123;&apos;mNum&apos;: 7501, operator: &apos;=&apos;&#125;,&apos;OR&apos;, &#123;mName: &apos;刘想&apos;,operator: &apos;=&apos;&#125;, &apos;AND&apos;,&#123;points: 5, operator: &apos;&gt;&apos;&#125;]&#125;,</span><br><span class="line">     &#123;limit: false, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //SELECT  * FROM `members` WHERE `mNum`=&apos;7501&apos; OR `mName`=&apos;刘想&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询——  % + AND+OR</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&apos;(&apos;, &#123;&apos;mNum&apos;: 7501, operator: &apos;=&apos;&#125;,&apos;OR&apos;, &#123;mName: &apos;刘想&apos;,operator: &apos;=&apos;&#125;,&apos;)&apos;, &apos;AND&apos;,&#123;points: 5, operator: &apos;&gt;&apos;&#125;]&#125;,</span><br><span class="line">    &#123;limit: false, num: 1&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT * FROM `members` WHERE ( `mNum`=&apos;7501&apos; OR `mName`=&apos;刘想&apos; ) AND `points`&gt;&apos;5&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询——DESC/ASC</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//true: ASC,false: DESC</span><br><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;, orderProp: &#123;points:false&#125;&#125;,</span><br><span class="line">    &apos;members&apos;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT  * FROM `members` ORDER BY points DESC</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询——WHERE</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;, prop: [&apos;mName&apos;,&apos;points&apos;,&apos;mNum&apos;], orderProp: &#123;points: true&#125;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&#123;mId: 2, operator: &apos;&gt;&apos;&#125;]&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT `mName`,`points`,`mNum` FROM `members` WHERE `mId`=&apos;24&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询——distinct</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;, distinct: true, prop: [&apos;points&apos;], orderProp: &#123;points: true&#125;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&#123;mId: 2, operator: &apos;&gt;&apos;&#125;]&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT  DISTINCT `points` FROM `members` WHERE `mId`&gt;&apos;2&apos; ORDER BY points ASC</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck1ri96ra000dlkpp6jfihlz8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-flex布局" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/12/flex布局/" class="article-date">
+  <time datetime="2017-08-12T01:27:47.000Z" itemprop="datePublished">2017-08-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/12/flex布局/">flex布局</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="flex布局是什么？"><a href="#flex布局是什么？" class="headerlink" title="flex布局是什么？"></a>flex布局是什么？</h2><p>Flex是Flexible box的缩写，意为“弹性布局”，用来为盒子模型提供最大的灵活性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    display: flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*行内元素也可以使用flex布局*/</span><br><span class="line">.box &#123;</span><br><span class="line">    display: inline-flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*webkit内核浏览器*/</span><br><span class="line">.box &#123;</span><br><span class="line">    display: -webkit-flex;</span><br><span class="line">    display: flex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>采用flex布局的元素称为flex容器（被设置了display: flex/inline-flex;属性的元素），其所有子元素自动成为容器成员，称为 flex item(简称项目)<br>容器默认存在水平的主轴（main axis）和垂直于主轴的交叉轴（cross axis）。主轴的开始位置（与边框的交叉点）叫做 main start ，结束位置叫做 main end；交叉轴的开始位置叫做cross start，结束位置叫做cross end。默认沿主轴排列。单个项目占据的主轴空间叫做 main size，占据的交叉轴的空间叫做cross size。</p>
+<h2 id="容器属性"><a href="#容器属性" class="headerlink" title="容器属性"></a>容器属性</h2><p>以下6个属性设置在容器上</p>
+<ul>
+<li>flex-direction</li>
+<li>flex-wrap</li>
+<li>flex-flow</li>
+<li>justify-content</li>
+<li>align-items</li>
+<li>align-content</li>
+</ul>
+<h3 id="flex-direction"><a href="#flex-direction" class="headerlink" title="flex-direction"></a>flex-direction</h3><p>flex-direction属性决定主轴方向（子元素的排列方向），flex-direction有4个可选值</p>
+<ul>
+<li>row（默认值）：主轴为水平方向，起点在左端</li>
+<li>row-reverse：主轴为水平防线，起点在右端</li>
+<li>column：主轴为垂直方向，起点在上沿</li>
+<li>column：主轴为垂直方向，起点在下沿</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    flex-direction: row | row-reverse | column | column-reverse;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="flex-wrap"><a href="#flex-wrap" class="headerlink" title="flex-wrap"></a>flex-wrap</h3><p>默认情况下，项目都排列在一条线（又称“轴线”）上。flex-wrap属性定义，如果一条轴线排不下，如何换行。flex-wrap有3个可选值：</p>
+<ul>
+<li>nowrap（默认）：不换行</li>
+<li>wrap：换行，第一行在上方</li>
+<li>wrap-reverse：换行，第一行在下方</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    flex-wrap: no-wrap | wrap | wrap-reverse;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="flex-flow"><a href="#flex-flow" class="headerlink" title="flex-flow"></a>flex-flow</h3><p>flex-flow属性是flex-direction属性和flex-wrap属性的简写形式。默认值为 row nowrap。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    flex-flow: &lt;flex-direction&gt; | &lt;flex-wrap&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="justify-content"><a href="#justify-content" class="headerlink" title="justify-content"></a>justify-content</h3><p>justify-content属性定义了项目在主轴上的对齐方式，有5个可选值：</p>
+<ul>
+<li>flex-start（默认值）：左对齐</li>
+<li>flex-end：右对齐</li>
+<li>center：居中</li>
+<li>space-between：两端对齐，项目之间的间隔相等。</li>
+<li>space-around：每个项目两侧的间距相等。所以，项目之间的间隔比项目与边框的间隔大一倍。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    justify-content: flex-start | flex-end | center | space-around | space-between;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="align-items-属性"><a href="#align-items-属性" class="headerlink" title="align-items 属性"></a>align-items 属性</h3><p>align-items属性定义项目在交叉轴上如何对齐，有五个可选值。</p>
+<ul>
+<li>flex-start：交叉轴的起点对齐。</li>
+<li>flex-end：交叉轴的终点对齐。</li>
+<li>center：交叉轴的终点对齐。</li>
+<li>baseline：项目的第一行文字的基线对齐</li>
+<li>stretch（默认值）：如果项目未设置高度或设置为auto，将占满整个容器的高度。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    align-items: flex-start | flex-end | center | baseline | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="align-content-属性"><a href="#align-content-属性" class="headerlink" title="align-content 属性"></a>align-content 属性</h3><p>align-content 属性定义了多根轴线的对齐方式（交叉轴方向）。如果项目只有一根轴线，该属性不起作用。有6个可选值：</p>
+<ul>
+<li>flex-start：与交叉轴的起点对齐。</li>
+<li>flex-end：与交叉轴的终点对齐。</li>
+<li>center：与交叉轴的中点对齐。</li>
+<li>space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。</li>
+<li>space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框之间的距离大一倍。</li>
+<li>stretch（默认值）：轴线占满整个交叉轴</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    align-content: flex-start | flex-end | center | space-between | space-around | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="项目属性"><a href="#项目属性" class="headerlink" title="项目属性"></a>项目属性</h2><p>以下6个属性设置在项目上</p>
+<ul>
+<li>order</li>
+<li>flex-grow</li>
+<li>flex-shrink</li>
+<li>flex-basis</li>
+<li>flex</li>
+<li>align-self</li>
+</ul>
+<h3 id="order属性"><a href="#order属性" class="headerlink" title="order属性"></a>order属性</h3><p>order属性定义项目的排列顺序。数值越小，排序越靠前，默认值为0.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">    order: &lt;integer&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="flex-grow属性"><a href="#flex-grow属性" class="headerlink" title="flex-grow属性"></a>flex-grow属性</h3><p>flex-grow属性定义项目的放大比例，默认为0，即如果剩余空间，也不放大。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">    flex-grow: &lt;integer&gt;; /*default 0*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果所有的项目的flex-grow属性都为1，则他们将等分剩余空间（如果有的话）。如果项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。</p>
+<h3 id="flex-shrink-属性定义了项目缩小的比例，默认为1，即如果空间不足，该项目将缩小。"><a href="#flex-shrink-属性定义了项目缩小的比例，默认为1，即如果空间不足，该项目将缩小。" class="headerlink" title="flex-shrink 属性定义了项目缩小的比例，默认为1，即如果空间不足，该项目将缩小。"></a>flex-shrink 属性定义了项目缩小的比例，默认为1，即如果空间不足，该项目将缩小。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">    flex-shrink: &lt;number&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果所有的项目的flex-shrink属性都为1，当空间不足时，都将等比缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。负值对该属性无效。</p>
+<h3 id="flex-basis-属性"><a href="#flex-basis-属性" class="headerlink" title="flex-basis 属性"></a>flex-basis 属性</h3><p>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。他的默认为auto，即项目本来大小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">    flex-basis: &lt;length&gt; | auto;/*default auto*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它可以设为跟width或height属性一样的值，（比如350px），则项目将占据固定空间。</p>
+<h3 id="flex属性"><a href="#flex属性" class="headerlink" title="flex属性"></a>flex属性</h3><p>flex属性是flex-grow，flex-shrink和flex-basis的简写，默认值为 0&nbsp;1&nbsp;auto。后两个属性可选</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">    flex: none | [&lt;&apos;flex-grow&apos;&gt; &lt;&apos;flex-shrink&apos;&gt;? || &lt;&apos;flex-basis&apos;&gt;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该属性有两个快捷值：auto（1&nbsp;1&nbsp;auto）和none（0&nbsp;0&nbsp;auto）。<br>建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
+<h3 id="align-self-属性"><a href="#align-self-属性" class="headerlink" title="align-self 属性"></a>align-self 属性</h3><p>align-self 属性允许单个项目与所有其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。该属性有6个可选值，除了auto，其他都与align-items属性完全一致。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">    align-self: auto | flex-start | flex-end | center | baseline | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/12/flex布局/" data-id="ck1ri96qz0008lkppo9h8ytqf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-prettierOptions" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/24/prettierOptions/" class="article-date">
+  <time datetime="2017-07-24T13:16:37.000Z" itemprop="datePublished">2017-07-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/24/prettierOptions/">prettier的配置选项（参数）官网直译</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ATTENTION PLEASE:<br>本翻译仅用于学习交流，禁止商业用途。请参考<a href="https://prettier.io/docs/en/options.html" target="_blank" rel="noopener">prettier官网</a></p>
+<p> 我刚刚接触文档翻译，英语自打大学英语六级（CET-6）通过后就在没有提升过，现在基本上都快还给我的英语老师了@_@。直至发稿时，全网（百度）搜索没有发现一片像样的文档，好事心又开始作怪，发出来就当祭天了（估计老天爷都嫌弃文笔差，最近看《明朝那些事儿》才知道祭天得用一种叫做“青词”的专用文章，这事大奸臣严嵩的儿子做得好。。。。。）。好啦，不啰嗦了，如果有大神发现有错误，或者更好的翻译，欢迎带锤子来读（万分感激！）</p>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><p>Prettier工具少数几个可以定制的参数，在CLI命令行和配置文件中均可用。</p>
+<h3 id="Print-Width"><a href="#Print-Width" class="headerlink" title="Print Width"></a>Print Width</h3><p>设置prettier单行输出（不折行）的（最大）长度。</p>
+<p>出于代码的可读性，我们不推荐（单行）超过80个字符的coding方式。</p>
+<p>在代码的书写手册中，单行最大长度常被设置为100或120。但是，人们写代码时，不会刻意的使每行都达到这个上限值。为便于阅读，开发者们通常使用空格将过长的单行变成多行。最佳实践是，每行的平均长度应当小于这个上限值。<br>另一方面，Prettier 会尽力让代码在一行（所以链式调用就都被搞到一行了，不得不吐槽了^~^）。当print width被设置成120时，工具有可能产出过于紧凑的或是其他不尽人意的代码。</p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>80</td>
+<td>–print-width &nbsp;&lt;int&gt;</td>
+<td>printWidth: &lt;int&gt;</td>
+</tr>
+</tbody></table>
+<p>注：如果在格式markdown时，不想折行，请设置 prose wrap参数来禁止这一行为。</p>
+<h3 id="Tab-Width"><a href="#Tab-Width" class="headerlink" title="Tab Width"></a>Tab Width</h3><p>设置工具每一个水平缩进的空格数</p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2</td>
+<td>–tab-width &nbsp;&lt;int&gt;</td>
+<td>tabWidth: &lt;int&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Tabs"><a href="#Tabs" class="headerlink" title="Tabs"></a>Tabs</h3><p>使用tab（制表位）缩进而非空格；</p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>false</td>
+<td>–use-tabs</td>
+<td>useTabs: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Semicolons"><a href="#Semicolons" class="headerlink" title="Semicolons"></a>Semicolons</h3><p>在语句末尾添加分号；</p>
+<p>有效参数：</p>
+<ul>
+<li>true - 在每一条语句后面添加分号</li>
+<li>false - 只在有可能导致ASI错误的行首添加分号</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>true</td>
+<td>–mo-semi</td>
+<td>semi: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Quotes"><a href="#Quotes" class="headerlink" title="Quotes"></a>Quotes</h3><p>使用单引号而非双引号；</p>
+<p>提示：</p>
+<ul>
+<li>在JSX语法中，所有引号均为双引号，该设置在JSX中被自动忽略</li>
+<li>在字符串中，如果一种引号在数量上超过另一种引号，数量少的引号，将被用于格式化字符串；示例：&quot;I &apos;m double quoted &quot;被格式化后是：&quot;I &apos;m double quoted &quot;(我觉得这里好像有点问题，但是亲测例子结果就是这样，按理说被较少使用的是单引号，但是例子就是双引号包裹的，尊重原文吧) ；再例：&quot;This \&quot;example\&quot; is single quoted &quot;格式化过后：&apos;This &quot;example&quot; is single quoted &apos;</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>false</td>
+<td>–single-quote</td>
+<td>singleQuote: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Trailing-Commas-尾逗号-a-b-c-d-数组项d后面的逗号就是尾逗号"><a href="#Trailing-Commas-尾逗号-a-b-c-d-数组项d后面的逗号就是尾逗号" class="headerlink" title="Trailing Commas (尾逗号[a,b,c,d,] 数组项d后面的逗号就是尾逗号)"></a>Trailing Commas (尾逗号[a,b,c,d,] 数组项d后面的逗号就是尾逗号)</h3><p>在任何可能的多行中输入尾逗号。</p>
+<p>有效参数：</p>
+<ul>
+<li>&nbsp;none&nbsp; - 无尾逗号；</li>
+<li>&nbsp;es5&nbsp; - 添加es5中被支持的尾逗号；</li>
+<li>&nbsp;all&nbsp; - 所有可能的地方都被添加尾逗号；（包括函数参数），这个参数需要安装nodejs8或更高版本；</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>none</td>
+<td>–trailing-comma  &lt;none</td>
+<td>es5</td>
+</tr>
+</tbody></table>
+<h3 id="Bracket-Spacing-括号空格"><a href="#Bracket-Spacing-括号空格" class="headerlink" title="Bracket Spacing (括号空格)"></a>Bracket Spacing (括号空格)</h3><p>在对象字面量声明所使用的的花括号后（{）和前（}）输出空格</p>
+<p>有效参数：</p>
+<ul>
+<li>true - Example: { &nbsp; foo:&nbsp;bar &nbsp;}</li>
+<li>false - Example: {foo:&nbsp;bar}</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>true</td>
+<td>–none-bracket-spacing</td>
+<td>bracketSpacing: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="JSX-Bracket上"><a href="#JSX-Bracket上" class="headerlink" title="JSX Bracket上"></a>JSX Bracket上</h3><p>在多行JSX元素最后一行的末尾添加 &gt; 而使 &gt; 单独一行（不适用于自闭和元素）</p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>false</td>
+<td>–jsx-bracket-same-line</td>
+<td>jsxBracketSameLinte: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Arrow-Function-Parentheses-适用于v1-9-0"><a href="#Arrow-Function-Parentheses-适用于v1-9-0" class="headerlink" title="Arrow Function Parentheses (适用于v1.9.0+)"></a>Arrow Function Parentheses (适用于v1.9.0+)</h3><p>为单行箭头函数的参数添加圆括号。</p>
+<p>有效参数：</p>
+<ul>
+<li>&quot; avoid &quot; - 尽可能不添加圆括号，示例：x =&gt; x</li>
+<li>&quot; always &quot; - 总是添加圆括号，示例： (x) =&gt; x</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&quot; avoid &quot;</td>
+<td>–arrow-parens &lt; avoid</td>
+<td>always &gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Range"><a href="#Range" class="headerlink" title="Range"></a>Range</h3><p>只格式化某个文件的一部分；</p>
+<p>这两个参数可以用于从指定起止偏移字符(单独指定开始或结束、两者同时指定、分别指定)格式化代码。<br>一下情况，范围将会扩展：</p>
+<ul>
+<li>回退至包含选中语句的第一行的开始</li>
+<li>向前直到选中语句的末尾</li>
+</ul>
+<p>注意：这些参数不可以同cursorOffset共用；</p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>–range-start-&lt; int &gt;</td>
+<td>rangeStart: &lt; int &gt;</td>
+</tr>
+<tr>
+<td>Infinity</td>
+<td>–range-end-&lt; int &gt;</td>
+<td>rangeEnd: &lt; int &gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Parser"><a href="#Parser" class="headerlink" title="Parser"></a>Parser</h3><p>指定使用哪一种解析器。</p>
+<p>babylon和flow都支持同一套JavaScript特性（包括Flow）.Prettier将自动根据文件的输入路径选择解析器，如非必要，不要修改该项设置。</p>
+<p>内置的解析器包含：</p>
+<ul>
+<li>babylon</li>
+<li>flow</li>
+<li>typescript v1.4.0+（是指Prettier的版本，并包含该版本，下同）</li>
+<li>postcss v1.4.0+</li>
+<li>json v1.5.0+</li>
+<li>graphql v1.5.0+</li>
+<li>markdown v1.8.0+</li>
+<li>用户自定义解析器 v1.5.0+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>babylon</td>
+<td>–parser &lt; string  <br> –parser ./my-parser</td>
+<td>parser: &quot; &lt;string&gt; &quot; <br> parser: require(&quot; ./my-parserrr &quot;)</td>
+</tr>
+</tbody></table>
+<h3 id="FilePath"><a href="#FilePath" class="headerlink" title="FilePath"></a>FilePath</h3><p>指定文件的输入路径，这将被用于解析器参照。<br>示例：下面的将使用postcss解析器</p>
+<p><code>cat foo | prettier --stdin-filepath foo.css</code></p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>None</td>
+<td>–stdin-filepath &lt;string&gt;</td>
+<td>filePath: &quot; &lt;string&gt; &quot;</td>
+</tr>
+</tbody></table>
+<h3 id="Require-pragma-v1-7-0"><a href="#Require-pragma-v1-7-0" class="headerlink" title="Require pragma (v1.7.0+)"></a>Require pragma (v1.7.0+)</h3><p>Prettier可以严格按照按照文件顶部的一些特殊的注释格式化代码，这些注释称为“require pragma”(必须杂注)。这在逐步格式化一些大型、未经格式化过的代码是十分有用的。<br>例如，一个带有下面注释的文件将在执行带有 –require-pragma的cli指令（api配置文件亦可）时被格式化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    /**</span><br><span class="line">    *@prettier</span><br><span class="line">    */</span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">    *@format</span><br><span class="line">    */</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>false</td>
+<td>–require-pragma</td>
+<td>requirePragma: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Insert-Pragma-v1-8-0"><a href="#Insert-Pragma-v1-8-0" class="headerlink" title="Insert Pragma (v1.8.0+)"></a>Insert Pragma (v1.8.0+)</h3><p>Prettier可以在文件的顶部插入一个 @format的特殊注释，以表明改文件已经被Prettier格式化过了。在使用 –require-pragma参数处理一连串的文件时这个功能将十分有用。如果文件顶部已经有一个doclock，这个选项将新建一行注释，并打上@format标记。</p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>false</td>
+<td>–insert-pragma</td>
+<td>insertPragma: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Prose-Wrap-v1-8-2"><a href="#Prose-Wrap-v1-8-2" class="headerlink" title="Prose Wrap(v1.8.2+)"></a>Prose Wrap(v1.8.2+)</h3><p>默认情况下，Prettier会因为使用了一些折行敏感型的渲染器（如GitHub comment 和 BitBucket）而按照markdown文本样式进行折行，但在某些情况下，你可能只是希望这个文本在编译器或查看器中soft-wrapping（是当屏幕放不下时发生的软折行），所以这一参数允许设置为 &quot; never &quot;</p>
+<p>有效参数：</p>
+<ul>
+<li>&quot; always &quot; - 当超出print width（上面有这个参数）时就折行</li>
+<li>&quot; never &quot; - 不折行</li>
+<li>&quot; perserve &quot; - 按照文件原样折行 （v1.9.0+）</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&quot; preserve &quot;</td>
+<td>–prose-wrap &lt;always</td>
+<td>never</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck1ri96rd000flkpppaj5xy31" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-es6-3-StringExt" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/01/es6-3-StringExt/" class="article-date">
+  <time datetime="2017-06-01T13:33:16.000Z" itemprop="datePublished">2017-06-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/01/es6-3-StringExt/">ES6(3) 字符串扩展</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;字符串数据类型新增了很多功能，其中对Unicode进行了大幅度的增强，新增了若干方法，同时引进了模板字符串，本节只讨论模板字符串的部分功能。</p>
+<h2 id="字符的Unicode表示法增强。"><a href="#字符的Unicode表示法增强。" class="headerlink" title="字符的Unicode表示法增强。"></a>字符的Unicode表示法增强。</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;javascript允许采用\uxxxx形式表示一个字符，其中xxxx表示字符Unicode码点。\u0061’ == ‘a’;但是这种表示法只限于码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必输用两个双字节的形式表示。如，’\uD842\uDFB7’ =&gt;  𠮷,  ‘\u20BB7’ =&gt; 7。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  '\uD842\uDFB7' //  𠮷
+  '\u20BB7' // 7
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上面代码表示，如果直接在\u后面跟上超过0xFFFF的数值（如\u20BB7），javascript会理解成\u20BB + 7，由于\u20BB 是一个不可打印字符，只会显示一个空格，后面跟着一个7。ES6对此进行了改进，只要将码点放入大括号，就能正确解读该字符。示例</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  "\u{20BB7}"  //"𠮷"
+
+  "\u{41}\u{42}\u{43}"  //"ABC"
+
+  let hello = 123;
+  hell\u{6F}  //123
+
+  '\u{1F680}' === '\uD83D\uDE80'
+   //true
+</code>
+</pre>
+
+<h2 id="codePointAt"><a href="#codePointAt" class="headerlink" title="codePointAt()"></a>codePointAt()</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;javascript内部，字符以UTF-16的格式存储，每个字符固定为2个字节。对于那些需要4个字节存储的字符（Unicode码点大于0xFFFF），javascript会认为他们是两个字符。codePointAt()方法用于正确处理4个字节存储的字符，返回一个字符的码点。示例：</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let s = '𠮷a';
+
+    s.codePointAt(0).toString(16) // "20bb7"
+    s.codePointAt(2).toString(16) // "61"
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编码的问题是解决了，但是codePointAt方法的参数还是不正确，要解决这个问题需要for of循环</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let s = '𠮷a';
+    for (let ch of s) {
+        console.log(ch.codePointAt(0).toString(16));
+    }
+    // 20bb7
+    // 61
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;codePointAt方法是测试一个字符由两个字节还是由四个字节组成的最简单方法。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    function is32Bit(c) {
+        return c.codePointAt(0) > 0xFFFF;
+    }
+
+    is32Bit("𠮷") // true
+    is32Bit("a") // false
+</code>
+</pre>
+
+
+<h2 id="String-fromCodePoint"><a href="#String-fromCodePoint" class="headerlink" title="String.fromCodePoint()"></a>String.fromCodePoint()</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ES5提供String.fromCharCode方法，用于从码点返回对应字符，但是这个方法不能识别32位的UTF-16字符（Unicode编号大于0xFFFF）。因此String.fromCodePoint方法可以弥补这一点，其实就是将16进制的码点转换成字符，且可以识别4个字节字符</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    String.fromCodePoint(0x20BB7)
+    // "𠮷"
+    String.fromCodePoint(0x78, 0x1f680, 0x79) === 'x\uD83D\uDE80y'
+    // true
+</code>
+</pre>
+
+<h2 id="字符串的遍历器接口"><a href="#字符串的遍历器接口" class="headerlink" title="字符串的遍历器接口"></a>字符串的遍历器接口</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    //1.字符串添加了遍历器接口，使得字符串可以for of 循环遍历：示例
+    for (let basic of 'JavaScript') {
+        console.log(basic);
+    }
+    //J a v a S c r i p t
+</code>
+</pre>
+
+<h2 id="at-方法"><a href="#at-方法" class="headerlink" title="at()方法"></a>at()方法</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ES5 对字符串对象提供charAt方法，返回字符串给定位置的字符。该方法不能识别码点大于0xFFFF的字符。at方法作用同charAt()方法作用相同，返回参数位置的字符，且可以识别码点大于 0xFFFF的字符。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+   'abc'.at(0) // "a"
+   '𠮷'.at(0) // "𠮷"
+</code>
+</pre>
+
+<h2 id="normalize-方法"><a href="#normalize-方法" class="headerlink" title="normalize()方法"></a>normalize()方法</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;许多欧洲语言有语调符号，为了表示它们，Unicode提供了两种方法。一种是直接提供带符号的字符，比如Ǒ（\u01D1）。另一种是提供合成字符，即两个字符合成一个带符号的字符，O（\u004F）和ˇ（\u030C）合成Ǒ（\u004F\u030C）。这两种方法在视觉和语义上都等价，但是JavaScript不能识别，es6解决了这个问题，es6的normalize方法，用来将字符串的不同表示方法统一为永阳的形式，这称为Unicode正规化。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  '\u01D1'.normalize() === '\u004F\u030C'.normalize()
+  // true
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normalize()方法可以接受一个参数，表示normalize的方式，参数的四个可选值如下</p>
+<p> NFC，默认参数，表示“标准等价合成”（Normalization Form Canonical Composition），返回多个简单字符的合成字符。所谓“标准等价”指的是视觉和语义上的等价。<br> NFD，表示“标准等价分解”（Normalization Form Canonical Decomposition），即在标准等价的前提下，返回合成字符分解的多个简单字符。<br> NFKC，表示“兼容等价合成”（Normalization Form Compatibility Composition），返回合成字符。所谓“兼容等价”指的是语义上存在等价，但视觉上不等价，比如“囍”和“喜喜”。（这只是用来举例，normalize方法不能识别中文。）<br> NFKD，表示“兼容等价分解”（Normalization Form Compatibility Decomposition），即在兼容等价的前提下，返回合成字符分解的多个简单字符。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  '\u004F\u030C'.normalize('NFC').length // 1
+  '\u004F\u030C'.normalize('NFD').length // 2
+</code>
+</pre>
+
+<h2 id="includes-startsWith-endsWith"><a href="#includes-startsWith-endsWith" class="headerlink" title="includes()/startsWith()/endsWith()"></a>includes()/startsWith()/endsWith()</h2><p> includes(); 返回布尔值，表示是否找到了参数字符串；<br> startsWith();返回布尔值，表示参数字符串是否在原字符串的头部；<br> endsWith();返回布尔值，表示参数字符串是否在源字符串的尾部；</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以上三个方法均支持第二个参数，表示搜索开始的位置；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let  strOpApi = 'Hello world';
+    var isStartWith = strOpApi.startsWith('Hello');
+    var isIn = strOpApi.includes('llo');
+    var isEndWith = strOpApi.endsWith('ld');
+    console.log(isStartWith); //true
+    console.log(isIn); //true
+    console.log(isEndWith); //true
+</code>
+</pre>
+
+<h2 id="repeat"><a href="#repeat" class="headerlink" title="repeat()"></a>repeat()</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;repeat()方法返回一个新的字符串，表示将源字符串重复n次。参数是一个数字，int，如果写小数会自动取整；如果是负数或者infinity则会报错；<a href="区间">-1,0</a>被视为0，NaN视为0；如果传递字符串，则默认会把字符串转化成数字；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    var xAfterRepeat = 'x'.repeat(3);
+    console.log(xAfterRepeat);
+</code>
+</pre>
+
+<h2 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;模板字符串使用``反引号包裹(如果要在模板字符串中使用反引号，需要转义)，无须拼接，如果模板字符串中欲使用变量，要使用 ${变量} 写在数据的位置，大括号内可以放入任意的js表达式，可以进行运算，以及引用对象的属性，模板字符串中还可以调用函数。<br> 模板字符串还可以嵌套：<br> 使用模板字符串，所有的空格和缩进都会保留在输出中；如果不想要他们，可以用trim方法消除他们；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let obj = {
+        a: 'a',
+        b: 'b',
+        c: 'c'
+    };
+    var str2 = `
+        &lt;div&gt;
+            &lt;h2&gt;
+                这是模板字符串，感觉这么像PHP的界定符？
+            &lt;/h2&gt;
+            &lt;ul&gt;
+                &lt;li&gt;${obj.a}&lt;/li&gt;
+                &lt;li&gt;${obj.b}&lt;/li&gt;
+                &lt;li&gt;${obj.c}&lt;/li&gt;
+                &lt;li&gt;heheheheheh&lt;/li&gt;
+            &lt;/ul&gt;
+        
+    `;
+    $('body').append(str2);
+</code>
+</pre>
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;除以上扩展了原来字符串功能外，模板字符串还有标签模板功能；所谓标签模板是指模板字符串紧跟在一个函数名后面，该函数被调用来处理这个模板字符串（tagged template）。标签模板其实不是模板，而是函数调用的一种特殊形式。“标签”指的是函数，紧跟在后面的模板字符串就是它的参数。但是，如果模板字符里面有变量，就不是简单地调用了，而是会将模板字符串先处理成多个参数，再调用函数。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;标签模板是将模板字符串转换成一种特殊格式的参数传进函数，也就是说如果你想用标签模板调用函数，那么在编写函数的时候就需要考虑到这种特殊格式；传入函数的参数由：一个数组，和编译替换后的变量，示例：</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    alert`123`;//等同于alert('123');
+    function tag(strAry, value1, value2, value3){
+        console.log(arguments);
+    }
+    var a = 10, b = 5;
+    tag`hello ${ a + b } world ${ a  b }`;
+    //上面调用tag函数后的返回结果；
+    //  "Hello "
+    //  " world "
+    //  ""
+    //  15
+    // 50
+    // "OK"
+
+     实际传入函数的参数是样的：(形参定义的时候得个数和下面的结果个数对应)
+     0: [//这个数组中装的是不需要翻译的字符串
+          hello,
+          world,
+          heheda,
+          ""
+     ]//这个数组之外的值都是经过编译和替换后的变量值
+     1:15
+     2:50
+     3:5
+
+
+    function tag(s, v1, v2){
+        console.log(s[0]);
+        console.log(s[1]);
+        console.log(s[2]);
+        console.log(v1);
+        console.log(v2);
+
+        return 'ok';
+    }
+    var total = 30;
+    var msg = passThru`The total is ${total}(${total  1.05}with tax)`;
+    //上面这个msg例子展示了，如何将各个参数按照原来的位置拼合回去。
+
+    function passThru(literals, value1, value2) {
+        console.log(arguments);
+        var result = '';
+        var i = 0;
+        while (i &lt; literals.length) {
+            result += literals[i++];
+            if (i &lt; arguments.length) {
+                result += arguments[i];
+            }
+        }
+        return result;
+    }
+    console.log(msg);
+</code>
+</pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck1ri96qw0005lkppccrlldu4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-es6-2-destructing" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/20/es6-2-destructing/" class="article-date">
+  <time datetime="2017-05-20T14:00:52.000Z" itemprop="datePublished">2017-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/20/es6-2-destructing/">es6(2)destructing</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本节讨论解构赋值，解构赋值 destructing :解构赋值:ES6允许按照一定的模式，对变量进行赋值，本质上，这种写法数据“模式匹配”，只要等号两边的模式相同，左边的变量就会被赋予对应位置的值。我觉得这个东东真是个宝，用起来相当的爽。不多说，赶紧练起来吧。</p>
+<h2 id="对象解构赋值"><a href="#对象解构赋值" class="headerlink" title="对象解构赋值"></a>对象解构赋值</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    //赋值
+     let catT = 'Tom',
+     mouseJ = 'Jerry';
+     let cartoonRole = {catT , mouseJ};
+     console.log(cartoonRole);//{catT: "Tom", mouseJ: "Jerry"}
+
+     //解构
+     let cartoonRole = {catT:'Tom' , mouseJ: 'Jerry',ok:'hahahha'};
+     let {catT,ok} = cartoonRole;
+     console.log(catT,ok);//'Tom' 'hahahha'
+
+     //对象的解构与数组有一个重要的不同，数组的元素是按顺序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值；
+     let {ac, ad} = {ac:'aaa', ad: 'bbb'};
+     console.log(ac);
+
+     //对象的嵌套解构赋值：
+     let obj1 = {
+         p:[
+             'hello',
+             {y: 'world'}
+         ]
+     };
+     let { p: [ x,  {yy} ] } = obj1;//注意p不是变量是匹配模式，所以是不会被赋值
+     console.log(x);//hello
+
+    //使用对象的解构赋值，可以很方便的将现有的对象的方法赋值到某个变量上，使用起来将会很方便
+    let {log, sin, cos} = Math;//这行代码将对数，正弦，余弦三个方法赋值到对应的变量上，使用起来将会方便很多；
+
+</code>
+</pre>
+
+<h2 id="数组解构赋值"><a href="#数组解构赋值" class="headerlink" title="数组解构赋值"></a>数组解构赋值</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  let cry = ['a','b','c'];
+  let [h, i, j] = cry; //这相当于声明了三个变量 h i j，这三个值分按照顺序分别对应数组项
+  console.log(i);//'b'
+
+  //复合数组的：
+  let [ab, [bc, cd], de] = [1, [2, 3], 4];//这时候等号左边的不是数组，只是一个方括号，里面的是单个的变量，可以直接使用
+  console.log(ab);
+
+  //不完全解构的：(但都是成功解构的)
+  let [fg,[hg],hi] = [1, [2, 3], 4];
+  console.log(hg);//2
+
+  let [jk, lm] = [1, 2, 4];
+  console.log(lm);//2
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由上例可知，解构赋值最重要的就是变量名和对象的key值同名，结构赋值数组时，变量和数组的位置对应，你想取得的值的数量和对象中的key-value数量可以不同，但是要求变量名和key相同，同数组项的位置一致。如果在对象结构赋值时变量同key不同名，那需要特殊处理，即写成key:value的形式，key仍是和对象属性名相同的值，value是进行解构赋值后被赋值的变量（可以和对象的属性名不同）；其中ae是匹配模式，aaa才是真正的变量，真正被赋值的是变量aaa不是ae，还要注意一点，采用这种写法时，变量的声明和赋值时一体的，对于let和const来说，变量不能重新声明，所以一旦赋值的变量以前声明过，就会报错；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    //对象的解构与数组有一个重要的不同，数组的元素是按顺序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值；
+    let {ac, ad} = {ac:'aaa', ad: 'bbb'};
+    console.log(ac);// 'aaa'
+
+    //key同变量名不同名
+    let {ae:aaa} = {ae:'hhhhhh'};
+    console.log(aaa);
+</code>
+</pre>
+
+<h2 id="字符串解构赋值"><a href="#字符串解构赋值" class="headerlink" title="字符串解构赋值"></a>字符串解构赋值</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+   //字符串也可以解构赋值，因为此时，字符串被转换成了一个类数组对象；
+   const [ai, aj, ak, al, am] = 'hello';
+   console.log(ai);//h
+
+   //类数组对象有一个length属性，因此还可以对这个属性解构赋值。
+   let {length:len} = 'hello';
+   console.log(len);//5
+</code>
+</pre>
+
+<h2 id="其他数据结构"><a href="#其他数据结构" class="headerlink" title="其他数据结构"></a>其他数据结构</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果等号的右边不是数组（或者严格的说，不是可遍历的结构：对象、数组、set对象、map对象等）那么将报错；事实上，只要某种数据结构具有Iterator接口，都可以采用数据形式的解构赋值。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let [uv, vw, wx] = new Set(['a', 'b', 'c']);
+    console.log(uv); //a
+</code>
+</pre>
+
+<h2 id="结构赋值时设置默认值"><a href="#结构赋值时设置默认值" class="headerlink" title="结构赋值时设置默认值"></a>结构赋值时设置默认值</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;结构赋值允许指定默认值。但是注意：ES6中使用严格相等运算符（===），判断一个位置是否有值。所以，如果一个数组成员不严格等于undefined，默认值是不会生效的；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let [xy = true] = [];
+    console.log(xy);//true
+
+    let [yz = 'undefined'] = [null];//null 不严格等于undefined，所以默认值是不生效的
+    console.log(yz);//null
+
+    //如果默认值是一个表达式，那么这个表达式是惰性求值的，即只有在用到的时候才会求值；
+    function faaa(){
+        console.log('abacd');
+    }
+    let [xb = faaa()] = [1];//这行代码中，因为xb能取到值，所以函数f根本不会执行；
+
+    //解构赋值时的默认值可以引用其他解构赋值的变量，但是这个变量必须已经声明过；
+    let [xc = 1, yc = xc] = [];
+    let [aa = bb,bb = 1] = [];//referenceError，因为引用给aa用到默认值(如果用不到就不会报错)，给默认值赋值时，bb还没
+
+    //对象结构赋值也可以指定默认值，同样默认值生效的条件：对象的属性值严格等于undefined。如果解构失败，变量将会被赋值undefined;
+    let {ag = 3} = {x:undefined};
+    console.log(ag);//3
+</code>
+</pre>
+
+<h2 id="函数参数解构赋值"><a href="#函数参数解构赋值" class="headerlink" title="函数参数解构赋值"></a>函数参数解构赋值</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+//函数的解构赋值意义是：函数形参设置的时候可以设置成数组或者对象，但是通过解构，在函数体内得到的就是一个一个的值
+function add([x, y]){
+    //console.log(arguments);//通过打印arguments，我们发现，函数收到的参数其实是单个的数字，而非数组
+    return x + y;
+}
+var total = add([1, 2]);
+console.log(total);//3
+
+var arr = [[1,2,3],[3,4,5]].map(([a, b, c]) => a + b + c);//map方法经过操作后会映射成一个新的数组，而且map方法的第一个参数是数组项，而经过参数解构赋值后 得到 a=1,b=2,c=3 ，执行一次回调，将原数组第一项映射成6，以此类推
+console.log(arr);//[6, 12]
+
+//参数解构赋值也可以使用默认值
+function move({an = 0, ao = 0} = {}){
+    return [an, ao];
+}
+var ar1 = move({an: 1, ao: 2});
+console.log(ar1);//[1, 2]
+
+var ar2 = move();//{an = 0, ao = 0} = {} 这么写是为了给函数的实参一个默认值{}，当不传的时候就是空对象{}
+console.log(ar2);//[0, 0]
+</code>
+</pre>
+
+<h2 id="解构赋值应用场景"><a href="#解构赋值应用场景" class="headerlink" title="解构赋值应用场景"></a>解构赋值应用场景</h2><h3 id="交换变量"><a href="#交换变量" class="headerlink" title="交换变量"></a>交换变量</h3><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let ap = 1;
+    let aq = 2;
+    [ap, aq] = [aq, ap];
+    console.log(ap);//2
+</code>
+</pre>
+
+<h3 id="函数返回多个值"><a href="#函数返回多个值" class="headerlink" title="函数返回多个值"></a>函数返回多个值</h3><p>原则上函数只能返回一个值，如果要返回多个值，只能将他们放在数组或者对象中，有了解构赋值，去除这些值将会非常的方便；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    function eg1(){
+        return [1, 2, 3];
+    }
+    let [ar, as, at] = eg1();
+    console.log(ar);//1
+
+    function eg2(){
+        return {
+            au:'www',
+            av:'itouzi',
+            aw:'com',
+        }
+    }
+    let {au:ax, av:ay, aw:az} = eg2();
+    console.log(ay);//itouzi
+</code>
+</pre>
+
+<h3 id="提取json数据-解构赋值对提取JSON对象中的数据尤其有用；"><a href="#提取json数据-解构赋值对提取JSON对象中的数据尤其有用；" class="headerlink" title="提取json数据:解构赋值对提取JSON对象中的数据尤其有用；"></a>提取json数据:解构赋值对提取JSON对象中的数据尤其有用；</h3><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let json = {
+        id: 42,
+        status: 'ok',
+        data: [333, 444]
+    };
+    let {id ,status, data} = json;
+    console.log(data);//[333, 444]
+</code>
+</pre>
+
+<h3 id="函数参数设置默认值"><a href="#函数参数设置默认值" class="headerlink" title="函数参数设置默认值"></a>函数参数设置默认值</h3><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    function plus([x = 0,y = 0] = []){
+        return x + y;
+    }
+    console.log(plus());//0
+</code>
+</pre>
+
+<h3 id="遍历Map解构"><a href="#遍历Map解构" class="headerlink" title="遍历Map解构"></a>遍历Map解构</h3><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    for (let [key, value] of map) {
+        //console.log(key + ' is ' + value);
+    }
+    //只获取键
+    for (let [key1] of map) {
+        console.log(key1);
+    }
+    //只获取值
+    for (let [, value1] of map) {
+        //console.log(value1);
+    }
+</code>
+</pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck1ri96qr0003lkpp1eqmnqh0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-es6-1-let-cosnt" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/12/es6-1-let-cosnt/" class="article-date">
+  <time datetime="2017-05-12T14:32:25.000Z" itemprop="datePublished">2017-05-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/12/es6-1-let-cosnt/">ES6(1) let和const</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从这篇文章起，后面将会有一系列的文章和大家探讨es6，现在才说es6好像有点晚了，但是我们的前端团队还没有大规模应用es6。一直以来我也零零星星的学过一些es6，早在几年前就了解过，但是始终没有系统的学习过，这一次做分享，也是对自己的一个激励，争取这个系列可以覆盖全部的es6特性，想要学习的跟上吧。</p>
+<h2 id="块级作用域"><a href="#块级作用域" class="headerlink" title="块级作用域"></a>块级作用域</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在es6以前，ECMAScript是没有块级作用域的，这就带来了很多意外的情况，比如经典的for循环问题。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    例 1：
+    var a = [];
+    for (var i = 0; i < 10; i++) {
+        a[i] = function (){
+            console.log(i);
+        }
+    }
+    a[3]();//10
+</code>
+</pre>
+
+<p>引入块级作用域后</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    例 2：
+    var a = [];
+    for (let i = 0; i < 10; i++) {
+        a[i] = function (){
+            console.log(i);
+        }
+    }
+    a[3]();//3
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;看了上面两段代码，块级作用域就是除字面量声明对象（{key: value}）以外的花括号代码块都构成块级作用域，但是现在有个问题值得思考。大家都知道，在js中变量是存在于作用域中的，在上面例1中，var i = 0;i存在的作用域就是全局（for循环外围无函数）作用域，所以for循环的i++每次都会修改全局作用域中的i。那么改成let声明后，变量的保存的作用域是不是改变了呢？下面代码我们模拟了块级作用域（不是很严谨，只是按照自己的猜测），其中循环体中的闭包模拟块级作用域。很显然，每次for循环（let声明）的循环体（花括号空的代码）执行一次就声明了一个块级作用域，变量i就保存在了块级作用域中，按照作用域查找机制，块级作用域延长了作用域链。同时由于数组a的引用，这个块级作用域并不会销毁，因而变量值得以保存。（仅个人理解）</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    var a = [];
+    for (var i = 0; i < 10; i++) {
+        a[i] = (function (i){
+            return function () {console.log(i)}
+        })(i);
+
+    }
+    a[3]();//3
+</code>
+</pre>
+
+<h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p>使用let 和 const将带来的暂时性死区：只要块级作用域内存在let命令，它所声明的变量就绑定在这个区域，不再受外部的影响。示例：</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    var tmp = 123;
+    if (true) {
+        tmp = 'abc';
+        let tmp;
+    }
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上面代码中存在全局变量tmp，但是块级作用域内let又声明了一个局部变量tmp，导致后者绑定这个块级作用域，所以在let语句之前调用变量，就会报错；ReferenceError；暂时性死区也意味着typeof不再是一个百分百安全的操作，因为你typeof这个变量仍然是访问变量，仍然会报错。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;与此同时，另一不可忽略的事实产生了，var除是用于变量声明的关键字，还具有变量提声（javascript预解释）的作用。而let和const并无此作用，仅用于变量的声明，因此在使用let和const声明的变量时，确认这些变量在被引用前（代码顺序）是否被声明将变得意义非同寻常。示例</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    console.log(tmp);//undefined
+    var tmp = 123;
+
+    if (true) {
+         console.log(wrong);//ReferenceError
+         let wrong = 'abc';
+    }
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第三，同var不同的是，let和const不允许重复声明。示例</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+   function foo(declareParam){
+       let declareParam = 0; //报错  'declareParam' has already been declared
+   }
+   foo('aaa');//报错   但是得在方法执行的时候才报错
+
+   //但是请注意这种在块级作用域中的声明并不会收到这一影响
+   function fooWithBlockZone(declareParam){
+       { //这一花括号是块级作用域
+           let declareParam = 14;//这个不会报错
+       }
+   }
+   fooWithBlockZone('aa');//不报错
+</code>
+</pre>
+
+<h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const的作用域和let一样：只在声明所在的块级作用域内有效。const声明的常量也不存在变量提声，同样存在暂时性死区，只能在声明的位置后面使用。同样不能重复声明一个变量；const实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址不得改动，对于简单的数据类型（数值，字符串，布尔值），值就保存在保存变量指向的那个内存地址，因此等同于常量。但是对于复合型数据额类型（主要是对象和数组），变量指向的内存地址，保存的只是一个指针，const只能保证这个指针是固定的，至于他的指向的数据结构是否是不是可变的，就完全不能控制了，因此，将一个对象声明为常量必须非常小心；什么意思呢？就是说啊：当使用const声明一个复杂数据类型时，这个const只能保存指向这个复杂数据类型的地址不被改变，但是这个复杂数据类型的数据仍然可以操作：示例:</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  const objConst = {};
+  objConst.testAddPropIntoConstObj = 'yes,you guess it';
+  console.log(objConst);//虽然声明的是常量，但是给这个对象的内存地址中的内容还是可以操作的；
+
+
+  //如果你真想声明一个不可以修改的对象使用Object.freeze({})方法；示例
+  const objFrozen = Object.freeze({});//声明一个冻结常量；
+  objFrozen.prop = 'No,what a pity,what you guess is thoroughly wrong!';
+  //严格模式下使用这一行代码报错
+  //非严格模式不理会这行代码；
+  console.log(objFrozen);
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注意，在ES5中，在全局中声明的变量和挂载在全局中的属性是等价的，从ES6开始，全局变量将和顶层对象的属性脱离，为了改变这一点，一方面规定，为了保持兼容性，var 和 function声明的全局变量扔等同于顶层对象window/global的属性，但是使用let、const、class声明的全局变量不属于顶层对象。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck1ri96qu0004lkppkeqgiw15" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/15/JavaScript基础教程1/">JavaScript 基础教程 1 JS 数据类型和变量</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

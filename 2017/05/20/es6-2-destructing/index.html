@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>es6(2)destructing | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;本节讨论解构赋值，解构赋值 destructing :解构赋值:ES6允许按照一定的模式，对变量进行赋值，本质上，这种写法数据“模式匹配”，只要等号两边的模式相同，左边的变量就会被赋予对应位置的值。我觉得这个东东真是个宝，用起来相当的爽。不多说，赶紧练起来吧。 对象解构赋值">
+<meta name="keywords" content="es6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6(2)destructing">
+<meta property="og:url" content="http://yoursite.com/2017/05/20/es6-2-destructing/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;本节讨论解构赋值，解构赋值 destructing :解构赋值:ES6允许按照一定的模式，对变量进行赋值，本质上，这种写法数据“模式匹配”，只要等号两边的模式相同，左边的变量就会被赋予对应位置的值。我觉得这个东东真是个宝，用起来相当的爽。不多说，赶紧练起来吧。 对象解构赋值">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-24T15:07:47.226Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6(2)destructing">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;本节讨论解构赋值，解构赋值 destructing :解构赋值:ES6允许按照一定的模式，对变量进行赋值，本质上，这种写法数据“模式匹配”，只要等号两边的模式相同，左边的变量就会被赋予对应位置的值。我觉得这个东东真是个宝，用起来相当的爽。不多说，赶紧练起来吧。 对象解构赋值">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-es6-2-destructing" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/20/es6-2-destructing/" class="article-date">
+  <time datetime="2017-05-20T14:00:52.000Z" itemprop="datePublished">2017-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      es6(2)destructing
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本节讨论解构赋值，解构赋值 destructing :解构赋值:ES6允许按照一定的模式，对变量进行赋值，本质上，这种写法数据“模式匹配”，只要等号两边的模式相同，左边的变量就会被赋予对应位置的值。我觉得这个东东真是个宝，用起来相当的爽。不多说，赶紧练起来吧。</p>
+<h2 id="对象解构赋值"><a href="#对象解构赋值" class="headerlink" title="对象解构赋值"></a>对象解构赋值</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    //赋值
+     let catT = 'Tom',
+     mouseJ = 'Jerry';
+     let cartoonRole = {catT , mouseJ};
+     console.log(cartoonRole);//{catT: "Tom", mouseJ: "Jerry"}
+
+     //解构
+     let cartoonRole = {catT:'Tom' , mouseJ: 'Jerry',ok:'hahahha'};
+     let {catT,ok} = cartoonRole;
+     console.log(catT,ok);//'Tom' 'hahahha'
+
+     //对象的解构与数组有一个重要的不同，数组的元素是按顺序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值；
+     let {ac, ad} = {ac:'aaa', ad: 'bbb'};
+     console.log(ac);
+
+     //对象的嵌套解构赋值：
+     let obj1 = {
+         p:[
+             'hello',
+             {y: 'world'}
+         ]
+     };
+     let { p: [ x,  {yy} ] } = obj1;//注意p不是变量是匹配模式，所以是不会被赋值
+     console.log(x);//hello
+
+    //使用对象的解构赋值，可以很方便的将现有的对象的方法赋值到某个变量上，使用起来将会很方便
+    let {log, sin, cos} = Math;//这行代码将对数，正弦，余弦三个方法赋值到对应的变量上，使用起来将会方便很多；
+
+</code>
+</pre>
+
+<h2 id="数组解构赋值"><a href="#数组解构赋值" class="headerlink" title="数组解构赋值"></a>数组解构赋值</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  let cry = ['a','b','c'];
+  let [h, i, j] = cry; //这相当于声明了三个变量 h i j，这三个值分按照顺序分别对应数组项
+  console.log(i);//'b'
+
+  //复合数组的：
+  let [ab, [bc, cd], de] = [1, [2, 3], 4];//这时候等号左边的不是数组，只是一个方括号，里面的是单个的变量，可以直接使用
+  console.log(ab);
+
+  //不完全解构的：(但都是成功解构的)
+  let [fg,[hg],hi] = [1, [2, 3], 4];
+  console.log(hg);//2
+
+  let [jk, lm] = [1, 2, 4];
+  console.log(lm);//2
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由上例可知，解构赋值最重要的就是变量名和对象的key值同名，结构赋值数组时，变量和数组的位置对应，你想取得的值的数量和对象中的key-value数量可以不同，但是要求变量名和key相同，同数组项的位置一致。如果在对象结构赋值时变量同key不同名，那需要特殊处理，即写成key:value的形式，key仍是和对象属性名相同的值，value是进行解构赋值后被赋值的变量（可以和对象的属性名不同）；其中ae是匹配模式，aaa才是真正的变量，真正被赋值的是变量aaa不是ae，还要注意一点，采用这种写法时，变量的声明和赋值时一体的，对于let和const来说，变量不能重新声明，所以一旦赋值的变量以前声明过，就会报错；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    //对象的解构与数组有一个重要的不同，数组的元素是按顺序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值；
+    let {ac, ad} = {ac:'aaa', ad: 'bbb'};
+    console.log(ac);// 'aaa'
+
+    //key同变量名不同名
+    let {ae:aaa} = {ae:'hhhhhh'};
+    console.log(aaa);
+</code>
+</pre>
+
+<h2 id="字符串解构赋值"><a href="#字符串解构赋值" class="headerlink" title="字符串解构赋值"></a>字符串解构赋值</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+   //字符串也可以解构赋值，因为此时，字符串被转换成了一个类数组对象；
+   const [ai, aj, ak, al, am] = 'hello';
+   console.log(ai);//h
+
+   //类数组对象有一个length属性，因此还可以对这个属性解构赋值。
+   let {length:len} = 'hello';
+   console.log(len);//5
+</code>
+</pre>
+
+<h2 id="其他数据结构"><a href="#其他数据结构" class="headerlink" title="其他数据结构"></a>其他数据结构</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果等号的右边不是数组（或者严格的说，不是可遍历的结构：对象、数组、set对象、map对象等）那么将报错；事实上，只要某种数据结构具有Iterator接口，都可以采用数据形式的解构赋值。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let [uv, vw, wx] = new Set(['a', 'b', 'c']);
+    console.log(uv); //a
+</code>
+</pre>
+
+<h2 id="结构赋值时设置默认值"><a href="#结构赋值时设置默认值" class="headerlink" title="结构赋值时设置默认值"></a>结构赋值时设置默认值</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;结构赋值允许指定默认值。但是注意：ES6中使用严格相等运算符（===），判断一个位置是否有值。所以，如果一个数组成员不严格等于undefined，默认值是不会生效的；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let [xy = true] = [];
+    console.log(xy);//true
+
+    let [yz = 'undefined'] = [null];//null 不严格等于undefined，所以默认值是不生效的
+    console.log(yz);//null
+
+    //如果默认值是一个表达式，那么这个表达式是惰性求值的，即只有在用到的时候才会求值；
+    function faaa(){
+        console.log('abacd');
+    }
+    let [xb = faaa()] = [1];//这行代码中，因为xb能取到值，所以函数f根本不会执行；
+
+    //解构赋值时的默认值可以引用其他解构赋值的变量，但是这个变量必须已经声明过；
+    let [xc = 1, yc = xc] = [];
+    let [aa = bb,bb = 1] = [];//referenceError，因为引用给aa用到默认值(如果用不到就不会报错)，给默认值赋值时，bb还没
+
+    //对象结构赋值也可以指定默认值，同样默认值生效的条件：对象的属性值严格等于undefined。如果解构失败，变量将会被赋值undefined;
+    let {ag = 3} = {x:undefined};
+    console.log(ag);//3
+</code>
+</pre>
+
+<h2 id="函数参数解构赋值"><a href="#函数参数解构赋值" class="headerlink" title="函数参数解构赋值"></a>函数参数解构赋值</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+//函数的解构赋值意义是：函数形参设置的时候可以设置成数组或者对象，但是通过解构，在函数体内得到的就是一个一个的值
+function add([x, y]){
+    //console.log(arguments);//通过打印arguments，我们发现，函数收到的参数其实是单个的数字，而非数组
+    return x + y;
+}
+var total = add([1, 2]);
+console.log(total);//3
+
+var arr = [[1,2,3],[3,4,5]].map(([a, b, c]) => a + b + c);//map方法经过操作后会映射成一个新的数组，而且map方法的第一个参数是数组项，而经过参数解构赋值后 得到 a=1,b=2,c=3 ，执行一次回调，将原数组第一项映射成6，以此类推
+console.log(arr);//[6, 12]
+
+//参数解构赋值也可以使用默认值
+function move({an = 0, ao = 0} = {}){
+    return [an, ao];
+}
+var ar1 = move({an: 1, ao: 2});
+console.log(ar1);//[1, 2]
+
+var ar2 = move();//{an = 0, ao = 0} = {} 这么写是为了给函数的实参一个默认值{}，当不传的时候就是空对象{}
+console.log(ar2);//[0, 0]
+</code>
+</pre>
+
+<h2 id="解构赋值应用场景"><a href="#解构赋值应用场景" class="headerlink" title="解构赋值应用场景"></a>解构赋值应用场景</h2><h3 id="交换变量"><a href="#交换变量" class="headerlink" title="交换变量"></a>交换变量</h3><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let ap = 1;
+    let aq = 2;
+    [ap, aq] = [aq, ap];
+    console.log(ap);//2
+</code>
+</pre>
+
+<h3 id="函数返回多个值"><a href="#函数返回多个值" class="headerlink" title="函数返回多个值"></a>函数返回多个值</h3><p>原则上函数只能返回一个值，如果要返回多个值，只能将他们放在数组或者对象中，有了解构赋值，去除这些值将会非常的方便；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    function eg1(){
+        return [1, 2, 3];
+    }
+    let [ar, as, at] = eg1();
+    console.log(ar);//1
+
+    function eg2(){
+        return {
+            au:'www',
+            av:'itouzi',
+            aw:'com',
+        }
+    }
+    let {au:ax, av:ay, aw:az} = eg2();
+    console.log(ay);//itouzi
+</code>
+</pre>
+
+<h3 id="提取json数据-解构赋值对提取JSON对象中的数据尤其有用；"><a href="#提取json数据-解构赋值对提取JSON对象中的数据尤其有用；" class="headerlink" title="提取json数据:解构赋值对提取JSON对象中的数据尤其有用；"></a>提取json数据:解构赋值对提取JSON对象中的数据尤其有用；</h3><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let json = {
+        id: 42,
+        status: 'ok',
+        data: [333, 444]
+    };
+    let {id ,status, data} = json;
+    console.log(data);//[333, 444]
+</code>
+</pre>
+
+<h3 id="函数参数设置默认值"><a href="#函数参数设置默认值" class="headerlink" title="函数参数设置默认值"></a>函数参数设置默认值</h3><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    function plus([x = 0,y = 0] = []){
+        return x + y;
+    }
+    console.log(plus());//0
+</code>
+</pre>
+
+<h3 id="遍历Map解构"><a href="#遍历Map解构" class="headerlink" title="遍历Map解构"></a>遍历Map解构</h3><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    for (let [key, value] of map) {
+        //console.log(key + ' is ' + value);
+    }
+    //只获取键
+    for (let [key1] of map) {
+        console.log(key1);
+    }
+    //只获取值
+    for (let [, value1] of map) {
+        //console.log(value1);
+    }
+</code>
+</pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck1ri96qr0003lkpp1eqmnqh0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/01/es6-3-StringExt/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ES6(3) 字符串扩展
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/12/es6-1-let-cosnt/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ES6(1) let和const</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/15/JavaScript基础教程1/">JavaScript 基础教程 1 JS 数据类型和变量</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

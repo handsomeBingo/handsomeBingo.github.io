@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>浅析js中的面向对象（一） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160; 相信大家在学习js的初期都听说过一句话：js中万物皆对象；想想初期的我，还真的不是能理解，但是许多的问题如果用对象来解释就很容易理解。包括后面的angular、node.js、express都是对对象有了更为深层次应用，从这个角度阐述，我们可以理解对象究竟有多重要这里不再过多叙述，后面我还会继续分享有关angular、node.js、exp">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅析js中的面向对象（一）">
+<meta property="og:url" content="http://yoursite.com/2016/09/10/浅析js中的面向对象/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160; 相信大家在学习js的初期都听说过一句话：js中万物皆对象；想想初期的我，还真的不是能理解，但是许多的问题如果用对象来解释就很容易理解。包括后面的angular、node.js、express都是对对象有了更为深层次应用，从这个角度阐述，我们可以理解对象究竟有多重要这里不再过多叙述，后面我还会继续分享有关angular、node.js、exp">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-10-10T13:27:09.772Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅析js中的面向对象（一）">
+<meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160; 相信大家在学习js的初期都听说过一句话：js中万物皆对象；想想初期的我，还真的不是能理解，但是许多的问题如果用对象来解释就很容易理解。包括后面的angular、node.js、express都是对对象有了更为深层次应用，从这个角度阐述，我们可以理解对象究竟有多重要这里不再过多叙述，后面我还会继续分享有关angular、node.js、exp">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-浅析js中的面向对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/10/浅析js中的面向对象/" class="article-date">
+  <time datetime="2016-09-10T13:23:22.000Z" itemprop="datePublished">2016-09-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浅析js中的面向对象（一）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> &#160; &#160; &#160; &#160; 相信大家在学习js的初期都听说过一句话：js中万物皆对象；想想初期的我，还真的不是能理解，但是许多的问题如果用对象来解释就很容易理解。包括后面的angular、node.js、express都是对对象有了更为深层次应用，从这个角度阐述，我们可以理解对象究竟有多重要这里不再过多叙述，后面我还会继续分享有关angular、node.js、express的学习心得。<br> &#160; &#160; &#160; &#160; 想要面向对象，首先搞清楚，面向对象的概念是怎么提出的。面向对象是相对于以往的的面向过程变成提出的。面向过程中，为实现一个功能和效果，我们只是顺着业务逻辑写代码，不考虑代码的复用和封装的，如此一来造成页面中的代码非必要的重复，既增加了代码运行的压力，也降低了代码的可维护性。就在这样一个背景下，js中的面向对象应运而生。面向对象并不是js的专利，其他服务端语言都有这样一个概念。不同于后台的语言，由于js中没有类的概念（ES6中已经明确了类的概念，这里不阐述ES6），所以js的面向对象有有着自身十分独特的一面。<br> &#160; &#160; &#160; &#160; 前面们已经阐述过面向对象产生的背景及其意义，对象是什么？对象是一个由无序的键值对（key:value）组成的。接下来我们从更深层次认识一下对象，作为一个刚刚淌过这条小河的人来说，这十分有助于我们后面更好的理解面向对象的其他含义。<br>首先要从创建一个对象说起。创建一个对象有字面量和实例两种创建方式：</p>
+<ul>
+<li><p>1）字面量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var person=&#123;</span><br><span class="line">    name:&quot;Binary&quot;,</span><br><span class="line">    age:24,</span><br><span class="line">    job:&quot;FE&quot;,</span><br><span class="line">    say:function()&#123;console.log(this.name)&#125;</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2）实例创建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var person=new Object();</span><br><span class="line">person.name=&quot;Binary&quot;;</span><br><span class="line">person.age=24;</span><br><span class="line">person.job=&quot;FE&quot;;</span><br><span class="line">person.say=function()&#123;console.log(this.name)&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>在js中以上两种创建方式是相同的。<br> &#160; &#160; &#160; &#160; 第二，属性的类型，也可以说成是属性的属性。在对象中，每一个key不是孤零零的，在其身后也有许许多多的属性在跟随他，而他背后的这些属性规定了，是key的本质属性；key背后的属性又分成了数据属性和访问器属性；</p>
+<ul>
+<li>数据属性：</li>
+</ul>
+<ul>
+<li>1）Configurable:表示能否通过delete删除该key，能否修改这个key，默认值是true；如果将该属性置位false，表示该属性不可以被删除，如果删除，在非严格模式下被忽略，严格模式下将报错。而且这个属性只能修改一次，例如，这次将age的configurable置位false，有一天你想删除它，再次将其置位true，但是同样无法删除，该操作在非严格模式下被忽略，严格模式下将报错。</li>
+<li>2）Enumerable：表示该key是否可以通过for-in循环遍历到，【这个属性重点记忆】，默认值是true</li>
+<li>3）Writable：表示该属性能否修改key对应的value，默认值true；当该属性置位false后，person的age属性为只读，如果修改，在非严格模式下被忽略，严格模式下将报错。</li>
+<li>4）Value：包含这个属性的数据值，读取key值的时候，从这个位置读取，给key赋值的时候保存在这里；<br>  设置key的数据属性：Object.defineProperty()方法，该方法需要三个参数：第一个，key所在的对象；第二个：欲修改属性的key；第三个，描述key的对象，这个对象中的属性就是key背后的属性；示例</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Object.defineProperty(person,&quot;age&quot;,&#123;</span><br><span class="line">    configurable:true,</span><br><span class="line">    enumerable:true,</span><br><span class="line">    writable:false,</span><br><span class="line">    value:24</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>访问器属性：<br>访问器，又称get、set器，访问器属性是不包含数据值的，get器其实就是getter函数，set器就是setter函数，那么这两个两个方法是干嘛的呢？当我们读取对象的属性值的时候，会默认调用getter函数，获取key对应的value；当我们设置值的时候，又会调用setter函数，完成设置；访问器同样也有四个属性</li>
+</ul>
+<ul>
+<li>1）Configurable:表示能否通过delete删除该key，能否修改这个key，默认值是true；</li>
+<li>2）Enumerable：表示该key是否可以通过for-in循环遍历到，默认值是true；</li>
+<li>3）Get:读取属性时调用的函数，默认值undefined；</li>
+<li>4）Set:设置属性时调用的函数，默认值undefined；</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">var person=&#123;</span><br><span class="line">    name:&quot;Binary&quot;,</span><br><span class="line">    age:24,</span><br><span class="line">    year:1992,</span><br><span class="line">    job:&quot;FE&quot;,</span><br><span class="line">    say:function()&#123;console.log(this.name)&#125;</span><br><span class="line">&#125;;</span><br><span class="line">Object.defineProperty(person,&quot;age&quot;,&#123;</span><br><span class="line">     configurable:true,</span><br><span class="line">     enumerable:true,</span><br><span class="line">     get:function()&#123;</span><br><span class="line">        return this.age</span><br><span class="line">     &#125;,</span><br><span class="line">     set:function(newVal)&#123;//通过这个方法可以在修改age的同时，让year跟着自动改变。</span><br><span class="line">        if(newVal&gt;this.age)&#123;</span><br><span class="line">            this.age=newVal;</span><br><span class="line">            this.year-=newVal+24</span><br><span class="line">        &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;);</span><br><span class="line">person.age=25;</span><br><span class="line">console.log(person.year);//1991;</span><br></pre></td></tr></table></figure>
+
+<p> &#160; &#160; &#160; &#160; 以上是深层次的了解了一个对象，当然了，一般情况下工作中我们用不到这些高阶的功能，在我的印象中，只在一个node开发时用到一次get、set器，之所以写这些是为了以后更好的理解面向对象。在后面的文章中，定义一个对象的数据属性十分常用，例如enumerable属性，在后面的有关继承、构造函数模式实例识别中都有着重要意义。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/10/浅析js中的面向对象/" data-id="ck1ri96s5000xlkppibf0ymzn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/25/浅析js中的面向对象（二）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          浅析js中的面向对象（二）
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/15/JavaScript基础教程1/">JavaScript 基础教程 1 JS 数据类型和变量</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
