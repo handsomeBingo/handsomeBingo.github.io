@@ -67,6 +67,207 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaScript基础教程2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/31/JavaScript基础教程2/" class="article-date">
+  <time datetime="2018-03-31T07:23:10.000Z" itemprop="datePublished">2018-03-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/31/JavaScript基础教程2/">基础教程 2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="数据类型深入"><a href="#数据类型深入" class="headerlink" title="数据类型深入"></a>数据类型深入</h1><h2 id="一、普通对象"><a href="#一、普通对象" class="headerlink" title="一、普通对象"></a>一、普通对象</h2><blockquote>
+<p>js中的普通对象：无序的键值对集合。</p>
+<ul>
+<li>由大括号包裹起来的{key: value}</li>
+<li>由零到多组属性名和属性值（键值对）组成。属性名可以是数字、字母、或者下划线等，并且属性名都是字符串类型的。</li>
+</ul>
+</blockquote>
+<p><code>属性是用来描述当前对象特征的，属性名是当前对象具备的特征，属性值是这个特征的描述，一组属性名和属性值成为一组键值对</code></p>
+<h4 id="声明对象"><a href="#声明对象" class="headerlink" title="声明对象"></a>声明对象</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> feTraining = &#123;</span><br><span class="line">    name: <span class="string">'珠峰培训'</span>,</span><br><span class="line">    age: <span class="number">9</span>,</span><br><span class="line">    characters: <span class="string">'专注前端10年'</span>,</span><br><span class="line">    <span class="number">9</span>: <span class="string">'age'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="对象的操作：键值对的增删改查"><a href="#对象的操作：键值对的增删改查" class="headerlink" title="对象的操作：键值对的增删改查"></a>对象的操作：键值对的增删改查</h4><ul>
+<li>获取对象的某个属性的值<ul>
+<li>对象.属性名</li>
+<li>对象[‘属性名’]</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(feTraining.name);</span><br><span class="line"><span class="built_in">console</span>.log(feTraining[<span class="string">'name'</span>]);</span><br><span class="line"><span class="keyword">var</span> str = <span class="string">'age'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(feTraining[str]); <span class="comment">// 9</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果用. 后面的属性名不用写引号，如果使用[]，属性名需要用字符串包裹<br>如果属性名是数字，只能使用 []<br>方括号里面还可以写变量或者表达式<br>如果获取一个对象不存在的属性，会得到一个undefined</p>
+</blockquote>
+<ul>
+<li><p>增加/修改<br><code>js对象中的属性名是不允许重复的，是唯一的</code></p>
+<p>  如给个一个对象的属性赋值，有两种情况:</p>
+<ul>
+<li>如果对象之前不存在这个属性，那么就是给这个对象增加一个属性，值是等号右侧的值</li>
+<li>如果对象之前已经存在这个属性了，再赋值就是修改对象中的这个属性的值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">feTraining.courses = <span class="string">'JS高级+vue+react+node'</span>; <span class="comment">// feTraining之前不存在courses这个属性，所以是增加；</span></span><br><span class="line"><span class="built_in">console</span>.log(feTraining);</span><br><span class="line"></span><br><span class="line">feTraining.name = <span class="string">'Everest Training'</span>; <span class="comment">// feTraining之前就存在name属性，所以是修改</span></span><br><span class="line"><span class="built_in">console</span>.log(feTraining);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除</li>
+</ul>
+<ul>
+<li>彻底删除：把对象的属性名和属性值都删除。 delete obj[‘name’]</li>
+<li>软删除：将对象的某个属性的值赋值为null。 obj.name = null</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> feTraining.age;</span><br><span class="line"><span class="built_in">console</span>.log(feTraining);</span><br><span class="line"></span><br><span class="line">feTraining.courses = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(feTraining); <span class="comment">// course属性名还在，只是值为null了</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="思考？"><a href="#思考？" class="headerlink" title="思考？"></a>思考？</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'珠峰培训'</span>,</span><br><span class="line">    age: <span class="number">10</span></span><br><span class="line">&#125;;</span><br><span class="line">obj.name <span class="comment">// '珠峰培训'</span></span><br><span class="line">obj[<span class="string">'name'</span>] <span class="comment">// '珠峰培训'</span></span><br><span class="line">obj[name] ?? =&gt; name和 <span class="string">'name'</span>有什么区别？<span class="string">'name'</span>表示的是一个字符串，而name表示一个变量名</span><br></pre></td></tr></table></figure>
+
+<p><code>对象中的属性名都是字符串类型的</code></p>
+<hr>
+<h2 id="二、数组对象"><a href="#二、数组对象" class="headerlink" title="二、数组对象"></a>二、数组对象</h2><blockquote>
+<p>数组是【有序】的键值对集合；但是数组的键是浏览器设置的，不需要我们手动设置，并且键都是从0开始的数字，我们称数字属性名为【索引】。数组的第一项的对应的索引是0，第二项对应的索引是1，以此类推，第n项对应的索引是 n - 1。</p>
+</blockquote>
+<p>var ary = [12, 23]; // ? 12和23是都是属性值，属性名呢？<br>console.log(ary); // 从控制台可以发现是有键的，并且键都是数字</p>
+<h4 id="数组的操作"><a href="#数组的操作" class="headerlink" title="数组的操作"></a>数组的操作</h4><p>数组的键是数字，所以只能用方括号的方式获取、修改，而且写在方括号里面的属性名不需要用引号包裹；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [<span class="number">12</span>, <span class="number">23</span>];</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">0</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary<span class="number">.0</span>); <span class="comment">// 报错</span></span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">1</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">2</span>]); <span class="comment">// 访问一个数组不存在的索引，会得到一个undefined</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、基本数据类型和引用数据类型的区别"><a href="#三、基本数据类型和引用数据类型的区别" class="headerlink" title="三、基本数据类型和引用数据类型的区别"></a>三、基本数据类型和引用数据类型的区别</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">b = <span class="number">13</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 12</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 13</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj1 = &#123;</span><br><span class="line">  name: <span class="string">'珠峰'</span>,</span><br><span class="line">  age: <span class="number">10</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = obj1;</span><br><span class="line">obj2.age = <span class="number">100</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj1.age); <span class="comment">// 100</span></span><br><span class="line"><span class="built_in">console</span>.log(obj2.age); <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="为什么会有这种情况？"><a href="#为什么会有这种情况？" class="headerlink" title="为什么会有这种情况？"></a>为什么会有这种情况？</h3><p>基本数据类型（也叫做值类型）的操作，直接操作就是这个值，意思就是说变量本身就代表这个值。所以： var b = a;  存储12这个值，然后声明一个变量b，然后让变量b和这个新的12关联起来。这一行和 var b = 12本质上没有任何区别；</p>
+<p>引用数据类型都是存放在堆内存空间中的，同时这个堆内存空间有一个十六进制的内存地址。我们在声明一个引用数据类型时，不是直接把对象赋值给变量，而是把对象的堆内存地址赋值给变量。<br>所以引用数据类型的操作不是直接操作的值，而是操作它的引用数据类型的堆内存地址。所以var obj2 = obj1; 只是把obj1代表的堆内存地址地址赋值给了变量obj2。<br>所以obj2.age = 100;是通过obj2的堆内存地址找到堆内存地址中的存储的age的值，把它修改成100。同时，我们访问obj1.name 时也是先通过obj1存储的堆内存地址找到内存空间，然后从里面把属性age的值取到，此时这个内存空间中的值已经修改成100了。所以obj.name 也是100</p>
+<h2 id="四、布尔类型、布尔运算"><a href="#四、布尔类型、布尔运算" class="headerlink" title="四、布尔类型、布尔运算"></a>四、布尔类型、布尔运算</h2><blockquote>
+<p>布尔类型值只有两个值，true和false；布尔运算用来测试真假值，即运算结果是真的还是假的，通常结合js的判断语句（if/switch-case/三元表达式）使用。</p>
+</blockquote>
+<h3 id="其他数据类型和布尔值进行转换"><a href="#其他数据类型和布尔值进行转换" class="headerlink" title="其他数据类型和布尔值进行转换"></a>其他数据类型和布尔值进行转换</h3><ul>
+<li>Boolean方法</li>
+</ul>
+<blockquote>
+<p>语法：Boolean(需要转换的值) ；得到转换后的规则</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> boo = <span class="built_in">Boolean</span>(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">var</span> boo2 = <span class="built_in">Boolean</span>(<span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(boo, boo2); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>!运算符（取反运算符）true取反就是false，而false取反就是true<blockquote>
+<p>运算符是有固定功能的关键字或者符号。它通过操作值也可以得到返回结果，与方法不同的是运算符不需要小括号。<br>语法：!需要取反的值 ；得到 取反后的布尔值。其内部机制是先把其他数据类型转换成布尔值，然后再取反。<br>转换规律：在js中只有 0/NaN/空字符串’’/null/undefined 这5个值转换成布尔值是false，其余的都是true。</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'珠峰培训，10年专注前端'</span>;</span><br><span class="line"><span class="keyword">var</span> result = !str;</span><br><span class="line"><span class="comment">// 内部运作机制：</span></span><br><span class="line"><span class="comment">// 第一步先将str转换成布尔值，str不属于那5个值，所以 Boolean(str) =&gt; true</span></span><br><span class="line"><span class="comment">// 然后再取反，true 取反 =&gt; false</span></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>!! 运算符 等效于 Boolean方法<blockquote>
+<p>语法：!!需要转换的值；</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num1 = !!<span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> num2 = !!<span class="number">0</span>;</span><br><span class="line"><span class="built_in">console</span>.log(num1, num2); <span class="comment">// true false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(!!&#123;&#125;); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(!![]); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(!!&#123;<span class="attr">name</span>: <span class="string">'zhufeng'</span>&#125;); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="五、null和undefined"><a href="#五、null和undefined" class="headerlink" title="五、null和undefined"></a>五、null和undefined</h2><blockquote>
+<p>null空对象指针；不占内存，通俗理解就是人为的手动先赋值为null，后面程序中我们会再给它赋值为其他值；</p>
+</blockquote>
+<blockquote>
+<p>undefined 未定义。多数情况是某些浏览器内置机制设置的默认值，声明一个变量不赋值，这个变量的默认值就是undefined</p>
+</blockquote>
+<hr>
+<h2 id="六、js中的判断语句"><a href="#六、js中的判断语句" class="headerlink" title="六、js中的判断语句"></a>六、js中的判断语句</h2><p><code>判断语句是流程控制的重要语句，其作用是当满足某些条件时才能执行某些代码</code></p>
+<h3 id="1、if-else-if-else"><a href="#1、if-else-if-else" class="headerlink" title="1、if/else if/else"></a>1、if/else if/else</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单独使用if</span></span><br><span class="line"><span class="keyword">if</span> (条件) &#123;</span><br><span class="line">  <span class="comment">// 浏览器会对条件进行布尔运算，即求出条件时true还是false。条件为true时，即条件成立的时候才会执行这个花括号里面的代码</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 两种情况，结合else</span></span><br><span class="line"><span class="keyword">if</span> (条件) &#123;</span><br><span class="line">  <span class="comment">// 条件为true时</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 不满足条件的时候要执行的代码</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 多种情况，结合else if</span></span><br><span class="line"><span class="keyword">if</span> (条件) &#123;</span><br><span class="line">  <span class="comment">// 条件1为true时</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (条件<span class="number">2</span>) &#123;</span><br><span class="line">  <span class="comment">// 条件2为true的时候要执行的代码</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 上面条件都不满足条件的时候要执行的代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">if</span> (num &gt; <span class="number">6</span>) &#123;</span><br><span class="line">  num++; <span class="comment">// =&gt; num = num + 1; 在自身上累加一个</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (num &gt;=<span class="number">10</span>) &#123;</span><br><span class="line">  num--;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  num+=<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(num);</span><br></pre></td></tr></table></figure>
+
+<p><code>只要有一个条件成立，后面不管是否还有成立的条件，都不会在执行了</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">if</span> (num &gt; <span class="number">5</span>) &#123;</span><br><span class="line">  num += <span class="number">2</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (num &gt; <span class="number">8</span>) &#123;</span><br><span class="line">  <span class="comment">// 虽然num满足大于8，但是再上面已经执行过num&gt;5的代码，所以这里不会执行</span></span><br><span class="line">  num += <span class="number">3</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  num += <span class="number">4</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// 12</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2、条件怎么写？"><a href="#2、条件怎么写？" class="headerlink" title="2、条件怎么写？"></a>2、条件怎么写？</h3><p><code>if (条件) 条件最终需要的是一个布尔值，然后根据是true还是false来判断条件是否成立。如果条件里面写的是可以返回布尔值的表达式，那么就利用这个表达式的返回结果；如果不是返回布尔值，那么浏览器会自动把它转换成布尔值，然后用转换出来的结果判断条件是否成成立</code></p>
+<p>常见比较运算符：比较运算符都会返回布尔值</p>
+<ul>
+<li>大于(&gt;)， a &gt; b， 当a大于b时返回true，否则返回false</li>
+<li>大于等于(&gt;=)， a &gt;= b ，当a大于等于b时返回true，否则返回false</li>
+<li>小于(&lt;)，a &lt; b</li>
+<li>小于等于(&lt;=)</li>
+<li>不等于(!=)、</li>
+<li>等于(相对比较== 或者 绝对比较===)<ul>
+<li>== 是相对比较，只要两边的值相同就行，不比较类型，如 1 == ‘1’ 返回true</li>
+<li>=== 是绝对比较，两边值相同还不够，还要比较类型。1 === ‘1’ 返回false，因为1是number，而’1’是string，类型不同</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span> &gt; <span class="number">0</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span> &lt; <span class="number">0</span>); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span> == <span class="string">'1'</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span> === <span class="string">'1'</span>); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>条件常见形式：</p>
+<ul>
+<li><p>使用比较运算符，直接返回布尔值</p>
+</li>
+<li><p>如果是数学表达式，那么会先运算求值，然后再把运算出来的结果转换成布尔值。</p>
+<blockquote>
+<p>在js中，+ - * / % 都是数学运算，除+以外，其余的运算符在运算时，如果遇到非数字类型的值，首先会转成数字类型（Number），然后再进行运算</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="string">'3px'</span> + <span class="number">3</span>) &#123;</span><br><span class="line">  <span class="comment">// + 操作符在两边都是数字时才是加法运算符，如果有一个不是数字，那么加好就是字符串拼接。</span></span><br><span class="line">  <span class="comment">// 所以 '3px' + 3的结果是字符串'3px3'，而字符串 '3px3'转换成布尔值以后是true，所以条件成立</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="string">'3px'</span> - <span class="number">3</span>) &#123;</span><br><span class="line">  <span class="comment">// - 会调用Number()方法把'3px'转成数字，Number('3px') -&gt; NaN，而NaN - 3 -&gt; NaN，而NaN转成布尔值是false，所以条件不成立</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其他情况，均会把条件转成布尔值。</li>
+</ul>
+<h4 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">parseInt</span>(<span class="string">'width: 35.5px'</span>);</span><br><span class="line"><span class="keyword">if</span> (num == <span class="number">35.5</span>) &#123;</span><br><span class="line">  alert(<span class="number">0</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (num == <span class="number">35</span>) &#123;</span><br><span class="line">  alert(<span class="number">1</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (num == <span class="literal">NaN</span>) &#123;</span><br><span class="line">  alert(<span class="number">2</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> num == <span class="string">'number'</span>) &#123;</span><br><span class="line">  alert(<span class="number">3</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  alert(<span class="number">4</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、三元运算符"><a href="#2、三元运算符" class="headerlink" title="2、三元运算符"></a>2、三元运算符</h3><blockquote>
+<p>语法： 条件 ? 成立要做的事情 : 不成立要做的事情<br>相当于简单的 if else判断<br>并且三元运算符是有返回值的，当条件成立时三元运算符返回条件成立时的值，不成立时返回不成立的值。</p>
+</blockquote>
+<ul>
+<li>一般情况</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">if</span> (num &lt; <span class="number">10</span>) &#123;</span><br><span class="line">  num++;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  num--;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改写成三元运算符</span></span><br><span class="line"></span><br><span class="line">num &gt; <span class="number">10</span> ? num++ : num--;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>特殊情况：<ul>
+<li>如果三元运算符中条件成立或者不成立时不需要任何操作，我们用null/undefined/ void 0占位</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// num &gt; 10就++，否则啥也不做</span></span><br><span class="line"></span><br><span class="line">num &gt; <span class="number">10</span> ? num++ : <span class="literal">null</span>;</span><br><span class="line">num &gt; <span class="number">10</span> ? num++ : <span class="literal">undefined</span>;</span><br><span class="line">num &gt; <span class="number">10</span> ? num++ : <span class="keyword">void</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<pre><code>- 如果在条件成立（或不成立）时有多条语句，需要用小括号括起来，每条语句；</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">10</span>;</span><br><span class="line">num &gt;= <span class="number">10</span> ? (num++, num*=<span class="number">2</span>) : <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、switch-case"><a href="#3、switch-case" class="headerlink" title="3、switch case"></a>3、switch case</h3><p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (变量或者表达式) &#123;</span><br><span class="line">  <span class="keyword">case</span> 值<span class="number">1</span>:</span><br><span class="line">    变量或者表达式的值是值<span class="number">1</span>的时候执行的代码;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> 值<span class="number">2</span>:</span><br><span class="line">     变量或者表达式的值是值<span class="number">2</span>的时候执行的代码;</span><br><span class="line">     <span class="keyword">break</span>;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">case</span> 值n:</span><br><span class="line">    变量或者表达式的值是值<span class="number">1</span>的时候执行的代码;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    以上情况都不满足时，相当于<span class="keyword">else</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>switch case应用于变量（表达式）在不同值的情况下的不同操作，每一种case结束后都需要加break（break是结束整个判断）;</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">if</span> (num == <span class="number">10</span>) &#123;</span><br><span class="line">  num++;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (num == <span class="number">5</span>) &#123;</span><br><span class="line">  num--;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  num = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改写成switch case</span></span><br><span class="line"><span class="keyword">switch</span> (num) &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="number">10</span>:</span><br><span class="line">    num++;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">    num--;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    num = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：switch case 中每一个case的比较都是基于 === 绝对相等来完成判断的。即 10 === ‘10’ 是false。真实项目中常用绝对比较。</p>
+</blockquote>
+<p>【发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行】</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/31/JavaScript基础教程2/" data-id="ck1rjs4fz0003vopp15tya5b0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JavaScript基础教程1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/19/JavaScript基础教程1/" class="article-date">
@@ -89,7 +290,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="js引入方式"><a href="#js引入方式" class="headerlink" title="js引入方式"></a>js引入方式</h2><ul>
+        <h1 id="JS-数据类型和变量"><a href="#JS-数据类型和变量" class="headerlink" title="JS 数据类型和变量"></a>JS 数据类型和变量</h1><h2 id="js引入方式"><a href="#js引入方式" class="headerlink" title="js引入方式"></a>js引入方式</h2><ul>
 <li><p>行内式：通过向html元素行内添加一些js代码，如给div绑定点击事件</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">"alert('这是js代码')"</span>&gt;</span>这是一个div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -271,7 +472,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/JavaScript基础教程1/" data-id="ck1rj8m400000j8ppyjjefy33" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/19/JavaScript基础教程1/" data-id="ck1rjs4fn0000voppq45pbc2s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -331,7 +532,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/07/vueRender函数（3）/" data-id="ck1rj8m5r000uj8pp05p4sgi3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/07/vueRender函数（3）/" data-id="ck1rjs4ha000wvopptda28iq0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -423,7 +624,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/24/vueRender函数（2）/" data-id="ck1rj8m5o000rj8pp0gqoeew8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/24/vueRender函数（2）/" data-id="ck1rjs4h7000uvoppl36bq0mo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -529,7 +730,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/02/vueRender函数（1）/" data-id="ck1rj8m5k000pj8pp1y9ejbff" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/02/vueRender函数（1）/" data-id="ck1rjs4h4000rvoppp2ts3spb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -616,7 +817,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck1rj8m50000dj8ppdtq9neta" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck1rjs4gm000fvoppzznumqsv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -748,7 +949,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/12/flex布局/" data-id="ck1rj8m4s0008j8pp8mttqzif" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/12/flex布局/" data-id="ck1rjs4gb0008voppk8mnkmb3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li></ul>
@@ -1075,7 +1276,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck1rj8m53000fj8ppzuq9srl0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck1rjs4gx000mvopphpd906uq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1322,7 +1523,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck1rj8m4n0005j8pp4iog9tmv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck1rjs4gj000dvoppdf2ilri9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -1562,149 +1763,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck1rj8m4k0004j8ppf4tmbrkb" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-es6-1-let-cosnt" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/12/es6-1-let-cosnt/" class="article-date">
-  <time datetime="2017-05-12T14:32:25.000Z" itemprop="datePublished">2017-05-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/12/es6-1-let-cosnt/">ES6(1) let和const</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从这篇文章起，后面将会有一系列的文章和大家探讨es6，现在才说es6好像有点晚了，但是我们的前端团队还没有大规模应用es6。一直以来我也零零星星的学过一些es6，早在几年前就了解过，但是始终没有系统的学习过，这一次做分享，也是对自己的一个激励，争取这个系列可以覆盖全部的es6特性，想要学习的跟上吧。</p>
-<h2 id="块级作用域"><a href="#块级作用域" class="headerlink" title="块级作用域"></a>块级作用域</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在es6以前，ECMAScript是没有块级作用域的，这就带来了很多意外的情况，比如经典的for循环问题。</p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-    例 1：
-    var a = [];
-    for (var i = 0; i < 10; i++) {
-        a[i] = function (){
-            console.log(i);
-        }
-    }
-    a[3]();//10
-</code>
-</pre>
-
-<p>引入块级作用域后</p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-    例 2：
-    var a = [];
-    for (let i = 0; i < 10; i++) {
-        a[i] = function (){
-            console.log(i);
-        }
-    }
-    a[3]();//3
-</code>
-</pre>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;看了上面两段代码，块级作用域就是除字面量声明对象（{key: value}）以外的花括号代码块都构成块级作用域，但是现在有个问题值得思考。大家都知道，在js中变量是存在于作用域中的，在上面例1中，var i = 0;i存在的作用域就是全局（for循环外围无函数）作用域，所以for循环的i++每次都会修改全局作用域中的i。那么改成let声明后，变量的保存的作用域是不是改变了呢？下面代码我们模拟了块级作用域（不是很严谨，只是按照自己的猜测），其中循环体中的闭包模拟块级作用域。很显然，每次for循环（let声明）的循环体（花括号空的代码）执行一次就声明了一个块级作用域，变量i就保存在了块级作用域中，按照作用域查找机制，块级作用域延长了作用域链。同时由于数组a的引用，这个块级作用域并不会销毁，因而变量值得以保存。（仅个人理解）</p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-    var a = [];
-    for (var i = 0; i < 10; i++) {
-        a[i] = (function (i){
-            return function () {console.log(i)}
-        })(i);
-
-    }
-    a[3]();//3
-</code>
-</pre>
-
-<h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p>使用let 和 const将带来的暂时性死区：只要块级作用域内存在let命令，它所声明的变量就绑定在这个区域，不再受外部的影响。示例：</p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-    var tmp = 123;
-    if (true) {
-        tmp = 'abc';
-        let tmp;
-    }
-</code>
-</pre>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上面代码中存在全局变量tmp，但是块级作用域内let又声明了一个局部变量tmp，导致后者绑定这个块级作用域，所以在let语句之前调用变量，就会报错；ReferenceError；暂时性死区也意味着typeof不再是一个百分百安全的操作，因为你typeof这个变量仍然是访问变量，仍然会报错。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;与此同时，另一不可忽略的事实产生了，var除是用于变量声明的关键字，还具有变量提声（javascript预解释）的作用。而let和const并无此作用，仅用于变量的声明，因此在使用let和const声明的变量时，确认这些变量在被引用前（代码顺序）是否被声明将变得意义非同寻常。示例</p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-    console.log(tmp);//undefined
-    var tmp = 123;
-
-    if (true) {
-         console.log(wrong);//ReferenceError
-         let wrong = 'abc';
-    }
-</code>
-</pre>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第三，同var不同的是，let和const不允许重复声明。示例</p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-   function foo(declareParam){
-       let declareParam = 0; //报错  'declareParam' has already been declared
-   }
-   foo('aaa');//报错   但是得在方法执行的时候才报错
-
-   //但是请注意这种在块级作用域中的声明并不会收到这一影响
-   function fooWithBlockZone(declareParam){
-       { //这一花括号是块级作用域
-           let declareParam = 14;//这个不会报错
-       }
-   }
-   fooWithBlockZone('aa');//不报错
-</code>
-</pre>
-
-<h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const的作用域和let一样：只在声明所在的块级作用域内有效。const声明的常量也不存在变量提声，同样存在暂时性死区，只能在声明的位置后面使用。同样不能重复声明一个变量；const实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址不得改动，对于简单的数据类型（数值，字符串，布尔值），值就保存在保存变量指向的那个内存地址，因此等同于常量。但是对于复合型数据额类型（主要是对象和数组），变量指向的内存地址，保存的只是一个指针，const只能保证这个指针是固定的，至于他的指向的数据结构是否是不是可变的，就完全不能控制了，因此，将一个对象声明为常量必须非常小心；什么意思呢？就是说啊：当使用const声明一个复杂数据类型时，这个const只能保存指向这个复杂数据类型的地址不被改变，但是这个复杂数据类型的数据仍然可以操作：示例:</p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-  const objConst = {};
-  objConst.testAddPropIntoConstObj = 'yes,you guess it';
-  console.log(objConst);//虽然声明的是常量，但是给这个对象的内存地址中的内容还是可以操作的；
-
-
-  //如果你真想声明一个不可以修改的对象使用Object.freeze({})方法；示例
-  const objFrozen = Object.freeze({});//声明一个冻结常量；
-  objFrozen.prop = 'No,what a pity,what you guess is thoroughly wrong!';
-  //严格模式下使用这一行代码报错
-  //非严格模式不理会这行代码；
-  console.log(objFrozen);
-</code>
-</pre>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注意，在ES5中，在全局中声明的变量和挂载在全局中的属性是等价的，从ES6开始，全局变量将和顶层对象的属性脱离，为了改变这一点，一方面规定，为了保持兼容性，var 和 function声明的全局变量扔等同于顶层对象window/global的属性，但是使用let、const、class声明的全局变量不属于顶层对象。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck1rj8m4h0003j8ppficqphdq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck1rjs4g80005vopp9naffnl8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -1720,7 +1779,7 @@ console.log(ar2);//[0, 0]
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
   </nav>
 
 </section>
@@ -1766,6 +1825,10 @@ console.log(ar2);//[0, 0]
       <ul>
         
           <li>
+            <a href="/2018/03/31/JavaScript基础教程2/">基础教程 2</a>
+          </li>
+        
+          <li>
             <a href="/2018/03/19/JavaScript基础教程1/">基础教程 1 JS 数据类型和变量</a>
           </li>
         
@@ -1779,10 +1842,6 @@ console.log(ar2);//[0, 0]
         
           <li>
             <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
           </li>
         
       </ul>
