@@ -81,7 +81,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+      <a class="article-title" href="/2019/10/25/JavaScript进阶教程16/">进阶教程 16. PromiseA+</a>
     </h1>
   
 
@@ -89,7 +89,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="实现一个Promise"><a href="#实现一个Promise" class="headerlink" title="实现一个Promise"></a>实现一个Promise</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span> (executor) &#123;</span><br><span class="line">		<span class="comment">// this 是当前类的实例</span></span><br><span class="line">		<span class="comment">// 当resolve执行是，会把当前实例上成功的事件池中的所有函数挨个执行</span></span><br><span class="line">		<span class="comment">// 给实例添加两个事件池，一个是装成功的事件函数，一个装失败的事件函数</span></span><br><span class="line">		<span class="comment">// 初始化一个状态 pending</span></span><br><span class="line">		<span class="comment">// 初始化一个值value</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">this</span>.state = <span class="string">'pending'</span>;</span><br><span class="line">		<span class="keyword">this</span>.fulfilledEvent = [];</span><br><span class="line">		<span class="keyword">this</span>.rejectedEvent = [];</span><br><span class="line">		<span class="keyword">this</span>.value = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">let</span> resolve = <span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="comment">// 循环事件池中的函数，让其按个执行</span></span><br><span class="line">			<span class="comment">// 修改状态，一旦状态发生变更就不能再修改状态</span></span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">this</span>.state = <span class="string">'fulfilled'</span>;</span><br><span class="line">			<span class="keyword">this</span>.value = result;</span><br><span class="line">			setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">this</span>.fulfilledEvent.forEach(<span class="function"><span class="params">fulfillCb</span> =&gt;</span> &#123;</span><br><span class="line">					<span class="keyword">if</span> (<span class="keyword">typeof</span> fulfillCb === <span class="string">'function'</span>) fulfillCb(<span class="keyword">this</span>.value);</span><br><span class="line">				&#125;, <span class="number">0</span>)</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 当reject时，把实例上保存失败的事件池中的函数都执行了</span></span><br><span class="line">		<span class="keyword">let</span> reject = <span class="function">(<span class="params">reason</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">this</span>.state = <span class="string">'rejected'</span>;</span><br><span class="line">			<span class="keyword">this</span>.value = reason;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">let</span> timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">				clearTimeout(timer); <span class="comment">// 这里为啥要清除timer???</span></span><br><span class="line">				<span class="keyword">this</span>.rejectedEvent.forEach(<span class="function"><span class="params">rejectCb</span> =&gt;</span> &#123;</span><br><span class="line">					<span class="keyword">if</span> (<span class="keyword">typeof</span> rejectCb === <span class="string">'function'</span>) rejectCb(<span class="keyword">this</span>.value);</span><br><span class="line">				&#125;)</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 处理Promise的异常</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			executor(resolve, reject);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">			reject(e)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	then (resolveFn, rejectFn) &#123;</span><br><span class="line">		<span class="comment">// 如果then方法中没有传递resolveFn或者rejectFn，要自动补全</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!resolveFn) &#123;</span><br><span class="line">			resolveFn = <span class="function"><span class="params">result</span> =&gt;</span> result;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!rejectFn) &#123;</span><br><span class="line">			rejectFn = <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(reason)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="comment">// 不是直接把函数放进去，因为需要判断当前函数是否返回一个Promise实例</span></span><br><span class="line">			<span class="keyword">this</span>.fulfilledEvent.push(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					<span class="keyword">let</span> x = resolveFn(result);</span><br><span class="line">					x <span class="keyword">instanceof</span> MyPromise</span><br><span class="line">						? x.then(resolve, reject)</span><br><span class="line">						: resolve(result);</span><br><span class="line">				&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">					reject(e)</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">this</span>.rejectedEvent.push(<span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					<span class="keyword">let</span> x = rejectFn(reason);</span><br><span class="line">					x <span class="keyword">instanceof</span> MyPromise</span><br><span class="line">						? x.then(resolve, reject)</span><br><span class="line">						: resolve(x); <span class="comment">// 如果不是Promise实例，直接执行下一个then中的resolve</span></span><br><span class="line">				&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">					reject(e);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span> (executor) &#123;</span><br><span class="line">		<span class="comment">// this 是当前类的实例</span></span><br><span class="line">		<span class="comment">// 当resolve执行是，会把当前实例上成功的事件池中的所有函数挨个执行</span></span><br><span class="line">		<span class="comment">// 给实例添加两个事件池，一个是装成功的事件函数，一个装失败的事件函数</span></span><br><span class="line">		<span class="comment">// 初始化一个状态 pending</span></span><br><span class="line">		<span class="comment">// 初始化一个值value</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">this</span>.state = <span class="string">'pending'</span>;</span><br><span class="line">		<span class="keyword">this</span>.fulfilledEvent = [];</span><br><span class="line">		<span class="keyword">this</span>.rejectedEvent = [];</span><br><span class="line">		<span class="keyword">this</span>.value = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">let</span> resolve = <span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="comment">// 循环事件池中的函数，让其按个执行</span></span><br><span class="line">			<span class="comment">// 修改状态，一旦状态发生变更就不能再修改状态</span></span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">this</span>.state = <span class="string">'fulfilled'</span>;</span><br><span class="line">			<span class="keyword">this</span>.value = result;</span><br><span class="line">			setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">this</span>.fulfilledEvent.forEach(<span class="function"><span class="params">fulfillCb</span> =&gt;</span> &#123;</span><br><span class="line">					<span class="keyword">if</span> (<span class="keyword">typeof</span> fulfillCb === <span class="string">'function'</span>) fulfillCb(<span class="keyword">this</span>.value);</span><br><span class="line">				&#125;, <span class="number">0</span>)</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 当reject时，把实例上保存失败的事件池中的函数都执行了</span></span><br><span class="line">		<span class="keyword">let</span> reject = <span class="function">(<span class="params">reason</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">this</span>.state = <span class="string">'rejected'</span>;</span><br><span class="line">			<span class="keyword">this</span>.value = reason;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">let</span> timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">				clearTimeout(timer); <span class="comment">// 这里为啥要清除timer???</span></span><br><span class="line">				<span class="keyword">this</span>.rejectedEvent.forEach(<span class="function"><span class="params">rejectCb</span> =&gt;</span> &#123;</span><br><span class="line">					<span class="keyword">if</span> (<span class="keyword">typeof</span> rejectCb === <span class="string">'function'</span>) rejectCb(<span class="keyword">this</span>.value);</span><br><span class="line">				&#125;)</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 处理Promise的异常</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			executor(resolve, reject);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">			reject(e)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	then (resolveFn, rejectFn) &#123;</span><br><span class="line">		<span class="comment">// 如果then方法中没有传递resolveFn或者rejectFn，要自动补全</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!resolveFn) &#123;</span><br><span class="line">			resolveFn = <span class="function"><span class="params">result</span> =&gt;</span> result;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!rejectFn) &#123;</span><br><span class="line">			rejectFn = <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(reason)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="comment">// 不是直接把函数放进去，因为需要判断当前函数是否返回一个Promise实例</span></span><br><span class="line">			<span class="keyword">this</span>.fulfilledEvent.push(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					<span class="keyword">let</span> x = resolveFn(result);</span><br><span class="line">					x <span class="keyword">instanceof</span> MyPromise</span><br><span class="line">						? x.then(resolve, reject)</span><br><span class="line">						: resolve(result);</span><br><span class="line">				&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">					reject(e)</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">this</span>.rejectedEvent.push(<span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					<span class="keyword">let</span> x = rejectFn(reason);</span><br><span class="line">					x <span class="keyword">instanceof</span> MyPromise</span><br><span class="line">						? x.then(resolve, reject)</span><br><span class="line">						: resolve(x); <span class="comment">// 如果不是Promise实例，直接执行下一个then中的resolve</span></span><br><span class="line">				&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">					reject(e);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">	reject(<span class="string">'abc'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">4</span>)</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">5</span>)</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
 
@@ -98,7 +98,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/25/JavaScript进阶教程16/" data-id="ck2flbyfl000y9kpppygdpaoe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/25/JavaScript进阶教程16/" data-id="ck2flifbe000vycpp8u28f6jy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -124,7 +124,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+      <a class="article-title" href="/2019/10/06/JavaScript进阶教程15/">进阶教程 15. Promise 用法详解</a>
     </h1>
   
 
@@ -132,7 +132,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="三、Promise"><a href="#三、Promise" class="headerlink" title="三、Promise"></a>三、Promise</h2><h3 id="Promise-是什么？"><a href="#Promise-是什么？" class="headerlink" title="Promise 是什么？"></a>Promise 是什么？</h3><p>Promise: 是浏览器新增的内置类，用来管理异步；Promise本身是同步的，是用来管理异步的；传递给Promise的构造函数的回调函数是同步执行的；</p>
+        <h3 id="Promise-是什么？"><a href="#Promise-是什么？" class="headerlink" title="Promise 是什么？"></a>Promise 是什么？</h3><p>Promise: 是浏览器新增的内置类，用来管理异步；Promise本身是同步的，是用来管理异步的；传递给Promise的构造函数的回调函数是同步执行的；</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 这个函数中处理异步</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <h3 id="Promise实例对象有三种状态；"><a href="#Promise实例对象有三种状态；" class="headerlink" title="Promise实例对象有三种状态；"></a>Promise实例对象有三种状态；</h3><ul>
@@ -199,7 +199,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/06/JavaScript进阶教程15/" data-id="ck2flbyfc000q9kppijilud9m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/06/JavaScript进阶教程15/" data-id="ck2flifba000rycppourafc5s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -225,7 +225,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+      <a class="article-title" href="/2019/09/15/JavaScript进阶教程14/">进阶教程 14. 跨域和同源策略</a>
     </h1>
   
 
@@ -268,7 +268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/15/JavaScript进阶教程14/" data-id="ck2flbyfp00129kppxvleqt8e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/09/15/JavaScript进阶教程14/" data-id="ck2flifb8000pycppagmgo2rn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -294,7 +294,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+      <a class="article-title" href="/2019/08/29/JavaScript进阶教程13/">进阶教程 13. ajax的前世今生</a>
     </h1>
   
 
@@ -457,7 +457,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/29/JavaScript进阶教程13/" data-id="ck2flbyfa000o9kppijxism6u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/29/JavaScript进阶教程13/" data-id="ck2flifb6000nycpp6tdbqetw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -483,7 +483,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+      <a class="article-title" href="/2019/07/19/JavaScript进阶教程12/">进阶教程 12. DOM 事件扩展-发布订阅</a>
     </h1>
   
 
@@ -523,7 +523,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/19/JavaScript进阶教程12/" data-id="ck2flbyf0000k9kppopl1ghsv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/19/JavaScript进阶教程12/" data-id="ck2flifb5000lycppg43a0or6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -549,7 +549,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/16/JavaScript进阶教程11/">进阶教程 —— 10. 本地存储、http协议基础</a>
+      <a class="article-title" href="/2019/06/16/JavaScript进阶教程11/">进阶教程 10. 本地存储、http协议基础</a>
     </h1>
   
 
@@ -724,7 +724,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/16/JavaScript进阶教程11/" data-id="ck2flbyev000i9kppza047h9i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/16/JavaScript进阶教程11/" data-id="ck2flifb2000jycpp6s5y0em3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -750,7 +750,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/20/JavaScript进阶教程10/">进阶教程 —— 10. DOM 事件扩展-拖拽</a>
+      <a class="article-title" href="/2019/04/20/JavaScript进阶教程10/">进阶教程 10. DOM 事件扩展-拖拽</a>
     </h1>
   
 
@@ -840,7 +840,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/20/JavaScript进阶教程10/" data-id="ck2flbyf5000m9kppp8ch3bjm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/20/JavaScript进阶教程10/" data-id="ck2flifaz000hycppp17anobe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -866,7 +866,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/15/JavaScript进阶教程9/">进阶教程 —— 9. DOM 事件</a>
+      <a class="article-title" href="/2019/03/15/JavaScript进阶教程9/">进阶教程 9. DOM 事件</a>
     </h1>
   
 
@@ -1029,7 +1029,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/15/JavaScript进阶教程9/" data-id="ck2flbyfw00189kpp4k7dvco7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/15/JavaScript进阶教程9/" data-id="ck2flifbs0019ycppbhbaoagt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1055,7 +1055,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/22/JavaScript进阶教程8/">进阶教程 —— 8. 继承详解</a>
+      <a class="article-title" href="/2019/02/22/JavaScript进阶教程8/">进阶教程 8. 继承详解</a>
     </h1>
   
 
@@ -1153,7 +1153,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/22/JavaScript进阶教程8/" data-id="ck2flbyfy001a9kpplbvn5d2j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/22/JavaScript进阶教程8/" data-id="ck2flifbq0017ycpp97ealnkx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1179,7 +1179,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/17/JavaScript进阶教程7/">进阶教程 —— 7. JS 手写轮播图</a>
+      <a class="article-title" href="/2019/01/17/JavaScript进阶教程7/">进阶教程 7. JS 手写轮播图</a>
     </h1>
   
 
@@ -1265,7 +1265,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/17/JavaScript进阶教程7/" data-id="ck2flbyfu00169kppuk4rp5fs" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/17/JavaScript进阶教程7/" data-id="ck2flifbo0015ycppkjxr8kbg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1327,23 +1327,23 @@
       <ul>
         
           <li>
-            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 16. PromiseA+</a>
           </li>
         
           <li>
-            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 15. Promise 用法详解</a>
           </li>
         
           <li>
-            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 14. 跨域和同源策略</a>
           </li>
         
           <li>
-            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 13. ajax的前世今生</a>
           </li>
         
           <li>
-            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 12. DOM 事件扩展-发布订阅</a>
           </li>
         
       </ul>

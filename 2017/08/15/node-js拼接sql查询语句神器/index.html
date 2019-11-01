@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Bin">
 <meta property="og:description" content="前一阵子被迫分享了一次node.JS，在写sql时真是恼火的不得了。之前写php的时候发现php真是机智，php的双引号是可以识别变量的，而js就惨了，当写sql查询时，写变量得拼字符串，然后sql里本身就有不少的字符串，js的字符串还要单双循环。我真是欲哭无泪啊，写一个稍稍复杂点sql，就要改好几次。从网上找了半天，最后果断写一个。目前只支持增删改查，适合给用nodejs做后台写个小demo的玩">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-24T15:16:29.714Z">
+<meta property="og:updated_time" content="2019-11-01T03:45:18.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="node.js拼接sql查询语句神器">
 <meta name="twitter:description" content="前一阵子被迫分享了一次node.JS，在写sql时真是恼火的不得了。之前写php的时候发现php真是机智，php的双引号是可以识别变量的，而js就惨了，当写sql查询时，写变量得拼字符串，然后sql里本身就有不少的字符串，js的字符串还要单双循环。我真是欲哭无泪啊，写一个稍稍复杂点sql，就要改好几次。从网上找了半天，最后果断写一个。目前只支持增删改查，适合给用nodejs做后台写个小demo的玩">
@@ -111,17 +111,17 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;UPDATE&apos;, prop: &#123;points: 14&#125;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&#123;mId: 24&#125;]&#125;,</span><br><span class="line">    &#123;limit: true, num: 1&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//UPDATE members SET `points` =&apos;14&apos; WHERE `mId`=&apos;24&apos; LIMIT 1</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>查询—— %</li>
+<li>查询%</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;SELECT&apos;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;where: true, likeProp: &#123;mNum: 75, mName: &apos;刘&apos;, points: 12&#125;&#125;,</span><br><span class="line">     &#123;limit: false, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //SELECT  * FROM `members` WHERE mNum LIKE &apos;%75%&apos; AND mName LIKE &apos;%刘%&apos; AND points LIKE &apos;%12%&apos;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>查询—— % + AND/OR</li>
+<li>查询% + AND/OR</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;SELECT&apos;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;where: true, whereProp: [&#123;&apos;mNum&apos;: 7501, operator: &apos;=&apos;&#125;,&apos;OR&apos;, &#123;mName: &apos;刘想&apos;,operator: &apos;=&apos;&#125;, &apos;AND&apos;,&#123;points: 5, operator: &apos;&gt;&apos;&#125;]&#125;,</span><br><span class="line">     &#123;limit: false, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //SELECT  * FROM `members` WHERE `mNum`=&apos;7501&apos; OR `mName`=&apos;刘想&apos;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>查询——  % + AND+OR</li>
+<li>查询 % + AND+OR</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&apos;(&apos;, &#123;&apos;mNum&apos;: 7501, operator: &apos;=&apos;&#125;,&apos;OR&apos;, &#123;mName: &apos;刘想&apos;,operator: &apos;=&apos;&#125;,&apos;)&apos;, &apos;AND&apos;,&#123;points: 5, operator: &apos;&gt;&apos;&#125;]&#125;,</span><br><span class="line">    &#123;limit: false, num: 1&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT * FROM `members` WHERE ( `mNum`=&apos;7501&apos; OR `mName`=&apos;刘想&apos; ) AND `points`&gt;&apos;5&apos;</span><br></pre></td></tr></table></figure>
 
@@ -144,7 +144,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck2flbygq001p9kppgbjyz8d0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck2flifc9001qycpp5pn5cue3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -218,23 +218,23 @@
       <ul>
         
           <li>
-            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 16. PromiseA+</a>
           </li>
         
           <li>
-            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 15. Promise 用法详解</a>
           </li>
         
           <li>
-            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 14. 跨域和同源策略</a>
           </li>
         
           <li>
-            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 13. ajax的前世今生</a>
           </li>
         
           <li>
-            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 12. DOM 事件扩展-发布订阅</a>
           </li>
         
       </ul>

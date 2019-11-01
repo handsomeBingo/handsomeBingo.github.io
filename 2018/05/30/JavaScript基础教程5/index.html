@@ -5,19 +5,19 @@
   
 
   
-  <title>基础教程 —— 5. arguments、递归和函数表达式 | Bin</title>
+  <title>基础教程 5. arguments、递归和函数表达式 | Bin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="一、函数的实参集合-arguments 现在有个需求，需要写一个方法，求10数的和。 代码如下：   123456function sum(a, b, c, d, e, f, g, h, i, j) &amp;#123;  var total = a + b + c + d + e + f + g + h + i + j;  return total;&amp;#125;sum(1, 2, 3, 4, 5, 6,">
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基础教程 —— 5. arguments、递归和函数表达式">
+<meta property="og:title" content="基础教程 5. arguments、递归和函数表达式">
 <meta property="og:url" content="http://yoursite.com/2018/05/30/JavaScript基础教程5/index.html">
 <meta property="og:site_name" content="Bin">
 <meta property="og:description" content="一、函数的实参集合-arguments 现在有个需求，需要写一个方法，求10数的和。 代码如下：   123456function sum(a, b, c, d, e, f, g, h, i, j) &amp;#123;  var total = a + b + c + d + e + f + g + h + i + j;  return total;&amp;#125;sum(1, 2, 3, 4, 5, 6,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-01T03:22:09.740Z">
+<meta property="og:updated_time" content="2019-11-01T03:45:18.205Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基础教程 —— 5. arguments、递归和函数表达式">
+<meta name="twitter:title" content="基础教程 5. arguments、递归和函数表达式">
 <meta name="twitter:description" content="一、函数的实参集合-arguments 现在有个需求，需要写一个方法，求10数的和。 代码如下：   123456function sum(a, b, c, d, e, f, g, h, i, j) &amp;#123;  var total = a + b + c + d + e + f + g + h + i + j;  return total;&amp;#125;sum(1, 2, 3, 4, 5, 6,">
   
     <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
@@ -83,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      基础教程 —— 5. arguments、递归和函数表达式
+      基础教程 5. arguments、递归和函数表达式
     </h1>
   
 
@@ -119,7 +119,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum2</span>(<span class="params">n, m</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(n, m);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</span><br><span class="line"></span><br><span class="line">   <span class="built_in">arguments</span>它是一个类数组（不是数组，不能直接使用数组中的方法）</span><br><span class="line">   即使设置形参变量，形参该是什么还是什么，但是<span class="built_in">arguments</span>存储的是所有传进来的实参，所以<span class="built_in">arguments</span>被称为 实参集合</span><br><span class="line">   我们发现它有索引，有length，可以用<span class="keyword">for</span>循环遍历</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="number">0</span>: <span class="number">1</span>,</span><br><span class="line">     <span class="number">1</span>: <span class="number">2</span>,</span><br><span class="line">     <span class="number">2</span>: <span class="number">5</span>,</span><br><span class="line">     <span class="number">3</span>: <span class="number">7</span>,</span><br><span class="line">     <span class="number">4</span>: <span class="number">8</span></span><br><span class="line">     length: <span class="number">5</span>,</span><br><span class="line">     callee: 存储的当前函数本身 <span class="built_in">arguments</span>.callee == sum2 -&gt; <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sum2(<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">8</span>);</span><br></pre></td></tr></table></figure>
 
 <h3 id="ES6-不定参数"><a href="#ES6-不定参数" class="headerlink" title="ES6 不定参数"></a>ES6 不定参数</h3><ul>
-<li>ES6中提供了一个功能和arguments的功能相似的功能———— 不定参数</li>
+<li>ES6中提供了一个功能和arguments的功能相似的功能——不定参数</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">...arg</span>) </span>&#123;</span><br><span class="line">   ...叫做展开运算符</span><br><span class="line">   arg 是一个形参变量</span><br><span class="line">  <span class="built_in">console</span>.log(arg);  arg是一个数组</span><br><span class="line">&#125;</span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>);</span><br></pre></td></tr></table></figure>
 
@@ -397,7 +397,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/30/JavaScript基础教程5/" data-id="ck2flbyem000c9kpptizo2inx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/30/JavaScript基础教程5/" data-id="ck2flifag0005ycppyz4trlfl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -412,7 +412,7 @@
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          基础教程 —— 6. 数据去重算法、字符串常用方法
+          基础教程 6. 数据去重算法、字符串常用方法
         
       </div>
     </a>
@@ -420,7 +420,7 @@
   
     <a href="/2018/05/08/JavaScript基础教程4/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">基础教程 —— 4. JS 的函数</div>
+      <div class="article-nav-title">基础教程 4. JS 的函数</div>
     </a>
   
 </nav>
@@ -471,23 +471,23 @@
       <ul>
         
           <li>
-            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 16. PromiseA+</a>
           </li>
         
           <li>
-            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 15. Promise 用法详解</a>
           </li>
         
           <li>
-            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 14. 跨域和同源策略</a>
           </li>
         
           <li>
-            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 13. ajax的前世今生</a>
           </li>
         
           <li>
-            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 12. DOM 事件扩展-发布订阅</a>
           </li>
         
       </ul>
