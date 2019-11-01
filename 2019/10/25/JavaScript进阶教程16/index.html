@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>进阶教程 —— 16. PromiseA+ —— 实现一个 Promise | Bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="实现一个Promise123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990class MyPromise &amp;#">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进阶教程 —— 16. PromiseA+ —— 实现一个 Promise">
+<meta property="og:url" content="http://yoursite.com/2019/10/25/JavaScript进阶教程16/index.html">
+<meta property="og:site_name" content="Bin">
+<meta property="og:description" content="实现一个Promise123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990class MyPromise &amp;#">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-01T03:38:56.611Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="进阶教程 —— 16. PromiseA+ —— 实现一个 Promise">
+<meta name="twitter:description" content="实现一个Promise123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990class MyPromise &amp;#">
+  
+    <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Bin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行；</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript进阶教程16" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/10/25/JavaScript进阶教程16/" class="article-date">
+  <time datetime="2019-10-25T06:23:14.000Z" itemprop="datePublished">2019-10-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      进阶教程 —— 16. PromiseA+ —— 实现一个 Promise
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="实现一个Promise"><a href="#实现一个Promise" class="headerlink" title="实现一个Promise"></a>实现一个Promise</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPromise</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span> (executor) &#123;</span><br><span class="line">		<span class="comment">// this 是当前类的实例</span></span><br><span class="line">		<span class="comment">// 当resolve执行是，会把当前实例上成功的事件池中的所有函数挨个执行</span></span><br><span class="line">		<span class="comment">// 给实例添加两个事件池，一个是装成功的事件函数，一个装失败的事件函数</span></span><br><span class="line">		<span class="comment">// 初始化一个状态 pending</span></span><br><span class="line">		<span class="comment">// 初始化一个值value</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">this</span>.state = <span class="string">'pending'</span>;</span><br><span class="line">		<span class="keyword">this</span>.fulfilledEvent = [];</span><br><span class="line">		<span class="keyword">this</span>.rejectedEvent = [];</span><br><span class="line">		<span class="keyword">this</span>.value = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">let</span> resolve = <span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="comment">// 循环事件池中的函数，让其按个执行</span></span><br><span class="line">			<span class="comment">// 修改状态，一旦状态发生变更就不能再修改状态</span></span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">this</span>.state = <span class="string">'fulfilled'</span>;</span><br><span class="line">			<span class="keyword">this</span>.value = result;</span><br><span class="line">			setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">this</span>.fulfilledEvent.forEach(<span class="function"><span class="params">fulfillCb</span> =&gt;</span> &#123;</span><br><span class="line">					<span class="keyword">if</span> (<span class="keyword">typeof</span> fulfillCb === <span class="string">'function'</span>) fulfillCb(<span class="keyword">this</span>.value);</span><br><span class="line">				&#125;, <span class="number">0</span>)</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 当reject时，把实例上保存失败的事件池中的函数都执行了</span></span><br><span class="line">		<span class="keyword">let</span> reject = <span class="function">(<span class="params">reason</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">this</span>.state = <span class="string">'rejected'</span>;</span><br><span class="line">			<span class="keyword">this</span>.value = reason;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">let</span> timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">				clearTimeout(timer); <span class="comment">// 这里为啥要清除timer???</span></span><br><span class="line">				<span class="keyword">this</span>.rejectedEvent.forEach(<span class="function"><span class="params">rejectCb</span> =&gt;</span> &#123;</span><br><span class="line">					<span class="keyword">if</span> (<span class="keyword">typeof</span> rejectCb === <span class="string">'function'</span>) rejectCb(<span class="keyword">this</span>.value);</span><br><span class="line">				&#125;)</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 处理Promise的异常</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			executor(resolve, reject);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">			reject(e)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	then (resolveFn, rejectFn) &#123;</span><br><span class="line">		<span class="comment">// 如果then方法中没有传递resolveFn或者rejectFn，要自动补全</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!resolveFn) &#123;</span><br><span class="line">			resolveFn = <span class="function"><span class="params">result</span> =&gt;</span> result;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!rejectFn) &#123;</span><br><span class="line">			rejectFn = <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(reason)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="comment">// 不是直接把函数放进去，因为需要判断当前函数是否返回一个Promise实例</span></span><br><span class="line">			<span class="keyword">this</span>.fulfilledEvent.push(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					<span class="keyword">let</span> x = resolveFn(result);</span><br><span class="line">					x <span class="keyword">instanceof</span> MyPromise</span><br><span class="line">						? x.then(resolve, reject)</span><br><span class="line">						: resolve(result);</span><br><span class="line">				&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">					reject(e)</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">this</span>.rejectedEvent.push(<span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					<span class="keyword">let</span> x = rejectFn(reason);</span><br><span class="line">					x <span class="keyword">instanceof</span> MyPromise</span><br><span class="line">						? x.then(resolve, reject)</span><br><span class="line">						: resolve(x); <span class="comment">// 如果不是Promise实例，直接执行下一个then中的resolve</span></span><br><span class="line">				&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">					reject(e);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">	reject(<span class="string">'abc'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">4</span>)</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">5</span>)</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/10/25/JavaScript进阶教程16/" data-id="ck2flbyfl000y9kpppygdpaoe" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/10/06/JavaScript进阶教程15/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">进阶教程 —— 15. Promise 用法详解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Mabin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

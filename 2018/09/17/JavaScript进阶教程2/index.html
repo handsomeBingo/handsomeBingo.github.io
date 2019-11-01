@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>进阶教程 —— 2. 变量提升 | Bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="变量提升变量提升（预解释） 在js代码执行之前，对所有声明的变量 进行提前带var和带function变量进行提前声明和定义（赋值）； 对于带var的进行提前声明，不赋值（变量声明时不赋值，变量的默认值是undefined），只是浏览器知道有这么个变量。 对于带function的进行提前声明 并且赋值为函数定义本身变量提升结束后，代码才会从上到下执行。 当执行到var 变量 = 值；时，此时才会对">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进阶教程 —— 2. 变量提升">
+<meta property="og:url" content="http://yoursite.com/2018/09/17/JavaScript进阶教程2/index.html">
+<meta property="og:site_name" content="Bin">
+<meta property="og:description" content="变量提升变量提升（预解释） 在js代码执行之前，对所有声明的变量 进行提前带var和带function变量进行提前声明和定义（赋值）； 对于带var的进行提前声明，不赋值（变量声明时不赋值，变量的默认值是undefined），只是浏览器知道有这么个变量。 对于带function的进行提前声明 并且赋值为函数定义本身变量提升结束后，代码才会从上到下执行。 当执行到var 变量 = 值；时，此时才会对">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-01T03:22:10.033Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="进阶教程 —— 2. 变量提升">
+<meta name="twitter:description" content="变量提升变量提升（预解释） 在js代码执行之前，对所有声明的变量 进行提前带var和带function变量进行提前声明和定义（赋值）； 对于带var的进行提前声明，不赋值（变量声明时不赋值，变量的默认值是undefined），只是浏览器知道有这么个变量。 对于带function的进行提前声明 并且赋值为函数定义本身变量提升结束后，代码才会从上到下执行。 当执行到var 变量 = 值；时，此时才会对">
+  
+    <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Bin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行；</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript进阶教程2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/17/JavaScript进阶教程2/" class="article-date">
+  <time datetime="2018-09-17T14:33:28.000Z" itemprop="datePublished">2018-09-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      进阶教程 —— 2. 变量提升
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h2><h3 id="变量提升（预解释）"><a href="#变量提升（预解释）" class="headerlink" title="变量提升（预解释）"></a>变量提升（预解释）</h3><ul>
+<li>在js代码执行之前，对所有声明的变量 进行提前带var和带function变量进行提前声明和定义（赋值）；</li>
+<li>对于带var的进行提前声明，不赋值（变量声明时不赋值，变量的默认值是undefined），只是浏览器知道有这么个变量。</li>
+<li>对于带function的进行提前声明 并且赋值为函数定义本身<br>变量提升结束后，代码才会从上到下执行。</li>
+<li>当执行到var 变量 = 值；时，此时才会对变量进行赋值，即在此之后变量才代表这个值本身，在此之前是undefined；</li>
+<li>而当执行到function 函数名… 时，跳过，因为在变量提升阶段就已经完成了对变量的赋值过程。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// undefined 因为代码执行到这里时，num只是经过了变量提升阶段的声明，但是没有完成赋值，所以是undefined；</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">100</span>; <span class="comment">// 代码执行过这一行后完成了赋值，所以num是100</span></span><br><span class="line"><span class="built_in">console</span>.log(num);  <span class="comment">// 100</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(fe); <span class="comment">// 函数体本身，因为fe这个变量在函数执行时就已经赋值完成了，所以无论在函数声明前还是后使用都是函数本身</span></span><br><span class="line">fe(); <span class="comment">// 因为fe在变量提升阶段就已经完成了赋值，所以fe是一个函数，所以可以成功执行</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'We are Front-end Engineer'</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="变量提升和js运行机制"><a href="#变量提升和js运行机制" class="headerlink" title="变量提升和js运行机制"></a>变量提升和js运行机制</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">12</span>; <span class="comment">// 赋值操作，只在执行到这一行时，num才被赋值为12；</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	name: <span class="string">"江外"</span>,</span><br><span class="line">	age: <span class="string">'10'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(zf);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">zf</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> age = <span class="number">10</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(str, age);</span><br><span class="line">&#125;</span><br><span class="line">zf(<span class="string">'江外'</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="js的运行机制及原理："><a href="#js的运行机制及原理：" class="headerlink" title="js的运行机制及原理："></a>js的运行机制及原理：</h3><h4 id="js运行的环境（栈内存）：作用域"><a href="#js运行的环境（栈内存）：作用域" class="headerlink" title="js运行的环境（栈内存）：作用域"></a>js运行的环境（栈内存）：作用域</h4><p>作用域是js运行的环境，另外一个功能是保存基本数据类型。在js中作用域分为：</p>
+<pre><code>+全局作用域 ：当页面打开时，首先形成一个全局作用域，执行全局中的代码，全局作用域是window；
++私有作用域（函数作用域）当函数执行时，会形成一个函数作用域，这个作用域用来保存函数中的基本数据类型同时执行函数代码；
++块级作用域（类似私有作用域 ES6）</code></pre><h4 id="js运行过程"><a href="#js运行过程" class="headerlink" title="js运行过程"></a>js运行过程</h4><ul>
+<li>在js代码执行前，浏览器会开辟一个全局作用域，然后执行变量提升，完成变量提升操作后，代码开始从上到下开始执行；</li>
+<li>当执行时，如果遇到基本数据类型，就在作用域中存储该基本数据类型；</li>
+<li>如果遇到引用数据类型，则浏览器会再次分配一个堆内存，然后把引用数据类型的内容存储到堆内存中，接下来再把这个堆内存的地址赋值给变量（此时这个地址是存储在作用域内存中的）；</li>
+<li>遇到函数执行时，会经历以下几步：<ol>
+<li>浏览器开辟一个私有作用域；</li>
+<li>形参赋值，把执行时的实参赋值给函数形参变量；</li>
+<li>私有作用域中变量提升</li>
+<li>函数代码从上到下执行</li>
+</ol>
+</li>
+</ul>
+<h4 id="私有变量和全局变量"><a href="#私有变量和全局变量" class="headerlink" title="私有变量和全局变量"></a>私有变量和全局变量</h4><ul>
+<li>全局变量：在全局作用域中声明的变量</li>
+<li>私有变量：函数的形参以及在函数私有作用域中声明的变量</li>
+</ul>
+<h4 id="预解释只发生在当前作用域，如果函数不执行时，函数中的变量不会进行变量提升。"><a href="#预解释只发生在当前作用域，如果函数不执行时，函数中的变量不会进行变量提升。" class="headerlink" title="预解释只发生在当前作用域，如果函数不执行时，函数中的变量不会进行变量提升。"></a>预解释只发生在当前作用域，如果函数不执行时，函数中的变量不会进行变量提升。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> num = <span class="number">13</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// 报错：因为预解释发生在当前作用域中，而当前作用域没有num的变量，num是fn的私有变量。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="重复声明的问题"><a href="#重复声明的问题" class="headerlink" title="重复声明的问题"></a>重复声明的问题</h3><h4 id="1-同名变量只会声明一次，代表的值就是最后一次的值"><a href="#1-同名变量只会声明一次，代表的值就是最后一次的值" class="headerlink" title="1. 同名变量只会声明一次，代表的值就是最后一次的值"></a>1. 同名变量只会声明一次，代表的值就是最后一次的值</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num;</span><br><span class="line"><span class="keyword">var</span> num;</span><br><span class="line"><span class="keyword">var</span> num; <span class="comment">// 这些语句没有赋值操作，当代码执行时会略过</span></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">100</span>; <span class="comment">// num虽然var了4次，但是并不会声明4次，只会声明一次，同时只有这一次才会将num的值赋值成100；</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn(); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-变量提升时，function的优先级高于普通变量"><a href="#2-变量提升时，function的优先级高于普通变量" class="headerlink" title="2. 变量提升时，function的优先级高于普通变量"></a>2. 变量提升时，function的优先级高于普通变量</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(fe); <span class="comment">// 函数体</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 当代码执行到这里时，直接忽略，因为函数变量赋值已经在变量</span></span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'我是来自江外的FE'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fe = <span class="number">123</span>; <span class="comment">// 代码执行到这一行时，将变量fe的值修改为123</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-如果变量名和函数名同名，在执行到变量的赋值语句之前时，这个名字代表函数，但是当执行过变量赋值语句后，"><a href="#3-如果变量名和函数名同名，在执行到变量的赋值语句之前时，这个名字代表函数，但是当执行过变量赋值语句后，" class="headerlink" title="3. 如果变量名和函数名同名，在执行到变量的赋值语句之前时，这个名字代表函数，但是当执行过变量赋值语句后，"></a>3. 如果变量名和函数名同名，在执行到变量的赋值语句之前时，这个名字代表函数，但是当执行过变量赋值语句后，</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'FE'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fe = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// fe(); // 报错，因为执行到这里的时候fe不再代表一个函数了，而是一个数字</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="变量提升的细节问题"><a href="#变量提升的细节问题" class="headerlink" title="变量提升的细节问题"></a>变量提升的细节问题</h3><h4 id="1-等号右侧的不会进行变量提升，即使右侧是函数也不会进行变量提升"><a href="#1-等号右侧的不会进行变量提升，即使右侧是函数也不会进行变量提升" class="headerlink" title="1. 等号右侧的不会进行变量提升，即使右侧是函数也不会进行变量提升"></a>1. 等号右侧的不会进行变量提升，即使右侧是函数也不会进行变量提升</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fn(); // 报错，</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'来自等号右侧的你'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// console.log(x1); // 报错：x1 is not defined</span></span><br><span class="line"><span class="comment">// console.log(x); // undefined</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="function"><span class="keyword">function</span> <span class="title">x1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(x1);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-条件语句中的变量不管条件成立与否都会参与当前作用域中的变量提升；"><a href="#2-条件语句中的变量不管条件成立与否都会参与当前作用域中的变量提升；" class="headerlink" title="2. 条件语句中的变量不管条件成立与否都会参与当前作用域中的变量提升；"></a>2. 条件语句中的变量不管条件成立与否都会参与当前作用域中的变量提升；</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(n); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">NaN</span> === <span class="built_in">Number</span>(<span class="string">'I Love programming'</span>)) &#123;</span><br><span class="line">	<span class="keyword">var</span> n = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(n); <span class="comment">// undefined，以内条件不成立，所以赋值语句没执行，所以n仍然是undefined</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-函数中，return-下面的代码虽然不执行，但仍会进行函数作用域中的变量提升；"><a href="#3-函数中，return-下面的代码虽然不执行，但仍会进行函数作用域中的变量提升；" class="headerlink" title="3. 函数中，return 下面的代码虽然不执行，但仍会进行函数作用域中的变量提升；"></a>3. 函数中，return 下面的代码虽然不执行，但仍会进行函数作用域中的变量提升；</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(n); <span class="comment">// undefined</span></span><br><span class="line">	fe(); <span class="comment">// 执行了</span></span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">	<span class="keyword">var</span> n = <span class="number">123</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'前端工程师从入门到删库跑路'</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">add();</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-函数的返回值不参与变量提升；-return右边的不会参与变量提升"><a href="#4-函数的返回值不参与变量提升；-return右边的不会参与变量提升" class="headerlink" title="4. 函数的返回值不参与变量提升； return右边的不会参与变量提升"></a>4. 函数的返回值不参与变量提升； return右边的不会参与变量提升</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">minus</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(foo);</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'函数的返回值不参与变量提升'</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">minus();</span><br></pre></td></tr></table></figure>
+
+<h3 id="带var和不带var的区别"><a href="#带var和不带var的区别" class="headerlink" title="带var和不带var的区别"></a>带var和不带var的区别</h3><h4 id="1-在全局中，用var和function声明的变量，也相当于给window上添加一个同名属性"><a href="#1-在全局中，用var和function声明的变量，也相当于给window上添加一个同名属性" class="headerlink" title="1. 在全局中，用var和function声明的变量，也相当于给window上添加一个同名属性"></a>1. 在全局中，用var和function声明的变量，也相当于给window上添加一个同名属性</h4><ul>
+<li>全局作用域是一个内置对象 window<br>console.log(window);</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">2019</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.num); <span class="comment">// 2019</span></span><br><span class="line"><span class="built_in">window</span>.num = <span class="number">2020</span>;</span><br><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// 2020 num和window.num是绑定在一起的</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'num'</span> <span class="keyword">in</span> <span class="built_in">window</span>); <span class="comment">// in 运算符 检测对象是否有某个属性，有返回true，否则false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'FE'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.fe();</span><br><span class="line">fe();</span><br></pre></td></tr></table></figure>
+
+<h3 id="不带var-的不会参与变量提升"><a href="#不带var-的不会参与变量提升" class="headerlink" title="不带var 的不会参与变量提升"></a>不带var 的不会参与变量提升</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 报错：</span></span><br><span class="line">b = <span class="number">2</span>; <span class="comment">// 不带var 不会参与变量提升，所以不会提前声明和赋值</span></span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
+
+<h2 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h2><p>js中作用域</p>
+<ul>
+<li>全局作用域</li>
+<li>私有作用域</li>
+<li>块级作用域</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(n);</span><br><span class="line">&#125;</span><br><span class="line">fn(); <span class="comment">// 15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(x)</span><br><span class="line">&#125;</span><br><span class="line">fn3();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn3</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	x = <span class="number">16</span>;</span><br><span class="line">&#125;</span><br><span class="line">fn2();</span><br></pre></td></tr></table></figure>
+
+<h3 id="作用域链：变量的查找机制："><a href="#作用域链：变量的查找机制：" class="headerlink" title="作用域链：变量的查找机制："></a>作用域链：变量的查找机制：</h3><p>当在作用域中查找一个变量的时候，先看当前作用域中是否声明过这个变量，如果声明过，就使用这个变量，如果没有生命过，那么就去上级作用域（上级作用域就是函数声明时所在的作用域）查找，找到就使用，如果没有就一直向上查找，一直找到window为止，如果本次使用变量是赋值，那么就相当于给window上面增加一个属性，如果是引用变量，就会报错;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123; <span class="comment">// fe 是在全局中定义的，所以fe的上级作用域就是全局作用域</span></span><br><span class="line">  <span class="keyword">var</span> n = <span class="number">200</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 这个function就是在fe的作用域中定义的，所以该函数的上级作用域就是fe的作用域</span></span><br><span class="line">    <span class="built_in">console</span>.log(n) <span class="comment">// 200</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fn = fe();</span><br><span class="line">fn();</span><br></pre></td></tr></table></figure>
+
+<h3 id="上级作用域的确定："><a href="#上级作用域的确定：" class="headerlink" title="上级作用域的确定："></a>上级作用域的确定：</h3><ul>
+<li>如何查找上级作用域，就看这个函数是在哪里定义的。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123; <span class="comment">// fe 是在全局中定义的，所以fe的上级作用域就是全局作用域</span></span><br><span class="line">	<span class="keyword">var</span> n = <span class="number">200</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 这个function就是在fe的作用域中定义的，所以该函数的上级作用域就是fe的作用域</span></span><br><span class="line">		<span class="built_in">console</span>.log(n) <span class="comment">// 200</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fn = fe();</span><br><span class="line">fn();</span><br></pre></td></tr></table></figure>
+
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程2/" data-id="ck2flbyfe000s9kppjsf036jn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/17/JavaScript进阶教程1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          进阶教程 —— 1. 闭包、this、和面向对象
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/27/JavaScript基础教程8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">基础教程 —— 6. JS DOM 操作和属性操作</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Mabin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

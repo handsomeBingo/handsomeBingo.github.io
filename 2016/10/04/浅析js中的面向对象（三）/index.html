@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Bin">
 <meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;前面两篇文章，我们介绍了对象的一些特性以及面向对象的常见的封装方式，今天我们来继续讨论另外两个的关于面向对象中的重点:继承和多态；继承是所有面向对象语言津津乐道的概念，后面讲述的继承方式大多基于原型模式、构造函数模式的，如果想更好的了解继承的概念，还希望大家好好看看上一篇文章中有关原型模式的论述。&amp;#160; &amp;#160; &amp;#160; &amp;#1">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-10-10T13:27:09.757Z">
+<meta property="og:updated_time" content="2019-11-01T03:22:09.599Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析js中的面向对象（三）">
 <meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;前面两篇文章，我们介绍了对象的一些特性以及面向对象的常见的封装方式，今天我们来继续讨论另外两个的关于面向对象中的重点:继承和多态；继承是所有面向对象语言津津乐道的概念，后面讲述的继承方式大多基于原型模式、构造函数模式的，如果想更好的了解继承的概念，还希望大家好好看看上一篇文章中有关原型模式的论述。&amp;#160; &amp;#160; &amp;#160; &amp;#1">
@@ -95,7 +95,7 @@
 <ul>
 <li>原型继承：<br>&#160; &#160; &#160; &#160;原型继承的实现原理，子类的原型指向父类的一个实例；这样父类公有和私有的方法和属性都成为了子类公有的方法和属性；<br>示例：</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function Super()&#123;//父类</span><br><span class="line">    this.delete=functinon(item)&#123;&#125;</span><br><span class="line">&#125;   </span><br><span class="line">Super.prototype.edit=function()&#123;&#125;;</span><br><span class="line">function Sub()&#123;//子类&#125;</span><br><span class="line"></span><br><span class="line">子类想调用父类的delete和edit方法，只需要将子类的原型指向父类的实例；</span><br><span class="line">Sub.prototype=new Super();//继承实现的核心代码</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function Super()&#123;//父类</span><br><span class="line">    this.delete=functinon(item)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">Super.prototype.edit=function()&#123;&#125;;</span><br><span class="line">function Sub()&#123;//子类&#125;</span><br><span class="line"></span><br><span class="line">子类想调用父类的delete和edit方法，只需要将子类的原型指向父类的实例；</span><br><span class="line">Sub.prototype=new Super();//继承实现的核心代码</span><br></pre></td></tr></table></figure>
 
 <p> &#160; &#160; 原型继承虽然操作很简单，但是应该注意以下问题；</p>
 <ul>
@@ -107,31 +107,30 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sub.prototype.constructor=Sub;//手动修改子类的构造函数指向；</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>call继承：<br>&#160; &#160; &#160; &#160;原型继承中，是将父类的公有和私有的方法都继承到了子类的公有的，但有时我们并不希望都继承了，很多场景下我们只需要继承某个类私有的方法即可，这时候就要用到call继承了。<br>&#160; &#160; &#160; &#160;call继承的实现原理，call方法是用来this关键字的方法，而在构造函数中的this都是当前类的实例，所以在子类的构造函数中call执行父类的构造函数（不通过new关键字），把父类构造函数中的this关键字修改为子类构造函数中的this，这样，父类实例的私有属性和方法都随着父类构造函数的执行继承到了子类的的实例身上。示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function Super()&#123;//父类</span><br><span class="line">  this.delete=functinon(item)&#123;&#125;</span><br><span class="line">&#125;;   </span><br><span class="line">  Super.prototype.edit=function()&#123;&#125;;</span><br><span class="line">function Sub()&#123;//子类</span><br><span class="line">  this.generation=son;</span><br><span class="line">  Super.call(this);//call继承的实现的核心代码</span><br><span class="line">&#125;;</span><br><span class="line">```  </span><br><span class="line">- 混合继承：</span><br><span class="line">&amp;#160; &amp;#160; &amp;#160; &amp;#160;原型继承是将父类的私有和公有的都变成子类的公有的，而call继承是将父类私有的变成子类私有的，那么有没有一种继承，让父类公有的变成子类公有的，父类私有的变成子类私有的?混合继承就解决了这个问题；</span><br><span class="line">&amp;#160; &amp;#160; &amp;#160; &amp;#160;混合继承是原型继承和call继承混合，如此一来类公有的变成子类公有的，父类私有的变成子类私有。但是在子类的公有中多了一份父类私有的，但是原型查找机制是先查找子类私有，瑕不掩瑜，混合继承的优势还是很突出的。示例：</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function Super()&#123;//父类</span><br><span class="line">  this.delete=functinon(item)&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">  Super.prototype.edit=function()&#123;&#125;;</span><br><span class="line">function Sub()&#123;//子类</span><br><span class="line">  this.generation=son;</span><br><span class="line">  Super.call(this);//call继承的实现的核心代码</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>混合继承：<br>&#160; &#160; &#160; &#160;原型继承是将父类的私有和公有的都变成子类的公有的，而call继承是将父类私有的变成子类私有的，那么有没有一种继承，让父类公有的变成子类公有的，父类私有的变成子类私有的?混合继承就解决了这个问题；<br>&#160; &#160; &#160; &#160;混合继承是原型继承和call继承混合，如此一来类公有的变成子类公有的，父类私有的变成子类私有。但是在子类的公有中多了一份父类私有的，但是原型查找机制是先查找子类私有，瑕不掩瑜，混合继承的优势还是很突出的。示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function Super()&#123;//父类</span><br><span class="line">  this.delete=functinon(item)&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">Super.prototype.edit=function()&#123;&#125;;</span><br><span class="line">Sub.prototype=new Super();//原型继承核心代码</span><br><span class="line">Sub.prototype.contructor=Sub;//修改constructor指向</span><br><span class="line">function Sub()&#123;//子类</span><br><span class="line">   this.generation=son;</span><br><span class="line">   Super.call(this);//call继承的实现的核心代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>中间件继承：<br>&#160; &#160; &#160; &#160;中间件继承的实现依赖于<strong>proto</strong>属性，子类原型上的<strong>proto</strong>默认是指向Object的原型的，我们在在<strong>proto</strong>指向Object.prototype之前插入父类的原型。中间件继承其实是延长了子类的原型链，中间件继承是将父类公有的继承到了子类公有的。示例：</p>
 </li>
 </ul>
-<p>function Super(){//父类<br>  this.delete=functinon(item){}<br>};<br>Super.prototype.edit=function(){};<br>Sub.prototype=new Super();//原型继承核心代码<br>Sub.prototype.contructor=Sub;//修改constructor指向<br>function Sub(){//子类<br>   this.generation=son;<br>   Super.call(this);//call继承的实现的核心代码<br>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 中间件继承：</span><br><span class="line">&amp;#160; &amp;#160; &amp;#160; &amp;#160;中间件继承的实现依赖于__proto__属性，子类原型上的__proto__默认是指向Object的原型的，我们在在__proto__指向Object.prototype之前插入父类的原型。中间件继承其实是延长了子类的原型链，中间件继承是将父类公有的继承到了子类公有的。示例：</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function Super()&#123;//父类</span><br><span class="line">  this.delete=functinon(item)&#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Super.prototype.edit=function()&#123;&#125;;</span><br><span class="line">function Sub()&#123;//子类</span><br><span class="line">    this.generation=son;</span><br><span class="line">&#125;</span><br><span class="line">Sub.prototype.__proto__=Super.prototype;//中间件继承核心代码</span><br><span class="line"></span><br><span class="line">值得注意的是，.__proto__在ie下不兼容，所以慎重使用；</span><br></pre></td></tr></table></figure>
 
-<p>function Super(){//父类<br>  this.delete=functinon(item){<br>  }<br>};<br>Super.prototype.edit=function(){};<br>function Sub(){//子类<br>    this.generation=son;<br>}<br>Sub.prototype.<strong>proto</strong>=Super.prototype;//中间件继承核心代码 </p>
-<p>值得注意的是，.<strong>proto</strong>在ie下不兼容，所以慎重使用；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 扩展：</span><br><span class="line">巧用Object.create(proObj)方法实现继承（from珠峰培训周啸天）</span><br><span class="line">该继承方式很巧妙，利用的是这个方法的返回值是一个以proObj为原型的对象，其实现原理和中间件继承是一样的。但是在IE8- 不兼容。示例：</span><br></pre></td></tr></table></figure>
+<ul>
+<li>扩展：<br>巧用Object.create(proObj)方法实现继承（from江外琉璃周啸天）<br>该继承方式很巧妙，利用的是这个方法的返回值是一个以proObj为原型的对象，其实现原理和中间件继承是一样的。但是在IE8- 不兼容。示例：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function Super()&#123;//父类</span><br><span class="line">  this.delete=functinon(item)&#123;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line">Super.prototype.edit=function()&#123;&#125;;</span><br><span class="line">function Sub()&#123;//子类</span><br><span class="line">   this.generation=son;</span><br><span class="line">&#125;;</span><br><span class="line">Sub.prototype. = Object.create(Super.prototype);//核心代码</span><br><span class="line">虽然该方法不兼容，我尝试了简单模拟Object.create方法，代码如下</span><br><span class="line">function(obj)&#123;</span><br><span class="line">  function Fn()&#123;&#125;;</span><br><span class="line">  Fn.prototype=obj;</span><br><span class="line">  return new Fn();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>function Super(){//父类<br>  this.delete=functinon(item){};<br>};<br>Super.prototype.edit=function(){};<br>function Sub(){//子类<br>   this.generation=son;<br>};<br>Sub.prototype. = Object.create(Super.prototype);//核心代码<br>虽然该方法不兼容，我尝试了简单模拟Object.create方法，代码如下<br>function(obj){<br>  function Fn(){};<br>  Fn.prototype=obj;<br>  return new Fn();<br>};</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&amp;#160; &amp;#160; &amp;#160; &amp;#160;以上是有关于面向对象的继承，最后在说说js中面向对象的多态，多态包括重载和重写；在这里重点强调，js中不能像传统的面向对象那样实现重载，在其他语言中(如java)中，可以为一个函数编写两个定义，只要这两个定义的签名不同即可。（这句话是说，在java等后台语言中，可以定义两个同名函数，只要这两个函数的参数的类型或个数不同即可），当调用时，根据传递参数的不同，机制会自动调用方法。但是，在js中，如果定义多个同名函数，在预解释阶段就会被覆盖，以最后一个为准；在js中有一个现象类似于重载，但是绝不是重载；示例：</span><br></pre></td></tr></table></figure>
+<p>&#160; &#160; &#160; &#160;以上是有关于面向对象的继承，最后在说说js中面向对象的多态，多态包括重载和重写；在这里重点强调，js中不能像传统的面向对象那样实现重载，在其他语言中(如java)中，可以为一个函数编写两个定义，只要这两个定义的签名不同即可。（这句话是说，在java等后台语言中，可以定义两个同名函数，只要这两个函数的参数的类型或个数不同即可），当调用时，根据传递参数的不同，机制会自动调用方法。但是，在js中，如果定义多个同名函数，在预解释阶段就会被覆盖，以最后一个为准；在js中有一个现象类似于重载，但是绝不是重载；示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function sum(num)&#123;</span><br><span class="line">	if(typeof num===”undefined”)&#123;</span><br><span class="line"> 		return 0</span><br><span class="line">&#125;</span><br><span class="line">return num++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>function sum(num){<br>    if(typeof num===”undefined”){<br>         return 0<br>}<br>return num++;<br>}</p>
-<pre><code>&amp;#160; &amp;#160; &amp;#160; &amp;#160;在上面的例子中，虽然参数传与不传时结果不同，但是请大家注意中重点，重载是定义**多个**同名方法，当参数不同时自动调用对应方法执行，而这里是虽然参数不同，但是调用的始终都是**一个**sum方法；
+<p>&#160; &#160; &#160; &#160;在上面的例子中，虽然参数传与不传时结果不同，但是请大家注意中重点，重载是定义<strong>多个</strong>同名方法，当参数不同时自动调用对应方法执行，而这里是虽然参数不同，但是调用的始终都是<strong>一个</strong>sum方法；</p>
 
-
-
-
-</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/04/浅析js中的面向对象（三）/" data-id="ck1rjy8cl000z0kppje7cbuqm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/04/浅析js中的面向对象（三）/" data-id="ck2flbyhj002b9kppditnmlm3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -192,7 +191,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
     </div>
   </div>
 
@@ -205,23 +204,23 @@
       <ul>
         
           <li>
-            <a href="/2018/03/31/JavaScript基础教程2/">基础教程 —— 2. 数据类型深入</a>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
           </li>
         
           <li>
-            <a href="/2018/03/19/JavaScript基础教程1/">基础教程 —— 1. JS 数据类型和变量</a>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
           </li>
         
           <li>
-            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
           </li>
         
           <li>
-            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
           </li>
         
           <li>
-            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
           </li>
         
       </ul>

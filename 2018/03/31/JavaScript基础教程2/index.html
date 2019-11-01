@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Bin">
 <meta property="og:description" content="一、普通对象 js中的普通对象：无序的键值对集合。 由大括号包裹起来的{key: value} 由零到多组属性名和属性值（键值对）组成。属性名可以是数字、字母、或者下划线等，并且属性名都是字符串类型的。  属性是用来描述当前对象特征的，属性名是当前对象具备的特征，属性值是这个特征的描述，一组属性名和属性值成为一组键值对 声明对象123456var feTraining = &amp;#123;    na">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-15T07:55:46.931Z">
+<meta property="og:updated_time" content="2019-11-01T03:22:09.773Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础教程 —— 2. 数据类型深入">
 <meta name="twitter:description" content="一、普通对象 js中的普通对象：无序的键值对集合。 由大括号包裹起来的{key: value} 由零到多组属性名和属性值（键值对）组成。属性名可以是数字、字母、或者下划线等，并且属性名都是字符串类型的。  属性是用来描述当前对象特征的，属性名是当前对象具备的特征，属性值是这个特征的描述，一组属性名和属性值成为一组键值对 声明对象123456var feTraining = &amp;#123;    na">
@@ -97,7 +97,7 @@
 <li>由零到多组属性名和属性值（键值对）组成。属性名可以是数字、字母、或者下划线等，并且属性名都是字符串类型的。</li>
 </ul>
 <p><code>属性是用来描述当前对象特征的，属性名是当前对象具备的特征，属性值是这个特征的描述，一组属性名和属性值成为一组键值对</code></p>
-<h4 id="声明对象"><a href="#声明对象" class="headerlink" title="声明对象"></a>声明对象</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> feTraining = &#123;</span><br><span class="line">    name: <span class="string">'珠峰培训'</span>,</span><br><span class="line">    age: <span class="number">9</span>,</span><br><span class="line">    characters: <span class="string">'专注前端10年'</span>,</span><br><span class="line">    <span class="number">9</span>: <span class="string">'age'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="声明对象"><a href="#声明对象" class="headerlink" title="声明对象"></a>声明对象</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> feTraining = &#123;</span><br><span class="line">    name: <span class="string">'江外琉璃'</span>,</span><br><span class="line">    age: <span class="number">9</span>,</span><br><span class="line">    characters: <span class="string">'琉璃镶内江10年'</span>,</span><br><span class="line">    <span class="number">9</span>: <span class="string">'age'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="对象的操作：键值对的增删改查"><a href="#对象的操作：键值对的增删改查" class="headerlink" title="对象的操作：键值对的增删改查"></a>对象的操作：键值对的增删改查</h4><ul>
 <li>获取对象的某个属性的值<ul>
@@ -136,7 +136,7 @@
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> feTraining.age;</span><br><span class="line"><span class="built_in">console</span>.log(feTraining);</span><br><span class="line"></span><br><span class="line">feTraining.courses = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(feTraining); <span class="comment">// course属性名还在，只是值为null了</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="思考？"><a href="#思考？" class="headerlink" title="思考？"></a>思考？</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'珠峰培训'</span>,</span><br><span class="line">    age: <span class="number">10</span></span><br><span class="line">&#125;;</span><br><span class="line">obj.name <span class="comment">// '珠峰培训'</span></span><br><span class="line">obj[<span class="string">'name'</span>] <span class="comment">// '珠峰培训'</span></span><br><span class="line">obj[name] ?? =+ name和 <span class="string">'name'</span>有什么区别？<span class="string">'name'</span>表示的是一个字符串，而name表示一个变量名</span><br></pre></td></tr></table></figure>
+<h3 id="思考？"><a href="#思考？" class="headerlink" title="思考？"></a>思考？</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'江外琉璃'</span>,</span><br><span class="line">    age: <span class="number">10</span></span><br><span class="line">&#125;;</span><br><span class="line">obj.name <span class="comment">// '江外琉璃'</span></span><br><span class="line">obj[<span class="string">'name'</span>] <span class="comment">// '江外琉璃'</span></span><br><span class="line">obj[name] ?? =+ name和 <span class="string">'name'</span>有什么区别？<span class="string">'name'</span>表示的是一个字符串，而name表示一个变量名</span><br></pre></td></tr></table></figure>
 
 <p><code>对象中的属性名都是字符串类型的</code></p>
 <hr>
@@ -147,7 +147,7 @@
 <h4 id="数组的操作"><a href="#数组的操作" class="headerlink" title="数组的操作"></a>数组的操作</h4><p>数组的键是数字，所以只能用方括号的方式获取、修改，而且写在方括号里面的属性名不需要用引号包裹；</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [<span class="number">12</span>, <span class="number">23</span>];</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">0</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary<span class="number">.0</span>); <span class="comment">// 报错</span></span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">1</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">2</span>]); <span class="comment">// 访问一个数组不存在的索引，会得到一个undefined</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="三、基本数据类型和引用数据类型的区别"><a href="#三、基本数据类型和引用数据类型的区别" class="headerlink" title="三、基本数据类型和引用数据类型的区别"></a>三、基本数据类型和引用数据类型的区别</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">b = <span class="number">13</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 12</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 13</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj1 = &#123;</span><br><span class="line">  name: <span class="string">'珠峰'</span>,</span><br><span class="line">  age: <span class="number">10</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = obj1;</span><br><span class="line">obj2.age = <span class="number">100</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj1.age); <span class="comment">// 100</span></span><br><span class="line"><span class="built_in">console</span>.log(obj2.age); <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+<h2 id="三、基本数据类型和引用数据类型的区别"><a href="#三、基本数据类型和引用数据类型的区别" class="headerlink" title="三、基本数据类型和引用数据类型的区别"></a>三、基本数据类型和引用数据类型的区别</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">b = <span class="number">13</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 12</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 13</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj1 = &#123;</span><br><span class="line">  name: <span class="string">'江外'</span>,</span><br><span class="line">  age: <span class="number">10</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = obj1;</span><br><span class="line">obj2.age = <span class="number">100</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj1.age); <span class="comment">// 100</span></span><br><span class="line"><span class="built_in">console</span>.log(obj2.age); <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="为什么会有这种情况？"><a href="#为什么会有这种情况？" class="headerlink" title="为什么会有这种情况？"></a>为什么会有这种情况？</h3><p>基本数据类型（也叫做值类型）的操作，直接操作就是这个值，意思就是说变量本身就代表这个值。所以： var b = a;  存储12这个值，然后声明一个变量b，然后让变量b和这个新的12关联起来。这一行和 var b = 12本质上没有任何区别；</p>
 <p>引用数据类型都是存放在堆内存空间中的，同时这个堆内存空间有一个十六进制的内存地址。我们在声明一个引用数据类型时，不是直接把对象赋值给变量，而是把对象的堆内存地址赋值给变量。<br>所以引用数据类型的操作不是直接操作的值，而是操作它的引用数据类型的堆内存地址。所以var obj2 = obj1; 只是把obj1代表的堆内存地址地址赋值给了变量obj2。<br>所以obj2.age = 100;是通过obj2的堆内存地址找到堆内存地址中的存储的age的值，把它修改成100。同时，我们访问obj1.name 时也是先通过obj1存储的堆内存地址找到内存空间，然后从里面把属性age的值取到，此时这个内存空间中的值已经修改成100了。所以obj.name 也是100</p>
@@ -168,7 +168,7 @@
 <li>运算符是有固定功能的关键字或者符号。它通过操作值也可以得到返回结果，与方法不同的是运算符不需要小括号。</li>
 <li>语法：!需要取反的值 ；得到 取反后的布尔值。其内部机制是先把其他数据类型转换成布尔值，然后再取反。<br>转换规律：在js中只有 0/NaN/空字符串’’/null/undefined 这5个值转换成布尔值是false，其余的都是true。</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'珠峰培训，10年专注前端'</span>;</span><br><span class="line"><span class="keyword">var</span> result = !str;</span><br><span class="line"><span class="comment">// 内部运作机制：</span></span><br><span class="line"><span class="comment">// 第一步先将str转换成布尔值，str不属于那5个值，所以 Boolean(str) =+ true</span></span><br><span class="line"><span class="comment">// 然后再取反，true 取反 =+ false</span></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'江外琉璃，10年琉璃镶内江'</span>;</span><br><span class="line"><span class="keyword">var</span> result = !str;</span><br><span class="line"><span class="comment">// 内部运作机制：</span></span><br><span class="line"><span class="comment">// 第一步先将str转换成布尔值，str不属于那5个值，所以 Boolean(str) =+ true</span></span><br><span class="line"><span class="comment">// 然后再取反，true 取反 =+ false</span></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>!! 运算符 等效于 Boolean方法</li>
@@ -264,7 +264,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/31/JavaScript基础教程2/" data-id="ck1rjy8b500030kppw1ih22p2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/31/JavaScript基础教程2/" data-id="ck2flbyc200039kppgkj12ik9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -274,6 +274,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2018/04/15/JavaScript基础教程3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          基础教程 —— 3. JS 逻辑运算符和 DOM 对象
+        
+      </div>
+    </a>
   
   
     <a href="/2018/03/19/JavaScript基础教程1/" id="article-nav-older" class="article-nav-link-wrap">
@@ -316,7 +325,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
     </div>
   </div>
 
@@ -329,23 +338,23 @@
       <ul>
         
           <li>
-            <a href="/2018/03/31/JavaScript基础教程2/">基础教程 —— 2. 数据类型深入</a>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
           </li>
         
           <li>
-            <a href="/2018/03/19/JavaScript基础教程1/">基础教程 —— 1. JS 数据类型和变量</a>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
           </li>
         
           <li>
-            <a href="/2017/12/07/vueRender函数（3）/">vueRender函数（3）</a>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
           </li>
         
           <li>
-            <a href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
           </li>
         
           <li>
-            <a href="/2017/10/02/vueRender函数（1）/">vueRender函数（1）</a>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
           </li>
         
       </ul>

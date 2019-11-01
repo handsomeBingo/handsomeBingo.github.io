@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>基础教程 —— 6. Date 类型和定时器 | Bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、Date类型1. js中获去日期时间1234var date = new Date(); // Date是一个类型，我们通过new操作符获取Date的实例console.log(date); // 这个date是标准的时间格式console.log(typeof date); // date实例是一个对象数据类型的值  2. Date实例方法2.1 getFullYear() 获取4位年份，返">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础教程 —— 6. Date 类型和定时器">
+<meta property="og:url" content="http://yoursite.com/2018/07/09/JavaScript基础教程7/index.html">
+<meta property="og:site_name" content="Bin">
+<meta property="og:description" content="一、Date类型1. js中获去日期时间1234var date = new Date(); // Date是一个类型，我们通过new操作符获取Date的实例console.log(date); // 这个date是标准的时间格式console.log(typeof date); // date实例是一个对象数据类型的值  2. Date实例方法2.1 getFullYear() 获取4位年份，返">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-01T03:07:50.321Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基础教程 —— 6. Date 类型和定时器">
+<meta name="twitter:description" content="一、Date类型1. js中获去日期时间1234var date = new Date(); // Date是一个类型，我们通过new操作符获取Date的实例console.log(date); // 这个date是标准的时间格式console.log(typeof date); // date实例是一个对象数据类型的值  2. Date实例方法2.1 getFullYear() 获取4位年份，返">
+  
+    <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Bin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行；</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript基础教程7" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/09/JavaScript基础教程7/" class="article-date">
+  <time datetime="2018-07-09T15:07:06.000Z" itemprop="datePublished">2018-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基础教程 —— 6. Date 类型和定时器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、Date类型"><a href="#一、Date类型" class="headerlink" title="一、Date类型"></a>一、Date类型</h2><h3 id="1-js中获去日期时间"><a href="#1-js中获去日期时间" class="headerlink" title="1. js中获去日期时间"></a>1. js中获去日期时间</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>(); <span class="comment">// Date是一个类型，我们通过new操作符获取Date的实例</span></span><br><span class="line"><span class="built_in">console</span>.log(date); <span class="comment">// 这个date是标准的时间格式</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> date); <span class="comment">// date实例是一个对象数据类型的值</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Date实例方法"><a href="#2-Date实例方法" class="headerlink" title="2. Date实例方法"></a>2. Date实例方法</h3><h4 id="2-1-getFullYear-获取4位年份，返回4位年份"><a href="#2-1-getFullYear-获取4位年份，返回4位年份" class="headerlink" title="2.1 getFullYear() 获取4位年份，返回4位年份"></a>2.1 getFullYear() 获取4位年份，返回4位年份</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> year = date.getFullYear();</span><br><span class="line"><span class="built_in">console</span>.log(year);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-getMonth-获取月份，返回0-11的数字，0代表1月份，11代表12月份"><a href="#2-2-getMonth-获取月份，返回0-11的数字，0代表1月份，11代表12月份" class="headerlink" title="2.2 getMonth() 获取月份，返回0-11的数字，0代表1月份，11代表12月份"></a>2.2 getMonth() 获取月份，返回0-11的数字，0代表1月份，11代表12月份</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> month = date.getMonth();</span><br><span class="line"><span class="built_in">console</span>.log(month);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-getDay-获取星期几，返回0-6的数字-0代表周日，6代表周六"><a href="#2-3-getDay-获取星期几，返回0-6的数字-0代表周日，6代表周六" class="headerlink" title="2.3 getDay() 获取星期几，返回0-6的数字 0代表周日，6代表周六"></a>2.3 getDay() 获取星期几，返回0-6的数字 0代表周日，6代表周六</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> weekday = date.getDay();</span><br><span class="line"><span class="built_in">console</span>.log(weekday);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-4-getDate-获取今天是几号-今天几号就返回几"><a href="#2-4-getDate-获取今天是几号-今天几号就返回几" class="headerlink" title="2.4 getDate() 获取今天是几号 今天几号就返回几"></a>2.4 getDate() 获取今天是几号 今天几号就返回几</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> today = date.getDate();</span><br><span class="line"><span class="built_in">console</span>.log(today);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-getHours-获取当前几点的小时数，返回0-23的数字，代表0点到23点"><a href="#2-6-getHours-获取当前几点的小时数，返回0-23的数字，代表0点到23点" class="headerlink" title="2.6 getHours() 获取当前几点的小时数，返回0-23的数字，代表0点到23点"></a>2.6 getHours() 获取当前几点的小时数，返回0-23的数字，代表0点到23点</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hour = date.getHours();</span><br><span class="line"><span class="built_in">console</span>.log(hour);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-7-getMinutes-获取当前几点的分钟数，现在是几分就返回几"><a href="#2-7-getMinutes-获取当前几点的分钟数，现在是几分就返回几" class="headerlink" title="2.7 getMinutes() 获取当前几点的分钟数，现在是几分就返回几"></a>2.7 getMinutes() 获取当前几点的分钟数，现在是几分就返回几</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> min = date.getMinutes();</span><br><span class="line"><span class="built_in">console</span>.log(min);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-8-getSeconds-获取当前几点的秒数，是几秒就返回几"><a href="#2-8-getSeconds-获取当前几点的秒数，是几秒就返回几" class="headerlink" title="2.8 getSeconds() 获取当前几点的秒数，是几秒就返回几"></a>2.8 getSeconds() 获取当前几点的秒数，是几秒就返回几</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sec = date.getSeconds();</span><br><span class="line"><span class="built_in">console</span>.log(sec);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-9-getMilliseconds-获取当前时间的毫秒数，是几毫秒就返回几"><a href="#2-9-getMilliseconds-获取当前时间的毫秒数，是几毫秒就返回几" class="headerlink" title="2.9 getMilliseconds() 获取当前时间的毫秒数，是几毫秒就返回几"></a>2.9 getMilliseconds() 获取当前时间的毫秒数，是几毫秒就返回几</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mills = date.getMilliseconds();</span><br><span class="line"><span class="built_in">console</span>.log(mills);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-10-getTime-获取时间戳，时间戳是当前时刻距离1970年1月1日0时0分0秒的毫秒数"><a href="#2-10-getTime-获取时间戳，时间戳是当前时刻距离1970年1月1日0时0分0秒的毫秒数" class="headerlink" title="2.10 getTime() 获取时间戳，时间戳是当前时刻距离1970年1月1日0时0分0秒的毫秒数"></a>2.10 getTime() 获取时间戳，时间戳是当前时刻距离1970年1月1日0时0分0秒的毫秒数</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timeStamp = date.getTime();</span><br><span class="line"><span class="built_in">console</span>.log(timeStamp);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Date-格式化时间"><a href="#Date-格式化时间" class="headerlink" title="Date 格式化时间"></a>Date 格式化时间</h3><blockquote>
+<p>时间字符串转时间对象：Date的另一个作用是可以把时间格式的字符串转换为时间对象，转换成时间格式对象后就可以调用getFullYear等方法</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'2019-10-10 17:34:23'</span>;</span><br><span class="line"><span class="keyword">var</span> date2 = <span class="keyword">new</span> <span class="built_in">Date</span>(str);</span><br><span class="line"><span class="built_in">console</span>.log(date2);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> date2);</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、定时器"><a href="#二、定时器" class="headerlink" title="二、定时器"></a>二、定时器</h2><blockquote>
+<p>js中的定时器分为两种：</p>
+<ol>
+<li>window.setTimeout() 设置一个事件间隔，等到了这个时间间隔执行一次</li>
+<li>window.setInterval() 每隔时间间隔执行一次</li>
+</ol>
+</blockquote>
+<h3 id="I-设置定时器"><a href="#I-设置定时器" class="headerlink" title="I 设置定时器"></a>I 设置定时器</h3><h4 id="1-1-setTimeout-function-时间到了要执行的代码-时间间隔-，返回定时器id"><a href="#1-1-setTimeout-function-时间到了要执行的代码-时间间隔-，返回定时器id" class="headerlink" title="1.1 setTimeout(function() {时间到了要执行的代码}, 时间间隔)，返回定时器id"></a>1.1 setTimeout(function() {时间到了要执行的代码}, 时间间隔)，返回定时器id</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timer1 = setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'2s到了'</span>);</span><br><span class="line">&#125;, <span class="number">2000</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2setInterval-function-时间到了要执行的代码-时间间隔-，返回定时器id"><a href="#1-2setInterval-function-时间到了要执行的代码-时间间隔-，返回定时器id" class="headerlink" title="1.2setInterval(function() {时间到了要执行的代码}, 时间间隔)，返回定时器id"></a>1.2setInterval(function() {时间到了要执行的代码}, 时间间隔)，返回定时器id</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> timer2 = setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'一个2s中到了'</span>);</span><br><span class="line">&#125;, <span class="number">2000</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="II-清除定时器：停止定时器办法就是清除定时器"><a href="#II-清除定时器：停止定时器办法就是清除定时器" class="headerlink" title="II. 清除定时器：停止定时器办法就是清除定时器"></a>II. 清除定时器：停止定时器办法就是清除定时器</h3><h4 id="2-1-clearTimeout-定时器id-清除setTimeout定时器"><a href="#2-1-clearTimeout-定时器id-清除setTimeout定时器" class="headerlink" title="2.1 clearTimeout(定时器id)  清除setTimeout定时器"></a>2.1 clearTimeout(定时器id)  清除setTimeout定时器</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clearTimeout(timer1);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-clearInterval-定时器id-清除setInterval定时器"><a href="#2-2-clearInterval-定时器id-清除setInterval定时器" class="headerlink" title="2.2 clearInterval(定时器id) 清除setInterval定时器"></a>2.2 clearInterval(定时器id) 清除setInterval定时器</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clearInterval(timer2);</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、倒计时案例"><a href="#三、倒计时案例" class="headerlink" title="三、倒计时案例"></a>三、倒计时案例</h2><ul>
+<li>根据所学，完成一个定时器功能。当到达目标时间后，显示00:00:00;</li>
+</ul>
+<p>代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">    #timeBox &#123;</span><br><span class="line">      margin: 20px auto;</span><br><span class="line">      height: 100px;</span><br><span class="line">      width: 300px;</span><br><span class="line">      line-height: 100px;</span><br><span class="line">      font-size: 25px;</span><br><span class="line">      text-align: center;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"timeBox"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/3-倒计时.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 1. 获取dom对象</span></span><br><span class="line"><span class="keyword">var</span> timeBox = <span class="built_in">document</span>.getElementById(<span class="string">'timeBox'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 声明一个函数，处理倒计时</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">timeCounter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 2.1 获取当前日期时间信息</span></span><br><span class="line">  <span class="keyword">var</span> curDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.2 获取目标日期时间信息</span></span><br><span class="line">  <span class="keyword">var</span> targetDate = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">'2019-05-11 10:50:55'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.3 获取目标时间和当前时间的毫秒时间差</span></span><br><span class="line">  <span class="keyword">var</span> curStamp = curDate.getTime();</span><br><span class="line">  <span class="keyword">var</span> targetStamp = targetDate.getTime();</span><br><span class="line">  <span class="keyword">var</span> stampSpan = targetStamp - curStamp;</span><br><span class="line">  <span class="keyword">if</span> (stampSpan &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">    timeBox.innerHTML = <span class="string">`00:00:00`</span>;</span><br><span class="line">    clearInterval(timerId);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.4 把这个时间差的毫秒数量换算成剩余多少小时、多少分钟、多少秒</span></span><br><span class="line">  <span class="comment">// 2.4.1 小时</span></span><br><span class="line">  <span class="keyword">var</span> hour = <span class="built_in">Math</span>.floor(stampSpan / (<span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.4.2 分钟</span></span><br><span class="line">  <span class="keyword">var</span> hMs = hour * <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span>; <span class="comment">// 小时数占用的毫秒，需要从stampSpan中减去才是分钟和秒数的</span></span><br><span class="line">  <span class="keyword">var</span> mins = <span class="built_in">Math</span>.floor((stampSpan - hMs) / (<span class="number">1000</span> * <span class="number">60</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.4.3 秒数</span></span><br><span class="line">  <span class="keyword">var</span> minsMs = mins * <span class="number">1000</span> * <span class="number">60</span>;</span><br><span class="line">  <span class="keyword">var</span> secs = <span class="built_in">Math</span>.floor((stampSpan - hMs - minsMs) / <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 因为倒计时的时分秒都是两位数字的，所以当时分秒小于10 的时候就需要补0</span></span><br><span class="line">  hour = hour &lt; <span class="number">10</span> ? <span class="string">`0<span class="subst">$&#123;hour&#125;</span>`</span> : hour;</span><br><span class="line">  mins = mins &lt; <span class="number">10</span> ? <span class="string">`0<span class="subst">$&#123;mins&#125;</span>`</span> : mins;</span><br><span class="line">  secs = secs &lt; <span class="number">10</span> ? <span class="string">`0<span class="subst">$&#123;secs&#125;</span>`</span> : secs;</span><br><span class="line">  timeBox.innerHTML = <span class="string">`<span class="subst">$&#123;hour&#125;</span>:<span class="subst">$&#123;mins&#125;</span>:<span class="subst">$&#123;secs&#125;</span>`</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// timeCounter</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 用倒计时每秒执行一次就算倒计时的方法，就可以实现页面中每秒减去一秒</span></span><br><span class="line"><span class="keyword">var</span> timerId = setInterval(timeCounter, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、数组排序算法"><a href="#四、数组排序算法" class="headerlink" title="四、数组排序算法"></a>四、数组排序算法</h2><h3 id="4-1-冒泡排序"><a href="#4-1-冒泡排序" class="headerlink" title="4.1 冒泡排序"></a>4.1 冒泡排序</h3><blockquote>
+<p>冒泡排序原理：数组相邻两项直接互相比较，如果前一项比后一项大，就交换两项的位置，否则什么也不做；这样比较一轮过后，可以得出本轮的最大值。</p>
+</blockquote>
+<p>示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [<span class="number">8</span>, <span class="number">94</span>, <span class="number">15</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">2</span>];</span><br><span class="line"><span class="comment">//轮数 i                  每一轮比较次数 j</span></span><br><span class="line"><span class="comment">// 0 [8, 15, 6, 3, 2, 94]  5</span></span><br><span class="line"><span class="comment">// 1 [8, 6, 3, 2, 15, 94]  4</span></span><br><span class="line"><span class="comment">// 2 [6, 3, 2, 8, 15, 94]  3</span></span><br><span class="line"><span class="comment">// 3 [3, 2, 6, 8, 15, 94]  2</span></span><br><span class="line"><span class="comment">// 4 [2, 3, 6, 8, 15, 94]  1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ?比较轮数: ary.length - 1 轮</span></span><br><span class="line"><span class="comment">// ? 每一轮两两比较的次数 ary.length - 1 - i</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ary.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; ary.length - <span class="number">1</span> - i; j++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (ary[j] &gt; ary[j + <span class="number">1</span>]) &#123;</span><br><span class="line">      <span class="keyword">var</span> temp = ary[j];</span><br><span class="line">      ary[j] = ary[j + <span class="number">1</span>];</span><br><span class="line">      ary[j + <span class="number">1</span>] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(ary);</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-快速排序"><a href="#4-2-快速排序" class="headerlink" title="4.2 快速排序"></a>4.2 快速排序</h3><blockquote>
+<p>快速排序的原理：声明两个新数组，分别叫做left(左)和right(右)，获取当前数组的中间相，比中间项小的放在left中，比中间项大的放在right。然后对left和right进行同样的操作，直到当前数组只有一项或者为空时，终止这个过程，然后把所有的left和right以及中间相拼接起来。</p>
+</blockquote>
+<ul>
+<li>示例：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [<span class="number">12</span>,<span class="number">8</span>,<span class="number">88</span>,<span class="number">97</span>,<span class="number">67</span>,<span class="number">56</span>,<span class="number">78</span>,<span class="number">86</span>,<span class="number">85</span>];</span><br><span class="line"><span class="comment">// left [12, 8, 56] |67| right [88, 97, 78, 86, 85]</span></span><br><span class="line"><span class="comment">// left [] |8| right [12, 56] |67| left [] |78| right [88, 97, 86, 85]</span></span><br><span class="line"><span class="comment">// left [] |8| left [] |12| right [56] |67|78| left [] |left [85] |86| right [88, 97]</span></span><br><span class="line"><span class="comment">// left [] |8| left [] |12| right [56] |67|78| left [] |left [85] |86| left [] |88| right [97]</span></span><br><span class="line"><span class="comment">// 拼接 [8, 12, 56, 67, 78, 85, 86, 88, 97]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// !!!! 使用递归要注意递归终止的条件：当前数组ary只要一项或者为空</span></span><br><span class="line">  <span class="keyword">if</span> (ary.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> ary;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 1. 计算中间相索引</span></span><br><span class="line">  <span class="keyword">var</span> middleIndex = <span class="built_in">Math</span>.floor(ary.length / <span class="number">2</span>);</span><br><span class="line">  <span class="comment">// 2. 获取中间项</span></span><br><span class="line">  <span class="keyword">var</span> middleVal = ary.splice(middleIndex, <span class="number">1</span>)[<span class="number">0</span>];</span><br><span class="line">  <span class="comment">// 3. 声明left和right</span></span><br><span class="line">  <span class="keyword">var</span> left = [];</span><br><span class="line">  <span class="keyword">var</span> right = [];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 4. 循环比较数组项和中间项的大小</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ary.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> cur = ary[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用当前项和中间项比较，如果大就push到right，left</span></span><br><span class="line">    <span class="keyword">if</span> (cur &gt; middleVal) &#123;</span><br><span class="line">      right.push(cur);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      left.push(cur);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> quickSort(left).concat(middleVal, quickSort(right));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sortedAry = quickSort(ary);</span><br><span class="line"><span class="built_in">console</span>.log(sortedAry);</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-插入排序"><a href="#4-3-插入排序" class="headerlink" title="4.3 插入排序"></a>4.3 插入排序</h3><blockquote>
+<p>插入排序原理：</p>
+<ol>
+<li>假定第一项是最小值；</li>
+<li>从第二项开始，从该项开始和前面的项进行比较</li>
+<li>如果前面一项比后一项大，则交换位置</li>
+</ol>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertSort</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; ary.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> j = i; j &gt; <span class="number">0</span>; j--) &#123;</span><br><span class="line">      <span class="keyword">if</span> ( ary[j - <span class="number">1</span>] &gt; ary[j]) &#123;</span><br><span class="line">        <span class="keyword">var</span> temp = ary[j];</span><br><span class="line">        ary[j] = ary[j - <span class="number">1</span>];</span><br><span class="line">        ary[j - <span class="number">1</span>] = temp;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ary;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(insertSort(ary));</span><br></pre></td></tr></table></figure>
+
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/09/JavaScript基础教程7/" data-id="ck2flbyeg000a9kpp9ano8utf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/27/JavaScript基础教程8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          基础教程 —— 6. JS DOM 操作和属性操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/27/JavaScript基础教程6/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">基础教程 —— 6. 数据去重算法、字符串常用方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Mabin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

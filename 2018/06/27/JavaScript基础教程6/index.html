@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>基础教程 —— 6. 数据去重算法、字符串常用方法 | Bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、数组去重算法I 双for循环去重思路：  依次拿出数组中的每一项（排除最后一项：最后一项后面没有需要比较的内容） 和当前取出向后面的每一项依次比较 如果发现有重复的，我们把找到的这个重复项在原有数组中删除（ary.splice）  1234567891011121314151617181920212223242526272829var ary = [1, 3, 3, 3, 5, 4];for">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础教程 —— 6. 数据去重算法、字符串常用方法">
+<meta property="og:url" content="http://yoursite.com/2018/06/27/JavaScript基础教程6/index.html">
+<meta property="og:site_name" content="Bin">
+<meta property="og:description" content="一、数组去重算法I 双for循环去重思路：  依次拿出数组中的每一项（排除最后一项：最后一项后面没有需要比较的内容） 和当前取出向后面的每一项依次比较 如果发现有重复的，我们把找到的这个重复项在原有数组中删除（ary.splice）  1234567891011121314151617181920212223242526272829var ary = [1, 3, 3, 3, 5, 4];for">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-01T03:22:09.841Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基础教程 —— 6. 数据去重算法、字符串常用方法">
+<meta name="twitter:description" content="一、数组去重算法I 双for循环去重思路：  依次拿出数组中的每一项（排除最后一项：最后一项后面没有需要比较的内容） 和当前取出向后面的每一项依次比较 如果发现有重复的，我们把找到的这个重复项在原有数组中删除（ary.splice）  1234567891011121314151617181920212223242526272829var ary = [1, 3, 3, 3, 5, 4];for">
+  
+    <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Bin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行；</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript基础教程6" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/27/JavaScript基础教程6/" class="article-date">
+  <time datetime="2018-06-27T15:07:06.000Z" itemprop="datePublished">2018-06-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基础教程 —— 6. 数据去重算法、字符串常用方法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、数组去重算法"><a href="#一、数组去重算法" class="headerlink" title="一、数组去重算法"></a>一、数组去重算法</h2><h3 id="I-双for循环去重"><a href="#I-双for循环去重" class="headerlink" title="I 双for循环去重"></a>I 双for循环去重</h3><p>思路：</p>
+<ol>
+<li>依次拿出数组中的每一项（排除最后一项：最后一项后面没有需要比较的内容）</li>
+<li>和当前取出向后面的每一项依次比较</li>
+<li>如果发现有重复的，我们把找到的这个重复项在原有数组中删除（ary.splice）</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">4</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ary.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">  <span class="keyword">var</span> item = ary[i];</span><br><span class="line">  <span class="comment">// item: 依次拿出数组的每一项</span></span><br><span class="line">  <span class="comment">// i 当前拿出来的数组项的索引值</span></span><br><span class="line">  <span class="comment">// =&gt; 用当前项和后面的项比较，所以后面的第一项的索引是 i + 1</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> k = i + <span class="number">1</span>; k &lt; ary.length; k++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (item === ary[k]) &#123;</span><br><span class="line">      <span class="comment">// =&gt; 如果我们从容数组中取出来的项和后面的相等说明后面有重复项，所以需要删除当前项</span></span><br><span class="line">      <span class="comment">// ary.splice(k, 1);</span></span><br><span class="line">      <span class="comment">/*</span></span><br><span class="line"><span class="comment">      * 但是直接这样删除后一个问题，就是数组塌陷；当我们把当前项删除后，后面的每一项都要向前移动一个，也就是 原有数组的索引发生了改变，此时我们的k继续累加1，下一次再拿出来的结果就会跳过一位</span></span><br><span class="line"><span class="comment">      * 原数组 [1, 3, 3, 3, 5, 4]</span></span><br><span class="line"><span class="comment">      * 索引：  0  1  2  3  4 5</span></span><br><span class="line"><span class="comment">      * 循环</span></span><br><span class="line"><span class="comment">      * k = 2 后面有重复的3，删除索引为2的位置上的3，删除之后 数组变成：</span></span><br><span class="line"><span class="comment">      *     [1, 3, 3, 5, 4];</span></span><br><span class="line"><span class="comment">      * 索引：0  1  2  3  4</span></span><br><span class="line"><span class="comment">      * 此时，在不删的情况下，原数组中第二个3的索引是2，但是删除后，原来索引为2的那个3的索引变成了1，当i再++时，i就变成了3，所以就会漏掉一项。</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      * */</span></span><br><span class="line">      ary.splice(k, <span class="number">1</span>);</span><br><span class="line">      k--; <span class="comment">// 删除以后不能让k累加了，所以先给k--，然后再++相当于没加没减</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(ary);</span><br></pre></td></tr></table></figure>
+
+<h3 id="II-对象法去重"><a href="#II-对象法去重" class="headerlink" title="II 对象法去重"></a>II 对象法去重</h3><blockquote>
+<p>原理：基于对象的属性名不能重复，我们可以实现高性能的数组去重</p>
+</blockquote>
+<p>步骤：</p>
+<ol>
+<li>创建一个空对象</li>
+<li>遍历数组中的每一项，把数组每一项存储的值，当做对象的属性名和属性值存储起来。形如 {数组项1：数组项1, 数组项2: 数组项2}<br>第一次遍历时：数组项 1, 对象：{1: 1}<br>第二次遍历时：数组项 3, 对象：{1: 1, 3: 3}</li>
+<li>在存储起来做一个判断，判断当前对象中是否存在这个属性了，如果不存在 对象[属性名] 就是undefined，说明这一个数组项在之前没有出现过，没出现就说明没有重复，然后直接存储在对象里。如果在之前出现过了，此时 对象[属性名] 的值就不是undefined，此时就不要存储到对象中，同时删除这一项。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ary.length; i++) &#123;</span><br><span class="line">  <span class="keyword">var</span> item = ary[i];</span><br><span class="line">  <span class="keyword">if</span> (obj[item] !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="comment">// ary.splice(i, 1); 这种删除方式不好，如果数组很长，我们删除中间的某一项，后面的所有的索引都会重新计算，非常消耗性能。所以我们采用下面这种删除方式：</span></span><br><span class="line">    <span class="comment">// 1. 用数组的最后一项替换当前项</span></span><br><span class="line">    <span class="comment">// 2. 把数组的最后一项删除</span></span><br><span class="line">    <span class="comment">// 例如：数组var ary = [12, 23, 23, 34, 56]  想删除第二个23</span></span><br><span class="line">    <span class="comment">// 先把第二个23获取到 ary[2]</span></span><br><span class="line">    <span class="comment">// 再把数组的最后一项获取到：ary[ary.length - 1]</span></span><br><span class="line">    <span class="comment">// 然后再把23换成数组最后一项，ary[2] = ary[ary.length - 1]</span></span><br><span class="line">    <span class="comment">// 最后删除最后一项: ary.length--;</span></span><br><span class="line"></span><br><span class="line">    ary[i] = ary[ary.length - <span class="number">1</span>]; <span class="comment">// ary[i] 就是当前项，并且和再此之前已经重复过了</span></span><br><span class="line">    ary.length--;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 否则的情况就是：数组当前项在之前没有重复过，此时需要存储到对象里面</span></span><br><span class="line">    obj[item] = item</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、字符串常用方法"><a href="#二、字符串常用方法" class="headerlink" title="二、字符串常用方法"></a>二、字符串常用方法</h2><h3 id="字符串特点："><a href="#字符串特点：" class="headerlink" title="字符串特点："></a>字符串特点：</h3><blockquote>
+<p>字符串：字符串是被单引号或双引号包裹的零到多个字符。是js中基本数据类型。<br>在字符串中的每个字符，浏览器也都给他们分配了一个索引，第一字符的索引是0，第二字符的索引是1，第三个字符的索引是2…,所以通过 字符串[索引]的方式可以获取对应索引位置的字符。<br>字符串也是有length属性的，代表字符串中字符的个数;</p>
+</blockquote>
+<p><code>tips: 有长度、有索引是不是可以用通过for 循环遍历它？</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'江外琉璃EverestTraining'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串常用方法"><a href="#字符串常用方法" class="headerlink" title="字符串常用方法"></a>字符串常用方法</h3><h4 id="I-通过制定索引获取字符或ASCII"><a href="#I-通过制定索引获取字符或ASCII" class="headerlink" title="I 通过制定索引获取字符或ASCII"></a>I 通过制定索引获取字符或ASCII</h4><ul>
+<li>1.1 charAt(index) 获取字符串中索引为index的字符。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = str.charAt(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">console</span>.log(s);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.2 charCodeAt(index) 获取字符串中指定索引位置的字符的Unicode编码值，返回的是一个 0 - 65535的整数</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> code = str.charCodeAt(<span class="number">5</span>); <span class="comment">// 69</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="II-复制和截取字符串"><a href="#II-复制和截取字符串" class="headerlink" title="II 复制和截取字符串"></a>II 复制和截取字符串</h4><ul>
+<li>2.1 substr(n, m); 从n开始截取m个，若不写m，则截取到末尾。如果n和m都不写，这截取全部；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s1 = str.substr(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"><span class="keyword">var</span> s2 = str.substr(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">var</span> s3 = str.substr();</span><br><span class="line"><span class="built_in">console</span>.log(s1, s2, s3);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>2.2 substring(n, m); 从索引n开始截取，截取到索引为m结束（不包含m），如果只写n，是从n开始截取到末尾；如果一个都不写，那就是截取全部；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> s4 = str.substring(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line"><span class="keyword">var</span> s5 = str.substring(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">var</span> s6 = str.substr();</span><br><span class="line"><span class="built_in">console</span>.log(s4, s5, s6);</span><br></pre></td></tr></table></figure>
+
+<h3 id="III-转换大小写（只能转英文字母）"><a href="#III-转换大小写（只能转英文字母）" class="headerlink" title="III. 转换大小写（只能转英文字母）"></a>III. 转换大小写（只能转英文字母）</h3><ul>
+<li>3.1 大写转成小写 toLowerCase()</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s7 = <span class="string">'A'</span>.toLocaleLowerCase();</span><br><span class="line"><span class="built_in">console</span>.log(s7);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>3.2 小写转大写 toUpperCase()</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s8 = <span class="string">'a'</span>.toUpperCase();</span><br><span class="line"><span class="built_in">console</span>.log(s8);</span><br></pre></td></tr></table></figure>
+
+<h4 id="IV-获取指定字符在字符串中出现的位置"><a href="#IV-获取指定字符在字符串中出现的位置" class="headerlink" title="IV. 获取指定字符在字符串中出现的位置"></a>IV. 获取指定字符在字符串中出现的位置</h4><ul>
+<li>4.1 indexOf() 获取字符在字符串中首次出现的位置，如果字符串中不包含这个字符，则返回-1</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> idx1 = str.indexOf(<span class="string">'珠'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(idx1);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>4.2 lastIndexOf() 获取字符在字符串中最后一次出现的位置，如果字符串中不包含这个字符，则返回-1</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> idx2 = str.indexOf(<span class="string">'E'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(idx2);</span><br></pre></td></tr></table></figure>
+
+<h4 id="V-split-按照指定的分隔符把字符串拆分成数组-数组中的join方法这个相反，join是根据指定的分隔符数组项拼接成字符串"><a href="#V-split-按照指定的分隔符把字符串拆分成数组-数组中的join方法这个相反，join是根据指定的分隔符数组项拼接成字符串" class="headerlink" title="V. split() 按照指定的分隔符把字符串拆分成数组(数组中的join方法这个相反，join是根据指定的分隔符数组项拼接成字符串)"></a>V. split() 按照指定的分隔符把字符串拆分成数组(数组中的join方法这个相反，join是根据指定的分隔符数组项拼接成字符串)</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str2 = <span class="string">'I am a Front-end Engineer'</span>;</span><br><span class="line"><span class="keyword">var</span> ary = str2.split(<span class="string">' '</span>); <span class="comment">// 根据空格把 str2 拆分成一个数组</span></span><br><span class="line"><span class="built_in">console</span>.log(ary);</span><br></pre></td></tr></table></figure>
+
+<h4 id="VI-replace-字符串替换"><a href="#VI-replace-字符串替换" class="headerlink" title="VI. replace() 字符串替换"></a>VI. replace() 字符串替换</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str3 = <span class="string">'zhufeng培训'</span>;</span><br><span class="line"><span class="comment">// 5.1 replace(old, new)</span></span><br><span class="line"><span class="keyword">var</span> s9 = str3.replace(<span class="string">'zhufeng'</span>, <span class="string">'江外'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(s9);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5.2 replace(old, function () &#123; return new&#125;)</span></span><br><span class="line"><span class="keyword">var</span> s10 = str3.replace(<span class="string">'zhufeng'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'江外'</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(s10);</span><br></pre></td></tr></table></figure>
+
+<h4 id="VII-match-匹配，如果匹配到，就返回一个数组，如果匹配不到就返回null"><a href="#VII-match-匹配，如果匹配到，就返回一个数组，如果匹配不到就返回null" class="headerlink" title="VII. match() 匹配，如果匹配到，就返回一个数组，如果匹配不到就返回null"></a>VII. match() 匹配，如果匹配到，就返回一个数组，如果匹配不到就返回null</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str4 = <span class="string">'abcdefabcggg'</span>;</span><br><span class="line"><span class="keyword">var</span> ary2 = str4.match(<span class="string">'abc'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary2);</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、Math对象"><a href="#三、Math对象" class="headerlink" title="三、Math对象"></a>三、Math对象</h2><blockquote>
+<p>Math对象，是浏览器中内置的专门处理数学计算的对象，Math内置了很多的数学方法。</p>
+</blockquote>
+<h4 id="1-Math-abs-获取绝对值"><a href="#1-Math-abs-获取绝对值" class="headerlink" title="1. Math.abs(); 获取绝对值"></a>1. Math.abs(); 获取绝对值</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m1 = <span class="built_in">Math</span>.abs(<span class="number">-12.5</span>);</span><br><span class="line"><span class="keyword">var</span> m2 = <span class="built_in">Math</span>.abs(<span class="number">12.5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(m1, m2);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-Math-floor-向下取整"><a href="#2-Math-floor-向下取整" class="headerlink" title="2. Math.floor();  向下取整"></a>2. Math.floor();  向下取整</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m3 = <span class="built_in">Math</span>.abs(<span class="number">12.5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(m3);</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-Math-ceil-向上取整"><a href="#3-Math-ceil-向上取整" class="headerlink" title="3. Math.ceil(); 向上取整"></a>3. Math.ceil(); 向上取整</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m4 = <span class="built_in">Math</span>.ceil(<span class="number">12.5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(m4);</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-Math-round-四舍五入"><a href="#4-Math-round-四舍五入" class="headerlink" title="4. Math.round() 四舍五入"></a>4. Math.round() 四舍五入</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m5 = <span class="built_in">Math</span>.round(<span class="number">2.3</span>);</span><br><span class="line"><span class="keyword">var</span> m6 = <span class="built_in">Math</span>.round(<span class="number">3.7</span>);</span><br><span class="line"><span class="comment">// 注意：负数是四舍六入</span></span><br><span class="line"><span class="keyword">var</span> m7 = <span class="built_in">Math</span>.round(<span class="number">-2.4</span>);</span><br><span class="line"><span class="keyword">var</span> m8 = <span class="built_in">Math</span>.round(<span class="number">-2.6</span>);</span><br><span class="line"><span class="built_in">console</span>.log(m5, m6, m7, m8);</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-Math-random-生成一个0-1之间的随机小数"><a href="#5-Math-random-生成一个0-1之间的随机小数" class="headerlink" title="5. Math.random() 生成一个0-1之间的随机小数"></a>5. Math.random() 生成一个0-1之间的随机小数</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m9 = <span class="built_in">Math</span>.random();</span><br><span class="line"><span class="built_in">console</span>.log(m9);</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-2-生成一个n-m之间的随机数，不包含m。-n-m-【左开右闭区间】的随机数"><a href="#5-2-生成一个n-m之间的随机数，不包含m。-n-m-【左开右闭区间】的随机数" class="headerlink" title="5.2 生成一个n-m之间的随机数，不包含m。[n,m) 【左开右闭区间】的随机数"></a>5.2 生成一个n-m之间的随机数，不包含m。[n,m) 【左开右闭区间】的随机数</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n, m;</span><br><span class="line"><span class="keyword">var</span> ran = <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random() * (m - n) + n);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>思考：如何获取一个字符串里随机的一个字符？</p>
+</blockquote>
+<h4 id="6-Math-sqrt-n-获取的n的算术平方根"><a href="#6-Math-sqrt-n-获取的n的算术平方根" class="headerlink" title="6. Math.sqrt(n) 获取的n的算术平方根"></a>6. Math.sqrt(n) 获取的n的算术平方根</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m10 = <span class="built_in">Math</span>.sqrt(<span class="number">9</span>);</span><br><span class="line"><span class="built_in">console</span>.log(m10); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="7-Math-PI-获取圆周率"><a href="#7-Math-PI-获取圆周率" class="headerlink" title="7. Math.PI 获取圆周率"></a>7. Math.PI 获取圆周率</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pi = <span class="built_in">Math</span>.PI();</span><br><span class="line"><span class="built_in">console</span>.log(pi);</span><br><span class="line"><span class="built_in">console</span>.log(pi.toFixed(<span class="number">2</span>)); <span class="comment">//给Math.PI() 保留2位小数； toFixed(x)是number的方法，作用：保留x位小数</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="四、随即验证码"><a href="#四、随即验证码" class="headerlink" title="四、随即验证码"></a>四、随即验证码</h2><h3 id="基础版"><a href="#基础版" class="headerlink" title="基础版"></a>基础版</h3><ul>
+<li>需求：</li>
+</ul>
+<ol>
+<li>生成一个4位的随机验证码</li>
+<li>把验证码插入到页面中展示出来<br>原理：<br>分析需求：</li>
+<li>我们学习过的能够随机的只有随机数，我们需要通过数字和字符连接起来。</li>
+<li>而字符串和数字有关联的就是索引和length，而字符和索引数字是一一对应的，我们要是生成一个随机数字，然后通过字符串索引取得这个随机数对应的字符，就可以达到随机字符的目的，既然是</li>
+<li>我们需要4个，就是说上面的事情需要干4回，显然需要一个for循环</li>
+</ol>
+<ul>
+<li>具体步骤：</li>
+</ul>
+<ol>
+<li>准备随机范围A-Z a-z 0-9</li>
+<li>设置一空字符串，后面得到的字符都拼接到这个空字符串上</li>
+<li>设置for循环，循环四次</li>
+<li>获取页面中的div元素对象</li>
+<li>通过设置div的innerHTML属性，把验证码插入到页面中</li>
+</ol>
+<p>HTML代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>江外-随机验证码<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"codeBox"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/7-随机验证码while循环版.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> strbase = <span class="string">'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> code = <span class="string">''</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">  <span class="comment">// 1.</span></span><br><span class="line">  <span class="keyword">var</span> ran = <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random() * (strbase.length - <span class="number">0</span>) + <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">var</span> char = strbase[ran];</span><br><span class="line">  code += char;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> codeBox = <span class="built_in">document</span>.getElementById(<span class="string">'codeBox'</span>);</span><br><span class="line">codeBox.innerHTML = code;</span><br></pre></td></tr></table></figure>
+
+<h3 id="不重复验证码"><a href="#不重复验证码" class="headerlink" title="不重复验证码"></a>不重复验证码</h3><ul>
+<li><p>需求：不重复验证码，A和a算重复</p>
+</li>
+<li><p>分析：</p>
+</li>
+</ul>
+<ol>
+<li>我们之所以会重复，是因为随机出字符串后拼接之前没有检查在已有的验证码中是否已经存在相同字符；所以我们需要在拼接之前需要检查当前字符在已有的验证码字符串中是否放出现过（indexOf）</li>
+<li>如何解决大小写也算重复呢？这样解决，我们把已经有的验证码全部转成大写，然后把我们本次获得字符也转成大写（toUpperCase）然后再判断是否出现过。如果没有出现过再拼接，如果出现过就不拼接。</li>
+<li>如果出现过了，对于for循环来说已经跑了一轮了，此时不能给i ++，因为我们本轮没有获得有效的字符。如果++了就会导致如果出现重复了，有一次的字符没有拼接，最后循环四次只有三个字符。</li>
+<li>为了解决3中中说的问题，我们不是直接在for循环中i++了，我们在满足拼接条件，成功拼接后i++</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validateCode</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> strbase = <span class="string">'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789'</span>;</span><br><span class="line">  <span class="keyword">var</span> code = <span class="string">''</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>;) &#123;</span><br><span class="line">    <span class="comment">// 1.</span></span><br><span class="line">    <span class="keyword">var</span> ran = <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random() * (strbase.length - <span class="number">0</span>) + <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">var</span> char = strbase[ran];</span><br><span class="line">    <span class="keyword">var</span> upperChar = char.toUpperCase();</span><br><span class="line">    <span class="keyword">var</span> upperCode = code.toUpperCase();</span><br><span class="line">    <span class="keyword">if</span> (upperCode.indexOf(upperChar) === <span class="number">-1</span>) &#123;</span><br><span class="line">      code += char;</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> code;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ranCode = validateCode();</span><br><span class="line"><span class="keyword">var</span> codeBox = <span class="built_in">document</span>.getElementById(<span class="string">'codeBox'</span>);</span><br><span class="line">codeBox.innerHTML = ranCode;</span><br></pre></td></tr></table></figure>
+
+<h3 id="不重复验证码while循环版"><a href="#不重复验证码while循环版" class="headerlink" title="不重复验证码while循环版"></a>不重复验证码while循环版</h3><h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><blockquote>
+<p>js中还有一种循环，就是while循环， while单词的意思是当…的时候一直做某件事情，一直到条件不成立。</p>
+</blockquote>
+<blockquote>
+<p>所以while循环表示只要条件成立就会执行循环体里面的代码。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (循环的条件) &#123;</span><br><span class="line">    循环体</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p> 思考：while循环的条件时什么？只要不满足什么条件我们就该一直循环？<br>? 我们循环干什么？获取验证码<br>? 验证码有什么要求？4位不重复的<br>? 我们在循环中判断重复与否，如果不重复，就拼接给code字符串，这个时候相当于获取到一个有效的字符串。如果我们获得字符串在之前已经存在过，这相当于我们没有获取到有效字符，所以就需要继续再来一次。重复执行这个操作，直到什么时候就不再找了？是已经获取到了4位验证码了。所以此时就该停止循环了</p>
+</blockquote>
+<blockquote>
+<p>所以停止的条件是 code.length &lt; 4 即只要code的字符串个数小于4就该接着随机</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validateCode</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> strbase = <span class="string">'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789'</span>;</span><br><span class="line">  <span class="keyword">var</span> code = <span class="string">''</span>;</span><br><span class="line">  <span class="keyword">while</span> (code.length &lt; <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ran = <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random() * (strbase.length - <span class="number">0</span>) + <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">var</span> char = strbase[ran];</span><br><span class="line">    <span class="keyword">var</span> upperChar = char.toUpperCase();</span><br><span class="line">    <span class="keyword">var</span> upperCode = code.toUpperCase();</span><br><span class="line">    <span class="keyword">if</span> (upperCode.indexOf(upperChar) === <span class="number">-1</span>) &#123;</span><br><span class="line">      code += char;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> code;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> codeBox = <span class="built_in">document</span>.getElementById(<span class="string">'codeBox'</span>);</span><br><span class="line">codeBox.innerHTML = validateCode();</span><br></pre></td></tr></table></figure>
+
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/06/27/JavaScript基础教程6/" data-id="ck2flbyed00099kpp5jfj122i" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/09/JavaScript基础教程7/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          基础教程 —— 6. Date 类型和定时器
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/30/JavaScript基础教程5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">基础教程 —— 5. arguments、递归和函数表达式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Mabin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

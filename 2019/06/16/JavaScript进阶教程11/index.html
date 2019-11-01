@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>进阶教程 —— 10. 本地存储、http协议基础 | Bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、本地存储为什么要本地存储？ 真实项目中经常需要在一个网站的多个页面间共享数据，如果登录状态，购物车信息等  但是浏览器打开页面时首先形成一个顶层的作用域window，每次页面打开都会形成一个单独的作用域，页面之间是不可以互通访问变量的；但是项目中经常会用到页面间传递数据的要求； 每个页面又都是在浏览器中打开的，如果可以把值存储到浏览器中，让浏览器作为一个中介，  A页面把值存到浏览器中，B页面">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进阶教程 —— 10. 本地存储、http协议基础">
+<meta property="og:url" content="http://yoursite.com/2019/06/16/JavaScript进阶教程11/index.html">
+<meta property="og:site_name" content="Bin">
+<meta property="og:description" content="一、本地存储为什么要本地存储？ 真实项目中经常需要在一个网站的多个页面间共享数据，如果登录状态，购物车信息等  但是浏览器打开页面时首先形成一个顶层的作用域window，每次页面打开都会形成一个单独的作用域，页面之间是不可以互通访问变量的；但是项目中经常会用到页面间传递数据的要求； 每个页面又都是在浏览器中打开的，如果可以把值存储到浏览器中，让浏览器作为一个中介，  A页面把值存到浏览器中，B页面">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-01T03:32:07.846Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="进阶教程 —— 10. 本地存储、http协议基础">
+<meta name="twitter:description" content="一、本地存储为什么要本地存储？ 真实项目中经常需要在一个网站的多个页面间共享数据，如果登录状态，购物车信息等  但是浏览器打开页面时首先形成一个顶层的作用域window，每次页面打开都会形成一个单独的作用域，页面之间是不可以互通访问变量的；但是项目中经常会用到页面间传递数据的要求； 每个页面又都是在浏览器中打开的，如果可以把值存储到浏览器中，让浏览器作为一个中介，  A页面把值存到浏览器中，B页面">
+  
+    <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Bin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行；</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript进阶教程11" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/16/JavaScript进阶教程11/" class="article-date">
+  <time datetime="2019-06-16T13:34:02.000Z" itemprop="datePublished">2019-06-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      进阶教程 —— 10. 本地存储、http协议基础
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、本地存储"><a href="#一、本地存储" class="headerlink" title="一、本地存储"></a>一、本地存储</h2><h3 id="为什么要本地存储？"><a href="#为什么要本地存储？" class="headerlink" title="为什么要本地存储？"></a>为什么要本地存储？</h3><ul>
+<li>真实项目中经常需要在一个网站的多个页面间共享数据，如果登录状态，购物车信息等</li>
+</ul>
+<p>但是浏览器打开页面时首先形成一个顶层的作用域window，每次页面打开都会形成一个单独的作用域，页面之间是不可以互通访问变量的；但是项目中经常会用到页面间传递数据的要求；</p>
+<p>每个页面又都是在浏览器中打开的，如果可以把值存储到浏览器中，让浏览器作为一个中介，  A页面把值存到浏览器中，B页面从从浏览器中把A存储的值取出来；</p>
+<h3 id="本地存储解决方案："><a href="#本地存储解决方案：" class="headerlink" title="本地存储解决方案："></a>本地存储解决方案：</h3><ul>
+<li>cookie</li>
+<li>localStorage</li>
+<li>sessionStorage</li>
+</ul>
+<h3 id="localStorage-和-sessionStorage"><a href="#localStorage-和-sessionStorage" class="headerlink" title="localStorage 和 sessionStorage"></a>localStorage 和 sessionStorage</h3><p>HTML5提供了本地存储方式：</p>
+<ul>
+<li>localStorage 永久存储（如果手动触发删除或者用户清除）</li>
+<li>sessionStorage 会话存储</li>
+</ul>
+<h4 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.localStorage 对象</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.localStorage);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>localStorage.setItem(key, value) 存储数据</li>
+</ul>
+<ul>
+<li>localStorage 存储数据时键值的形式存储的；</li>
+<li>key 键</li>
+<li>value 值</li>
+<li>key和value都需要是字符串类型，如果不是字符串类型，浏览器会隐式调用toString将其转换为字符串；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localStorage.setItem(&#123;<span class="attr">name</span>: <span class="number">1</span>&#125;, &#123;<span class="attr">name</span>: <span class="number">2</span>&#125;);</span><br><span class="line">localStorage.setItem(<span class="number">1</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果不会有两个相同的key，如果key相同后面的值会覆盖前面的值；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localStorage.setItem(<span class="string">'user'</span>, <span class="string">'mabin'</span>);</span><br><span class="line">localStorage.setItem(<span class="string">'user'</span>, <span class="string">'mabin2'</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>如果批量存储数据太麻烦，直接存储JSON字符串</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ary = &#123;</span><br><span class="line">	code: <span class="number">0</span>,</span><br><span class="line">	data: &#123;</span><br><span class="line">		page: <span class="number">1</span>,</span><br><span class="line">		limit: <span class="number">10</span>,</span><br><span class="line">		list: [</span><br><span class="line">			&#123;</span><br><span class="line">				course: <span class="number">18</span>,</span><br><span class="line">				subject: <span class="number">15</span>,</span><br><span class="line">				fire: <span class="number">3</span>,</span><br><span class="line">				price: <span class="number">180</span></span><br><span class="line">			&#125;,</span><br><span class="line">			&#123;</span><br><span class="line">				course: <span class="number">18</span>,</span><br><span class="line">				subject: <span class="number">15</span>,</span><br><span class="line">				fire: <span class="number">3</span>,</span><br><span class="line">				price: <span class="number">180</span></span><br><span class="line">			&#125;,</span><br><span class="line">			&#123;</span><br><span class="line">				course: <span class="number">18</span>,</span><br><span class="line">				subject: <span class="number">15</span>,</span><br><span class="line">				fire: <span class="number">3</span>,</span><br><span class="line">				price: <span class="number">180</span></span><br><span class="line">			&#125;,</span><br><span class="line">			&#123;</span><br><span class="line">				course: <span class="number">18</span>,</span><br><span class="line">				subject: <span class="number">15</span>,</span><br><span class="line">				fire: <span class="number">3</span>,</span><br><span class="line">				price: <span class="number">180</span></span><br><span class="line">			&#125;</span><br><span class="line">		]</span><br><span class="line">	&#125;,</span><br><span class="line">	msg: <span class="string">'ok'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">localStorage.setItem(<span class="string">'someJson'</span>, <span class="built_in">JSON</span>.stringify(ary));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>localStorage.getItem(key) 获取ls中存储的数据。</p>
+</li>
+</ul>
+<p><strong>获取回来的都是字符串类型的</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> json = localStorage.getItem(<span class="string">'someJson'</span>);</span><br><span class="line"><span class="keyword">let</span> uk = localStorage.getItem(<span class="string">'uk'</span>); <span class="literal">null</span></span><br><span class="line"><span class="built_in">console</span>.log(uk); 获取不存在的key返回<span class="literal">null</span></span><br><span class="line"><span class="built_in">console</span>.log(json);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> json); string</span><br><span class="line"></span><br><span class="line">localStorage.removeItem(key) 删除</span><br><span class="line">localStorage.removeItem(<span class="string">'user'</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>sessionStorage 会话存储，</p>
+</li>
+<li><p>setItem(key, value)</p>
+</li>
+<li><p>getItem(key)</p>
+</li>
+<li><p>removeItem(key)</p>
+</li>
+<li><p>sessionStorage.setItem(‘ok’, ‘0’);</p>
+</li>
+<li><p>localStorage和sessionStorage的区别：</p>
+</li>
+</ul>
+<p>localStorage是永久存储，如果不删除或者用户不清除就会一直有。而sessionStorage只是会话存储，只要页面不关闭有，如果页面关闭了，就消失了。</p>
+<h2 id="二、发布网站"><a href="#二、发布网站" class="headerlink" title="二、发布网站"></a>二、发布网站</h2><ul>
+<li><p>项目：<br>前后端开发的项目代码</p>
+</li>
+<li><p>域名：<br>需要在万网（被阿里云收购）上买域名，每个域名项身份证号一样，是不会重复的，一旦被注册，就不能再次进行购买；</p>
+</li>
+<li><p>服务器：<br>存储项目代码的一台电脑。每个服务器都会对应一个对应的ip地址（一个门牌号），如果想让我们开发的项目代码为用户提供服务需要把项目代码部署在服务器上(虚拟服务器)。</p>
+</li>
+</ul>
+<ul>
+<li><p>DNS (Domain Name System)：<br>DNS服务由DNS服务器提供，DNS服务是将域名和IP地址进行绑定；</p>
+</li>
+<li><p>ftp(file transfer protocol)上传: ftp工具或者脚本把代码上传到服务器上；</p>
+</li>
+<li><p>端口：<br>一个服务器可以提供多个服务，每个服务器上可以有很多小房间（端口），这些小房间编号0-65535，每个端口可以提供一个服务；</p>
+</li>
+</ul>
+<p>+webstorm的localhost:63342/xxx/ccc.html 是在本机上启动了一个服务器程序，此时我们的电脑相当于服务器。我自己的电脑上访问localhost:xxx/cc.html时是不需要网络的</p>
+<ul>
+<li>搜索爬虫：每个做搜索的，公司如百度，都会有一个用来收集各大网站的程序，这个程序称为搜索爬虫。它会把最火的关键词或者网站上的关键字收录到自己的搜索库中；当我们进到百度时，查找某些东西时，百度的服务器会去自己的搜索库中和我们输入的内容最接近的内容，然后返回给我们</li>
+</ul>
+<h2 id="三、http协议"><a href="#三、http协议" class="headerlink" title="三、http协议"></a>三、http协议</h2><h3 id="什么事http协议？"><a href="#什么事http协议？" class="headerlink" title="什么事http协议？"></a>什么事http协议？</h3><p>http(HyperText Transfer Protocol):<br>超文本传输协议：在客户端和服务器端不仅可以进行文本传输，还可以传递图片，音视频；是浏览器和服务器端之间约定好了的一种规范；双方按照规范传递和接受数据；</p>
+<ul>
+<li>https:  加密的传输协议；更安全，在协议中增加了秘钥，不容易被拦截和篡改，大多数对安全有要求的都会使用https；</li>
+</ul>
+<p>http: 就像运行在客户端和服务端的快递小哥，可以把客户端的信息传递给服务器（请求: request），然后把服务器整理好的数据通过http协议发送给服务端（响应response）;</p>
+<h3 id="前后端交互模型"><a href="#前后端交互模型" class="headerlink" title="前后端交互模型"></a>前后端交互模型</h3><p>+在浏览器总输入一个url，到用户看到页面都经过了什么？</p>
+<ul>
+<li>http 请求阶段</li>
+</ul>
+<ol>
+<li>浏览器得到地址栏中的地址，发送给DNS服务器</li>
+<li>DNS服务器进行域名解析，找到域名对应的IP地址</li>
+<li>把客户端的请求发送给上一步查出来的服务器地址</li>
+</ol>
+<ul>
+<li>http 响应阶段</li>
+</ul>
+<ol start="4">
+<li>服务器接收到请求后，根据请求的信息，进行资源的整理，并且把响应的资源通过http返回给客户端（数据或者html、js、css文件等）；</li>
+<li>根据资源的类型不同，浏览器会进行不同的操作，如html和css进行解析渲染，js进行解析并执行；</li>
+</ol>
+<ul>
+<li>浏览器的渲染阶段</li>
+</ul>
+<ol>
+<li>解析html文件形成DOM树根据节点间关系组织树的节点关系；</li>
+<li>解析CSS形成CSS树</li>
+<li>把DOM树和CSS树组合形成render树</li>
+<li>接下来交给显卡，绘制成页面；</li>
+</ol>
+<h2 id="四、http的三次握手和四次挥手"><a href="#四、http的三次握手和四次挥手" class="headerlink" title="四、http的三次握手和四次挥手"></a>四、http的三次握手和四次挥手</h2><blockquote>
+<p>http 协议建立和断开连接时不是一次就完成的，连接时而是通过三次握手，断开时要经历4次挥手；</p>
+</blockquote>
+<ul>
+<li>三次握手</li>
+</ul>
+<ul>
+<li><p>第一次握手：客户端发送syn码数据包给服务器，客户端要求和服务器建立连接；</p>
+</li>
+<li><p>第二次握手：服务端接收到连接请求后，会发送ack码数据到客户端，表示你的连接请求已经收到，再次询问客户端是否确认建立连接</p>
+</li>
+<li><p>第三次握手：客户端收到服务器的ack码后，检验是否正确，如果正确则再次发送ack给服务器，表示确认连接；</p>
+</li>
+<li><p>三次握手如果成功，客户端和服务端的连接成功建立，才会开始传递数据；</p>
+</li>
+</ul>
+<ul>
+<li>四次挥手：</li>
+</ul>
+<ol>
+<li>当客户端发送数据结束后，会发送fin告知服务器，客户端要给服务器的数据传输完了；</li>
+<li>服务端返回给客户端一个ack码，告知客户端已经知道数据传递完成。客户端收到ack，就会把发送到服务端的通道关闭；</li>
+<li>服务端数据传输结束后，也会发送fin给客户端；</li>
+<li>当客户端收到fin后，会发送ack给服务端，表示客户端知道服务端已经发送完毕，服务器收到ack后就可以放心的关闭数据传输通道；</li>
+</ol>
+<h2 id="五、uri-urn-url"><a href="#五、uri-urn-url" class="headerlink" title="五、uri/urn/url"></a>五、uri/urn/url</h2><ul>
+<li><p>URI: 统一资源标识符</p>
+</li>
+<li><p>URN: 同一资源成名</p>
+</li>
+<li><p>URL: 同一资源定位符；</p>
+</li>
+<li><p>一个url的例子：</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//www.dahai.com:443/tech/ai.html?user=mabin&amp;time=1e8239473784#top</span></span><br></pre></td></tr></table></figure>
+
+<p>url各部分代表的意义:</p>
+<ol>
+<li>http  http/https: 协议</li>
+<li><a href="http://www.dahai.com" target="_blank" rel="noopener">www.dahai.com</a> 域名</li>
+<li>:443 端口号 http 协议默认80,https默认443</li>
+<li>/tech/ai.html 路径</li>
+<li>?user=mabin&amp;time=2323456 参数（可以有可以没有）放在?后面的都是告知服务器的数据</li>
+<li>#top 锚点：（哈希）</li>
+</ol>
+<h2 id="六、HTTP报文"><a href="#六、HTTP报文" class="headerlink" title="六、HTTP报文"></a>六、HTTP报文</h2><h3 id="http报文是时候什么？"><a href="#http报文是时候什么？" class="headerlink" title="http报文是时候什么？"></a>http报文是时候什么？</h3><p>HTTP报文用于http协议交互的信息，因为http通信分为请求和响应两个阶段，所以报文分为两种；</p>
+<ul>
+<li>请求报文</li>
+<li>响应报文</li>
+</ul>
+<h3 id="报文的结构："><a href="#报文的结构：" class="headerlink" title="报文的结构："></a>报文的结构：</h3><p>报文分为：报文首部 空行 报文主体；</p>
+<h4 id="请求报文："><a href="#请求报文：" class="headerlink" title="请求报文："></a>请求报文：</h4><p>报文首部：请求首部分为请求行和请求头；请求行中包含 请求方法、协议、版本、URI<br>空行（CR+LF）<br>报文主体：客户端传递给服务端的数据</p>
+<h4 id="响应报文："><a href="#响应报文：" class="headerlink" title="响应报文："></a>响应报文：</h4><p>报文首部：状态行和响应头；状态行包含http协议版本，响应状态码<br>空行（CR+LF）<br>报文主体：响应体（服务端返回给客户端的数据）</p>
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/16/JavaScript进阶教程11/" data-id="ck2flbyev000i9kppza047h9i" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/19/JavaScript进阶教程12/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          进阶教程 —— 12. DOM 事件扩展-发布订阅
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/20/JavaScript进阶教程10/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">进阶教程 —— 10. DOM 事件扩展-拖拽</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Mabin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

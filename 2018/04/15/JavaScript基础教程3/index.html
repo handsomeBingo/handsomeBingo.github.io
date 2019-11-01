@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>基础教程 —— 3. JS 逻辑运算符和 DOM 对象 | Bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、逻辑运算符 || 和 &amp;amp;&amp;amp;1、 || 表示或者，两者中有一个为true，就返回true123456789if (0 || 1) &amp;#123;  console.log(&apos;true&apos;)&amp;#125;if (0 || false) &amp;#123;  console.log(&apos;false&apos;)&amp;#125;if (true || 0) &amp;#123;  console.log(true);&amp;#">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础教程 —— 3. JS 逻辑运算符和 DOM 对象">
+<meta property="og:url" content="http://yoursite.com/2018/04/15/JavaScript基础教程3/index.html">
+<meta property="og:site_name" content="Bin">
+<meta property="og:description" content="一、逻辑运算符 || 和 &amp;amp;&amp;amp;1、 || 表示或者，两者中有一个为true，就返回true123456789if (0 || 1) &amp;#123;  console.log(&apos;true&apos;)&amp;#125;if (0 || false) &amp;#123;  console.log(&apos;false&apos;)&amp;#125;if (true || 0) &amp;#123;  console.log(true);&amp;#">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-01T03:22:09.983Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基础教程 —— 3. JS 逻辑运算符和 DOM 对象">
+<meta name="twitter:description" content="一、逻辑运算符 || 和 &amp;amp;&amp;amp;1、 || 表示或者，两者中有一个为true，就返回true123456789if (0 || 1) &amp;#123;  console.log(&apos;true&apos;)&amp;#125;if (0 || false) &amp;#123;  console.log(&apos;false&apos;)&amp;#125;if (true || 0) &amp;#123;  console.log(true);&amp;#">
+  
+    <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Bin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行；</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript基础教程3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/15/JavaScript基础教程3/" class="article-date">
+  <time datetime="2018-04-15T14:21:08.000Z" itemprop="datePublished">2018-04-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基础教程 —— 3. JS 逻辑运算符和 DOM 对象
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、逻辑运算符-和-amp-amp"><a href="#一、逻辑运算符-和-amp-amp" class="headerlink" title="一、逻辑运算符 || 和 &amp;&amp;"></a>一、逻辑运算符 || 和 &amp;&amp;</h2><h3 id="1、-表示或者，两者中有一个为true，就返回true"><a href="#1、-表示或者，两者中有一个为true，就返回true" class="headerlink" title="1、 || 表示或者，两者中有一个为true，就返回true"></a>1、 || 表示或者，两者中有一个为true，就返回true</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="number">0</span> || <span class="number">1</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'true'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="number">0</span> || <span class="literal">false</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'false'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span> || <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-amp-amp-是并且，两个值中必须两个都是true，才返回true"><a href="#2-amp-amp-是并且，两个值中必须两个都是true，才返回true" class="headerlink" title="2 &amp;&amp; 是并且，两个值中必须两个都是true，才返回true"></a>2 &amp;&amp; 是并且，两个值中必须两个都是true，才返回true</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="number">0</span> &amp;&amp; <span class="number">1</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">1</span>, <span class="string">'0 &amp;&amp; 1'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="number">0</span> &amp;&amp; <span class="literal">false</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">2</span>, <span class="string">'0 &amp;&amp; false'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span> &amp;&amp; <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">3</span>, <span class="string">'true &amp;&amp; 0'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-和-amp-amp-也是有返回值的，"><a href="#3-和-amp-amp-也是有返回值的，" class="headerlink" title="3. || 和 &amp;&amp; 也是有返回值的，"></a>3. || 和 &amp;&amp; 也是有返回值的，</h3><ul>
+<li>|| 如果第一个为true就返回第一个，如果第一个不为true就返回第二个</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> r1 = <span class="number">1</span> || <span class="number">0</span>;</span><br><span class="line"><span class="built_in">console</span>.log(r1);</span><br><span class="line"><span class="keyword">var</span> r2 = <span class="number">0</span> || <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>&amp;&amp; 如果第一个为true返回第二个，如果第一个为false返回值第一个</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> r3 = <span class="number">1</span> &amp;&amp; <span class="number">0</span>;</span><br><span class="line"><span class="keyword">var</span> r4 = <span class="literal">false</span> &amp;&amp; <span class="number">0</span>;</span><br><span class="line"><span class="built_in">console</span>.log(r3);</span><br><span class="line"><span class="built_in">console</span>.log(r4);</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、-和-的区别"><a href="#二、-和-的区别" class="headerlink" title="二、==和===的区别"></a>二、==和===的区别</h2><h3 id="在比较时等号左右两侧数据类型不同时会先转成相同数据类型，再比较"><a href="#在比较时等号左右两侧数据类型不同时会先转成相同数据类型，再比较" class="headerlink" title="== 在比较时等号左右两侧数据类型不同时会先转成相同数据类型，再比较"></a>== 在比较时等号左右两侧数据类型不同时会先转成相同数据类型，再比较</h3><blockquote>
+<ol>
+<li>== 是相对比较； === 是绝对比较</li>
+</ol>
+</blockquote>
+<ul>
+<li>1.1 字符串 == 数字 ；字符串转换成数字</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span> == <span class="string">'1'</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.2 布尔值 == 数字; 布尔值转成数字</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span> == <span class="literal">true</span>); <span class="comment">// true;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.3 布尔值 == 字符串; 布尔值转数字，字符串也转成数字，然后进行比较；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="literal">false</span> == <span class="string">'0'</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>1.4 null == undefined // true, null 和undefined和其他数据类型比较都是false</p>
+</li>
+<li><p>1.5 对象 == 对象; 比较的是空间地址，地址相同返回true</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(&#123;&#125; == &#123;&#125;); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.6 对象 == 字符串; 对象转成字符串，然后和字符串比较</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(&#123;&#125; == <span class="string">'[object Object]'</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.7 对象 == 布尔值；对象先转成字符串，再转数字，布尔值也转成数字，在比较这两个数字</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(&#123;&#125; == <span class="literal">true</span>); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log([] == <span class="literal">false</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.8 对象 == 数字；对象先转成字符串，然后再转成数字</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(&#123;&#125; == <span class="number">1</span>); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log([] == <span class="number">0</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>特殊：NaN和NaN 永远不相等<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="literal">NaN</span> == <span class="literal">NaN</span>); <span class="comment">// NaN和NaN 永远不相等</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="三、for循环"><a href="#三、for循环" class="headerlink" title="三、for循环"></a>三、for循环</h2><blockquote>
+<p>for 循环 (for loop) 语句：按照一定的规律，重复去做某一件事情，此时就需要使用循环语句.</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">/* [</span></span><br><span class="line"><span class="comment">   0: 1,</span></span><br><span class="line"><span class="comment">   1: 2,</span></span><br><span class="line"><span class="comment">   2: 3,</span></span><br><span class="line"><span class="comment">   ...</span></span><br><span class="line"><span class="comment">   11: 12</span></span><br><span class="line"><span class="comment">   length: 12 // length属性的值表示数组有多少项</span></span><br><span class="line"><span class="comment"> ]</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 把数组里面的每一项都输出出来：</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">0</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">1</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">2</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">3</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">4</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">5</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">6</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">7</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">8</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">9</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">10</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(ary[<span class="number">11</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>? 思考：我们发现上面的代码中除了方括号中索引不同，其他的代码都是相同的。<br>这个时候要是有一个变量i，然后让:<br>第一次时i=0，<br>第二次i=1，<br>第三次i=2，<br>…<br>依次类推，每一次帮我们给i加上1，那么到什么就不加了呢，因为i的最大索引是length-1，所以当i大于length-1之后就不再加了。<br>然后我们把代码中的索引换成i就可以了 console.log(ary[i]);</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ary.length; i++) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 第一次循环: i = 0  i &lt; 12 所以 ary[i] 是 ary[0]</span></span><br><span class="line">  <span class="comment">// 第二次循环: i = 1  i &lt; 12 所以 ary[i] 是 ary[1]</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// i = 12 i &lt; 12 =&gt; false 不再执行循环体，循环结束，</span></span><br><span class="line">  <span class="built_in">console</span>.log(ary[i]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i); <span class="comment">// 在for的小括号里声明的变量可以在外面使用</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="for-循环语法"><a href="#for-循环语法" class="headerlink" title="for 循环语法"></a>for 循环语法</h3><ol>
+<li>定义初始值 var i = 0</li>
+<li>设定循环成立的条件 i &lt; ary.length（如果条件成立执行循环，不成立则结束循环）</li>
+<li>条件成立会执行循环体中的内容（循环体就是花括号中的代码）</li>
+<li>执行累加 i++</li>
+</ol>
+<p><code>var i = 0; 和i++ 可以不放到括号里，但是你写在括号里的这个变量和写在外面是一样的，在循环里i++更改的就是外面声明的这个i；</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> k = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (;k &lt; <span class="number">5</span>;) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(k);</span><br><span class="line">  k++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(k); <span class="comment">// 在外面的k也被更改了，已经变成了5</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="倒着输出一个数组"><a href="#倒着输出一个数组" class="headerlink" title="倒着输出一个数组"></a>倒着输出一个数组</h3><ul>
+<li>把i的初始值设置为ary.length - 1，然后条件是 i &gt;=0 ; i–;</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [<span class="number">12</span>, <span class="number">23</span>, <span class="number">34</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = ary.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(ary[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="输入数组中的奇偶项"><a href="#输入数组中的奇偶项" class="headerlink" title="输入数组中的奇偶项"></a>输入数组中的奇偶项</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 输出数组中的奇数项</span></span><br><span class="line"><span class="comment">// 偶数：能够被2整除的数字叫做偶数（整除：被除数除以余数商是整数且余数为0）</span></span><br><span class="line"><span class="comment">// 奇数：不能被2整除的数字</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; ary.length; j++) &#123;</span><br><span class="line">  <span class="keyword">if</span> (j % <span class="number">2</span> === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// % 是取模运算符 ，就是取余数</span></span><br><span class="line">    <span class="comment">// 0 % 2 余数是0</span></span><br><span class="line">    <span class="comment">// 1 % 2 余数是1</span></span><br><span class="line">    <span class="comment">// 3 % 2 余数是1</span></span><br><span class="line">    <span class="comment">// 4 % 2 余数是0</span></span><br><span class="line">    <span class="built_in">console</span>.log(ary[j]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="理解break和continue"><a href="#理解break和continue" class="headerlink" title="理解break和continue"></a>理解break和continue</h3><ul>
+<li>continue 跳出某一轮的循环，继续后面的循环</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">	<span class="keyword">if</span> (i === <span class="number">5</span>) &#123;</span><br><span class="line">		<span class="keyword">continue</span>; <span class="comment">// 跳出i=5的那一次循环。结束本轮循环（循环体中的continue后面的代码将不再执行，继续执行下一轮循环）</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">console</span>.log(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>break 结束整个循环</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">	<span class="keyword">if</span> (i === <span class="number">5</span>) &#123;</span><br><span class="line">		<span class="keyword">break</span>; <span class="comment">// 结束i=5及以后所有的循环。break是强制结束整个循环，不做任何处理，同时循环体中的break后面的代码也不会执行了</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">console</span>.log(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、for-in-循环"><a href="#四、for-in-循环" class="headerlink" title="四、for in 循环"></a>四、for in 循环</h2><blockquote>
+<p>for in循环<br>for in 循环是专门用来遍历对象的，可以把对象里面的属性一个一个的遍历出来。<br>注意：for in只能遍历对象的可枚举属性。一般浏览器默认添加的都是不可枚举的属性。例如<strong>proto</strong></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  name: <span class="string">'江外'</span>,</span><br><span class="line">  age: <span class="number">10</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> obj) &#123;</span><br><span class="line">  <span class="comment">// k 代表每次遍历时的属性名</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'k '</span>, k);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'obj[k]'</span>, obj[k]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、获取DOM对象"><a href="#五、获取DOM对象" class="headerlink" title="五、获取DOM对象"></a>五、获取DOM对象</h2><blockquote>
+<p>DOM对象：我们通过js的相关和html方法获取到的html文档中的元素</p>
+</blockquote>
+<ol>
+<li>document.getElementById()</li>
+</ol>
+<p><code>通过ID获取页面中的元素对象 getElementById()方法</code></p>
+<blockquote>
+<p>语法：document.getElementById(‘idbox’);<br>参数：元素id， ‘box’就是参数<br>返回值（函数执行过后的结果）：如果获取到，就是获取到的DOM元素对象，如果获取不到就是null；</p>
+</blockquote>
+<ul>
+<li>解析：<ol>
+<li>document是根据ID查找的上下文，document代表的是整个HTML文档（就是html标签自身及包裹的所有内容），getElementById的上下文只能是document</li>
+<li>通过getElementById获取的元素是一个对象数据类型的值（里面包含了很多的内置属性，这些属性都是描述这个对象的）</li>
+</ol>
+</li>
+<li>DOM对象的属性：<ol>
+<li>className: 存储的是字符串类型（string），代表的是当前元素的样式类名</li>
+<li>id: 存储的是一个字符串类型（string），当前元素的ID名</li>
+<li>innerHTML：字符串 存储的当前元素中所有的内容（包含标签，并且标签以字符串形式存在）</li>
+<li>innerText: 存储当前元素中所有的文本内容（没有元素标签）</li>
+<li>onclick: 鼠标点击事件 元素的点击事件属性，基于这个属性，我们可以给元素绑定点击事件</li>
+<li>onmouseover: 鼠标划过事件</li>
+<li>onmouseout: 鼠标划出事件</li>
+<li>style 存储当前元素的所有的【行内样式】值（获取和操作的都只能是写在标签上的行内样式，写在样式表中的样式，无法通过这个属性获取到）；</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> box = <span class="built_in">document</span>.getElementById(<span class="string">'box'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(box);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>getElementsByTagName()</li>
+</ol>
+<p><code>通过标签名获取【元素对象集合】</code></p>
+<ul>
+<li>解析：<ol>
+<li>语法：context.getElementsByTagName(‘标签名’)</li>
+<li>参数：标签名字符串</li>
+<li>返回值：从context下面查到的指定标签名DOM元素对象组成的集合；这个集合中的每一项都是DOM元素对象；</li>
+<li>context不是写死的，是我们指定的上下文。你想获取那个元素下面的指定标签元素集合，哪个元素就是上下文</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> listContainer = <span class="built_in">document</span>.getElementById(<span class="string">'container'</span>);</span><br><span class="line"><span class="keyword">var</span>  liList = listContainer.getElementsByTagName(<span class="string">'li'</span>); <span class="comment">// 此时listContainer 就是上下文</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(liList); <span class="comment">//</span></span><br><span class="line"><span class="built_in">console</span>.log(liList[<span class="number">0</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(liList[<span class="number">1</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(liList[<span class="number">2</span>]);</span><br><span class="line">liList[<span class="number">0</span>].style.backgroundColor = <span class="string">'red'</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>解析：<ol>
+<li>获取的是一个元素结合（HTMLCollection），元素集合也是一个对象数据类型的，结合和数组非常类似（数字作为索引，length代表长度），但它不是数组，而是叫做类数组。</li>
+<li>和数组操作一样，通过[索引]的方式可以取出类数组的每一项。liList[0]获取的是第一项。</li>
+<li>liList.length 表示集合中li的数量</li>
+<li>集合中的每一项都是元素对象，我们可以获取或者修改它的元素属性，如style、innerHTML、innerText</li>
+<li>结合索引、length可以通过for循环把集合中的每一项获取出来。</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>? 思考 ? DOM对象也是对象，那么我们可以向操作普通对象那样操作它吗？比如说添加一个属性，或者修改某个属性？<br>DOM对象也是对象，我们也可以向操作对象的方式一样操作DOM对象</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; liList.length; i++) &#123;</span><br><span class="line">	<span class="keyword">var</span> cur = liList[i];</span><br><span class="line">	cur.myIndex = i; <span class="comment">// 通过自定义属性存储这个元素在元素集合中的索引</span></span><br><span class="line">	<span class="built_in">console</span>.log(cur);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、隔行变色"><a href="#六、隔行变色" class="headerlink" title="六、隔行变色"></a>六、隔行变色</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>江外-隔行变色<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">		* &#123;</span><br><span class="line">			margin: 0;</span><br><span class="line">			padding: 0;</span><br><span class="line">		&#125;</span><br><span class="line">		ul, li &#123;</span><br><span class="line">			list-style: none;</span><br><span class="line">		&#125;</span><br><span class="line">		.li-wrapper &#123;</span><br><span class="line">			margin: 30px auto;</span><br><span class="line">			border: 1px solid #00b38a;</span><br><span class="line">			width: 500px;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		.li-wrapper li &#123;</span><br><span class="line">			height: 50px;</span><br><span class="line">			line-height: 50px;</span><br><span class="line">			text-align: center;</span><br><span class="line">			border-bottom: 1px darkblue dashed;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"liWrapper"</span> <span class="attr">class</span>=<span class="string">"li-wrapper"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>1item1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>2item2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>3item3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>4item4<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>5item5<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>6item6<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>7item7<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>8item8<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>9item9<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>10item10<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/6-changeColor.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 1. =&gt; 获取元素 liWrapper下的li</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> liWrapper= <span class="built_in">document</span>.getElementById(<span class="string">'liWrapper'</span>);</span><br><span class="line"><span class="keyword">var</span> liList = liWrapper.getElementsByTagName(<span class="string">'li'</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; liList.length; i++) &#123;</span><br><span class="line">	<span class="comment">// 循环遍历元素对象，然后取出每一项</span></span><br><span class="line">	<span class="keyword">if</span> (i % <span class="number">2</span> === <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="comment">// 如果是i是偶数</span></span><br><span class="line">		liList[i].style.backgroundColor = <span class="string">'pink'</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">// 否则i是奇数</span></span><br><span class="line">		liList[i].style.backgroundColor = <span class="string">'yellow'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/15/JavaScript基础教程3/" data-id="ck2flbyc400049kpppkbimbl7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/05/08/JavaScript基础教程4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          基础教程 —— 4. JS 的函数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/31/JavaScript基础教程2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">基础教程 —— 2. 数据类型深入</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Mabin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

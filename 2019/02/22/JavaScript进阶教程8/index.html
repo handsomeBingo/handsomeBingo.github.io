@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>进阶教程 —— 8. 继承详解 | Bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、JS中的继承方式：面向对象：（类和实例）  继承 子类继承父类 封装 为实例添加方法、为原型增加方法 多态（重写、重载）   继承：两个类A B ，想让B类的实例使用A类上的属性和方法，就需要让B类继承A类，我们称B类为子类，A类为父类（超类）  123456789101112131415161718function Super() &amp;#123;&amp;#125;function A() &amp;#123">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进阶教程 —— 8. 继承详解">
+<meta property="og:url" content="http://yoursite.com/2019/02/22/JavaScript进阶教程8/index.html">
+<meta property="og:site_name" content="Bin">
+<meta property="og:description" content="一、JS中的继承方式：面向对象：（类和实例）  继承 子类继承父类 封装 为实例添加方法、为原型增加方法 多态（重写、重载）   继承：两个类A B ，想让B类的实例使用A类上的属性和方法，就需要让B类继承A类，我们称B类为子类，A类为父类（超类）  123456789101112131415161718function Super() &amp;#123;&amp;#125;function A() &amp;#123">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-01T03:26:32.448Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="进阶教程 —— 8. 继承详解">
+<meta name="twitter:description" content="一、JS中的继承方式：面向对象：（类和实例）  继承 子类继承父类 封装 为实例添加方法、为原型增加方法 多态（重写、重载）   继承：两个类A B ，想让B类的实例使用A类上的属性和方法，就需要让B类继承A类，我们称B类为子类，A类为父类（超类）  123456789101112131415161718function Super() &amp;#123;&amp;#125;function A() &amp;#123">
+  
+    <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Bin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行；</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript进阶教程8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/22/JavaScript进阶教程8/" class="article-date">
+  <time datetime="2019-02-22T13:37:42.000Z" itemprop="datePublished">2019-02-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      进阶教程 —— 8. 继承详解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、JS中的继承方式："><a href="#一、JS中的继承方式：" class="headerlink" title="一、JS中的继承方式："></a>一、JS中的继承方式：</h3><p>面向对象：（类和实例）</p>
+<ul>
+<li>继承 子类继承父类</li>
+<li>封装 为实例添加方法、为原型增加方法</li>
+<li>多态（重写、重载）</li>
+</ul>
+<blockquote>
+<p>继承：两个类A B ，想让B类的实例使用A类上的属性和方法，就需要让B类继承A类，我们称B类为子类，A类为父类（超类）</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Super</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">A.prototype.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'hello World'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"></span><br><span class="line"> b是B类的实例 想使用A类的属性和方法</span><br><span class="line"><span class="built_in">console</span>.log(b.say);  <span class="literal">undefined</span></span><br><span class="line"></span><br><span class="line"> 为啥是<span class="literal">undefined</span>？对象.属性名 先看自己是否有着私有属性，如果私有属性没有，就去实例所属类的原型查找公有的属性和方法，如果原型上也没有，就根据原型对象的__proto__ 一直找到<span class="built_in">Object</span>基类的原型上为止，如果还没有就返回<span class="literal">undefined</span>；</span><br><span class="line"></span><br><span class="line">现在需要b可以使用A类的say方法，现在就需要继承；</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-原型链继承"><a href="#1-1-原型链继承" class="headerlink" title="1.1 原型链继承"></a>1.1 原型链继承</h4><ul>
+<li>原型继承： 将子 类B的原型对象 重写成父类A的一个实例。<blockquote>
+<p>B.prototype = new A();<br>把父类共有属性和私有属性变成子类的公有属性</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">A.prototype.age = <span class="number">19</span>;</span><br><span class="line">A.prototype.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'来自A类原型的say方法'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">B.prototype = <span class="keyword">new</span> A();  把B类的原型改写成一个A类的实例；</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line"><span class="built_in">console</span>.log(b.__proto__);  &#123;<span class="attr">text</span>: <span class="string">'xxx'</span>, __proto__....&#125;</span><br><span class="line"><span class="built_in">console</span>.log(b.age);</span><br><span class="line"><span class="built_in">console</span>.log(b.say);</span><br></pre></td></tr></table></figure>
+
+<p>把B的原型改写成A类的一个实例，此时通过 b.age 访问b的age属性，首先在私有属性中查找，私有属性中没有age属性，接着去b所属类的原型（B.prototype）上查找，此时原型对象是A的实例对象，在原型对象也没有age属性，然后通过原型对象的<strong>proto</strong>就找到了A.prototype上，A的prototype上有age属性</p>
+<ul>
+<li>原型继承是把子类公有的属性和私有的属性都变成了子类私有的属性；</li>
+<li>缺点：改写子类的原型对象，会导致子类原型对象上的constructor属性被改写，需要重新指定继承后的constructor；</li>
+</ul>
+<h4 id="1-2-借用构造函数继承"><a href="#1-2-借用构造函数继承" class="headerlink" title="1.2 借用构造函数继承"></a>1.2 借用构造函数继承</h4><blockquote>
+<p>借用构造函数：把父类当做普通函数，在子类的函数体中call执行父类的函数；</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.a = <span class="string">'aa'</span>;</span><br><span class="line">	<span class="keyword">this</span>.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'A say'</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">A.prototype.public = <span class="string">'public'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	A.call(<span class="keyword">this</span>);  <span class="keyword">this</span>是B类的一个实例，A.call(<span class="keyword">this</span>) 的意思是把A中的<span class="keyword">this</span>就该成B的实例（而在B的构造函数中<span class="keyword">this</span>就是B的实例）这样在A中通过<span class="keyword">this</span>.xxx = xxx 的方式添加的属性都会添加到B的实例身上。</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"><span class="built_in">console</span>.log(b);  &#123;<span class="attr">a</span>: <span class="string">'aa'</span>, <span class="attr">say</span>: fun.....&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b2 = <span class="keyword">new</span> B();</span><br><span class="line"><span class="built_in">console</span>.log(b2.say === b.say);  <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+
+<p>借用构造函数继承：</p>
+<ul>
+<li>把父类当做普通函数，在子类的函数体里面，通过call方法执行 A.call(this)</li>
+<li>call方法是用来修改this指向的，这样一来就把A中的this修改成了b的实例；在函数A中通过this.xxx = xxx 添加的属性都添加到了B的实例身上；</li>
+<li>特点：只能把父类的私有属性和方法继承为子类的私有属性和方法；</li>
+</ul>
+<h4 id="1-3-组合继承"><a href="#1-3-组合继承" class="headerlink" title="1.3 组合继承"></a>1.3 组合继承</h4><p>组合继承：原型链继承 + 借用构造函数继承</p>
+<ul>
+<li>原型链继承：把父类私有的和共有的继承为子类公有的；</li>
+<li>借用构造函数继承：把父类私有的继承为子类私有的</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.a = <span class="string">'私有的'</span></span><br><span class="line">&#125;</span><br><span class="line">A.prototype.text = <span class="string">'公有'</span>;</span><br><span class="line">A.prototype.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'A公有的say方法'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	A.call(<span class="keyword">this</span>);  借用构造函数继承，继承父类私有的</span><br><span class="line">&#125;</span><br><span class="line">B.prototype = <span class="keyword">new</span> A();  原型链继承，继承父类私有和公有的属性；</span><br><span class="line">B.prototype.constructor = B;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"><span class="built_in">console</span>.log(b.text);  公有的</span><br><span class="line"><span class="built_in">console</span>.log(b.a);  私有的</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>组合继承也并非没有缺点，组合继承会父类的私有继承两次，一份在借用构造函数继承时成为私有的，而另一份是在原型继承时成为公有的；</li>
+</ul>
+<h4 id="1-4-原型式继承"><a href="#1-4-原型式继承" class="headerlink" title="1.4 原型式继承"></a>1.4 原型式继承</h4><p>原型式继承：把父类的公有属性继承为子类的公有属性；</p>
+<p>创建一个新的对象，并且新对象的<strong>proto</strong>指向A.prototype，最后把这个新对象作为B类的原型；</p>
+<ul>
+<li><p>创建一个对象，并且对象的<strong>proto</strong> 指向obj</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.create(obj)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>原型式继承示例</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.private = <span class="string">'private私有'</span>;</span><br><span class="line">&#125;</span><br><span class="line">A.prototype.public = <span class="string">'public公有'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">B.prototype = <span class="built_in">Object</span>.create(A.prototype);  创建一个指定原型的对象 创建一个对象，并且这个对象的__proto__ 指向A.prototype</span><br><span class="line"></span><br><span class="line">B.prototype.constructor = B;  原型式继承同样是修改B类原型的指向，所以需要重新指定构造函数</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"><span class="built_in">console</span>.log(b.public);</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-5-寄生组合式继承"><a href="#1-5-寄生组合式继承" class="headerlink" title="1.5 寄生组合式继承"></a>1.5 寄生组合式继承</h4><ul>
+<li>寄生组合式继承：原型式继承 + 借用构造函数继承</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.private = <span class="string">'私有属性'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">A.prototype.public = <span class="string">'公有属性'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	A.call(<span class="keyword">this</span>);  借用构造函数继承</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'b私有的'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> 原型式继承：把父类公有的 继承为子类实例公有的</span><br><span class="line">B.prototype = <span class="built_in">Object</span>.create(A.prototype);</span><br><span class="line">B.prototype.constructor = B;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();  &#123;<span class="attr">name</span>: <span class="string">'私有的'</span>, <span class="attr">private</span>: <span class="string">'私有属性'</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(b.private);  继承过来的私有属性</span><br><span class="line"><span class="built_in">console</span>.log(b.public);  继承过来到的公有属性</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-6-冒充对象继承"><a href="#1-6-冒充对象继承" class="headerlink" title="1.6 冒充对象继承"></a>1.6 冒充对象继承</h4><blockquote>
+<p>冒充对象继承：在子类的构造函数中生成一个父类的实例，把父类的这个实例进行遍历，把属性都添加子类的实例上；</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.private = <span class="string">'私有属性'</span>;</span><br><span class="line">&#125;</span><br><span class="line">A.prototype.public = <span class="string">'公有属性'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'B私有的属性'</span>;</span><br><span class="line">	<span class="keyword">let</span> tmp = <span class="keyword">new</span> A();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> tmp) &#123;</span><br><span class="line">		<span class="keyword">this</span>[key] = tmp[key];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-7-ES6中的类"><a href="#1-7-ES6中的类" class="headerlink" title="1.7 ES6中的类"></a>1.7 ES6中的类</h4><ul>
+<li><p>ES5 一个函数就是一个类</p>
+</li>
+<li><p>ES6 借鉴后端语言，增加了class关键字，创建一个类</p>
+</li>
+<li><p>ES5</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Teacher</span>(<span class="params">name, age, subject</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.age = age;</span><br><span class="line">	<span class="keyword">this</span>.subject = subject;</span><br><span class="line">&#125;</span><br><span class="line">Teacher.motor = <span class="string">'传道 授业 解惑'</span>;</span><br><span class="line">Teacher.prototype.teach = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name + <span class="keyword">this</span>.age);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> t = <span class="keyword">new</span> Teacher(<span class="string">'mabin'</span>, <span class="number">19</span>, <span class="string">'js'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ES6</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Teacher</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span> (name, age, subject) &#123;</span><br><span class="line">		 这里面通过<span class="keyword">this</span>.xxx = xxx 是给实例添加私有属性</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">		<span class="keyword">this</span>.subject = subject;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	 添加公有属性</span><br><span class="line">	teach () &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.name + <span class="keyword">this</span>.age + <span class="keyword">this</span>.subject);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	 添加静态方法</span><br><span class="line">	<span class="keyword">static</span> motor = <span class="string">'传道授业解惑'</span>;</span><br><span class="line">	<span class="keyword">static</span> getMotor () &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'We are U'</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> t = <span class="keyword">new</span> Teacher(<span class="string">'马宾'</span>, <span class="number">18</span>, <span class="string">'JS'</span>);</span><br><span class="line">t.teach();</span><br><span class="line"><span class="built_in">console</span>.log(Teacher.motor);</span><br><span class="line">Teacher.getMotor();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="1-7-ES6继承"><a href="#1-7-ES6继承" class="headerlink" title="1.7 ES6继承"></a>1.7 ES6继承</h4><p>ES6继承：extends关键字</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span> (name, age) &#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	 公有方法（添加到原型上）</span><br><span class="line">	say () &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span> say`</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> ES6继承时使用 extends 关键字实现继承</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span> </span>&#123;  B继承A类</span><br><span class="line">	<span class="keyword">constructor</span> (x, y, forName, forAge) &#123;</span><br><span class="line">		 注意：在使用ES6的extends关键字之前，必须使用<span class="keyword">super</span>(); <span class="keyword">super</span>表示父类的构造函数</span><br><span class="line">		<span class="keyword">super</span>(forName, forAge);  注意：</span><br><span class="line">		<span class="keyword">this</span>.x = x;</span><br><span class="line">		<span class="keyword">this</span>.y = y;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B(<span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'mabin'</span>, <span class="number">18</span>);</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line">b.say();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ES6的继承原理是：寄生组合式继承</li>
+</ul>
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】<div>
+</div></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/02/22/JavaScript进阶教程8/" data-id="ck2flbyfy001a9kpplbvn5d2j" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/15/JavaScript进阶教程9/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          进阶教程 —— 9. DOM 事件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/17/JavaScript进阶教程7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">进阶教程 —— 7. JS 手写轮播图</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Mabin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

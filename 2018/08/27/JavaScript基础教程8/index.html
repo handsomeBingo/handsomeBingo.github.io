@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>基础教程 —— 6. JS DOM 操作和属性操作 | Bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、js中获取DOM的方法1. document.getElementById() 根据id获取dom元素对象 参数：元素id 返回值：根据元素id获取到的DOM对象，如果获取不到返回null 注意： 如果ID名字相同：那么获取第一个； getElementById的上下文必须是 document    12var parent = document.getElementById(&apos;parent&apos;">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础教程 —— 6. JS DOM 操作和属性操作">
+<meta property="og:url" content="http://yoursite.com/2018/08/27/JavaScript基础教程8/index.html">
+<meta property="og:site_name" content="Bin">
+<meta property="og:description" content="一、js中获取DOM的方法1. document.getElementById() 根据id获取dom元素对象 参数：元素id 返回值：根据元素id获取到的DOM对象，如果获取不到返回null 注意： 如果ID名字相同：那么获取第一个； getElementById的上下文必须是 document    12var parent = document.getElementById(&apos;parent&apos;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-01T03:22:10.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基础教程 —— 6. JS DOM 操作和属性操作">
+<meta name="twitter:description" content="一、js中获取DOM的方法1. document.getElementById() 根据id获取dom元素对象 参数：元素id 返回值：根据元素id获取到的DOM对象，如果获取不到返回null 注意： 如果ID名字相同：那么获取第一个； getElementById的上下文必须是 document    12var parent = document.getElementById(&apos;parent&apos;">
+  
+    <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Bin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行；</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript基础教程8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/27/JavaScript基础教程8/" class="article-date">
+  <time datetime="2018-08-27T13:45:45.000Z" itemprop="datePublished">2018-08-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基础教程 —— 6. JS DOM 操作和属性操作
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、js中获取DOM的方法"><a href="#一、js中获取DOM的方法" class="headerlink" title="一、js中获取DOM的方法"></a>一、js中获取DOM的方法</h2><h3 id="1-document-getElementById-根据id获取dom元素对象"><a href="#1-document-getElementById-根据id获取dom元素对象" class="headerlink" title="1. document.getElementById() 根据id获取dom元素对象"></a>1. document.getElementById() 根据id获取dom元素对象</h3><ul>
+<li>参数：元素id</li>
+<li>返回值：根据元素id获取到的DOM对象，如果获取不到返回null</li>
+<li>注意：<ol>
+<li>如果ID名字相同：那么获取第一个；</li>
+<li>getElementById的上下文必须是 document</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> parent = <span class="built_in">document</span>.getElementById(<span class="string">'parent'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(parent);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-context-getElementsByTagName"><a href="#2-context-getElementsByTagName" class="headerlink" title="2. context.getElementsByTagName()"></a>2. context.getElementsByTagName()</h3><ul>
+<li>参数：标签名</li>
+<li>返回值：从context下获取的指定标签名的dom集合，获取不到时空集合</li>
+<li>注意：<ol>
+<li>dom集合是类数组，有length有索引</li>
+<li>context不是指定的，当你想获取哪个元素的下的所有的指定标签，哪个元素就是context</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lis = parent.getElementsByTagName(<span class="string">'li'</span>); <span class="comment">// 此时要获取id为parent的ul下的所有li，此时context就是parent</span></span><br><span class="line"><span class="built_in">console</span>.log(lis);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-context-getElementsByClassName-在上下文中，根据元素class名获取元素集合"><a href="#3-context-getElementsByClassName-在上下文中，根据元素class名获取元素集合" class="headerlink" title="3. context.getElementsByClassName() 在上下文中，根据元素class名获取元素集合"></a>3. context.getElementsByClassName() 在上下文中，根据元素class名获取元素集合</h3><ul>
+<li>参数：元素class名字</li>
+<li>返回值：带有指定的class的元素集合，如果获取不到则返回空集合</li>
+<li>context: 想要在哪个元素下查找某些class类名的元素，哪个元素就是context</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> someBox = <span class="built_in">document</span>.getElementsByClassName(<span class="string">'some-box'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(someBox);</span><br><span class="line"><span class="keyword">var</span> child = parent.getElementsByClassName(<span class="string">'child'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(child);</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-document-getElementsByName-通过name属性获取元素对象，一般用于表单元素集合"><a href="#4-document-getElementsByName-通过name属性获取元素对象，一般用于表单元素集合" class="headerlink" title="4. document.getElementsByName 通过name属性获取元素对象，一般用于表单元素集合"></a>4. document.getElementsByName 通过name属性获取元素对象，一般用于表单元素集合</h3><ul>
+<li>参数：元素name属性</li>
+<li>返回值：带有指定那么属性值的元素集合，获取不到就是空集合</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> input = <span class="built_in">document</span>.getElementsByName(<span class="string">'inputField'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(input);</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-document-documentElement-获取html元素对象"><a href="#5-document-documentElement-获取html元素对象" class="headerlink" title="5. document.documentElement 获取html元素对象"></a>5. document.documentElement 获取html元素对象</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">document</span>.documentElement);</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-document-body-获取body元素对象"><a href="#6-document-body-获取body元素对象" class="headerlink" title="6. document.body 获取body元素对象"></a>6. document.body 获取body元素对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">document</span>.body);</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取浏览器可视窗口的宽度和高度"><a href="#获取浏览器可视窗口的宽度和高度" class="headerlink" title="获取浏览器可视窗口的宽度和高度"></a>获取浏览器可视窗口的宽度和高度</h4><ul>
+<li><p>宽度</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> winW = <span class="built_in">document</span>.documentElement.clientWidth || <span class="built_in">document</span>.body.clientWidth;</span><br><span class="line"><span class="built_in">console</span>.log(winW);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>高度</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> winH = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">document</span>.body.clientHeight;</span><br><span class="line"><span class="built_in">console</span>.log(winH);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="7-根据选择器获取（可以在移动端使用，在PC端有兼容性问题）"><a href="#7-根据选择器获取（可以在移动端使用，在PC端有兼容性问题）" class="headerlink" title="7. 根据选择器获取（可以在移动端使用，在PC端有兼容性问题）"></a>7. 根据选择器获取（可以在移动端使用，在PC端有兼容性问题）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">context.querySelector(css选择器) 获取一个</span><br><span class="line">context.querySelectorAll(css选择器) 获取所有</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> single = <span class="built_in">document</span>.querySelector(<span class="string">'.some-box'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(single);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> multi = <span class="built_in">document</span>.querySelectorAll(<span class="string">'.some-box'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(multi);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、DOM节点属性"><a href="#二、DOM节点属性" class="headerlink" title="二、DOM节点属性"></a>二、DOM节点属性</h2><h3 id="1-节点："><a href="#1-节点：" class="headerlink" title="1. 节点："></a>1. 节点：</h3><blockquote>
+<p>在html中所有的内容都成为节点（node）。节点是通过节点属性描述节点间关系的，并且根据节点关系获取元素对象；</p>
+</blockquote>
+<p>DOM节点：<br>| 节点   |    nodeType |  nodeName  |  nodeValue |<br>|———|———–|————|————-|<br>| 元素节点 |     1       |   大写标签名 |  null |<br>|———|———–|————|————-|<br>| 文本节点 |     3       |    #text    |  文本内容 |<br>|———|———–|————|————-|<br>| 注释节点 |     8       |    #comment |  注释内容 |<br>|———|———–|————|————-|<br>| document|     9       |    #document|   null |</p>
+<p><code>注意：换行和空格都是文本节点</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> parent = <span class="built_in">document</span>.getElementById(<span class="string">'parent'</span>);</span><br><span class="line"><span class="keyword">var</span> second = <span class="built_in">document</span>.getElementById(<span class="string">'second'</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-节点属性"><a href="#2-节点属性" class="headerlink" title="2. 节点属性"></a>2. 节点属性</h3><h4 id="2-1-childNodes-获取当前元素节点的所有子节点，属性值是集合"><a href="#2-1-childNodes-获取当前元素节点的所有子节点，属性值是集合" class="headerlink" title="2.1 childNodes 获取当前元素节点的所有子节点，属性值是集合"></a>2.1 childNodes 获取当前元素节点的所有子节点，属性值是集合</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(parent.childNodes);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-children-获取当前元素的所有元素子节点，属性值是集合"><a href="#2-2-children-获取当前元素的所有元素子节点，属性值是集合" class="headerlink" title="2.2 children: 获取当前元素的所有元素子节点，属性值是集合"></a>2.2 children: 获取当前元素的所有元素子节点，属性值是集合</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(parent.children);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-fistChild-获取当前元素的第一个子节点"><a href="#2-3-fistChild-获取当前元素的第一个子节点" class="headerlink" title="2.3 fistChild 获取当前元素的第一个子节点"></a>2.3 fistChild 获取当前元素的第一个子节点</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(parent.firstChild);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-4-firstElementChild-获取当前元素的第一个元素子节点"><a href="#2-4-firstElementChild-获取当前元素的第一个元素子节点" class="headerlink" title="2.4 firstElementChild 获取当前元素的第一个元素子节点"></a>2.4 firstElementChild 获取当前元素的第一个元素子节点</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(parent.firstElementChild);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-5-lastChild-获取当前元素的最后一个子节点"><a href="#2-5-lastChild-获取当前元素的最后一个子节点" class="headerlink" title="2.5 lastChild 获取当前元素的最后一个子节点"></a>2.5 lastChild 获取当前元素的最后一个子节点</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(parent.lastChild);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-lastElementChild-获取当前元素的最后一个元素子节点"><a href="#2-6-lastElementChild-获取当前元素的最后一个元素子节点" class="headerlink" title="2.6 lastElementChild 获取当前元素的最后一个元素子节点"></a>2.6 lastElementChild 获取当前元素的最后一个元素子节点</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(parent.lastElementChild);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-7-parentNode-获取当前元素的父亲节点，属性值是对象"><a href="#2-7-parentNode-获取当前元素的父亲节点，属性值是对象" class="headerlink" title="2.7 parentNode: 获取当前元素的父亲节点，属性值是对象"></a>2.7 parentNode: 获取当前元素的父亲节点，属性值是对象</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(second.parentNode);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-8-previousSibling获取上一个哥哥节点"><a href="#2-8-previousSibling获取上一个哥哥节点" class="headerlink" title="2.8 previousSibling获取上一个哥哥节点"></a>2.8 previousSibling获取上一个哥哥节点</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(second.previousSibling);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-9-previousElementSibling-获取上一个元素哥哥节点"><a href="#2-9-previousElementSibling-获取上一个元素哥哥节点" class="headerlink" title="2.9 previousElementSibling 获取上一个元素哥哥节点"></a>2.9 previousElementSibling 获取上一个元素哥哥节点</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(second.previousElementSibling);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-10-nextSibling-获取下一个弟弟节点"><a href="#2-10-nextSibling-获取下一个弟弟节点" class="headerlink" title="2.10 nextSibling 获取下一个弟弟节点"></a>2.10 nextSibling 获取下一个弟弟节点</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(second.nextSibling);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-11-nextElementSibling-获取下一个元素弟弟节点"><a href="#2-11-nextElementSibling-获取下一个元素弟弟节点" class="headerlink" title="2.11 nextElementSibling 获取下一个元素弟弟节点"></a>2.11 nextElementSibling 获取下一个元素弟弟节点</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(second.nextElementSibling);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol start="3">
+<li>根据节点间关系获取到的节点集合或者节点都是DOM集合或者DOM元素对象。我们可以操作这些集合或者对象，和操作DOM集合或者对象一模一样。</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">parent.lastElementChild.firstElementChild.innerHTML = <span class="string">'我是通过dom节点属性添加的'</span>;</span><br><span class="line">parent.lastElementChild.firstElementChild.style.backgroundColor = <span class="string">'red'</span>;</span><br><span class="line">parent.lastElementChild.firstElementChild.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  alert(<span class="string">'这是通过DOM节点属性关系绑定的事件'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、动态操作DOM"><a href="#三、动态操作DOM" class="headerlink" title="三、动态操作DOM"></a>三、动态操作DOM</h2><h3 id="1-动态创建DOM元素对象-document-createElement"><a href="#1-动态创建DOM元素对象-document-createElement" class="headerlink" title="1. 动态创建DOM元素对象 document.createElement()"></a>1. 动态创建DOM元素对象 document.createElement()</h3><ul>
+<li>语法：document.createElement()</li>
+<li>参数：html标签名</li>
+<li>返回值：新创建的DOM对象</li>
+<li>注意：新建的DOM对象和我们从页面中获取的DOM对象操作起来没有任何区别；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> newDiv = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">newDiv.innerHTML = <span class="string">'我是新建的div'</span>;</span><br><span class="line">newDiv.style.backgroundColor = <span class="string">'red'</span>;</span><br><span class="line">newDiv.style.width = <span class="string">'100px'</span>;</span><br><span class="line">newDiv.style.height = <span class="string">'100px'</span>;</span><br><span class="line">newDiv.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  alert(<span class="string">'我是新建div的点击事件'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>? 页面上并没有这个div ? 为啥没有呢？ 因为这是我们动态创建的，并没有把这个新建的div插入到html文档中。</li>
+</ul>
+<h3 id="2-appendChild-向元素容器的末尾添加一个元素"><a href="#2-appendChild-向元素容器的末尾添加一个元素" class="headerlink" title="2. appendChild: 向元素容器的末尾添加一个元素"></a>2. appendChild: 向元素容器的末尾添加一个元素</h3><ul>
+<li>语法：父级容器.appendChild(元素对象);</li>
+<li>参数：元素对象（新建的也行、之前已经存在也行）</li>
+<li>返回值：插入到容器中的元素对象</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> wrapper = <span class="built_in">document</span>.getElementById(<span class="string">'wrapper'</span>);</span><br><span class="line"><span class="keyword">var</span> obj = wrapper.appendChild(newDiv);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-父级容器-removeChild"><a href="#3-父级容器-removeChild" class="headerlink" title="3. 父级容器.removeChild()"></a>3. 父级容器.removeChild()</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> originExist = <span class="built_in">document</span>.getElementById(<span class="string">'originExist'</span>);</span><br><span class="line">wrapper.removeChild(originExist);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-insertBefore-把一个元素插入到指定容器中某一个元素标签之前"><a href="#3-insertBefore-把一个元素插入到指定容器中某一个元素标签之前" class="headerlink" title="3. insertBefore 把一个元素插入到指定容器中某一个元素标签之前"></a>3. insertBefore 把一个元素插入到指定容器中某一个元素标签之前</h3><ul>
+<li>语法：父级容器.insertBefore(newEle, oldEle);</li>
+<li>参数：要插入的新元素, 已经存在于容器的老元素</li>
+<li>返回值：newEle</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> insertResutl = wrapper.insertBefore(newDiv, originExist);</span><br><span class="line"><span class="built_in">console</span>.log(insertResutl);</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-cloneNode-把一个节点进行克隆"><a href="#4-cloneNode-把一个节点进行克隆" class="headerlink" title="4. cloneNode() 把一个节点进行克隆"></a>4. cloneNode() 把一个节点进行克隆</h3><ul>
+<li>语法：curEle.cloneNode(false)</li>
+<li>参数：true表示深度克隆，把当前节点的子孙节点都克隆；false表示只克隆当前节点</li>
+<li>返回值：克隆出来的节点（）</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cloneWrapper = wrapper.cloneNode();</span><br><span class="line">console.log(cloneWrapper === wrapper); #### false 克隆出来的和原来的节点没有关系</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、属性操作"><a href="#五、属性操作" class="headerlink" title="五、属性操作"></a>五、属性操作</h2><h3 id="1-setAttribute-给当前元素设置html行内属性"><a href="#1-setAttribute-给当前元素设置html行内属性" class="headerlink" title="1. setAttribute() 给当前元素设置html行内属性"></a>1. setAttribute() 给当前元素设置html行内属性</h3><ul>
+<li>语法：元素对象.setAttribute(attr, value)</li>
+<li>参数：属性名, 属性值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> attributeBox = <span class="built_in">document</span>.querySelector(<span class="string">'#attributeBox'</span>);</span><br><span class="line">attributeBox.setAttribute(<span class="string">'name'</span>, <span class="string">'江外琉璃'</span>);</span><br><span class="line">attributeBox.setAttribute(<span class="string">'age'</span>, <span class="string">'10'</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-getAttribute-获取当前html某个行内属性的属性值"><a href="#2-getAttribute-获取当前html某个行内属性的属性值" class="headerlink" title="2. getAttribute() 获取当前html某个行内属性的属性值"></a>2. getAttribute() 获取当前html某个行内属性的属性值</h3><ul>
+<li>语法：元素对象.getAttribute(attr)</li>
+<li>参数：属性名</li>
+<li>返回值：属性值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = attributeBox.getAttribute(<span class="string">'name'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(name);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-removeAttribute-删除指定的属性"><a href="#3-removeAttribute-删除指定的属性" class="headerlink" title="3. removeAttribute() 删除指定的属性"></a>3. removeAttribute() 删除指定的属性</h3><ul>
+<li>语法：元素对象.removeAttribute(attr)</li>
+<li>参数：要删除的属性</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">attributeBox.removeAttribute(<span class="string">'age'</span>);</span><br></pre></td></tr></table></figure>
+
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/27/JavaScript基础教程8/" data-id="ck2flbyep000e9kppqihgbdqx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/17/JavaScript进阶教程2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          进阶教程 —— 2. 变量提升
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/07/09/JavaScript基础教程7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">基础教程 —— 6. Date 类型和定时器</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Mabin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

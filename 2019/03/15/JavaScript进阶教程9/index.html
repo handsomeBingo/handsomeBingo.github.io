@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>进阶教程 —— 9. DOM 事件 | Bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DOM事件事件及常见的事件 事件：文档（html元素及document）或者浏览器的窗口发生的一些特定的交互瞬间；可以监听这些事件，来实现在事件发生时执行特定的操作；  12let btn = document.querySelector(&apos;.btn&apos;);let box = document.querySelector(&apos;.box&apos;);  常见的事件： 1.1 鼠标事件：鼠标动作时触发的事件  元">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进阶教程 —— 9. DOM 事件">
+<meta property="og:url" content="http://yoursite.com/2019/03/15/JavaScript进阶教程9/index.html">
+<meta property="og:site_name" content="Bin">
+<meta property="og:description" content="DOM事件事件及常见的事件 事件：文档（html元素及document）或者浏览器的窗口发生的一些特定的交互瞬间；可以监听这些事件，来实现在事件发生时执行特定的操作；  12let btn = document.querySelector(&apos;.btn&apos;);let box = document.querySelector(&apos;.box&apos;);  常见的事件： 1.1 鼠标事件：鼠标动作时触发的事件  元">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-01T03:28:29.813Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="进阶教程 —— 9. DOM 事件">
+<meta name="twitter:description" content="DOM事件事件及常见的事件 事件：文档（html元素及document）或者浏览器的窗口发生的一些特定的交互瞬间；可以监听这些事件，来实现在事件发生时执行特定的操作；  12let btn = document.querySelector(&apos;.btn&apos;);let box = document.querySelector(&apos;.box&apos;);  常见的事件： 1.1 鼠标事件：鼠标动作时触发的事件  元">
+  
+    <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Bin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行；</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript进阶教程9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/15/JavaScript进阶教程9/" class="article-date">
+  <time datetime="2019-03-15T11:55:12.000Z" itemprop="datePublished">2019-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      进阶教程 —— 9. DOM 事件
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="DOM事件"><a href="#DOM事件" class="headerlink" title="DOM事件"></a>DOM事件</h2><h3 id="事件及常见的事件"><a href="#事件及常见的事件" class="headerlink" title="事件及常见的事件"></a>事件及常见的事件</h3><blockquote>
+<p>事件：文档（html元素及document）或者浏览器的窗口发生的一些特定的交互瞬间；可以监听这些事件，来实现在事件发生时执行特定的操作；</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> btn = <span class="built_in">document</span>.querySelector(<span class="string">'.btn'</span>);</span><br><span class="line"><span class="keyword">let</span> box = <span class="built_in">document</span>.querySelector(<span class="string">'.box'</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="常见的事件："><a href="#常见的事件：" class="headerlink" title="常见的事件："></a>常见的事件：</h4><ul>
+<li><p>1.1 鼠标事件：鼠标动作时触发的事件</p>
+<ul>
+<li>元素.onclick = function() {} 单击事件</li>
+<li>元素.ondbclick = function () {} 双击事件</li>
+<li>元素.onmouseenter = function () {} 鼠标移入</li>
+<li>元素.onmouseleave = function () {} 鼠标移出</li>
+<li>元素.onmouseover = function () {} 鼠标滑过</li>
+<li>元素.onmouseout = function () {} 鼠标划出</li>
+<li>元素.onmousemove = function () {} 鼠标移动</li>
+<li>元素.onmousedown = function () {} 鼠标按下</li>
+<li>元素.onmmouseup = function () {} 鼠标抬起</li>
+<li>元素.onmousewheel = function () {} 鼠标滚轮滚动</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">box.onmouseover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">1111</span>)</span><br><span class="line">&#125;;</span><br><span class="line">box.onmouseout = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">2222</span>)</span><br><span class="line">&#125;;</span><br><span class="line">box.onmousedown = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'3333'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">box.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">4444</span>)</span><br><span class="line">&#125;;</span><br><span class="line">box.onmousewheel = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">555</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.2  键盘事件：一般inputtextareadocument.bodydocumentwindowdocument.documentElement监听键盘事件<ul>
+<li>元素.onkeydown = function() {} 键盘按下</li>
+<li>元素.onkeyup = function () {} 键盘抬起</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> input = <span class="built_in">document</span>.querySelector(<span class="string">'#input'</span>);</span><br><span class="line">input.onkeydown = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'123'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">document</span>.onkeyup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'keyup'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.onkeydown = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'window key down'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.3 表单元素事件<ul>
+<li>onfocus 获取焦点（光标）事件</li>
+<li>onblur 失去焦点时触发</li>
+<li>onchange 事件，表单的值（value）发生改变时触发</li>
+<li>oninput input、textarea等元素的输入事件</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">input.onfocus = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'获取焦点'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">input.onblur = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'失去焦点'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">input.oninput = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.value);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.4 系统事件：<ul>
+<li>window.onload 页面中所有的资源全部加载完触发</li>
+<li>window.onresize 当前窗口尺寸发生改变时触发</li>
+<li>window.onsroll 滚动条滚动时触发</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onresize = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'变了、变了'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>1.5 移动端事件`<br>ontouchstart 触摸元素时触发<br>ontouchend 离开元素时触发<br>ontouchmove 滑动时触发</p>
+</li>
+<li><p>移动端使用click大概有300ms的延迟</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">box.ontouchstart = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'start'</span>);</span><br><span class="line">&#125;;</span><br><span class="line">box.ontouchend = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'end'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-事件对象"><a href="#1-2-事件对象" class="headerlink" title="1.2 事件对象"></a>1.2 事件对象</h4><blockquote>
+<p>在事件触发时，浏览器传递给事件函数的实参；其中包含了本次事件触发的具体信息；</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> box = <span class="built_in">document</span>.querySelector(<span class="string">'.box'</span>);</span><br><span class="line"></span><br><span class="line">box.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(e);  MouseEvent e一般称为事件对象，</span><br><span class="line">	 e.clientX 鼠标点击的位置相对于当前浏览器可视窗口的 左偏移值</span><br><span class="line">	 e.clientY 鼠标点击位置相对于当前浏览器可视窗口的 上偏移值</span><br><span class="line">	 e.pageX 鼠标点击位置相对于body左边缘的偏移值</span><br><span class="line">	 e.pageY 鼠标点击位置相对于body上边缘的偏移值</span><br><span class="line">	 e.target 触发事件的元素（点击事件中是点击的元素）对象，称为事件源</span><br><span class="line"></span><br><span class="line">	 IE事件触发时把事件信息挂载在<span class="built_in">window</span>.event  这个属性上</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.onkeydown = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	 键盘事件 KeyboardEvent </span><br><span class="line">	<span class="built_in">console</span>.log(e);</span><br><span class="line">	<span class="built_in">console</span>.log(e.keyCode);</span><br><span class="line">	 e.keyCode 键码：键盘上每个键对应一个键码，当keydown事件触发时，</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-默认事件和默认行为"><a href="#1-3-默认事件和默认行为" class="headerlink" title="1.3 默认事件和默认行为"></a>1.3 默认事件和默认行为</h4><blockquote>
+<p>有些元素时由默认行为的，如a标签点击会跳转。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> baidu = <span class="built_in">document</span>.getElementById(<span class="string">'baidu'</span>);</span><br><span class="line"> 阻止默认行为：</span><br><span class="line">baidu.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	alert(<span class="number">111</span>);</span><br><span class="line">	e.preventDefault();  阻止元素的事件默认行为</span><br><span class="line">	 IE 低版本：e.returnValue = <span class="literal">false</span></span><br><span class="line">	 <span class="keyword">return</span> <span class="literal">false</span>;  <span class="keyword">return</span> <span class="literal">false</span>也可以阻止默认行为</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-4-事件传播："><a href="#1-4-事件传播：" class="headerlink" title="1.4 事件传播："></a>1.4 事件传播：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> $ = <span class="function">(<span class="params">selector</span>) =&gt;</span> <span class="built_in">document</span>.querySelector(selector);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> outer = $(<span class="string">'.outer'</span>);</span><br><span class="line"><span class="keyword">let</span> inner = $(<span class="string">'.inner'</span>);</span><br><span class="line"><span class="keyword">let</span> center = $(<span class="string">'.center'</span>);</span><br><span class="line"><span class="built_in">document</span>.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'document'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">outer.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">inner.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">center.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'center'</span>);</span><br><span class="line">	e.stopPropagation();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>点击center会触发center的点击事件，同时inner和outer的以及更高层级的元素的点击事件也会被触发。这种现象称为事件的冒泡机制；</li>
+</ul>
+<p>事件的触发过程：事件的触发分为两个三个阶段：捕获阶段、目标阶段、冒泡阶段。在事件触发时，浏览器先从最外层的元素开始找，一直找到事件源的过程称为捕获阶段，触发事件源绑定事件后开始向上冒泡，依次触发父级元素的该事件；</p>
+<ul>
+<li><p>元素.onXXX = func… 绑定的事件都是DOM0级事件，DOM0级事件都是绑定再冒泡阶段的。</p>
+</li>
+<li><p>取消冒泡：e.stopPropagation()</p>
+<ul>
+<li>IE低版本：e.cancelBubble = true;</li>
+<li>取消冒泡后，事件不会再向上传播；更高层级的元素的对应事件不会触发；</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-5-onmouseover和mouseenter"><a href="#1-5-onmouseover和mouseenter" class="headerlink" title="1.5 onmouseover和mouseenter"></a>1.5 onmouseover和mouseenter</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> $ = <span class="function"><span class="params">selector</span> =&gt;</span> <span class="built_in">document</span>.querySelector(selector);</span><br><span class="line"><span class="keyword">let</span> inner = $(<span class="string">'.inner'</span>);</span><br><span class="line"><span class="keyword">let</span> outer = $(<span class="string">'.outer'</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mouseover</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">inner.onmouseover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner over'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">inner.onmouseout = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner out'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">outer.onmouseover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer over'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">outer.onmouseout = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer out'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mouseenter</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">inner.onmousenter = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner enter'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">inner.onmouseleave = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner leave'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">outer.onmouseenter = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer enter'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">outer.onmouseleave = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer leave'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>mouseenter &amp; mouseover的区别：</p>
+<ol>
+<li><p>over属于划过事件，从父元素进入子元素，属于离开了父元素，会触发父元素的out事件，然后触发子元素的over事件；</p>
+</li>
+<li><p>enter属于进入，从父元素进入子元素，不算离开父元素，不会触发父元素的leave事件；</p>
+</li>
+<li><p>enter和leave是阻止了事件冒泡的，而over和out还存在冒泡传播；</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>__ 所以对于父子嵌套的这种情况，使用over会触发很多不可控的情况，使用enter更加简单。__</p>
+<h3 id="二、-onload和DOMContentLoaded"><a href="#二、-onload和DOMContentLoaded" class="headerlink" title="二、 onload和DOMContentLoaded"></a>二、 onload和DOMContentLoaded</h3><ul>
+<li><ol>
+<li>onload事件：加载成功后执行</li>
+</ol>
+</li>
+<li><p>window.onlaod 是页面中所有的资源（css、js、图片等）全部加载完成后才会触发：</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'加载完成了'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol start="2">
+<li>DOMContentLoaded: 只要页面中的DOM结构加载完成后就可以触发</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'DOM结构加载完成了'</span>)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>JS是用来操作DOM的，一般需要在DOM加载结束以后再执行JS。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 以后经常有人会这样写代码，把js这在这个函数中，表示DOM结构加载完成后再执行</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、事件委托"><a href="#三、事件委托" class="headerlink" title="三、事件委托"></a>三、事件委托</h3><ul>
+<li>页面中有10个li，点击哪个li，就弹出该li的文本内容</li>
+</ul>
+<p>let liList = document.querySelectorAll(‘#list &gt; li’);</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; liList.length; i++) &#123;</span><br><span class="line">	liList[i].onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.innerText);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>利用事件委托：把事件绑定给父级元素或者更高级元素，然后根据e.target事件源作出不同操作；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> list = <span class="built_in">document</span>.querySelector(<span class="string">'#list'</span>);</span><br><span class="line">list.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> &#123; target &#125; = e;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 一般根据事件源的tagName来区分当前点击的是哪个元素</span></span><br><span class="line">	<span class="keyword">if</span> (target.tagName.toLowerCase() === <span class="string">'li'</span>) &#123;</span><br><span class="line">		alert(target.innerText);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>循环绑定事件的效率低，而且不适用于动态绑定的数据。</li>
+<li>事件委托：利用的是事件的冒泡传播机制，给里面的每个子元素绑定相同的事件行为，把事件绑定给他们共同的上级元素，然后利用e.target区分具体触发事件的元素，然后做不同的操作；</li>
+</ul>
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/15/JavaScript进阶教程9/" data-id="ck2flbyfw00189kpp4k7dvco7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/20/JavaScript进阶教程10/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          进阶教程 —— 10. DOM 事件扩展-拖拽
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/22/JavaScript进阶教程8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">进阶教程 —— 8. 继承详解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Mabin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

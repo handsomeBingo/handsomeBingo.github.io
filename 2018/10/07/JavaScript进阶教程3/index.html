@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>进阶教程 —— 3. JS 的堆栈内存管理 | Bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="javascript中的堆栈内存及释放js中的堆内存的创建和释放JS引擎中的内存分类： 栈内存（作用域）供js代码执行的环境，保存基本数据类型 堆内存：存储引用数据类型  堆内存的创建和销毁创建：创建一个对象、数组、函数、等引用数据类型，浏览器都会分配一块堆内存地址，存储引用数据类型的数据； 12345var obj = &amp;#123;	name: &apos;江外琉璃&apos;,	age: 10,	courses:">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进阶教程 —— 3. JS 的堆栈内存管理">
+<meta property="og:url" content="http://yoursite.com/2018/10/07/JavaScript进阶教程3/index.html">
+<meta property="og:site_name" content="Bin">
+<meta property="og:description" content="javascript中的堆栈内存及释放js中的堆内存的创建和释放JS引擎中的内存分类： 栈内存（作用域）供js代码执行的环境，保存基本数据类型 堆内存：存储引用数据类型  堆内存的创建和销毁创建：创建一个对象、数组、函数、等引用数据类型，浏览器都会分配一块堆内存地址，存储引用数据类型的数据； 12345var obj = &amp;#123;	name: &apos;江外琉璃&apos;,	age: 10,	courses:">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-01T03:22:09.564Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="进阶教程 —— 3. JS 的堆栈内存管理">
+<meta name="twitter:description" content="javascript中的堆栈内存及释放js中的堆内存的创建和释放JS引擎中的内存分类： 栈内存（作用域）供js代码执行的环境，保存基本数据类型 堆内存：存储引用数据类型  堆内存的创建和销毁创建：创建一个对象、数组、函数、等引用数据类型，浏览器都会分配一块堆内存地址，存储引用数据类型的数据； 12345var obj = &amp;#123;	name: &apos;江外琉璃&apos;,	age: 10,	courses:">
+  
+    <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Bin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行；</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript进阶教程3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/07/JavaScript进阶教程3/" class="article-date">
+  <time datetime="2018-10-07T12:00:23.000Z" itemprop="datePublished">2018-10-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      进阶教程 —— 3. JS 的堆栈内存管理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="javascript中的堆栈内存及释放"><a href="#javascript中的堆栈内存及释放" class="headerlink" title="javascript中的堆栈内存及释放"></a>javascript中的堆栈内存及释放</h2><h3 id="js中的堆内存的创建和释放"><a href="#js中的堆内存的创建和释放" class="headerlink" title="js中的堆内存的创建和释放"></a>js中的堆内存的创建和释放</h3><h3 id="JS引擎中的内存分类："><a href="#JS引擎中的内存分类：" class="headerlink" title="JS引擎中的内存分类："></a>JS引擎中的内存分类：</h3><ul>
+<li>栈内存（作用域）供js代码执行的环境，保存基本数据类型</li>
+<li>堆内存：存储引用数据类型</li>
+</ul>
+<h3 id="堆内存的创建和销毁"><a href="#堆内存的创建和销毁" class="headerlink" title="堆内存的创建和销毁"></a>堆内存的创建和销毁</h3><h4 id="创建："><a href="#创建：" class="headerlink" title="创建："></a>创建：</h4><p><code>创建一个对象、数组、函数、等引用数据类型，浏览器都会分配一块堆内存地址，存储引用数据类型的数据；</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	name: <span class="string">'江外琉璃'</span>,</span><br><span class="line">	age: <span class="number">10</span>,</span><br><span class="line">	courses: [<span class="string">'高级前端是怎样炼成的'</span>, <span class="string">'前端FE师是怎样炼成的'</span>, <span class="string">'UI设计师是怎样炼成的'</span>]</span><br><span class="line">&#125;; <span class="comment">// 每创建一个引用数据类型，浏览器都会开辟一个堆内存，并把这个堆内存地址给obj变量</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 此时obj相当于引用了这一块堆内存，</span></span><br><span class="line"><span class="keyword">var</span> obj2 = obj; <span class="comment">// 此时obj2也引用了这一块堆内存</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="堆内存释放"><a href="#堆内存释放" class="headerlink" title="堆内存释放"></a>堆内存释放</h4><p><code>让所有引用堆内存空间地址的变量赋值为null即可（没有变量占用这个堆内存了，浏览器会在空闲的时候把它释放掉）</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj = <span class="literal">null</span>; <span class="comment">// 将obj指向空对象指针null</span></span><br><span class="line">obj2 = <span class="literal">null</span>; <span class="comment">// 将obj2指向空对象指针null</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="js中的栈内存开辟和释放"><a href="#js中的栈内存开辟和释放" class="headerlink" title="js中的栈内存开辟和释放"></a>js中的栈内存开辟和释放</h3><ul>
+<li>栈内存（作用域）：供js代码执行的环境，也是用来保存基本数据类型的</li>
+</ul>
+<h4 id="栈内存的创建："><a href="#栈内存的创建：" class="headerlink" title="栈内存的创建："></a>栈内存的创建：</h4><ul>
+<li>当浏览器打开时，首先会开辟形成一个顶层的栈内存，就是全局作用域；</li>
+<li>函数执行时，也会开辟一个供函数代码执行的栈内存（私有作用域）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> total = <span class="number">0</span>;</span><br><span class="line">	total = a + b;</span><br><span class="line">	<span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>函数每一次执行，都会形成一个全新的栈内存，即每次函数执行都是在一个全新的环境里面执行，所以函数每次执行都是互相独立的；</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">add(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">add(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		zf: <span class="string">'zhufeng'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> o1 = fe(); <span class="comment">//</span></span><br><span class="line"><span class="keyword">var</span> o2 = fe();</span><br><span class="line"><span class="built_in">console</span>.log(o1 === o2); <span class="comment">// false fe执行几次，救护创建几个对象，所以o1和o2是两个不同的堆内存，没有任何关系。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="栈内存销毁："><a href="#栈内存销毁：" class="headerlink" title="栈内存销毁："></a>栈内存销毁：</h4><ul>
+<li>全局栈内存：当页面关闭时才会销毁</li>
+<li>函数的私有作用域：一般函数执行完成后，栈内存自动销毁。但是有一些特殊情况需要注意；</li>
+</ul>
+<h2 id="栈内存不销毁的情形"><a href="#栈内存不销毁的情形" class="headerlink" title="栈内存不销毁的情形"></a>栈内存不销毁的情形</h2><ul>
+<li><p>函数栈内存：正常情况下，函数执行会形成一个栈内存（作用域），当函数执行完成就会自动销毁。</p>
+</li>
+<li><p>但是函数执行完成后，当前形成的栈内存中，某些内容被栈内存以外的变量占用了，此时栈内存不能释放（一旦释放外面找不到原有的内容了）。栈内存不销毁，保存在栈内存中的数据也不会被销毁</p>
+</li>
+</ul>
+<h4 id="1-函数返回值被占用"><a href="#1-函数返回值被占用" class="headerlink" title="1 函数返回值被占用"></a>1 函数返回值被占用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		name: <span class="string">"江外琉璃"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = fe(); <span class="comment">// 函数fe执行形成一个不销毁的栈内存，里面定义的对象被外部obj变量占用，因而作用域不销毁</span></span><br><span class="line"></span><br><span class="line">fe(); <span class="comment">// 他们正常形成栈内存，但是执行后会被销毁</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-函数内部的引用数据类型被外部占用，函数执行的作用域不销毁。"><a href="#2-函数内部的引用数据类型被外部占用，函数执行的作用域不销毁。" class="headerlink" title="2.函数内部的引用数据类型被外部占用，函数执行的作用域不销毁。"></a>2.函数内部的引用数据类型被外部占用，函数执行的作用域不销毁。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	x = &#123;</span><br><span class="line">		name: <span class="string">'zf'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">fn(); <span class="comment">// 此时x占用着fn的作用域中对象&#123;name: 'zf'&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="累加计数"><a href="#累加计数" class="headerlink" title="累加计数"></a>累加计数</h3><ul>
+<li>需求：实现一个累加计数的功能，点击一次，让按钮中的数字累加；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>思路：既然是累加，一定是有一个地方保存着它的上一个值。关键就在于保存在哪里。</li>
+</ul>
+<h4 id="1-把值保存在全局作用域"><a href="#1-把值保存在全局作用域" class="headerlink" title="1. 把值保存在全局作用域"></a>1. 把值保存在全局作用域</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> count = <span class="number">0</span>; <span class="comment">// count保存在全局作用域</span></span><br><span class="line">btn.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	count++; <span class="comment">// 操作全局变量</span></span><br><span class="line">	btn.innerHTML = count;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-自定义不销毁的私有作用域"><a href="#2-自定义不销毁的私有作用域" class="headerlink" title="2. 自定义不销毁的私有作用域"></a>2. 自定义不销毁的私有作用域</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">btn.onclick = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> count = <span class="number">0</span>; <span class="comment">// count的值保存在</span></span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		btn.innerHTML = count;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-自定义不销毁的函数作用域2"><a href="#3-自定义不销毁的函数作用域2" class="headerlink" title="3. 自定义不销毁的函数作用域2"></a>3. 自定义不销毁的函数作用域2</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> count = <span class="number">0</span>; <span class="comment">// count保存在自执行函数形成的私有作用域中</span></span><br><span class="line">	btn.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		count++;</span><br><span class="line">		<span class="keyword">this</span>.innerHTML = count;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-块级作用域"><a href="#4-块级作用域" class="headerlink" title="4. 块级作用域"></a>4. 块级作用域</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="keyword">let</span> count = <span class="number">0</span>; <span class="comment">// let 会把花括号变成块级作用域，等效于私有作用域，count的值保存在块级作用域中</span></span><br><span class="line">	btn.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		count++;</span><br><span class="line">		<span class="keyword">this</span>.innerHTML = count;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="let-amp-const"><a href="#let-amp-const" class="headerlink" title="let &amp; const"></a>let &amp; const</h3><h4 id="let-const-是ES6新增关键字，用于声明变量"><a href="#let-const-是ES6新增关键字，用于声明变量" class="headerlink" title="let const 是ES6新增关键字，用于声明变量"></a>let const 是ES6新增关键字，用于声明变量</h4><ul>
+<li>let 用来声明普通变量</li>
+<li>const 用于声明常量</li>
+</ul>
+<h4 id="let-amp-const-和var的区别"><a href="#let-amp-const-和var的区别" class="headerlink" title="let &amp; const 和var的区别"></a>let &amp; const 和var的区别</h4><ul>
+<li><ol>
+<li>let const不存在变量提升，对于使用let const声明的变量，只能在定义后使用</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 报错：a is not defined</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 报错：b is not defined</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="number">12</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-let-const-不能重复声明变量-重复声明var或者function声明的也不行"><a href="#2-let-const-不能重复声明变量-重复声明var或者function声明的也不行" class="headerlink" title="2. let const 不能重复声明变量(重复声明var或者function声明的也不行)"></a>2. let const 不能重复声明变量(重复声明var或者function声明的也不行)</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> n;</span><br><span class="line"><span class="keyword">var</span> n = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> n = <span class="number">1</span>; <span class="comment">// 报错：a has already been declared</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-let-const-在全局声明的变量或者常量不会像window上增加属性"><a href="#3-let-const-在全局声明的变量或者常量不会像window上增加属性" class="headerlink" title="3. let const 在全局声明的变量或者常量不会像window上增加属性"></a>3. let const 在全局声明的变量或者常量不会像window上增加属性</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">100</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'num'</span> <span class="keyword">in</span> <span class="built_in">window</span>); <span class="comment">// true in 运算符，检测对象是否有某个属性</span></span><br><span class="line"><span class="keyword">let</span> css = <span class="string">'css3'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'css'</span> <span class="keyword">in</span> <span class="built_in">window</span>); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-let-const-在代码块中会出现，会形成块级作用域，并且出现-暂时性死区；"><a href="#4-let-const-在代码块中会出现，会形成块级作用域，并且出现-暂时性死区；" class="headerlink" title="4. let const 在代码块中会出现，会形成块级作用域，并且出现 暂时性死区；"></a>4. let const 在代码块中会出现，会形成块级作用域，并且出现 暂时性死区；</h4><ul>
+<li>if (condition) { 条件的花括号中使用let const 就会形成块级作用域 }</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> num1 = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">	<span class="keyword">let</span> num1 = <span class="number">4</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(num1); <span class="comment">// 4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>for(…) { for 循环中的代码块 }</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">12</span>; i++) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'var 没有块级作用域'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i); <span class="comment">// var 会把i泄露成全局变量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'let j j不会泄露出去'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(j); <span class="comment">// Uncaught ReferenceError: j is not defined</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>利用 {}形成块级作用域</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(a); <span class="comment">// a是块级作用域中</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">let</span> m = <span class="number">12</span>; <span class="comment">// m所处的块级作用域是下面的块级作用域的上级作用域，同样遵从作用域链的查找规则</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(m);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="暂时性死区（TDZ-temporary-dead-zone）"><a href="#暂时性死区（TDZ-temporary-dead-zone）" class="headerlink" title="暂时性死区（TDZ: temporary dead zone）"></a>暂时性死区（TDZ: temporary dead zone）</h4><p>在代码块中，用let const声明的变量，不能再声明之前使用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> q = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(q); <span class="comment">// 这个变量q已经被let锁定在块级作用域中，</span></span><br><span class="line">	<span class="keyword">let</span> q = <span class="number">14</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="const-声明变量的细节问题"><a href="#const-声明变量的细节问题" class="headerlink" title="const 声明变量的细节问题"></a>const 声明变量的细节问题</h3><h4 id="1-const声明时必须赋值"><a href="#1-const声明时必须赋值" class="headerlink" title="1. const声明时必须赋值"></a>1. const声明时必须赋值</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> m;</span><br><span class="line"><span class="keyword">var</span> m;</span><br><span class="line"><span class="keyword">const</span> m; <span class="comment">// 报错：Missing initializer in const declaration</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-值一旦被定义，不能被修改"><a href="#2-值一旦被定义，不能被修改" class="headerlink" title="2. 值一旦被定义，不能被修改"></a>2. 值一旦被定义，不能被修改</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> num = <span class="number">12</span>;</span><br><span class="line">num = <span class="number">15</span>; 报错：</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-如果const声明的常量是一个引用数据类型，那么常量带表的引用地址不能改变，但是堆内存中的内容是可以修改的。"><a href="#3-如果const声明的常量是一个引用数据类型，那么常量带表的引用地址不能改变，但是堆内存中的内容是可以修改的。" class="headerlink" title="3. 如果const声明的常量是一个引用数据类型，那么常量带表的引用地址不能改变，但是堆内存中的内容是可以修改的。"></a>3. 如果const声明的常量是一个引用数据类型，那么常量带表的引用地址不能改变，但是堆内存中的内容是可以修改的。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">ary.push(<span class="string">'33'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ary = [1, 3, 5]; // 报错：</span></span><br></pre></td></tr></table></figure>
+
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/07/JavaScript进阶教程3/" data-id="ck2flbyfh000u9kppkunqc9if" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/22/JavaScript进阶教程4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          进阶教程 —— 4. 深入面向对象
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/17/JavaScript进阶教程1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">进阶教程 —— 1. 闭包、this、和面向对象</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Mabin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

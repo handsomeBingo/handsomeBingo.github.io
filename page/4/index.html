@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="FE">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bin">
+<meta property="og:url" content="http://yoursite.com/page/4/index.html">
+<meta property="og:site_name" content="Bin">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bin">
+  
+    <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Bin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行；</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-es6-3-StringExt" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/01/es6-3-StringExt/" class="article-date">
+  <time datetime="2017-06-01T13:33:16.000Z" itemprop="datePublished">2017-06-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/01/es6-3-StringExt/">ES6(3) 字符串扩展</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;字符串数据类型新增了很多功能，其中对Unicode进行了大幅度的增强，新增了若干方法，同时引进了模板字符串，本节只讨论模板字符串的部分功能。</p>
+<h2 id="字符的Unicode表示法增强。"><a href="#字符的Unicode表示法增强。" class="headerlink" title="字符的Unicode表示法增强。"></a>字符的Unicode表示法增强。</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;javascript允许采用\uxxxx形式表示一个字符，其中xxxx表示字符Unicode码点。\u0061’ == ‘a’;但是这种表示法只限于码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必输用两个双字节的形式表示。如，’\uD842\uDFB7’ =&gt;  𠮷,  ‘\u20BB7’ =&gt; 7。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  '\uD842\uDFB7' //  𠮷
+  '\u20BB7' // 7
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上面代码表示，如果直接在\u后面跟上超过0xFFFF的数值（如\u20BB7），javascript会理解成\u20BB + 7，由于\u20BB 是一个不可打印字符，只会显示一个空格，后面跟着一个7。ES6对此进行了改进，只要将码点放入大括号，就能正确解读该字符。示例</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  "\u{20BB7}"  //"𠮷"
+
+  "\u{41}\u{42}\u{43}"  //"ABC"
+
+  let hello = 123;
+  hell\u{6F}  //123
+
+  '\u{1F680}' === '\uD83D\uDE80'
+   //true
+</code>
+</pre>
+
+<h2 id="codePointAt"><a href="#codePointAt" class="headerlink" title="codePointAt()"></a>codePointAt()</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;javascript内部，字符以UTF-16的格式存储，每个字符固定为2个字节。对于那些需要4个字节存储的字符（Unicode码点大于0xFFFF），javascript会认为他们是两个字符。codePointAt()方法用于正确处理4个字节存储的字符，返回一个字符的码点。示例：</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let s = '𠮷a';
+
+    s.codePointAt(0).toString(16) // "20bb7"
+    s.codePointAt(2).toString(16) // "61"
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编码的问题是解决了，但是codePointAt方法的参数还是不正确，要解决这个问题需要for of循环</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let s = '𠮷a';
+    for (let ch of s) {
+        console.log(ch.codePointAt(0).toString(16));
+    }
+    // 20bb7
+    // 61
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;codePointAt方法是测试一个字符由两个字节还是由四个字节组成的最简单方法。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    function is32Bit(c) {
+        return c.codePointAt(0) > 0xFFFF;
+    }
+
+    is32Bit("𠮷") // true
+    is32Bit("a") // false
+</code>
+</pre>
+
+
+<h2 id="String-fromCodePoint"><a href="#String-fromCodePoint" class="headerlink" title="String.fromCodePoint()"></a>String.fromCodePoint()</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ES5提供String.fromCharCode方法，用于从码点返回对应字符，但是这个方法不能识别32位的UTF-16字符（Unicode编号大于0xFFFF）。因此String.fromCodePoint方法可以弥补这一点，其实就是将16进制的码点转换成字符，且可以识别4个字节字符</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    String.fromCodePoint(0x20BB7)
+    // "𠮷"
+    String.fromCodePoint(0x78, 0x1f680, 0x79) === 'x\uD83D\uDE80y'
+    // true
+</code>
+</pre>
+
+<h2 id="字符串的遍历器接口"><a href="#字符串的遍历器接口" class="headerlink" title="字符串的遍历器接口"></a>字符串的遍历器接口</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    //1.字符串添加了遍历器接口，使得字符串可以for of 循环遍历：示例
+    for (let basic of 'JavaScript') {
+        console.log(basic);
+    }
+    //J a v a S c r i p t
+</code>
+</pre>
+
+<h2 id="at-方法"><a href="#at-方法" class="headerlink" title="at()方法"></a>at()方法</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ES5 对字符串对象提供charAt方法，返回字符串给定位置的字符。该方法不能识别码点大于0xFFFF的字符。at方法作用同charAt()方法作用相同，返回参数位置的字符，且可以识别码点大于 0xFFFF的字符。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+   'abc'.at(0) // "a"
+   '𠮷'.at(0) // "𠮷"
+</code>
+</pre>
+
+<h2 id="normalize-方法"><a href="#normalize-方法" class="headerlink" title="normalize()方法"></a>normalize()方法</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;许多欧洲语言有语调符号，为了表示它们，Unicode提供了两种方法。一种是直接提供带符号的字符，比如Ǒ（\u01D1）。另一种是提供合成字符，即两个字符合成一个带符号的字符，O（\u004F）和ˇ（\u030C）合成Ǒ（\u004F\u030C）。这两种方法在视觉和语义上都等价，但是JavaScript不能识别，es6解决了这个问题，es6的normalize方法，用来将字符串的不同表示方法统一为永阳的形式，这称为Unicode正规化。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  '\u01D1'.normalize() === '\u004F\u030C'.normalize()
+  // true
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normalize()方法可以接受一个参数，表示normalize的方式，参数的四个可选值如下</p>
+<p> NFC，默认参数，表示“标准等价合成”（Normalization Form Canonical Composition），返回多个简单字符的合成字符。所谓“标准等价”指的是视觉和语义上的等价。<br> NFD，表示“标准等价分解”（Normalization Form Canonical Decomposition），即在标准等价的前提下，返回合成字符分解的多个简单字符。<br> NFKC，表示“兼容等价合成”（Normalization Form Compatibility Composition），返回合成字符。所谓“兼容等价”指的是语义上存在等价，但视觉上不等价，比如“囍”和“喜喜”。（这只是用来举例，normalize方法不能识别中文。）<br> NFKD，表示“兼容等价分解”（Normalization Form Compatibility Decomposition），即在兼容等价的前提下，返回合成字符分解的多个简单字符。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  '\u004F\u030C'.normalize('NFC').length // 1
+  '\u004F\u030C'.normalize('NFD').length // 2
+</code>
+</pre>
+
+<h2 id="includes-startsWith-endsWith"><a href="#includes-startsWith-endsWith" class="headerlink" title="includes()/startsWith()/endsWith()"></a>includes()/startsWith()/endsWith()</h2><p> includes(); 返回布尔值，表示是否找到了参数字符串；<br> startsWith();返回布尔值，表示参数字符串是否在原字符串的头部；<br> endsWith();返回布尔值，表示参数字符串是否在源字符串的尾部；</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以上三个方法均支持第二个参数，表示搜索开始的位置；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let  strOpApi = 'Hello world';
+    var isStartWith = strOpApi.startsWith('Hello');
+    var isIn = strOpApi.includes('llo');
+    var isEndWith = strOpApi.endsWith('ld');
+    console.log(isStartWith); //true
+    console.log(isIn); //true
+    console.log(isEndWith); //true
+</code>
+</pre>
+
+<h2 id="repeat"><a href="#repeat" class="headerlink" title="repeat()"></a>repeat()</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;repeat()方法返回一个新的字符串，表示将源字符串重复n次。参数是一个数字，int，如果写小数会自动取整；如果是负数或者infinity则会报错；<a href="区间">-1,0</a>被视为0，NaN视为0；如果传递字符串，则默认会把字符串转化成数字；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    var xAfterRepeat = 'x'.repeat(3);
+    console.log(xAfterRepeat);
+</code>
+</pre>
+
+<h2 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;模板字符串使用``反引号包裹(如果要在模板字符串中使用反引号，需要转义)，无须拼接，如果模板字符串中欲使用变量，要使用 ${变量} 写在数据的位置，大括号内可以放入任意的js表达式，可以进行运算，以及引用对象的属性，模板字符串中还可以调用函数。<br> 模板字符串还可以嵌套：<br> 使用模板字符串，所有的空格和缩进都会保留在输出中；如果不想要他们，可以用trim方法消除他们；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let obj = {
+        a: 'a',
+        b: 'b',
+        c: 'c'
+    };
+    var str2 = `
+        &lt;div&gt;
+            &lt;h2&gt;
+                这是模板字符串，感觉这么像PHP的界定符？
+            &lt;/h2&gt;
+            &lt;ul&gt;
+                &lt;li&gt;${obj.a}&lt;/li&gt;
+                &lt;li&gt;${obj.b}&lt;/li&gt;
+                &lt;li&gt;${obj.c}&lt;/li&gt;
+                &lt;li&gt;heheheheheh&lt;/li&gt;
+            &lt;/ul&gt;
+        
+    `;
+    $('body').append(str2);
+</code>
+</pre>
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;除以上扩展了原来字符串功能外，模板字符串还有标签模板功能；所谓标签模板是指模板字符串紧跟在一个函数名后面，该函数被调用来处理这个模板字符串（tagged template）。标签模板其实不是模板，而是函数调用的一种特殊形式。“标签”指的是函数，紧跟在后面的模板字符串就是它的参数。但是，如果模板字符里面有变量，就不是简单地调用了，而是会将模板字符串先处理成多个参数，再调用函数。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;标签模板是将模板字符串转换成一种特殊格式的参数传进函数，也就是说如果你想用标签模板调用函数，那么在编写函数的时候就需要考虑到这种特殊格式；传入函数的参数由：一个数组，和编译替换后的变量，示例：</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    alert`123`;//等同于alert('123');
+    function tag(strAry, value1, value2, value3){
+        console.log(arguments);
+    }
+    var a = 10, b = 5;
+    tag`hello ${ a + b } world ${ a  b }`;
+    //上面调用tag函数后的返回结果；
+    //  "Hello "
+    //  " world "
+    //  ""
+    //  15
+    // 50
+    // "OK"
+
+     实际传入函数的参数是样的：(形参定义的时候得个数和下面的结果个数对应)
+     0: [//这个数组中装的是不需要翻译的字符串
+          hello,
+          world,
+          heheda,
+          ""
+     ]//这个数组之外的值都是经过编译和替换后的变量值
+     1:15
+     2:50
+     3:5
+
+
+    function tag(s, v1, v2){
+        console.log(s[0]);
+        console.log(s[1]);
+        console.log(s[2]);
+        console.log(v1);
+        console.log(v2);
+
+        return 'ok';
+    }
+    var total = 30;
+    var msg = passThru`The total is ${total}(${total  1.05}with tax)`;
+    //上面这个msg例子展示了，如何将各个参数按照原来的位置拼合回去。
+
+    function passThru(literals, value1, value2) {
+        console.log(arguments);
+        var result = '';
+        var i = 0;
+        while (i &lt; literals.length) {
+            result += literals[i++];
+            if (i &lt; arguments.length) {
+                result += arguments[i];
+            }
+        }
+        return result;
+    }
+    console.log(msg);
+</code>
+</pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck2flbyg7001g9kpp1l4c4vwj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-es6-2-destructing" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/20/es6-2-destructing/" class="article-date">
+  <time datetime="2017-05-20T14:00:52.000Z" itemprop="datePublished">2017-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/20/es6-2-destructing/">es6(2)destructing</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本节讨论解构赋值，解构赋值 destructing :解构赋值:ES6允许按照一定的模式，对变量进行赋值，本质上，这种写法数据“模式匹配”，只要等号两边的模式相同，左边的变量就会被赋予对应位置的值。我觉得这个东东真是个宝，用起来相当的爽。不多说，赶紧练起来吧。</p>
+<h2 id="对象解构赋值"><a href="#对象解构赋值" class="headerlink" title="对象解构赋值"></a>对象解构赋值</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    //赋值
+     let catT = 'Tom',
+     mouseJ = 'Jerry';
+     let cartoonRole = {catT , mouseJ};
+     console.log(cartoonRole);//{catT: "Tom", mouseJ: "Jerry"}
+
+     //解构
+     let cartoonRole = {catT:'Tom' , mouseJ: 'Jerry',ok:'hahahha'};
+     let {catT,ok} = cartoonRole;
+     console.log(catT,ok);//'Tom' 'hahahha'
+
+     //对象的解构与数组有一个重要的不同，数组的元素是按顺序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值；
+     let {ac, ad} = {ac:'aaa', ad: 'bbb'};
+     console.log(ac);
+
+     //对象的嵌套解构赋值：
+     let obj1 = {
+         p:[
+             'hello',
+             {y: 'world'}
+         ]
+     };
+     let { p: [ x,  {yy} ] } = obj1;//注意p不是变量是匹配模式，所以是不会被赋值
+     console.log(x);//hello
+
+    //使用对象的解构赋值，可以很方便的将现有的对象的方法赋值到某个变量上，使用起来将会很方便
+    let {log, sin, cos} = Math;//这行代码将对数，正弦，余弦三个方法赋值到对应的变量上，使用起来将会方便很多；
+
+</code>
+</pre>
+
+<h2 id="数组解构赋值"><a href="#数组解构赋值" class="headerlink" title="数组解构赋值"></a>数组解构赋值</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  let cry = ['a','b','c'];
+  let [h, i, j] = cry; //这相当于声明了三个变量 h i j，这三个值分按照顺序分别对应数组项
+  console.log(i);//'b'
+
+  //复合数组的：
+  let [ab, [bc, cd], de] = [1, [2, 3], 4];//这时候等号左边的不是数组，只是一个方括号，里面的是单个的变量，可以直接使用
+  console.log(ab);
+
+  //不完全解构的：(但都是成功解构的)
+  let [fg,[hg],hi] = [1, [2, 3], 4];
+  console.log(hg);//2
+
+  let [jk, lm] = [1, 2, 4];
+  console.log(lm);//2
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由上例可知，解构赋值最重要的就是变量名和对象的key值同名，结构赋值数组时，变量和数组的位置对应，你想取得的值的数量和对象中的key-value数量可以不同，但是要求变量名和key相同，同数组项的位置一致。如果在对象结构赋值时变量同key不同名，那需要特殊处理，即写成key:value的形式，key仍是和对象属性名相同的值，value是进行解构赋值后被赋值的变量（可以和对象的属性名不同）；其中ae是匹配模式，aaa才是真正的变量，真正被赋值的是变量aaa不是ae，还要注意一点，采用这种写法时，变量的声明和赋值时一体的，对于let和const来说，变量不能重新声明，所以一旦赋值的变量以前声明过，就会报错；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    //对象的解构与数组有一个重要的不同，数组的元素是按顺序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值；
+    let {ac, ad} = {ac:'aaa', ad: 'bbb'};
+    console.log(ac);// 'aaa'
+
+    //key同变量名不同名
+    let {ae:aaa} = {ae:'hhhhhh'};
+    console.log(aaa);
+</code>
+</pre>
+
+<h2 id="字符串解构赋值"><a href="#字符串解构赋值" class="headerlink" title="字符串解构赋值"></a>字符串解构赋值</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+   //字符串也可以解构赋值，因为此时，字符串被转换成了一个类数组对象；
+   const [ai, aj, ak, al, am] = 'hello';
+   console.log(ai);//h
+
+   //类数组对象有一个length属性，因此还可以对这个属性解构赋值。
+   let {length:len} = 'hello';
+   console.log(len);//5
+</code>
+</pre>
+
+<h2 id="其他数据结构"><a href="#其他数据结构" class="headerlink" title="其他数据结构"></a>其他数据结构</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果等号的右边不是数组（或者严格的说，不是可遍历的结构：对象、数组、set对象、map对象等）那么将报错；事实上，只要某种数据结构具有Iterator接口，都可以采用数据形式的解构赋值。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let [uv, vw, wx] = new Set(['a', 'b', 'c']);
+    console.log(uv); //a
+</code>
+</pre>
+
+<h2 id="结构赋值时设置默认值"><a href="#结构赋值时设置默认值" class="headerlink" title="结构赋值时设置默认值"></a>结构赋值时设置默认值</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;结构赋值允许指定默认值。但是注意：ES6中使用严格相等运算符（===），判断一个位置是否有值。所以，如果一个数组成员不严格等于undefined，默认值是不会生效的；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let [xy = true] = [];
+    console.log(xy);//true
+
+    let [yz = 'undefined'] = [null];//null 不严格等于undefined，所以默认值是不生效的
+    console.log(yz);//null
+
+    //如果默认值是一个表达式，那么这个表达式是惰性求值的，即只有在用到的时候才会求值；
+    function faaa(){
+        console.log('abacd');
+    }
+    let [xb = faaa()] = [1];//这行代码中，因为xb能取到值，所以函数f根本不会执行；
+
+    //解构赋值时的默认值可以引用其他解构赋值的变量，但是这个变量必须已经声明过；
+    let [xc = 1, yc = xc] = [];
+    let [aa = bb,bb = 1] = [];//referenceError，因为引用给aa用到默认值(如果用不到就不会报错)，给默认值赋值时，bb还没
+
+    //对象结构赋值也可以指定默认值，同样默认值生效的条件：对象的属性值严格等于undefined。如果解构失败，变量将会被赋值undefined;
+    let {ag = 3} = {x:undefined};
+    console.log(ag);//3
+</code>
+</pre>
+
+<h2 id="函数参数解构赋值"><a href="#函数参数解构赋值" class="headerlink" title="函数参数解构赋值"></a>函数参数解构赋值</h2><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+//函数的解构赋值意义是：函数形参设置的时候可以设置成数组或者对象，但是通过解构，在函数体内得到的就是一个一个的值
+function add([x, y]){
+    //console.log(arguments);//通过打印arguments，我们发现，函数收到的参数其实是单个的数字，而非数组
+    return x + y;
+}
+var total = add([1, 2]);
+console.log(total);//3
+
+var arr = [[1,2,3],[3,4,5]].map(([a, b, c]) => a + b + c);//map方法经过操作后会映射成一个新的数组，而且map方法的第一个参数是数组项，而经过参数解构赋值后 得到 a=1,b=2,c=3 ，执行一次回调，将原数组第一项映射成6，以此类推
+console.log(arr);//[6, 12]
+
+//参数解构赋值也可以使用默认值
+function move({an = 0, ao = 0} = {}){
+    return [an, ao];
+}
+var ar1 = move({an: 1, ao: 2});
+console.log(ar1);//[1, 2]
+
+var ar2 = move();//{an = 0, ao = 0} = {} 这么写是为了给函数的实参一个默认值{}，当不传的时候就是空对象{}
+console.log(ar2);//[0, 0]
+</code>
+</pre>
+
+<h2 id="解构赋值应用场景"><a href="#解构赋值应用场景" class="headerlink" title="解构赋值应用场景"></a>解构赋值应用场景</h2><h3 id="交换变量"><a href="#交换变量" class="headerlink" title="交换变量"></a>交换变量</h3><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let ap = 1;
+    let aq = 2;
+    [ap, aq] = [aq, ap];
+    console.log(ap);//2
+</code>
+</pre>
+
+<h3 id="函数返回多个值"><a href="#函数返回多个值" class="headerlink" title="函数返回多个值"></a>函数返回多个值</h3><p>原则上函数只能返回一个值，如果要返回多个值，只能将他们放在数组或者对象中，有了解构赋值，去除这些值将会非常的方便；</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    function eg1(){
+        return [1, 2, 3];
+    }
+    let [ar, as, at] = eg1();
+    console.log(ar);//1
+
+    function eg2(){
+        return {
+            au:'www',
+            av:'itouzi',
+            aw:'com',
+        }
+    }
+    let {au:ax, av:ay, aw:az} = eg2();
+    console.log(ay);//itouzi
+</code>
+</pre>
+
+<h3 id="提取json数据-解构赋值对提取JSON对象中的数据尤其有用；"><a href="#提取json数据-解构赋值对提取JSON对象中的数据尤其有用；" class="headerlink" title="提取json数据:解构赋值对提取JSON对象中的数据尤其有用；"></a>提取json数据:解构赋值对提取JSON对象中的数据尤其有用；</h3><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    let json = {
+        id: 42,
+        status: 'ok',
+        data: [333, 444]
+    };
+    let {id ,status, data} = json;
+    console.log(data);//[333, 444]
+</code>
+</pre>
+
+<h3 id="函数参数设置默认值"><a href="#函数参数设置默认值" class="headerlink" title="函数参数设置默认值"></a>函数参数设置默认值</h3><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    function plus([x = 0,y = 0] = []){
+        return x + y;
+    }
+    console.log(plus());//0
+</code>
+</pre>
+
+<h3 id="遍历Map解构"><a href="#遍历Map解构" class="headerlink" title="遍历Map解构"></a>遍历Map解构</h3><pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    for (let [key, value] of map) {
+        //console.log(key + ' is ' + value);
+    }
+    //只获取键
+    for (let [key1] of map) {
+        console.log(key1);
+    }
+    //只获取值
+    for (let [, value1] of map) {
+        //console.log(value1);
+    }
+</code>
+</pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck2flbyg4001e9kppwonmi1k0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-es6-1-let-cosnt" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/12/es6-1-let-cosnt/" class="article-date">
+  <time datetime="2017-05-12T14:32:25.000Z" itemprop="datePublished">2017-05-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/12/es6-1-let-cosnt/">ES6(1) let和const</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从这篇文章起，后面将会有一系列的文章和大家探讨es6，现在才说es6好像有点晚了，但是我们的前端团队还没有大规模应用es6。一直以来我也零零星星的学过一些es6，早在几年前就了解过，但是始终没有系统的学习过，这一次做分享，也是对自己的一个激励，争取这个系列可以覆盖全部的es6特性，想要学习的跟上吧。</p>
+<h2 id="块级作用域"><a href="#块级作用域" class="headerlink" title="块级作用域"></a>块级作用域</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在es6以前，ECMAScript是没有块级作用域的，这就带来了很多意外的情况，比如经典的for循环问题。</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    例 1：
+    var a = [];
+    for (var i = 0; i < 10; i++) {
+        a[i] = function (){
+            console.log(i);
+        }
+    }
+    a[3]();//10
+</code>
+</pre>
+
+<p>引入块级作用域后</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    例 2：
+    var a = [];
+    for (let i = 0; i < 10; i++) {
+        a[i] = function (){
+            console.log(i);
+        }
+    }
+    a[3]();//3
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;看了上面两段代码，块级作用域就是除字面量声明对象（{key: value}）以外的花括号代码块都构成块级作用域，但是现在有个问题值得思考。大家都知道，在js中变量是存在于作用域中的，在上面例1中，var i = 0;i存在的作用域就是全局（for循环外围无函数）作用域，所以for循环的i++每次都会修改全局作用域中的i。那么改成let声明后，变量的保存的作用域是不是改变了呢？下面代码我们模拟了块级作用域（不是很严谨，只是按照自己的猜测），其中循环体中的闭包模拟块级作用域。很显然，每次for循环（let声明）的循环体（花括号空的代码）执行一次就声明了一个块级作用域，变量i就保存在了块级作用域中，按照作用域查找机制，块级作用域延长了作用域链。同时由于数组a的引用，这个块级作用域并不会销毁，因而变量值得以保存。（仅个人理解）</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    var a = [];
+    for (var i = 0; i < 10; i++) {
+        a[i] = (function (i){
+            return function () {console.log(i)}
+        })(i);
+
+    }
+    a[3]();//3
+</code>
+</pre>
+
+<h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p>使用let 和 const将带来的暂时性死区：只要块级作用域内存在let命令，它所声明的变量就绑定在这个区域，不再受外部的影响。示例：</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    var tmp = 123;
+    if (true) {
+        tmp = 'abc';
+        let tmp;
+    }
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上面代码中存在全局变量tmp，但是块级作用域内let又声明了一个局部变量tmp，导致后者绑定这个块级作用域，所以在let语句之前调用变量，就会报错；ReferenceError；暂时性死区也意味着typeof不再是一个百分百安全的操作，因为你typeof这个变量仍然是访问变量，仍然会报错。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;与此同时，另一不可忽略的事实产生了，var除是用于变量声明的关键字，还具有变量提声（javascript预解释）的作用。而let和const并无此作用，仅用于变量的声明，因此在使用let和const声明的变量时，确认这些变量在被引用前（代码顺序）是否被声明将变得意义非同寻常。示例</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    console.log(tmp);//undefined
+    var tmp = 123;
+
+    if (true) {
+         console.log(wrong);//ReferenceError
+         let wrong = 'abc';
+    }
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第三，同var不同的是，let和const不允许重复声明。示例</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+   function foo(declareParam){
+       let declareParam = 0; //报错  'declareParam' has already been declared
+   }
+   foo('aaa');//报错   但是得在方法执行的时候才报错
+
+   //但是请注意这种在块级作用域中的声明并不会收到这一影响
+   function fooWithBlockZone(declareParam){
+       { //这一花括号是块级作用域
+           let declareParam = 14;//这个不会报错
+       }
+   }
+   fooWithBlockZone('aa');//不报错
+</code>
+</pre>
+
+<h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const的作用域和let一样：只在声明所在的块级作用域内有效。const声明的常量也不存在变量提声，同样存在暂时性死区，只能在声明的位置后面使用。同样不能重复声明一个变量；const实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址不得改动，对于简单的数据类型（数值，字符串，布尔值），值就保存在保存变量指向的那个内存地址，因此等同于常量。但是对于复合型数据额类型（主要是对象和数组），变量指向的内存地址，保存的只是一个指针，const只能保证这个指针是固定的，至于他的指向的数据结构是否是不是可变的，就完全不能控制了，因此，将一个对象声明为常量必须非常小心；什么意思呢？就是说啊：当使用const声明一个复杂数据类型时，这个const只能保存指向这个复杂数据类型的地址不被改变，但是这个复杂数据类型的数据仍然可以操作：示例:</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  const objConst = {};
+  objConst.testAddPropIntoConstObj = 'yes,you guess it';
+  console.log(objConst);//虽然声明的是常量，但是给这个对象的内存地址中的内容还是可以操作的；
+
+
+  //如果你真想声明一个不可以修改的对象使用Object.freeze({})方法；示例
+  const objFrozen = Object.freeze({});//声明一个冻结常量；
+  objFrozen.prop = 'No,what a pity,what you guess is thoroughly wrong!';
+  //严格模式下使用这一行代码报错
+  //非严格模式不理会这行代码；
+  console.log(objFrozen);
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注意，在ES5中，在全局中声明的变量和挂载在全局中的属性是等价的，从ES6开始，全局变量将和顶层对象的属性脱离，为了改变这一点，一方面规定，为了保持兼容性，var 和 function声明的全局变量扔等同于顶层对象window/global的属性，但是使用let、const、class声明的全局变量不属于顶层对象。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck2flbyg0001c9kpp81z1hh4t" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-vue2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/05/vue2/" class="article-date">
+  <time datetime="2017-04-05T14:20:43.000Z" itemprop="datePublished">2017-04-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/05/vue2/">vue从入门到掉进坑里(二)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上篇文章写了一点vue基础的例子，顺便给例子加了一些注释，如果你在看我的文章，代码中的注释请仔细阅读，这些数据才是真正的精华，是个点睛的代码。大家肯定很意外我为什么撕那些写文章分享的人，我不是撕他们的文章。爱分享固然是好事，我还撕人家，显得我不地道。各位读者，你有没有想过，专家会读我们写的博客吗？大牛需要读我们这个档次的博文吗？我们的博文，说好了是一篇文章，读者大多和我们一样的初学者。写给初学者的文章，将自己的逼格定义甚高，初学者读不懂，这篇文章的意义何在？所以我撕他们，反对那些因自己水平不高，反而为了装的有水平而写的晦涩难懂的人。说着说着又撕上了。。。。<br></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这篇文章本来打算讲一个VUE-CLI例子，但是大家可以先看看这篇博客，强烈建议按照博客代码敲上一遍。这个例子图文并茂，是我在学vue-cli的时候见到的最好的教程。上链接  <a href="http://www.jianshu.com/p/1626b8643676" target="_blank" rel="noopener">史上最全入坑教程</a>。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这篇文章说说组件开发，我理解的组件开发，我们习惯一开始就先钻进代码里，迫不及待的看代码。大神自是心领神会，对于一些事情根本不需要说出来，这些大神没有说出来的，正是阻碍我们前进的障碍。所谓组件开发，是一种“拆”的思想或者说是“拼”，是把一个页面，按照某种规则，一般按照功能、复用性，UI样式等规则拆分成若干部分，最不理想的拆还可以掐头去尾留中间。。。。这份工作首先是切图，按照一个完整的网页，把图切好，然后拆成一块一块的，然后由不同的人开发，这就是最通俗的讲法。和拼图或者积木一类的很像。但是拆法是仁者见仁智者见智的时候，从这里能看出水平。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我第一次接触VUE-CLI这个脚手架的时候，眼前一亮，但是同时初次接触vue，这么多 *.vue的文件直接让我懵逼了。现在我走过来了，今天就可以说说这些玩意儿了。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一个让我困惑的问题是父子组件的问题；每一个.vue的文件都是一个组件，在组件中被import的相对于该.vue而言就是子组件（后面须注册）。在学习VUE初期，我对于父子组件一直感到很困惑，因为在VUE中，父子组件和Angular中的父子组件完全不同，Angular的作用域是和DOM平齐的，而父子组件也会因为DOM嵌套关系而天然形成，而VUE组件的父子关系与嵌套无关，而是与注册关系决定的，习惯了这一思路后，我着实是在这里困惑了好久，如果眼前的你也是这样的话，那就赶紧出来吧。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面代码是 <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">point.vue</span> 组件的代码（部分），其中point.vue相对于common-header和mask-layer是父组件，而common-header和mask-layer是子组件。</p>
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+    &lt;template lang="html"&gt;
+        &lt;common-header :isNotLogin="isNotLogin" :theActive="active"&gt;&lt;/common-header&gt;
+        &lt;mask-layer &gt;&lt;/mask-layer&gt;
+      &lt;/div&gt;
+    &lt;/template&gt;
+</code>
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    &lt;script&gt;
+      import CommonHeader from '../common/CommonHeader' //导入子组件
+      import MaskLayer from '../common/MaskLayer' //导入子组件
+      export default {
+        name: 'pointOperate',
+        data () {
+          return {
+            newMember: {
+              mName: '',
+              mNum: '',
+              point: ''
+            }
+        },
+        methods: {},
+        components: {
+          CommonHeader, //注册子组件
+          MaskLayer //注册子组件
+        }
+      }
+    &lt;/script&gt;
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另一个困惑我很久的问题是如何在VUE-CLI中引入自己的静态资源文件，如bootstrap.min.css。写完这些基础内容后，我将分享一个完整的例子，而且，这个例子已经投入使用了（这个积分管理系统是给我女友的奶茶店用的积分管理），现在不多说，继续写基础内容。引入VUE-CLI后，脚手架将自动为我们打包应用，并将打包后的文件自动注入到index.html中，正由于这一操作，如果我们不按照正确的操作方式，我们自己引入的静态文件将失效。正确的做法是：在index.html同级新建一个static文件夹，将我们自己的静态文件放入其中，在index.html中使用相对路径引入即可。下面是<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">index.html</span>的代码：</p>
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+在head标签中引入index.css和bootstrap.min.css等静态文件
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;admin&lt;/title&gt;
+        &lt;meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"&gt;
+        &lt;title&gt;index首页&lt;/title&gt;
+        &lt;link rel="stylesheet" href="./static/bootstrap/dist/css/bootstrap.min.css"&gt;
+        &lt;link rel="shotcut icon" href="./static/favicon.ico"&gt;
+        &lt;link rel="stylesheet" href="./static/index.css"&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;div id="app"&gt;&lt;/div&gt;
+        &lt;!-- built files will be auto injected --&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+</code>
+</pre>
+
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+目录结构
+--|project
+    --|build/
+    --|config/
+    --|dist/
+    --|node_modules/
+    --|src/
+    --|static/
+        --|bootstrap/ ==>bootstrap.min.css所在文件夹
+            --|dis/
+            --|fonts/
+            --|...
+        --|index.css
+    --|.babelrc
+    --|.editorconfig
+    --|.gitignore
+    --|.postcsssrc.js
+    --|index.html
+    --|package.json
+    --|README.md
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第三个让我困惑的问题是关于数据驱动。在写这个系统的时候，我需要一个bootstrap的modal框，这个框用于确认、提示用，在bootstrap中用jquery操作点击事件来实现modal框的显隐，在vue虽然也可以操作dom，但是我最终选择了放弃这一做法，如果这样做了，那还算用框架么？我困惑了很久，其实现在想来特别简单，只需要设置modal框的v-show即可。想通了自然很简单，当时也是初学vue，根本不知道从何入手，初学vue容易只见树木不见森林，我们纠结语法和API，忽略了指导性的核心思想——数据驱动。我们想要实现某个功能时，我们思考的方向是改变某个（些）值（数据）来达到。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck2flbyh1001w9kpp6shmghgi" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-vue1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/14/vue1/" class="article-date">
+  <time datetime="2017-03-14T12:20:04.000Z" itemprop="datePublished">2017-03-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/14/vue1/">vue从入门到掉进坑里（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学习vue好一阵子了，是从一个爱炫耀的同事开始的。说到vue，我只想说：太坑了；无论文档还是某些人博客，都写的很晦涩。这让我很不解，我觉得这和打码是一样的。就不能写的通俗一些？说喜欢分享来着，结果分享的东西晦涩的不得了。我称这些博客和文档为：打码的文章。说到这个我又想起我一个同事问我的一个问题：什么样的人算大牛？我当时想了半天也说不清，我想coding能力强的人大抵就是大牛了。他的答案让我很意外，原话引用“写出来谁都看不懂的，不算大牛；写出来谁都看得懂的，也不是大牛；只有那些你看了能看懂，但是看完就拍大腿：我怎么就没想到呢？这些才是大牛。”我以此自砺，也送给那些给文章打码的人。</p>
+<h2 id="vue基础"><a href="#vue基础" class="headerlink" title="vue基础"></a>vue基础</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果你有angular 1.xx的基础就足够了。但是作为一个还在坑边上歇息的人告诉你，别拿着angular的思想去衡量vue的问题，尤其是 2.0以后的版本。基础不多说直接引用官网的教程：</p>
+<blockquote>
+<p>hello world</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/*html*/</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &#123;&#123; message &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">/*JS*/</span><br><span class="line">var exampleData = &#123;</span><br><span class="line">    message: &apos;hello world!&apos;</span><br><span class="line">&#125;;</span><br><span class="line">new Vue(&#123;</span><br><span class="line">    el: &apos;#app&apos;,</span><br><span class="line">    data: exampleData</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>使用Vue的过程即定义MVVM各个组成部分的过程。<br>     *   1.定义View<br>     *   2.定义Model<br>     *   3.创建一个Vue实例或’ViewModel’，它用于连接View和Model；在创建Vue实例时，需要传入一个选项对象，选项对象可以包含数据、挂载元素、方法、模拟生命周期钩子等等。<br>     *   示例讲解：<br>     *       在这个示例中，选项对象的el属性指向View，el:’#app’，表示将Vue示例挂载到  &lt;div id = ‘app’&gt;&lt;/div&gt;元素上；<br>     *       data属性：指向Model，data:exampleData表示我们的Model是exampleData对象；<br>     *       Vue.js有多种数据绑定的语法，最基础的形式是文本差值，使用一对大括号语法,mustache风格绑定；</p>
+<blockquote>
+<p>双向动态绑定</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/*html*/</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p&gt;&#123;&#123;message&#125;&#125;&lt;/p&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model=&quot;message&quot; /&gt;  &lt;!--v-model和ng-model类似是vue双向数据绑定用的--&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">/*js*/</span><br><span class="line">&lt;script src=&quot;../vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    exampleData = &#123;</span><br><span class="line">        message: &apos;hello world!hello everyone,I am the vue.js,which is the most fierce technology to ZhuangB!&apos;</span><br><span class="line">    &#125;;</span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: &apos;#app&apos;,</span><br><span class="line">        data:exampleData</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>绑定是双向绑定的，不同于angular 1.xx数据是挂载在作用域$scope上，vue的开发将数据都集成在了vue实例化的参数对象的data属性中，这一点无比的方便，我们推崇vue，但是拒绝装B，尤其是那些以vue牛逼，自己也牛逼起来的人。</p>
+<blockquote>
+<p>vue常用指令 v-*</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line">1.v-if</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVif&quot;&gt;</span><br><span class="line">    &lt;h1&gt;Hello Vue.js&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;yes&quot;&gt;Yes!&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;no&quot;&gt;No!&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;age &gt;= 25&quot;&gt;Age:&#123;&#123;age&#125;&#125;&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;name.indexOf(&apos;jack&apos;) &gt;= 0&quot;&gt;Name:&#123;&#123;name&#125;&#125;&lt;/h1&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVif = new Vue(&#123;</span><br><span class="line">    el: &apos;#appVif&apos;,</span><br><span class="line">    data: &#123;</span><br><span class="line">        yes: true,</span><br><span class="line">        no: false,</span><br><span class="line">        age: 26,</span><br><span class="line">        name: &apos;keep fool,keep aware&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">2.v-show</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVshow&quot;&gt;  &lt;!--v-show同ng-show都是通过设置不可见，而v-if是dom的增删--&gt;</span><br><span class="line">    &lt;h1&gt;Hello Vue.js&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-show=&quot;yes&quot;&gt;Yes!&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-show=&quot;no&quot;&gt;No!&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-show=&quot;age &gt;= 25&quot;&gt;Age:&#123;&#123;age&#125;&#125;&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-show=&quot;name.indexOf(&apos;jack&apos;) &gt;= 0&quot;&gt;Name:&#123;&#123;name&#125;&#125;&lt;/h1&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVshow = new Vue(&#123;</span><br><span class="line">    el: &apos;#appVshow&apos;,</span><br><span class="line">    data: &#123;</span><br><span class="line">        yes: true,</span><br><span class="line">        no: false,</span><br><span class="line">        age: 26,</span><br><span class="line">        name: &apos;keep fool,keep calm&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">3.v-for</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVfor&quot;&gt;</span><br><span class="line">    &lt;table&gt;</span><br><span class="line">        &lt;thead&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;Name&lt;/th&gt;</span><br><span class="line">            &lt;th&gt;Age&lt;/th&gt;</span><br><span class="line">            &lt;th&gt;Sex&lt;/th&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">        &lt;/thead&gt;</span><br><span class="line">        &lt;tbody&gt;</span><br><span class="line">            &lt;tr v-for=&quot;person in people&quot;&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123; person.name &#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123; person.age &#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123; person.sex &#125;&#125;&lt;/td&gt;</span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">        &lt;/tbody&gt;</span><br><span class="line">    &lt;/table&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVfor = new Vue(&#123;</span><br><span class="line">       el: &apos;#appVfor&apos;,</span><br><span class="line">       data: &#123;</span><br><span class="line">           people :[</span><br><span class="line">               &#123;</span><br><span class="line">                   name: &apos;jack&apos;,</span><br><span class="line">                   age: 24,</span><br><span class="line">                   sex: &apos;Male&apos;</span><br><span class="line">               &#125;,</span><br><span class="line">               &#123;</span><br><span class="line">                   name: &apos;Bill&apos;,</span><br><span class="line">                   age: 25,</span><br><span class="line">                   sex: &apos;Male&apos;</span><br><span class="line">               &#125;,</span><br><span class="line">               &#123;</span><br><span class="line">                   name: &apos;Julia&apos;,</span><br><span class="line">                   age: 17,</span><br><span class="line">                   sex: &apos;Female&apos;</span><br><span class="line">               &#125;</span><br><span class="line">           ]</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">4.v-bind</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVbind&quot;&gt; &lt;!--ng-bind可以简写成一个(冒号) : --&gt; &lt;!--v-bind有大用处，后面的动态class和动态绑定的props都离不开v-bind--&gt;</span><br><span class="line">    &lt;ul class=&quot;pagination&quot;&gt;</span><br><span class="line">        &lt;li v-for=&quot;n in pageCount&quot;&gt;</span><br><span class="line">            &lt;a href=&quot;javascript:void 0;&quot; :class=&quot;activeNumber === n ? &apos;active&apos;:&apos;&apos;&quot;&gt;&#123;&#123;n&#125;&#125;&lt;/a&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVbind = new Vue(&#123;</span><br><span class="line">        el: &apos;#appVbind&apos;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            pageCount: 10,</span><br><span class="line">            activeNumber: 1</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">5.v-on</span><br><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;appVon&quot;&gt; &lt;!--v-on可以简写成一个at符(@)--&gt;</span><br><span class="line">    &lt;p&gt;&lt;input type=&quot;text&quot; v-model=&quot;message&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">        &lt;!--click事件直接绑定一个方法--&gt;</span><br><span class="line">        &lt;button @click=&quot;greet&quot;&gt;Greet&lt;/button&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">        &lt;!--click事件使用内联语句：注意事件触发的方法要写在Vue实例化参数methods属性中--&gt;</span><br><span class="line">        &lt;button @click=&quot;say(&apos;Hi&apos;)&quot;&gt;Hi&lt;/button&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vmVon = new Vue(&#123;</span><br><span class="line">   el: &apos;#appVon&apos;,</span><br><span class="line">   data: &#123;</span><br><span class="line">       message: &apos;Hello, world!&apos;</span><br><span class="line">   &#125;,</span><br><span class="line">   methods: &#123;</span><br><span class="line">        greet: function ()&#123;</span><br><span class="line">            alert(this.message);</span><br><span class="line">        &#125;,</span><br><span class="line">        say: function (msg)&#123;</span><br><span class="line">            alert(msg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>综合例子</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--html--&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;fieldset&gt;</span><br><span class="line">        &lt;legend&gt;</span><br><span class="line">            Create New Person</span><br><span class="line">        &lt;/legend&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label &gt;Name&lt;/label&gt;</span><br><span class="line">            &lt;input type=&quot;text&quot; v-model=&quot;newPerson.name&quot;/&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label&gt;Age:&lt;/label&gt;</span><br><span class="line">            &lt;input type=&quot;text&quot; v-model=&quot;newPerson.age&quot; /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label&gt;Sex:&lt;/label&gt;</span><br><span class="line">            &lt;select v-model=&quot;newPerson.sex&quot;&gt;</span><br><span class="line">                &lt;option value=&quot;Male&quot;&gt;Male&lt;/option&gt;</span><br><span class="line">                &lt;option value=&quot;Female&quot;&gt;Female&lt;/option&gt;</span><br><span class="line">            &lt;/select&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label&gt;&lt;/label&gt;</span><br><span class="line">            &lt;button @click=&quot;createPerson&quot;&gt;Create&lt;/button&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/fieldset&gt;</span><br><span class="line">    &lt;table&gt;</span><br><span class="line">        &lt;thead&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;th&gt;Name&lt;/th&gt;</span><br><span class="line">                &lt;th&gt;Age&lt;/th&gt;</span><br><span class="line">                &lt;th&gt;Sex&lt;/th&gt;</span><br><span class="line">                &lt;th&gt;Delete&lt;/th&gt;</span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">        &lt;/thead&gt;</span><br><span class="line">        &lt;tbody&gt;</span><br><span class="line">            &lt;tr v-for=&quot;(person,index) in people&quot;&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;person.name&#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;person.age&#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;person.sex&#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&lt;button @click=&quot;deletePerson(index)&quot;&gt;Delete&lt;/button&gt;&lt;/td&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">        &lt;/tbody&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/table&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--js--&gt;</span><br><span class="line">var vm = new Vue(&#123;</span><br><span class="line">        el: &apos;#app&apos;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            newPerson : &#123;</span><br><span class="line">                name: &apos;&apos;,</span><br><span class="line">                age: 0,</span><br><span class="line">                sex: &apos;Male&apos;</span><br><span class="line">            &#125;,</span><br><span class="line">            people: [</span><br><span class="line">                &#123;</span><br><span class="line">                    name: &apos;jack&apos;,</span><br><span class="line">                    age: 30,</span><br><span class="line">                    sex: &apos;Male&apos;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    name: &apos;bill&apos;,</span><br><span class="line">                    age: 34,</span><br><span class="line">                    sex: &apos;Male&apos;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    name: &apos;cindy&apos;,</span><br><span class="line">                    age: 24,</span><br><span class="line">                    sex: &apos;female&apos;</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line"></span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            createPerson : function ()&#123;</span><br><span class="line">                this.people.push(this.newPerson);</span><br><span class="line">                this.newPerson = &#123;name: &apos;&apos;, age: 0,sex: &apos;Male&apos;&#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            deletePerson : function (index)&#123;</span><br><span class="line">                this.people.splice(index, 1)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;基础教程就先上这么多，其他的基础教程请参看官网，有了这些你就能听懂后面的东西了，如果你还没有框架基础，这可能有点困难，我不是想打码，但是建议你学习一下angular v1.xx，因为现在框架，以指令(html行内属性)解决问题的，angular是师祖，是基础，我虽然讨厌angular的古板，但是对于初学者，能更好的体会框架的基础的东西，vue好用就是因为很多东西被封装了，但是对于初学者这将是黑盒的。在学习vue之前，与我而言，框架都有优劣，没必要因为哪个框架好参与撕逼，你开心就好。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck2flbyh700219kppg1jqy923" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-requirejs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/14/requirejs/" class="article-date">
+  <time datetime="2017-02-14T13:20:59.000Z" itemprop="datePublished">2017-02-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/14/requirejs/">三分钟带你入门RequireJs</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="三分钟带你入门RequireJs"><a href="#三分钟带你入门RequireJs" class="headerlink" title="三分钟带你入门RequireJs"></a>三分钟带你入门RequireJs</h1><h3 id="require-js是什么"><a href="#require-js是什么" class="headerlink" title="require.js是什么"></a>require.js是什么</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/datura-lj/RequireJS_demo" target="_blank" rel="noopener">RequireJS</a>遵循AMD，相对于AMD的是CMD通用模块定义的SeaJs。</p>
+<h3 id="为什么要模块化"><a href="#为什么要模块化" class="headerlink" title="为什么要模块化"></a>为什么要模块化</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在不使用模块化之前，文件依赖要手动添加，而且各个依赖顺序不能错乱，一旦顺序错乱将引发错误。其次，模块化有利于团队的协同开发，同时提高了代码的可复用性和可维护性。使用require.js可以为我们带来哪些改变？</p>
+<ol>
+<li>解决文件之间依赖</li>
+<li>自动引入js</li>
+<li>也可以解决命名冲突</li>
+</ol>
+<h3 id="如何使用RequireJs"><a href="#如何使用RequireJs" class="headerlink" title="如何使用RequireJs"></a>如何使用RequireJs</h3><p>1.在html中引入RequireJS。在HTML中，添加这样的 &lt;script&gt; 标签：</p>
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+&lt;script type="text/javascript" src="require.min.js" data-main="main"&gt;&lt;/script&gt;
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们如果使用RequireJs的话，不需要我们显式地引入其他依赖的js文件，这些工作交给RequireJs去做，这也正是使用它的重要意义。注意，在我们引入require.js的script标签里有一个data-main属性，requirejs提供的这种功能叫做“主数据”的功能，我们首先创建一个main.js，然后在页面中使用<script data-main="js/main" src="js/require.js"></script>，这个script标签中加入了data-main属性，这个属性指定的js将在加载require.js之后处理，我们把require.config的配置加入到data-main后，就可以使每一个页面都使用这个配置，然后页面中就可以直接使用require来加载所有的短模块名。data-main 还有一个重要的功能，script标签指定data-main属性时，require会默认的data-main指定的js为根路径，即如上面的data-main=’js/main’ 设定后，我们在使用require([‘jquery’])后（不配置jquery的paths），require会自动加载js/jquery.js文件，而不是jquery.js，相当于默认配置了baseUrl（如下示例）：</p>
+<p>全局配置文件的作用：</p>
+<p>1.配置RequireJs项目中用到的其他模块<br>2.引入其他模块的基础路径（baseUrl）</p>
+<p><span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">main.js</span>的代码（部分）</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    require.config({
+        paths:{
+            'jquery':['http:libs/baidu.com/jquery/2.0.3/jquery','jquery'],
+            'a':'a'
+        }
+    });
+     require.config({
+         baseUrl:'js'
+     });
+</code>
+</pre>
+<p>2.定义模块；requirejs通过define()方法定义一个模块，在需要的地方通过require()方法加载即可；</p>
+<p>定义不存在依赖的模块<br><span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">fun1.js</span></p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  define(function (){
+      function fun1(){
+          alert('it works');
+      }
+      fun1();
+  });
+</code>
+</pre>
+
+<p>存在依赖的函数式定义<br>如果模块存在依赖：则第一个参数是依赖的名称数组，第二个参数是函数，在模块的所有依赖加载完毕后，该函数会被调用来定义该模块，因此该模块应该返回一个定义了本模块的object。依赖关系会以参数的形式注入到该函数上，参数列表与依赖名称列表一一对应。<br><span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">cart.js</span></p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    define(['./cart','./inventory'],function (cart, inventory){
+        return {
+            color: 'blue',
+            size: 'large',
+            addToCart: function (){
+                inventory.decrement(this);
+                cart.add(this);
+            }
+        }
+    });
+</code>
+</pre>
+
+<p>使用第三方模块<br>//通过require加载的模块一般都需要符合AMD规范，即使用define方法来声明模块，但是有的时候需要加载非AMD规范的js，这时候就需要用到另一个功能：shim，shim本意为‘垫’，其实大概也就是一个垫的作用。目前这个方法有两方面的应用：</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    //1、非AMD模块输出，将非标准的AMD模块垫成可以应用的模块，例如：在老版本的jquery中，是没有继承AMD规范的，所以不能直接require['jquery']，这时候就需要shim，比如我要是用underscore类库，但是他并没有实现AMD规范，那我们可以这样配置
+    require.config({
+        shim:{
+            'underscore':{
+                export : '_'
+            }
+        }
+    });
+    //经过上面配置，我们就可以在其他模块中引用underscore模块：
+    require(['underscore'],function (_){
+        //_表示加载underscore后，自动注入到后面的回调中，在回调中使用_就是underscore，和jquery 的$ 类似
+        _.each([1,2,3],alert);
+    });
+
+    //插件形式的非AMD模块，我们经常会用到jquer插件，而且这些插件基本都不符合AMD规范，比如jquery.form插件，这时候就需要将form插件'垫'到jquery中：
+    require.config({
+        shim:{
+            'underscore':{
+                exports:'_'
+            },
+            'jquery.form':{
+                deps:['jquery']//deps  depends 依赖
+            }
+        }
+    });
+
+    //简写
+    require.config({
+        shim:{
+
+            'underscore' : {
+                deps: ['angular'],
+                export: '_'
+            },
+            'jquery.form' : ['jquery']
+        }
+    });
+
+    //这样配置之后我们就可以使用加载插件之后的jquery了
+    require(['jquery','jquery.form'],function (){
+        $(function (){
+            $('#form').ajaxSubmit({});
+        });
+    });
+</code>
+</pre>
+
+<h3 id="来个例子"><a href="#来个例子" class="headerlink" title="来个例子"></a>来个例子</h3><p>1.引入require.js<br>2.定义模块<br>定义<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">function1.js</span></p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    define(function(){
+        return {
+            rnd:function (m,n) {
+                return parseInt(Math.random()*(m-n)+m);
+            }
+        }
+    });
+</code>
+</pre>
+
+<p>定义<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">str.js</span></p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+  define(function(){
+      return '我是一个简单的字符串';
+  });
+</code>
+</pre>
+
+<p>3.定义<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">main.js</span>文件</p>
+<pre style="background: #00b38a;">
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+   require.config({
+       baseUrl:'js'
+   });
+   require(['./function1', './str'], function(function1, str){
+       return {
+            test1: alert(str),
+            test2: console.log(function1(1, 100))
+       }
+   })
+</code>
+</pre>
+
+<p>结果效果：弹窗弹出字符串，控制台（console）输出一个随机数。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/14/requirejs/" data-id="ck2flbygt001r9kpp0en5kxzk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-LESSS入门教程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/15/LESSS入门教程/" class="article-date">
+  <time datetime="2017-01-15T14:21:34.000Z" itemprop="datePublished">2017-01-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/15/LESSS入门教程/">LESS入门教程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="LESS入门教程"><a href="#LESS入门教程" class="headerlink" title="LESS入门教程"></a>LESS入门教程</h1><h3 id="为什么学习LESS"><a href="#为什么学习LESS" class="headerlink" title="为什么学习LESS"></a>为什么学习LESS</h3><p>　　说实话，起初我特别反感写LESS这种需要编译的东西，因此一直心怀抵触，但这过程中我没放弃学习这些技术，原因很简单，辩证来看，这种技术如果真像我厌恶的样子它怎么会流行？我厌恶，说明是我还没真正窥见她的美。当你讨厌的时候，你有数不清的理由，但是你爱上她，你发现根本没有理由。<br><br>　　我的leader就用LESS开发，也要求过我用，我一直反对，直到后来一些我未曾预见的问题找上门——官网改版，新老版共存，CSS类名经常发生冲突，让我异常崩溃；我的leader再次推荐LESS，我才正式的运用这项技术。我才发现LESS写出的css样式代码真的很美，分享这项技术我觉得不一定是重点，重点是心路历程。一项技术的诞生都是为了解决一些问题或者能够提升开发效率。</p>
+<hr>
+<div id="backToTop"></div>
+
+<h3 id="初学LESS我们需要掌握什么"><a href="#初学LESS我们需要掌握什么" class="headerlink" title="初学LESS我们需要掌握什么"></a>初学LESS我们需要掌握什么</h3><p>　　首先，我们需要知道它就是css样式代码。但是初学，我们需要了解只有以下几点</p>
+<ul>
+<li><a href="#installation">安装</a></li>
+<li><a href="#variety">变量思想</a> 【块级作用域（变量查找机制）】</li>
+<li><a href="#levelAndNested">层级与嵌套</a> 【后代则直接嵌套、&amp;与伪类】</li>
+<li><a href="#function">函数化css</a>【函数调用样式、@arguments、默认值、Mixin、继承样式、复用子级样式】</li>
+</ul>
+<hr>
+<div id="installation">
+<h3>安装LESS</h3>
+这里推荐使用<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">NODEJS + LESS</span>的学习方式；<br>
+1.安装nodejs<br>
+2.安装LESS <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">npm install -g less</span>
+
+</div>
+
+<hr>
+<div id="variety">
+<h3>LESS变量</h3>
+　　LESS的变量思想类似JS的变量（值类型变量）。LESS的变量只能是值类型，可以使色值、字体等等；<br>
+　　LESS声明变量使用<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">@</span>符号<br>
+　　LESS的变量和JS的变量很类似，存在作用域和作用域链机制。在LESS中，选择器后面的花括号即块级作用域（私有作用域），所以，未在选择器后的花括号内声明的变量都是全局变量，可以在任何的位置访问，在选择器后的花括号内声明的变量都是私有变量，只能在当前块级作用域中使用；<br>
+　　块级作用域是一个命名空间——场景-当我们拥有了大量的选择器的时候，特别是团队协同开发时，如何保证选择器之间重名问题：LESS采用了命名空间的方法来来避免重名问题；
+
+
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+@width: 900px;//全局变量
+@bgColor: blue;//全局变量
+.contentHeart {
+    @bgColor: #00b38a;
+    width: @width;
+    background:  @bgColor;//使用私有变量，在LESS中，变量查找也是采取就近原则，如果当前作用域中存在该变量，则直接取该作用域下的值，如果没有则向上查找
+}
+//编译之后的css样式
+.contentHeart {
+    width: 900px;
+    background: #00b38a;
+}
+</code>
+</pre>
+<p><a href="#backToTop">回顶部</a></p>
+</div>
+
+<div id="levelAndNested">
+<h3>设置嵌套HTML结构样式</h3>
+　　在LESS中如果设置被嵌套的样式，则直接在父级元素样式的花括号内继续写欲设置的子级元素的选择器样式，示例：
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+//html
+&lt;div id="home" &gt;
+    &lt;div id="top"&gt;top&lt;/div&gt;
+    &lt;div id="center">
+        &lt;div id="left">left&lt;/div&gt;
+        &lt;div id="right">right&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+<p>//LESS样式，在LESS中，关于HTML嵌套，我们采用从外到内的选择器嵌套定义，要么采用给特定元素加class或id<br>#home {//父级<br>  color: blue;<br>  width: 600px;<br>  height: 500px;<br>  border: outset;<br>  #top {//子级<br>    border: outset;<br>    width: 90%;<br>  }<br>  #center {//子级<br>    border: outset;<br>    height: 300px;<br>    width: 90%;<br>    #left {//子级的子级<br>      border: outset;<br>      float: left;<br>      width: 40%<br>    }<br>    #right {//子级的子级<br>      border: outset;<br>      float: left;<br>      width: 40%;<br>    }<br>  }<br>}<br>//编译之后的css样式<br>#home {<br>  color: blue;<br>  width: 600px;<br>  height: 500px;<br>  border: outset;<br>}<br>#home #top {<br>  border: outset;<br>  width: 90%;<br>}<br>#home #center {<br>  border: outset;<br>  height: 300px;<br>  width: 90%;<br>}<br>#home #center #left {<br>  border: outset;<br>  float: left;<br>  width: 40%;<br>}<br>#home #center #right {<br>  border: outset;<br>  float: left;<br>  width: 40%;<br>}<br></p></code><br></pre><p></p>
+<p>如果你要复用div#home下的div#top的样式，只需要在其他选择器中这样写：</p>
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+.copyStyle {
+    #home>#top;
+}
+</code>
+</pre>
+
+<p>在嵌套中最值得一提的是伪类，在嵌套中 有 <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">&amp;</span>时解析的是同一个元素或此元素的伪类；没有 <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">&amp;</span> 时，解析的是后代元素；示例：</p>
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+//设置a：hover样式
+a {
+  color: red;
+  text-decoration: none;
+  &:hover { //有 & 时解析的是同一个元素或此元素的伪类；没有 & 时，解析的是后代元素
+    color: #000;
+    text-decoration: underline;
+  }
+}
+//编译后的样式
+a {
+  color: red;
+  text-decoration: none;
+}
+a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+</code>
+</pre>
+<p><a href="#backToTop">回顶部</a></p>
+</div>
+
+<hr>
+<div id="function">
+<h3>在LESS中使用函数</h3>
+LESS还有一个更为强大的功能——函数；这里我们不讨论LESS支持的表达式及色值的计算函数；只是类似JS函数的一种用法；<br>
+Mixins——Mixins其实是一种嵌套，它允许将一个类嵌入到另外一个类中使用，被嵌入的类也可以称作变量，简单的讲，Mixins其实是规则级别的复用。说通俗一些，就是直接把一个选择器直接放到新的块级作用域中即可；
+Mixins还有一种形式叫做ParametricMixins（混入参数），Less也支持这一特性
+示例：
+
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+//定义一个样式选择器选择器函数
+.roundedCorners(@radius: 5px) {// 5px是一个默认值
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+//在另外的样式选择器中使用
+#header {
+  .roundedCorners;//不传参，则使用默认值5px；同时这也是一个Mixins
+}
+#footer {
+  .roundedCorners(10px);//传参则使用实参10px；同时这也是带参数的Mixins
+}
+
+//编译后代码
+#header {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+#footer {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+</code>
+</pre>
+
+<p>@arguments——在LESS的函数中，同样也有一个类似JS函数中arguments的东东，就是@arguments，他同样包含着函数所有的参数，与JS的arguments不同的是，@arguments是值的传递；示例：</p>
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+//定义一个函数，这个函数参数众多
+.boxShadow(@x: 0, @y: 0, @blur: 1px, @color: #000) {
+  -webkit-box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+
+//使用
+#header {
+  .boxShadow(2px, 2px, 3px, #f36);
+}
+
+//编译后的样式代码
+#header {
+  -webkit-box-shadow: 2px 2px 3px #f36;
+  -moz-box-shadow: 2px 2px 3px #f36;
+  box-shadow: 2px 2px 3px #f36;
+}
+
+</code>
+</pre>
+<p><a href="#backToTop">回顶部</a></p>
+</div>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/01/15/LESSS入门教程/" data-id="ck2flbygw001u9kppn6w57q80" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-gulp进阶（gulp中的插件的使用）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/23/gulp进阶（gulp中的插件的使用）/" class="article-date">
+  <time datetime="2016-11-23T14:40:19.000Z" itemprop="datePublished">2016-11-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/23/gulp进阶（gulp中的插件的使用）/">gulp进阶（gulp中的插件的使用）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在上一篇文章中简单介绍了gulp的基础知识，gulp提供了一些很实用的接口，但本身并不能做太多的事情 可以读取文件、写入文件以及监控文件等一少部分功能 其它实用的功能都是依靠插件来进行扩展的 这些插件可以实现比如<br>编译 Sass：gulp-sass<br>编译 Less：gulp-less<br>合并文件：gulp-concat<br>压缩文件：gulp-uglify<br>重命名js文件：gulp-rename<br>优化图像大小：gulp-imagemin<br>压缩css 文件：gulp-minify-css<br>创建本地服务器：gulp-connect<br>实时预览 gulp-connect<br>1、 使用插件步骤<br>npm install xxx –save-dev 安装插件<br>在 gulpfile.js 顶部引入此插件<br>在创建任务的时候使用此插件<br>2、 gulp-load-plugins<br>这个插件能自动帮你加载package.json文件里的gulp插件。 例如假设你的package.json文件里的依赖是这样的:<br>    “devDependencies”: {<br>       “gulp”: “^3.9.0”,<br>       “gulp-concat”: “^2.6.0”,<br>       “gulp-connect”: “^2.2.0”<br>     }<br>然后我们可以在gulpfile.js中使用gulp-load-plugins来帮我们加载插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">var $ = require(&apos;gulp-load-plugins&apos;)();</span><br></pre></td></tr></table></figure>
+
+<p>然后我们要使用gulp-concat和gulp-connect这两个插件的时候， 就可以使用$.concat和$.connect来代替了,也就是原始插件名去掉gulp-前缀，之后再转换为驼峰命名。<br>3、插件的使用<br>1）less<br>less插件可以把less文件编译成css</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$    npm install gulp-less --save-dev</span><br><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">    var less = require(&apos;gulp-less&apos;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;less&apos;,function()&#123;</span><br><span class="line">        return gulp.src(&apos;app/less/*.less&apos;)</span><br><span class="line">        .pipe(less())</span><br><span class="line">        .pipe(gulp.dest(&apos;dist/css&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;default&apos;,[&apos;less&apos;]);</span><br></pre></td></tr></table></figure>
+
+<p>2） gulp-concat<br>这个插件可以把几个文件合并到一块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$    npm install gulp-concat --save-dev</span><br><span class="line">  var gulp = require(&apos;gulp&apos;);</span><br><span class="line">  var concat = require(&apos;gulp-concat&apos;);</span><br><span class="line"></span><br><span class="line">  gulp.task(&apos;concat&apos;,function()&#123;</span><br><span class="line">      return gulp.src(\[&apos;app/js/*.js&apos;,&apos;!app/js/*.tmp.js&apos;])//指定要合并的文件glob</span><br><span class="line">          .pipe(concat(&apos;app.js&apos;))//进行合并并指定合并后的文件名</span><br><span class="line">          .pipe(gulp.dest(&apos;dist/js&apos;));//输出到目标路径</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  gulp.task(&apos;default&apos;,\[&apos;concat&apos;]);</span><br></pre></td></tr></table></figure>
+
+<p>3） gulp-uglify<br>合并后我们可以对JS文件进行压缩,最小化处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$  npm install gulp-uglify --save-dev</span><br><span class="line">    var gulp = require(&apos;gulp&apos;);</span><br><span class="line">    var concat = require(&apos;gulp-concat&apos;);</span><br><span class="line">    var uglify = require(&apos;gulp-uglify&apos;)</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;uglify&apos;,function()&#123;</span><br><span class="line">        return gulp.src([&apos;app/js/*.js&apos;,&apos;!app/js/*.tmp.js&apos;])</span><br><span class="line">            .pipe(concat(&apos;app.js&apos;)) //把多个JS文件合并成一个文件</span><br><span class="line">            .pipe(uglify()) //对合并后的app.js文件进行压缩</span><br><span class="line">            .pipe(gulp.dest(&apos;dist/js&apos;)); //输出到目的地</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;default&apos;,[&apos;uglify&apos;]);</span><br></pre></td></tr></table></figure>
+
+<p>4） gulp-rename<br>在把处理好的文件存放到指定的位置之前，我们可以先去重新命名一下它</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ npm install gulp-rename --save-dev</span><br><span class="line">    var gulp = require(&apos;gulp&apos;);</span><br><span class="line">    var concat = require(&apos;gulp-concat&apos;);</span><br><span class="line">    var uglify = require(&apos;gulp-uglify&apos;);</span><br><span class="line">    var rename = require(&apos;gulp-rename&apos;);</span><br><span class="line">    gulp.task(&apos;uglify&apos;,function()&#123;</span><br><span class="line">        return gulp.src([&apos;app/js/*.js&apos;,&apos;!app/js/*.tmp.js&apos;])//指定要处理的文件</span><br><span class="line">            .pipe(concat(&apos;app.js&apos;))//合并成一个文件</span><br><span class="line">            .pipe(gulp.dest(&apos;dist/js&apos;))//保存此文件</span><br><span class="line">            .pipe(uglify())//进行压缩</span><br><span class="line">            .pipe(rename(&apos;app.min.js&apos;))//对此文件进行重命名</span><br><span class="line">            .pipe(gulp.dest(&apos;dist/js&apos;));//再输出一次</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;default&apos;,[&apos;uglify&apos;]);</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">5） gulp-minify-css</span><br><span class="line">压缩css</span><br></pre></td></tr></table></figure>
+
+<p>$    npm install gulp-minify-css –save-dev<br>   var gulp = require(‘gulp’);<br>    var less = require(‘gulp-less’);<br>    var minify = require(‘gulp-minify-css’);//在文件的顶部去包含这个插件，起个名字，叫做 minify<br>    var rename = require(‘gulp-rename’);<br>    gulp.task(‘minify’,function(){<br>        return gulp.src(‘app/less/page.less’)//指定 less文件<br>            .pipe(less())//把less编译成css<br>            .pipe(gulp.dest(‘dist/css’))//输出到目的地<br>            .pipe(minify())//对 css再进行压缩<br>            .pipe(rename(‘page.min.css’))//重命名<br>            .pipe(gulp.dest(‘dist/css’));//输出到目的地<br>    });</p>
+<pre><code>gulp.task(&apos;default&apos;,[&apos;less&apos;]);</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">6） gulp-minify-html</span><br><span class="line">html文件压缩</span><br></pre></td></tr></table></figure>
+
+<p>$ npm install gulp-minify-html –save-dev<br>    var gulp = require(‘gulp’),<br>        minifyHtml = require(“gulp-minify-html”);</p>
+<pre><code>gulp.task(&apos;minify-html&apos;, function () {
+    gulp.src(&apos;src/*.html&apos;) // 要压缩的html文件
+    .pipe(minifyHtml())    //压缩
+    .pipe(gulp.dest(&apos;dist/html&apos;));//输出到目的地
+});</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">7） gulp-imagemin</span><br><span class="line">如果要想在保证不改变图像质量的情况下，让图像文件的体积变得更小一点,我们可以使用gulp-imagemin</span><br></pre></td></tr></table></figure>
+
+<p>$ npm install gulp-imagemin –save-dev<br> var gulp = require(‘gulp’);<br> var imagemin = require(‘gulp-imagemin’);</p>
+<p> gulp.task(‘copy-images’,function(){<br>     return gulp.src(‘app/imgs/<em>*/</em>.{jpg,png}’)//指定要压缩的图片<br>         .pipe(imagemin()) //进行图片压缩<br>         .pipe(gulp.dest(‘dist’));//输出目的地<br> });</p>
+<p>  gulp.task(‘default’,[‘copy-images’]);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">8） gulp-connect</span><br><span class="line">有些时候我们需要把文件放到本地服务器上去预览，gulp-connect可以帮我们创建一个本地服务器去运行我们的项目</span><br></pre></td></tr></table></figure>
+
+<pre><code> npm install gulp-connect --save-dev
+var gulp = require(&apos;gulp&apos;);
+var connect = require(&apos;gulp-connect&apos;);
+
+gulp.task(&apos;server&apos;,function(){
+   connect.server({
+       root:&apos;dist&apos;,//服务器的根目录
+       port:8080 //服务器的地址，没有此配置项默认也是 8080
+   });
+});
+
+gulp.task(&apos;default&apos;,[&apos;server&apos;]); //运行此任务的时候会在8080上启动服务器，</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">9） 自动刷新</span><br><span class="line">我们希望当文件变化的时候浏览器可以自动刷新，这样我们就不需要文件修改后手动去刷新浏览器了</span><br></pre></td></tr></table></figure>
+
+<pre><code>var gulp = require(&apos;gulp&apos;);
+var connect = require(&apos;gulp-connect&apos;);
+
+gulp.task(&apos;copy-html&apos;,function(){
+     gulp.src(&apos;app/index.html&apos;)//指定源文件
+         .pipe(gulp.dest(&apos;dist&apos;))//拷贝到dist目录
+         .pipe(connect.reload());//通知浏览器重启
+});
+
+gulp.task(&apos;watch&apos;,function(){
+    gulp.watch(&apos;app/index.html&apos;,[&apos;copy-html&apos;]);//当index.html文件变化时执行copy-html任务
+});
+
+gulp.task(&apos;server&apos;,function(){
+    connect.server({
+        root:&apos;dist&apos;,//服务器的根目录
+        port:8080, //服务器的地址，没有此配置项默认也是 8080
+        livereload:true//启用实时刷新的功能
+    });
+});</code></pre><p>gulp.task(‘default’,[‘server’,’watch’]);//运行此任务的时候会在8080上启动服务器；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10）gulp-inject </span><br><span class="line">自动向html中插入经过gulp编译、压缩、合并后的js、css文件，这个功能需要在html中写注释配合才行</span><br><span class="line">html中注释：（格式和内容是写死的）；</span><br><span class="line">注入css：</span><br></pre></td></tr></table></figure>
+
+<!--inject:css-->;
+<!--endinject-->;
+<p>注入js：</p>
+<!--inject:js-->;
+<!--endinject-->;
+<p>gulp代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var gulp=require(“gulp”);</span><br><span class="line">var inject=require(“gulp- inject”);</span><br><span class="line">gulp.task(“inject”,function()&#123;</span><br><span class="line">var target=gulp.src(“app/index.html”), /target指定向哪个文件中插入css和js</span><br><span class="line"></span><br><span class="line">	source=gulp.src([“dist/css/all.min.css”,”dist/js/all.min.js”]);// //source是向指定的html插入什么文件</span><br><span class="line">target.pipe(inject(source,&#123;ignorePaht:”/dist/”,addRootSlash:false&#125;)&#125;).pipe(gulp.dest(“dist”));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>注意：inject的第二参数：<br>ignorePath：因在定义这个任务时，gulp.src方法都是参照gulpfile.js为参照物去寻找文件，但是css和js插入到html的link和script标签中的时候，这时候的相对路径的参照物就应该是html了，所以在给插入到html中的css和js文件拼接路径时要将一段路径去掉；<br>addRootSlash:在拼接路径的时候，gulp默认会在link的href和script的src的路径中添加一个默认根目录的/，但是这不是我们想要的，一般不用；</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/23/gulp进阶（gulp中的插件的使用）/" data-id="ck2flbygl001l9kppbgdlhir0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-gulp入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/22/gulp入门/" class="article-date">
+  <time datetime="2016-11-22T13:12:20.000Z" itemprop="datePublished">2016-11-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/22/gulp入门/">gulp入门</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&#160; &#160; &#160; &#160;用gulp有一段时间了，有个朋友让我给他说说gulp，所以今天就写一篇关于gulp的文章做做分享。<br>在我的文章中，我在介绍一个东西之前都会说一说这个东西诞生的背景，亦或者说这个东西诞生是为了解决什么问题。每次技术的进步都是从未知到已知，从发现问题，到认识问题，最后解决问题的，我之所以介绍这些背景，其实是在理顺这些思路，是在为后面的逻辑铺路，在学习一门新的技术的时候，我们也应该是这样一种思路：这门技术是解决什么问题的，这门技术又是如何解决的这个问题。所以说每当遇到问题时，要想清楚到底是哪里出了问题，只有这样，靶向解决问题才能指标治本。当然，在解决问题时，难的不是解决，时发现问题的根源所在！我记得我在学习这门语言的时候，我遇到过很多困惑的地方，老师问我到底是哪里不懂，我说：“如果我能说出我哪里不懂，其实距离懂只差一层窗户纸额的距离。”很显然，发现问题的根源远比解决问题更难，希望大家在学习技术的时候，遇到问题，不能理解的时候，或者觉得和自己“以为”的不一样时，千万记得找出你心里的疑惑究竟是在哪儿，只有把这个疑惑解决了，问题才算是真正解决了；好了，说了一大堆，还是回来说说gulp吧。<br>1、    什么是gulp？<br>gulp是可以自动化执行任务的工具 在平时开发的流程里面,一定有一些任务需要手工重复得执行，比如:<br>&#160; &#160; &#160; &#160;    把文件从开发目录拷贝到生产目录<br>&#160; &#160; &#160; &#160;    把多个 JS 或者 CSS 文件合并成一个文件<br>&#160; &#160; &#160; &#160;    对JS文件和CSS进行压缩<br>&#160; &#160; &#160; &#160;    把sass或者less文件编译成CSS<br>&#160; &#160; &#160; &#160;    压缩图像文件<br>&#160; &#160; &#160; &#160;只要你觉得有些动作是要重复去做的,就可以把这些动作创建成一个gulp任务 然后在指定的条件下自动执行 比如在less源文件发生改变后自动编译成css文件；但是这些改变时建立在监视基础之上的，下面将会讲述这一特殊的机制。<br>gulp是基于node.js的，建议大家在阅读这篇文章的时候，对nodejs有一定的了解，如果你还不是很了解，建议阅读前面的有关nodejs基础和node.js进阶的一些知识，因为gulp大多是文件的IO操作，大家在看node.js的基础的时候，重点记忆有关于fs模块、fs中的流。<br>2、gulp的特点<br>&#160; &#160; &#160; &#160;利用 node.js 流的威力，你可以快速构建项目并减少频繁的 IO 操作。前一级的输出，直接变成后一级的输入，使得在操作上非常简单。此外gulp还提供了高质量的插件， Gulp 严格的插件指南确保插件如你期望的那样简洁地工作。<br>这里要提出注意的地方是gulp的流（Stream）又和node.js中的流（Stream）不大一样，因为node中的流逝二进制流，gulp的流是文件流，文件流不仅仅包含了文件的内容，还包含了文件的的文件名和路径。但是这两种流都是分为可读流和可写流；<br>此外，gulp最大的优势在于其类似jquery的链式写法，上一级操作的输出，直接变成下一级的输入，后面将为大家展示。<br>3、实现思路：<br>&#160; &#160; &#160; &#160;gulp的核心原理就是先创建一个可读流，然后通过pipe方法导出，然乎经过各个插件的加工，最后创建一个可写流，写入硬盘；<br>4、gulp的核心API<br>&#160; &#160; &#160; &#160;gulp只有四个核心API，也正是这四个方法使得原来的复杂的任务简化起来，也正是由于其API简单，所以很易学。但是插件的API又是五花八门的，当然，只有需要使用插件的地方，我们在引入插件；</p>
+<p>1）、<br>gulp.src(glob,[,options]);创建一个可读流<br>参数：<br>&#160; &#160; &#160; &#160;•    globs 参数是文件匹配模式(类似正则表达式)，用来匹配文件路径(包括文件名)，当然这里也可以直接指定某个具体的文件路径。当有多个匹配模式时，该参数可以为一个数组；<br>&#160; &#160; &#160; &#160;•    options 为可选参数。通常情况下我们不需要用到<br>2）、<br>gulp.dest(path[,options]) 是用来向硬盘写入文件的；<br>&#160; &#160; &#160; &#160;•    path 为写入文件的路径<br>&#160; &#160; &#160; &#160;•    options 为一个可选的参数对象，通常我们不需要用到<br>&#160; &#160; &#160; &#160;要想使用好gulp.dest()这个方法，就要理解给它传入的路径参数与最终生成的文件的关系。gulp.dest()传入的路径参数只能用来指定要生成的文件的目录,而不能指定生成文件的文件名 它生成文件的文件名使用的是导入到它的文件流自身的文件名 所以生成的文件名是由导入到它的文件流决定的<br>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">  gulp.src(&apos;script/jquery.js&apos;)</span><br><span class="line">  .pipe(gulp.dest(&apos;dist/jquery.js&apos;));</span><br><span class="line">//最终生成的文件路径为 dist/jquery.js/jquery.js,而不是dist/jquery.js</span><br></pre></td></tr></table></figure>
+
+
+<p>3）、gulp.task(name[, deps], fn);gulp.task方法用来定义任务;<br>&#160; &#160; &#160; &#160;•    name 为任务名称<br>&#160; &#160; &#160; &#160;•    deps 是当前定义的任务需要依赖的其他任务，为一个数组。当前定义的任务会在所有依赖的任务执行完毕后才开始执行。如果没有依赖，则可省略这个参数<br>•    fn 为任务定义函数，我们把任务要执行的代码都写在里面。该参数也是可选的。<br>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&apos;mytask&apos;, \[&apos;array&apos;, &apos;of&apos;, &apos;task&apos;, &apos;names&apos;\],</span><br><span class="line">function() &#123; //定义一个有依赖的任务</span><br><span class="line">      // Do something</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>如果某个任务所依赖的任务是异步的，就要注意了，gulp并不会等待那个所依赖的异步任务完成，而是会接着执行后续的任务<br>//two任务虽然依赖于one任务,但并不会等到one任务中的异步操作完成后再执行；<br>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&apos;one&apos;,function()&#123;</span><br><span class="line">      //one是一个异步执行的任务</span><br><span class="line">      setTimeout(function()&#123;</span><br><span class="line">        console.log(&apos;one is done&apos;)</span><br><span class="line">      &#125;,5000);</span><br><span class="line">    &#125;);</span><br><span class="line"> gulp.task(&apos;two&apos;,[&apos;one&apos;],function()&#123;</span><br><span class="line">      console.log(&apos;two is done&apos;);</span><br><span class="line">    &#125;);</span><br><span class="line">//先打印two is done然后打印one is done；</span><br></pre></td></tr></table></figure>
+
+<p>4）、 gulp.watch(glob[, opts], tasks);//用来监视文件的变化，当文件发生变化后，我们可以利用它来执行相应的任务，例如文件拷贝等。<br>•    glob 为要监视的文件匹配模式，规则和用法与gulp.src()方法中的 glob 相同。<br>•    opts 为一个可选的配置对象，通常不需要用到<br>•    tasks 为文件变化后要执行的任务，为一个数组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&apos;uglify&apos;,function()&#123;</span><br><span class="line">    //do something</span><br><span class="line">  &#125;);</span><br><span class="line">gulp.task(&apos;reload&apos;,function()&#123;</span><br><span class="line">    //do something</span><br><span class="line">&#125;);</span><br><span class="line"> gulp.watch(&apos;js/\*\*/\*.js&apos;, \[&apos;uglify&apos;,&apos;reload&apos;\]);</span><br></pre></td></tr></table></figure>
+
+<p>另外一种使用方式：<br>    gulp.watch(glob[, opts, cb])<br>•    glob和 opts 参数与第一种用法相同<br>•    cb参数为一个函数。每当监视的文件发生变化时，就会调用这个函数,并且会给它传入一个对象，该对象包含了文件变化的一些信息 type属性为变化的类型，可以是 added、changed、deleted和path属性为发生变化的文件的路径<br>  gulp.watch(‘js/**/*.js’, function(event){<br>    //变化类型 added为新增,deleted为删除，changed为改变<br>    console.log(event.type);<br>   //变化的文件的路径<br>    console.log(event.path);<br>  });<br>练习：<br>1）写一个复制单个文件的方法；<br>//实现逻辑：先获取一个可读流（调用gulp.src()方法），通过管道（可读流的pipe()方法）输送到一个可写流中（调用gulp.dest()方法）；<br>代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var gulp=require(“gulp”);</span><br><span class="line">gulp.task(“copy”,function()&#123;</span><br><span class="line">gulp.src(“./app/index.html”).pipe(gulp.dest(“dist/html”))&#125;);</span><br><span class="line">//打开命令窗口输入 gulp copy 回车；即可执行任务；此时的dist/html目录下多出一个index.html文件，该方法便成功了；</span><br></pre></td></tr></table></figure>
+
+<p>2）写一个复制多个文件的方法，练习glob语法中的* **</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var gulp=require(“gulp”);</span><br><span class="line">gulp.task(“copy-imgs”,function()&#123;</span><br><span class="line">gulp.src(“app/img/*.&#123;jpg,png&#125;”)</span><br><span class="line">.pipe(gulp.dest(“dist/img”));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>//1、{}可以指定多个拓展名；<br>//2、* 可以匹配除路径分隔符 /以外的所有字符，“app/img/<em>.{jpg,png}”表示app/img第一级目录下的所有拓展名为jpg和png的文件；app/img/*</em>/.{jpg,png} 表示app/img/下所有目录（含子孙目录）中所有的拓展名为jpg和png的文件；</p>
+<p>3）组合任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">gulp.task(&apos;copy-html&apos;,function()&#123;</span><br><span class="line">   return gulp.src(&apos;app/index.html&apos;).pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(&apos;copy-images&apos;,function()&#123;</span><br><span class="line">   return gulp.src(&apos;app/imgs/**/*.&#123;jpg,png&#125;&apos;).pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(&apos;copy-other&apos;,function()&#123;</span><br><span class="line">    return gulp.src([&apos;app/css/*.css&apos;,&apos;app/js/*.js&apos;,&apos;app/js/*.tmp.js&apos;],&#123;base:&apos;app&apos;&#125;)</span><br><span class="line">.pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(&apos;default&apos;,[&apos;copy-html&apos;,&apos;copy-images&apos;,&apos;copy-other&apos;],function()&#123;</span><br><span class="line">    console.log(&apos;全部拷贝任务执行完毕!&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>4） 监听任务<br>使用 gulp 的 watch 这个方法，我们可以去监视一些文件，当这些文件发生变化的时候，立即去执行一些指定的任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;copy-html&apos;,function()&#123;</span><br><span class="line">        return gulp.src(&apos;app/index.html&apos;)</span><br><span class="line">        .pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;copy-images&apos;,function()&#123;</span><br><span class="line">        return gulp.src(&apos;app/imgs/**/*.&#123;jpg,png&#125;&apos;,&#123;base:&apos;app&apos;&#125;)</span><br><span class="line">        .pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;copy-other&apos;,function()&#123;</span><br><span class="line">        return gulp.src([&apos;app/css/*.css&apos;,&apos;app/js/*.js&apos;</span><br><span class="line">        ,&apos;app/js/*.tmp.js&apos;],&#123;base:&apos;app&apos;&#125;).pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    //在执行watch的时候会监控index.html文件的变化，发生变化后可以执行拷贝html的任务</span><br><span class="line">    gulp.task(&apos;default&apos;,function()&#123;</span><br><span class="line">        gulp.watch(&apos;app/index.html&apos;,[&apos;copy-html&apos;]);</span><br><span class="line">        gulp.watch(&apos;app/imgs/**/*.&#123;jpg,png&#125;&apos;,[&apos;copy-images&apos;]);</span><br><span class="line">        gulp.watch([&apos;app/css/*.css&apos;,&apos;app/js/*.js&apos;</span><br><span class="line">        ,&apos;app/js/*.tmp.js&apos;],[&apos;copy-other&apos;]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/22/gulp入门/" data-id="ck2flbyga001i9kpp7wa5adgk" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-浅析js中常用的四种检测数据类型的方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/22/浅析js中常用的四种检测数据类型的方法/" class="article-date">
+  <time datetime="2016-10-21T16:00:59.000Z" itemprop="datePublished">2016-10-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/22/浅析js中常用的四种检测数据类型的方法/">浅析js中常用的四种检测数据类型的方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&#160; &#160; &#160; &#160;在js中常用的检测数据类型的方法有四种，在项目开发中，数据类型穿插在每个重要的环节中，如果巧用数据类型检测，常常会起到意想不到的效果。在bug调试过程中，当山穷水尽的时候，如果尝试检测数据类型，往往会有柳暗花明的效果。尤其在nodejs的bug调试中十分有效，因为node在io操作时常常进行数据类型的转换，可以说屡试不爽。<br>&#160; &#160; &#160; &#160;之所以在这篇文章中才讲述，数据类型的检测，是因为数据类型的检测的方法和面向对象有着千丝万缕的联系，如果你有空可以看看前面三篇文章，相信能对数据类型检测有更深的体会，正所谓磨刀不费砍柴功。闲言少叙，奔正题。<br>1、    typeof<br>typeof的应用场景大多是检测基本数据类型或者不需要具体细分的对象数据类型检测亦或者是区分基本数据类型和引用数据类型。<br>typeof的返回值是字符串包裹的被检值对应的数据类型，一共有6个，”number”、”string”、”boolean”、”undefined”、”function”、”null”、”object”。示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">console.log(typeof 	5);//”number”</span><br><span class="line">console.log(typeof 	“binary”);//”string”</span><br><span class="line">console.log(typeof 	true);//”boolean”</span><br><span class="line">console.log(typeof 	undefined);//” undefined”</span><br><span class="line">console.log(typeof  function ()&#123;&#125;);//”function”</span><br><span class="line">console.log(typeof 	null);//” object”</span><br><span class="line">console.log(typeof 	&#123;&#125;);//” object”</span><br><span class="line">console.log(typeof 	[]);//” object”</span><br><span class="line">console.log(typeof  /^\d+$/);//” object”</span><br><span class="line">………..</span><br></pre></td></tr></table></figure>
+
+<p>从上面的例子中不难看出typeof有局限性，具体体现在：<br>1）    检测null的时候返回object<br>2）    不能具体细分对象数据类型<br>3）    函数本身不是一种数据类型，但是因为函数有许多特殊之处，这里typeof一个函数时返回一个function也是有道理的<br>2、    instanceof：<br>instanceof操作符是检测某个实例是否属于一个类，检测结果是布尔值，是，则返回true，否则返回false；<br>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var ary=[1m,2m,23];</span><br><span class="line">console.log(ary instanceof Array);//true</span><br><span class="line">console.log(ary instanceof Object);//true</span><br><span class="line">var num=12；</span><br><span class="line">var num2=new Number(12);</span><br><span class="line">console.log(num instanceof Number);//false</span><br><span class="line">console.log(num2  instanceof  Number);//true</span><br></pre></td></tr></table></figure>
+
+<p>但是instanceof也有其局限性，<br>1）    不能检测用字面临创建的基本数据类型的值，这是由于js是弱类型的语言，从这个角度讲，实例创建和字面量创建还是有区别的，只有通过实例创建的才算是对象；<br>2）    只要当前被检值在当前类的原型链上，检测结果就是true；<br>3）    在使用类的继承后，检测结果将不够准确；<br>3、    constructor:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">constructor是来弥补instanceof的不能检测字面量创建的数据的；</span><br><span class="line">var num=12；</span><br><span class="line">console.log(num.constructor===Number);//true</span><br><span class="line">var ary=[1,2,3];</span><br><span class="line">console.log(ary.constructor===Array);//true;</span><br><span class="line">console.log(ary.constructor===Object);//false;</span><br></pre></td></tr></table></figure>
+
+<p>constructor虽然弥补了一部分instanceof的不足，但是其缺点仍然不可忽视:当类的原型被重写时，其原型的constructor很可能被修改，导致检测结果不准确；<br>4、    Object.prototype.toString.call();方法<br>每一种数据类型都自带一个toString()方法，但是功用却不尽相同，如数组的toString是转化成字符串的，而对象的toString是检测数据类型的。该方法返回值是一个字符串，如”[object  数据所属类]“。示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var num=24;</span><br><span class="line">console.log(Object.prototype.toString.call(num));//”[object Number]”;</span><br><span class="line">var ary=[1,2,3];</span><br><span class="line">console.log(Object.prototype.toString.call(ary));//”[object Array]”;</span><br><span class="line">var reg=/^\w+$/g;</span><br><span class="line">console.log(Object.prototype.toString.call(reg));//”[object RegExp]”</span><br><span class="line">………..</span><br></pre></td></tr></table></figure>
+
+<p>如果要求检测结果精准时推荐使用最后一种方法。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/22/浅析js中常用的四种检测数据类型的方法/" data-id="ck2flbyhp002e9kppswrqg8or" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">下一页 &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 —— 16. PromiseA+ —— 实现一个 Promise</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 —— 15. Promise 用法详解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 —— 14. 跨域和同源策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 —— 13. ajax的前世今生</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 —— 12. DOM 事件扩展-发布订阅</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Mabin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
