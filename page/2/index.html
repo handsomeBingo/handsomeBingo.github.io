@@ -67,6 +67,118 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaScript进阶教程7" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/17/JavaScript进阶教程7/" class="article-date">
+  <time datetime="2019-01-17T14:45:07.000Z" itemprop="datePublished">2019-01-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/17/JavaScript进阶教程7/">进阶教程 7. JS 手写轮播图</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="轮播图原理及实现"><a href="#轮播图原理及实现" class="headerlink" title="轮播图原理及实现"></a>轮播图原理及实现</h1><h2 id="知识储备"><a href="#知识储备" class="headerlink" title="知识储备"></a>知识储备</h2><ul>
+<li>jquery方法<ol>
+<li>根据选择器获取元素；$(selector)</li>
+<li>ajax 方法及配置参数 $.ajax({})</li>
+<li>绑定事件 on方法</li>
+<li>html() 方法</li>
+<li>css() 方法</li>
+<li>addClass()、removeClass() 方法</li>
+<li>animate() 动画方法 finish() 结束动画方法</li>
+</ol>
+</li>
+<li>定时器基础：<ol>
+<li>js动画的原理就是利用定时器操作某个样式值缓慢增加，轮播图操作的是wrapper元素的left属性。</li>
+<li>停止动画就是清除定时器，再次开启动画即重新开启定时器；</li>
+<li>定时器setTimeout和setInterval的返回值是一个定时器id；</li>
+<li>clearTimeout(定时器id)和clearInterval(定时器id)；</li>
+</ol>
+</li>
+</ul>
+<h2 id="轮播图需求："><a href="#轮播图需求：" class="headerlink" title="轮播图需求："></a>轮播图需求：</h2><ol>
+<li>制作一个轮播图（又称焦点图），自动轮播，并且轮播图下焦点跟随切换；</li>
+<li>当鼠标移入轮播图时，轮播图停止自动轮播，并且展示手动切换的箭头图标，当鼠标移出轮播图时，继续自动轮播，隐藏手动切换箭头图标；</li>
+<li>当点击手动控制轮播箭头图标的时候，可以手动切换图片。如果点击左侧箭头，则切换至上一张，如果切换到第一张，再次点击则切换至最后一张，依此类推；如果点击右侧箭头，则切换至下一张，如果已经是最后一张，再次点击则切换至第一张，实现循环播放；</li>
+<li>点击焦点时，对应索引的图片也要跟随切换；</li>
+</ol>
+<h2 id="轮播图原理："><a href="#轮播图原理：" class="headerlink" title="轮播图原理："></a>轮播图原理：</h2><ol>
+<li>有一个外面的盒子container，container的宽度只能展示一张图片，其余的溢出隐藏。</li>
+<li>在container里面有一个wrapper的盒子，里面装着很多张图片，这些图片在一行排列，而wrapper相对于container绝对定位，初始时left=0，所以默认展示第一张图片（第一张图片索引为0）。</li>
+<li>轮播一次其实就是让wrapper盒子向左移动一张图片的距离（操作wrapper的left值），这样第二张（索引为1）图片就露出来了（此时wrapper的left的值是 负的1张图片的宽度），里面的盒子再向左移动一张，第三张（索引为2）就露出来了（此时wrapper的left值是 负的2张图片的宽度），依次类推，我们发现如果想让轮播图轮到第几张，就将wrapper的left值设置成：负的图片宽度*索引。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>展示图片</th>
+<th>图片索引</th>
+<th>wrapper的left值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0</td>
+<td>0 * 图片宽度</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>-1 * 图片宽度</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>-2 * 图片宽度</td>
+</tr>
+<tr>
+<td>4</td>
+<td>3</td>
+<td>-3 * 图片宽度</td>
+</tr>
+</tbody></table>
+<ol start="4">
+<li>综上，我们需要有个变量stepIndex，记录着要轮播的是第几张，让后轮播时就是让wrapper的left值就是负的stepIndex 乘以图片宽度，即 left = -1 * stepIndex * 1000(1000是图片宽度)</li>
+</ol>
+<h2 id="无缝轮播实现"><a href="#无缝轮播实现" class="headerlink" title="无缝轮播实现"></a>无缝轮播实现</h2><ol>
+<li>我们首先复制一份第一张图片并且把复制的这个放到末尾，相当于真实图片的最后一张后面还有一个第一张的副本。</li>
+<li>然后当轮播到最后一张的时候，这个时候展示的使我们第一步复制过来的第一张图片，下一次再轮播应该展示第二张图了。</li>
+<li>这个时候我们将wrapper的left设置成0，然后left为0时展示的是真正的第一张，下一张要轮播的是第二张所以我们将stepIndex的值置为1（1就是第二张图的索引啊），然后再轮播就是第二张图了。</li>
+<li>又因为浏览器设置wrapper的值基本不需要时间，所以给人的感觉就是无缝轮播的。</li>
+</ol>
+<h3 id="html代码"><a href="#html代码" class="headerlink" title="html代码"></a>html代码</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>江外琉璃-轮播图<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/reset.min.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/banner.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">"container"</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrapper"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;div class="slide"&gt;&lt;img src="img/banner1.jpg" alt=""&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="comment">        &lt;div class="slide"&gt;</span></span><br><span class="line"><span class="comment">            &lt;img src="img/banner2.jpg" alt=""&gt;</span></span><br><span class="line"><span class="comment">        &lt;/div&gt;</span></span><br><span class="line"><span class="comment">        &lt;div class="slide"&gt;&lt;img src="img/banner3.jpg" alt=""&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="comment">        &lt;div class="slide"&gt;&lt;img src="img/banner4.jpg" alt=""&gt;&lt;/div&gt;--&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"focus"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- &lt;li class="active"&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         &lt;li&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         &lt;li&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         &lt;li&gt;&lt;/li&gt;--&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript: void 0;"</span> <span class="attr">class</span>=<span class="string">"arrow arrowLeft"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript: void 0;"</span> <span class="attr">class</span>=<span class="string">"arrow arrowRight"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--&lt;section class="container" id="container2"&gt;</span></span><br><span class="line"><span class="comment">    &lt;div class="wrapper"&gt;</span></span><br><span class="line"><span class="comment">        &amp;lt;!&amp;ndash;&lt;div class="slide"&gt;&lt;img src="img/banner1.jpg" alt=""&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="comment">        &lt;div class="slide"&gt;</span></span><br><span class="line"><span class="comment">            &lt;img src="img/banner2.jpg" alt=""&gt;</span></span><br><span class="line"><span class="comment">        &lt;/div&gt;</span></span><br><span class="line"><span class="comment">        &lt;div class="slide"&gt;&lt;img src="img/banner3.jpg" alt=""&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="comment">        &lt;div class="slide"&gt;&lt;img src="img/banner4.jpg" alt=""&gt;&lt;/div&gt;&amp;ndash;&amp;gt;</span></span><br><span class="line"><span class="comment">    &lt;/div&gt;</span></span><br><span class="line"><span class="comment">    &lt;ul class="focus"&gt;</span></span><br><span class="line"><span class="comment">        &amp;lt;!&amp;ndash; &lt;li class="active"&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         &lt;li&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         &lt;li&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         &lt;li&gt;&lt;/li&gt;&amp;ndash;&amp;gt;</span></span><br><span class="line"><span class="comment">    &lt;/ul&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href="javascript:;" class="arrow arrowLeft"&gt;&lt;/a&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href="javascript:;" class="arrow arrowRight"&gt;&lt;/a&gt;</span></span><br><span class="line"><span class="comment">&lt;/section&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/jquery.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/banner.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--&lt;script&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--let b1 = new Banner(&#123;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--ele: '#container',--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--url: 'json/banner.json',--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--speed: 100--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&#125;);--&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--let b2 = new Banner(&#123;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--ele: '#container2',--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--url: 'json/banner2.json',--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--interval: 1000,--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--speed: 500--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&#125;);--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--&lt;/script&gt;--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="css-代码"><a href="#css-代码" class="headerlink" title="css 代码"></a>css 代码</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">20px</span> auto;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">1000px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.container</span> <span class="selector-class">.wrapper</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">4000px</span>; <span class="comment">/*根据JS中获取的数据动态控制宽度*/</span></span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.container</span> <span class="selector-class">.wrapper</span> <span class="selector-class">.slide</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">1000px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.container</span> <span class="selector-class">.wrapper</span> <span class="selector-class">.slide</span> <span class="selector-tag">img</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.container</span> <span class="selector-class">.focus</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">999</span>;</span><br><span class="line">    <span class="attribute">bottom</span>: <span class="number">10px</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translateX</span>(-50%); <span class="comment">/*基于CSS3中的TRANSFORM变形属性，在不固定的宽度的情况下实现水品居中 translateX:让当前元素在水平方向发生位移(此处-50%向左移动当前盒子的一半)*/</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">4px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">rgba</span>(0, 0, 0, .5);</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">10px</span>; <span class="comment">/*让其为盒子高度的一半,这样把长方型的盒子修改为椭圆状*/</span></span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.container</span> <span class="selector-class">.focus</span> <span class="selector-tag">li</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline-block;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">4px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#FFF</span>;</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.container</span> <span class="selector-class">.focus</span> <span class="selector-tag">li</span><span class="selector-class">.active</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#DB192A</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.container</span> <span class="selector-class">.arrow</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: none;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">margin-top</span>: -<span class="number">22.5px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">28px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">45px</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">"../img/pre.png"</span>) no-repeat;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">0.3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.container</span> <span class="selector-class">.arrow</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.container</span> <span class="selector-class">.arrow</span><span class="selector-class">.arrowLeft</span> &#123;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.container</span> <span class="selector-class">.arrow</span><span class="selector-class">.arrowRight</span> &#123;</span><br><span class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">background-position</span>: -<span class="number">50px</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="js代码"><a href="#js代码" class="headerlink" title="js代码"></a>js代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> bannerRender = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// -&gt; 获取后续需要操作的对象或者元素</span></span><br><span class="line">  <span class="keyword">let</span> container = $(<span class="string">'#container'</span>),</span><br><span class="line">    wrapper = $(<span class="string">'.wrapper'</span>),</span><br><span class="line">    focus = $(<span class="string">'.focus'</span>),</span><br><span class="line">    arrowLeft = $(<span class="string">'.arrowLeft'</span>),</span><br><span class="line">    arrowRight = $(<span class="string">'.arrowRight'</span>),</span><br><span class="line">    slideList = <span class="literal">null</span>,</span><br><span class="line">    focusList = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// =&gt; 轮播图运动的基础参数</span></span><br><span class="line">  <span class="keyword">let</span> stepIndex = <span class="number">0</span>; <span class="comment">// stepIndex 记录当前展示块的索引</span></span><br><span class="line">  <span class="keyword">let</span> autoTimer = <span class="literal">null</span>; <span class="comment">// autoTimer 自动轮播的定时器</span></span><br><span class="line">  <span class="keyword">let</span> interval = <span class="number">3000</span>; <span class="comment">// interval 间隔多长时间自动切换</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// autoMove：控制轮播图的运动和切换</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  * 索引为1，展示第二张，warpper 的left - 1000;</span></span><br><span class="line"><span class="comment">  * 索引为2， 展示第三章，wrapper的left - 2000；</span></span><br><span class="line"><span class="comment">  * ....</span></span><br><span class="line"><span class="comment">  * warpper的left值其实就是当前要展示的图片索引对应的结果 ：-索引 * 1000</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * */</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">autoMove</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    stepIndex++;</span><br><span class="line">    <span class="keyword">if</span> (stepIndex &gt;= slideList.length) &#123;</span><br><span class="line">      <span class="comment">// 说明再往后切换没有了，现在展示的是克隆的第一张，此时我们将wrapper设置到回到真实的第一张的位置，即left = 0，然后stepIndex = 1，这样就可以切换到第二张了</span></span><br><span class="line">      wrapper.css(<span class="string">'left'</span>, <span class="number">0</span>);</span><br><span class="line">      stepIndex = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    wrapper.animate(&#123;</span><br><span class="line">      left: -stepIndex * <span class="number">1000</span></span><br><span class="line">    &#125;, <span class="number">200</span>); <span class="comment">// 200 是从当前切换到下一张的动画时间 interval是间隔多久切换一次</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// -&gt; 每一次运动完成需要让焦点跟着切换</span></span><br><span class="line">    changeFocus();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// changeFocus: 让焦点跟着轮播图切换而切换（运动到克隆的这一张的时候，也需要让第一个li有选中的样式</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">changeFocus</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 当轮播图运动到最后一张（克隆的第一张，我们需要让第一个li有选中样式，之所以使用tempIndex是因为stepIndex对轮播图切换起着很大作用，不能轻易修改）</span></span><br><span class="line">    <span class="keyword">let</span> tempIndex = stepIndex;</span><br><span class="line">    tempIndex === slideList.length - <span class="number">1</span></span><br><span class="line">      ? tempIndex = <span class="number">0</span></span><br><span class="line">      : <span class="literal">null</span>;</span><br><span class="line">    focusList.each(<span class="function">(<span class="params">index, item</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (index === tempIndex) &#123;</span><br><span class="line">        $(item).addClass(<span class="string">'active'</span>)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $(item).removeClass(<span class="string">'active'</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// queryDate：获取数据</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">queryData</span>(<span class="params">onSuccess, onError</span>) </span>&#123;</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">      url: <span class="string">'json/banner.json'</span>,</span><br><span class="line">      method: <span class="string">'GET'</span>,</span><br><span class="line">      dataType: <span class="string">'json'</span>,</span><br><span class="line">      <span class="keyword">async</span>: <span class="literal">false</span>,</span><br><span class="line">      success: onSuccess,</span><br><span class="line">      error: onError</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// bindHTML：数据绑定</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bindHTML</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> strSlide = <span class="string">``</span>;</span><br><span class="line">    <span class="keyword">let</span> strFocus = <span class="string">``</span>;</span><br><span class="line">    data.forEach(<span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> &#123;</span><br><span class="line">        img = <span class="string">'img/banner1.jpg'</span>,</span><br><span class="line">        desc = <span class="string">'江外琉璃'</span></span><br><span class="line">      &#125; = item;</span><br><span class="line">      strSlide += <span class="string">`&lt;div class="slide"&gt;</span></span><br><span class="line"><span class="string">        &lt;img src="<span class="subst">$&#123;img&#125;</span>" alt="<span class="subst">$&#123;desc&#125;</span>"&gt;</span></span><br><span class="line"><span class="string">      &lt;/div&gt;`</span>;</span><br><span class="line"></span><br><span class="line">      strFocus += <span class="string">`&lt;li class="<span class="subst">$&#123;index === <span class="number">0</span> ? <span class="string">'active'</span> : <span class="string">''</span> &#125;</span>"&gt;&lt;/li&gt;`</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将第一张克隆一份放到最后</span></span><br><span class="line">    strSlide += <span class="string">`&lt;div class="slide"&gt;</span></span><br><span class="line"><span class="string">        &lt;img src="<span class="subst">$&#123;data[<span class="number">0</span>].img&#125;</span>" alt="<span class="subst">$&#123;data[<span class="number">0</span>].desc&#125;</span>"&gt;</span></span><br><span class="line"><span class="string">      &lt;/div&gt;`</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 插入到容器中</span></span><br><span class="line">    wrapper.html(strSlide);</span><br><span class="line">    focus.html(strFocus);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// -&gt; 获取所有的slide和li</span></span><br><span class="line">    slideList = $(<span class="string">'.slide'</span>);</span><br><span class="line">    focusList = $(<span class="string">'.focus &gt; li'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// -&gt; 根据slide的个数动态计算wrapper的宽度</span></span><br><span class="line">    wrapper.css(&#123;</span><br><span class="line">      width: slideList.length * <span class="number">1000</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// handleContainer 鼠标进入后停止自动轮播，离开后开始自动轮播；</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleContainer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    container.on(<span class="string">'mouseenter'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      clearInterval(autoTimer);</span><br><span class="line">      arrowLeft.css(&#123;</span><br><span class="line">        display: <span class="string">'block'</span></span><br><span class="line">      &#125;);</span><br><span class="line">      arrowRight.css(&#123;</span><br><span class="line">        display: <span class="string">'block'</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;).on(<span class="string">'mouseleave'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      clearInterval(autoTimer);</span><br><span class="line">      autoTimer = setInterval(autoMove, interval);</span><br><span class="line">      arrowLeft.css(&#123;</span><br><span class="line">        display: <span class="string">'none'</span></span><br><span class="line">      &#125;);</span><br><span class="line">      arrowRight.css(&#123;</span><br><span class="line">        display: <span class="string">'none'</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 点击箭头切换轮播</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleArrow</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    arrowRight.click(autoMove);</span><br><span class="line">    arrowLeft.click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      stepIndex--;</span><br><span class="line">      <span class="keyword">if</span> (stepIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 如果索引减减后小于0，说明当前已经是第一张，不能向右运动了，如果再减就该展示最后一张图片了（这里的最后一张应该是真实的最后一张图，而不是我们复制出来的那个），最后一张在slide中的位置是倒数第二，即索引位置是 length -2</span></span><br><span class="line">        wrapper.css(&#123;</span><br><span class="line">          left: -(slideList.length - <span class="number">1</span>) * <span class="number">1000</span></span><br><span class="line">        &#125;);</span><br><span class="line">        stepIndex = slideList.length - <span class="number">2</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      wrapper.finish().animate(&#123;</span><br><span class="line">        left: -stepIndex * <span class="number">1000</span></span><br><span class="line">      &#125;, <span class="number">200</span>);</span><br><span class="line">      changeFocus();</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 点击焦点切换</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleFocus</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    focusList.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 给每个焦点绑定点击事件，点击的是谁，就让stepIndex的值等于谁的索引，然后运动到这里</span></span><br><span class="line">      <span class="keyword">let</span> focusIndex = $(<span class="keyword">this</span>).index();</span><br><span class="line">      stepIndex = index;</span><br><span class="line">        wrapper.finish().animate(&#123;</span><br><span class="line">          left: -focusIndex * <span class="number">1000</span></span><br><span class="line">        &#125;, <span class="number">200</span>);</span><br><span class="line">        changeFocus();</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">  <span class="comment">// queryData(bindHTML);</span></span><br><span class="line">  <span class="comment">// handleContainer();</span></span><br><span class="line">  <span class="comment">// handleArrow();</span></span><br><span class="line">  <span class="comment">// handleFocus();</span></span><br><span class="line">  <span class="comment">// autoTimer = setInterval(autoMove, interval)</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    init() &#123;</span><br><span class="line">      queryData(bindHTML);</span><br><span class="line">      handleContainer();</span><br><span class="line">      handleArrow();</span><br><span class="line">      handleFocus();</span><br><span class="line">      autoTimer = setInterval(autoMove, interval)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line">bannerRender.init();</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/17/JavaScript进阶教程7/" data-id="ck3vgnco90015xsppytdb5vk5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JavaScript进阶教程5" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/12/24/JavaScript进阶教程5/" class="article-date">
@@ -335,7 +447,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程5/" data-id="ck2flmcaf0011v4pph87cegmj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程5/" data-id="ck3vgncnz000vxsppzuowb19t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -424,7 +536,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程6/" data-id="ck2flmcah0013v4pp446bxsfx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程6/" data-id="ck3vgnco50011xsppayuxoguu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -544,7 +656,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/22/JavaScript进阶教程4/" data-id="ck2flmcad000zv4ppntwbco0q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/22/JavaScript进阶教程4/" data-id="ck3vgncnx000txspppikhhcrx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -677,7 +789,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/10/07/JavaScript进阶教程3/" data-id="ck2flmcab000xv4ppzuzzxngg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/10/07/JavaScript进阶教程3/" data-id="ck3vgncnt000pxspphvty9aol" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -839,7 +951,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程1/" data-id="ck2flmc9n000fv4pp2b373sun" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程1/" data-id="ck3vgncn6000axsppsn0jz55a" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -947,7 +1059,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程2/" data-id="ck2flmca8000vv4pphfnsg63n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程2/" data-id="ck3vgncok001gxsppnauj48dc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1129,7 +1241,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/27/JavaScript基础教程8/" data-id="ck2flmc9k000dv4pp2m29vqjl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/08/27/JavaScript基础教程8/" data-id="ck3vgncnv000rxsppcv5rfw17" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1240,7 +1352,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/09/JavaScript基础教程7/" data-id="ck2flmc9g000av4pp75fs2aey" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/09/JavaScript基础教程7/" data-id="ck3vgncnd000fxspppoz2id7t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1427,347 +1539,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/27/JavaScript基础教程6/" data-id="ck2flmc9d0008v4ppgwsh2ork" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript基础教程5" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/05/30/JavaScript基础教程5/" class="article-date">
-  <time datetime="2018-05-30T13:47:34.000Z" itemprop="datePublished">2018-05-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/30/JavaScript基础教程5/">基础教程 5. arguments、递归和函数表达式</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、函数的实参集合-arguments"><a href="#一、函数的实参集合-arguments" class="headerlink" title="一、函数的实参集合-arguments"></a>一、函数的实参集合-arguments</h2><ul>
-<li><p>现在有个需求，需要写一个方法，求10数的和。</p>
-<p>代码如下：</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b, c, d, e, f, g, h, i, j</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> total = a + b + c + d + e + f + g + h + i + j;</span><br><span class="line">  <span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>函数形参的局限性：</p>
-</blockquote>
-<ol>
-<li>因为形参和实参是一一对应的，如果想要多少传递多少实参，就要设置多少形参，这很不方便，现在是10个，如果是100个，就要设置100个形参。</li>
-<li>如果实参个数不固定，可能10个可能2个，还可能100个，所以此时形参无法设置。</li>
-</ol>
-<ul>
-<li>需求2：需要写一个方法，实现可以求任意多个数字之和；</li>
-</ul>
-<p><code>任意多个实参，此时形参不固定了。咋办？</code></p>
-<blockquote>
-<p>为了解决上面的形参的种种限制，浏览器为函数内置一个arguments对象；</p>
-</blockquote>
-<blockquote>
-<p>arguments：arguments叫做内置的实参集合，这个对象里面包含了函数执行时传递进来的所有实参（内置：函数天生自带的机制，不管是否设置了形参，也不管你是否传递了实参，arguments一直都存在）。</p>
-</blockquote>
-<p>使用arguments：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum2</span>(<span class="params">n, m</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(n, m);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</span><br><span class="line"></span><br><span class="line">   <span class="built_in">arguments</span>它是一个类数组（不是数组，不能直接使用数组中的方法）</span><br><span class="line">   即使设置形参变量，形参该是什么还是什么，但是<span class="built_in">arguments</span>存储的是所有传进来的实参，所以<span class="built_in">arguments</span>被称为 实参集合</span><br><span class="line">   我们发现它有索引，有length，可以用<span class="keyword">for</span>循环遍历</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="number">0</span>: <span class="number">1</span>,</span><br><span class="line">     <span class="number">1</span>: <span class="number">2</span>,</span><br><span class="line">     <span class="number">2</span>: <span class="number">5</span>,</span><br><span class="line">     <span class="number">3</span>: <span class="number">7</span>,</span><br><span class="line">     <span class="number">4</span>: <span class="number">8</span></span><br><span class="line">     length: <span class="number">5</span>,</span><br><span class="line">     callee: 存储的当前函数本身 <span class="built_in">arguments</span>.callee == sum2 -&gt; <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sum2(<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">8</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="ES6-不定参数"><a href="#ES6-不定参数" class="headerlink" title="ES6 不定参数"></a>ES6 不定参数</h3><ul>
-<li>ES6中提供了一个功能和arguments的功能相似的功能——不定参数</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">...arg</span>) </span>&#123;</span><br><span class="line">   ...叫做展开运算符</span><br><span class="line">   arg 是一个形参变量</span><br><span class="line">  <span class="built_in">console</span>.log(arg);  arg是一个数组</span><br><span class="line">&#125;</span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>arguments 和 不定参数的不同</li>
-</ul>
-<ol>
-<li>arguments是函数天生自带的属性不需要声明，而不定参数需要声明</li>
-<li>arguments是类数组，而不定参数是数组</li>
-</ol>
-<h3 id="任意数求和："><a href="#任意数求和：" class="headerlink" title="任意数求和："></a>任意数求和：</h3><p>思路：</p>
-<ol>
-<li>既然是任意数，那么肯定使用函数的arguments</li>
-<li>arguments里面存储着所有的实参，我们需要把这些实参一个一个的取出来（遍历），然后加给一个基础值上</li>
-<li>把结果return出去</li>
-</ol>
-<blockquote>
-<p>基础版:</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum3</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="number">1.</span> 设立初始值</span><br><span class="line">  <span class="keyword">var</span> total = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">   <span class="number">2.</span> 遍历<span class="built_in">arguments</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="built_in">arguments</span>.length;i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> item = <span class="built_in">arguments</span>[i];</span><br><span class="line">    total += item;</span><br><span class="line">  &#125;</span><br><span class="line">   <span class="number">3.</span> 把计算结果返回</span><br><span class="line">  <span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> result = sum3(<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>升级版：为了提高代码的健壮性，我们累加的时候需要判断一下我们传进来的实参是不是一个数字，如果不是数字，我们先给它转成数字，然后再看转换后是不是有效数字，如果是再加，如果不是就不加了。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum4</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="number">1.</span> 设立初始值</span><br><span class="line">  <span class="keyword">var</span> total = <span class="number">0</span>;</span><br><span class="line">   <span class="number">2.</span> 遍历<span class="built_in">arguments</span>对象，取出每一项</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="built_in">arguments</span>.length; i++) &#123;</span><br><span class="line">     <span class="number">3.</span> 不管你传进来的是不是数字，都转一次</span><br><span class="line">    <span class="keyword">var</span> item = <span class="built_in">Number</span>(<span class="built_in">arguments</span>[i]);</span><br><span class="line">     <span class="number">4.</span> 判断转换后的结果是不是有效数字累加，非有效数字直接跳过</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">isNaN</span>(item)) &#123;</span><br><span class="line">       如果不是<span class="literal">NaN</span>就让total加等于item</span><br><span class="line">      total += item;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(sum4(<span class="number">10</span>, <span class="string">'20'</span>, <span class="string">'aa'</span>));  <span class="number">30</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="二、函数表达式"><a href="#二、函数表达式" class="headerlink" title="二、函数表达式"></a>二、函数表达式</h2><ul>
-<li>函数分类：</li>
-</ul>
-<ol>
-<li>实名函数：有函数名的</li>
-<li>匿名函数：没有函数名的<br>2.1 函数表达式：把函数当做赋值给变量或者元素对象的事件属性<br>2.2 自执行函数：创建和执行一起完成的</li>
-</ol>
-<ul>
-<li>函数表达式：</li>
-</ul>
-<ol>
-<li><p>把函数当成一个值赋值给变量或者对象的属性</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'我是一个函数表达式'</span>);</span><br><span class="line">&#125;;</span><br><span class="line">fn();  fn是一个变量名，它代表的也是一个函数</span><br><span class="line"></span><br><span class="line"> 赋值给元素对象的事件属性：</span><br><span class="line">oBox.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"> 普通对象的属性值：</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  getName: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'江外琉璃'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.getName();  因为obj.getName 是一个函数，因此也可以执行</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>自执行函数：函数的定义和声明都放在一起了</p>
-</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">   第一部分是函数定义</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'i 是'</span>, i);</span><br><span class="line">&#125;)(<span class="number">10</span>); 后面的小括号放在函数后面就是让函数执行的</span><br><span class="line"></span><br><span class="line"> 以下都是自执行函数</span><br><span class="line">~<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">+<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">!<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、函数递归"><a href="#三、函数递归" class="headerlink" title="三、函数递归"></a>三、函数递归</h2><blockquote>
-<p>函数：分为定义部分和执行部分</p>
-</blockquote>
-<h3 id="函数递归（recursion）：在函数体内部，调用函数自身，达到重复某一行为的目的。"><a href="#函数递归（recursion）：在函数体内部，调用函数自身，达到重复某一行为的目的。" class="headerlink" title="函数递归（recursion）：在函数体内部，调用函数自身，达到重复某一行为的目的。"></a>函数递归（recursion）：在函数体内部，调用函数自身，达到重复某一行为的目的。</h3><ul>
-<li>需求：写一个方法求出 1-10之间所有数的数字之和</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rSum</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (num === <span class="number">10</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">10</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> num + rSum(num + <span class="number">1</span>)</span><br><span class="line">   如果函数的返回值遇到一个表达式，那么函数会等着这个表达式求值完成最后把这个值返回出去。</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + rSum(<span class="number">2</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + rSum(<span class="number">3</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + rSum(<span class="number">4</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + rSum(<span class="number">5</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + rSum(<span class="number">6</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + rSum(<span class="number">7</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + <span class="number">7</span> + rSum(<span class="number">8</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + <span class="number">7</span> + <span class="number">8</span> + rSum(<span class="number">9</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + <span class="number">7</span> + <span class="number">8</span> + <span class="number">9</span> + rSum(<span class="number">10</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + <span class="number">7</span> + <span class="number">8</span> + <span class="number">9</span> + <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(rSum(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>需求：求1-10中的是3的倍数的所有数之和。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rSum2</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (num === <span class="number">10</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (num % <span class="number">3</span> === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> num + rSum2(num + <span class="number">1</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> rSum2(num + <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">   <span class="keyword">return</span> rSum2(<span class="number">2</span>)</span><br><span class="line">   <span class="keyword">return</span> rSum2(<span class="number">3</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + rSum2(<span class="number">4</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + rSum2(<span class="number">5</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + rSum2(<span class="number">6</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + <span class="number">6</span> + rSum2(<span class="number">7</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + <span class="number">6</span> + rSum2(<span class="number">8</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + <span class="number">6</span> + rSum2(<span class="number">9</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + <span class="number">6</span> + <span class="number">9</span> + rSum(<span class="number">10</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + <span class="number">6</span> + <span class="number">9</span> + <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(rSum2(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：递归和for循环一样，在使用时考虑好递归终止的条件。不然就会造成死循环，导致栈内存溢出（stack overflow）</p>
-</blockquote>
-<h2 id="四、数组常用方法"><a href="#四、数组常用方法" class="headerlink" title="四、数组常用方法"></a>四、数组常用方法</h2><ul>
-<li>I 数组的删除和追加</li>
-</ul>
-<ol>
-<li>=&gt; push</li>
-</ol>
-<ul>
-<li>作用：向数组末尾追加项（可以多项，多项直接用逗号分隔）</li>
-<li>参数：需要添加到数组的项</li>
-<li>返回值：数组追加项之后的长度</li>
-<li>原数组是否改变：是</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> r1 = ary1.push(<span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary1, r1);</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>=&gt; pop</li>
-</ol>
-<ul>
-<li>作用：删除数组末尾一项</li>
-<li>参数：无</li>
-<li>返回值：被删除的数组项</li>
-<li>原数组是否改变：是</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary2 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> r2 = ary2.pop();</span><br><span class="line"><span class="built_in">console</span>.log(ary2, r2);</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>=&gt; unshift</li>
-</ol>
-<ul>
-<li>作用：向数组开头添加项</li>
-<li>参数：需要追加到开头的项</li>
-<li>返回值：追加完内容后的数组新长度</li>
-<li>原数组是否改变：是</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary3 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> r3 = ary3.unshift(<span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary3, r3);</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>=&gt; shift</li>
-</ol>
-<ul>
-<li>作用：删除数组起始一项</li>
-<li>参数：无</li>
-<li>返回值：被删除的项</li>
-<li>原数组是否改变：是</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary4 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> r4 = ary4.shift();</span><br><span class="line"><span class="built_in">console</span>.log(ary4, r4);</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>=&gt; splice(n, m)</li>
-</ol>
-<ul>
-<li>作用：从索引为n开始删除m个</li>
-<li>参数：起始索引n，要删除的个数</li>
-<li>返回值：由删除的项组成新数组</li>
-<li>原数组是否改变：是</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary5 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> r5 = ary.splice(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary5, r5);</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>=&gt; splice(n, m, x)</li>
-</ol>
-<ul>
-<li>作用：从索引n开始删除m个，用x替换删除的部分</li>
-<li>参数：起始索引，删除个数，用来替换的数组项x</li>
-<li>返回值：被删除的项组成的新数组</li>
-<li>原数组是否改变：是</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var ary6 = [1, 2, 3];</span><br><span class="line">var r6 = ary6.splice(1, 1, 5);</span><br><span class="line">console.log(ary6, r6);</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
-<li>=&gt; splice(n, 0, x)</li>
-</ol>
-<ul>
-<li>作用：从索引n开始删除0个，把x插入到n的前面</li>
-<li>参数：起始索引，删除个数0，x</li>
-<li>返回值：空数组</li>
-<li>原数组是否改变：是</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> r7 = ary.splice(<span class="number">1</span>, <span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line"><span class="keyword">var</span> ary7 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="built_in">console</span>.log(ary7, r7);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>II. 数组复制、拼接</li>
-</ul>
-<ol>
-<li>slice(n, m)</li>
-</ol>
-<ul>
-<li>作用：从索引n开始复制到索引m（不包括m）</li>
-<li>参数：起始索引n，终点索引m; 注意：m不写就是复制到最后一项，如果n和m都不写也是从开头复制到末尾</li>
-<li>返回值：复制的项组成的新数组</li>
-<li>原数组是否改变：否</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary8 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">var</span> r8 = ary8.slice(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line"><span class="keyword">var</span> r9 = ary8.slice(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">var</span> r10 = ary8.slice();</span><br><span class="line"><span class="keyword">var</span> r11 = ary.slice(<span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(r8);</span><br><span class="line"><span class="built_in">console</span>.log(r9);</span><br><span class="line"><span class="built_in">console</span>.log(r10);</span><br><span class="line"><span class="built_in">console</span>.log(r11);</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>=&gt; concat()</li>
-</ol>
-<ul>
-<li>作用：将数组拼接起来</li>
-<li>参数：需要拼接的数组或者数组项</li>
-<li>返回值：拼接过后的新数组</li>
-<li>原数组是否改变：否</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary12 = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>];</span><br><span class="line"><span class="keyword">var</span> r12 = ary12.concat([<span class="number">9</span>, <span class="number">11</span>]);  参数传递一个数组</span><br><span class="line"><span class="built_in">console</span>.log(ary12, r12);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> r13 = ary12.concat(<span class="number">9</span>, <span class="number">11</span>);  参数传递数组项</span><br><span class="line"><span class="built_in">console</span>.log(ary12, r13);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> r14 = ary12.concat();  一个参数不传相当于把数组复制一份</span><br><span class="line"><span class="built_in">console</span>.log(r14);</span><br><span class="line"><span class="built_in">console</span>.log(r14 === ary12);  <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>III. 数组的转换成字符串</li>
-</ul>
-<ol>
-<li>=&gt; join()</li>
-</ol>
-<ul>
-<li>作用：根据参数指定的分隔符把数组链接成字符串</li>
-<li>参数：分隔符，不指定时默认空字符串</li>
-<li>返回值：拼接过后的字符串</li>
-<li>原数组是否改变：否</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary15 = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>];</span><br><span class="line"><span class="keyword">var</span> str15 = ary15.join(<span class="string">'+'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary15, str15);</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>=&gt; toString()</li>
-</ol>
-<ul>
-<li>作用：把数组转换成字符串</li>
-<li>参数：无</li>
-<li>返回值：字符串</li>
-<li>原数组是否改变：否</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary16 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">8</span>];</span><br><span class="line"><span class="keyword">var</span> str16 = ary16.toString();</span><br><span class="line"><span class="built_in">console</span>.log(ary16, str16);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>IV 数组项是否在数组中出现过</li>
-</ul>
-<ol>
-<li>=&gt; indexOf(x)</li>
-</ol>
-<ul>
-<li>作用：数组项x在数组中第一次出现的索引位置</li>
-<li>参数：数组项x</li>
-<li>返回值：如果数组中存在该项，就返回该项第一次出现的索引，如果不存在，则返回 -1</li>
-<li>原数组是否改变：否</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary17 = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>];</span><br><span class="line"><span class="keyword">var</span> r17 = ary17.indexOf(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary17, r17);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> r18= ary17.indexOf(<span class="string">'bingo'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary17, r18);  <span class="number">-1</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>=&gt; lastIndexOf(x)</li>
-</ol>
-<ul>
-<li>作用：数组项x在数组中最后一次出现的索引位置</li>
-<li>参数：数组项x</li>
-<li>返回值：如果数组中存在该项，就返回该项最后一次出现的索引，如果不存在，则返回 -1</li>
-<li>原数组是否改变：否</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary19 = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> r19 = ary19.lastIndexOf(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary19, r19);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> r20 = ary19.lastIndexOf(<span class="string">'bingo'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary19, r20);  <span class="number">-1</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>V. 数组排序和倒序</li>
-</ul>
-<ol>
-<li>=&gt; sort(function (a, b) {<br>return a - b<br>})</li>
-</ol>
-<ul>
-<li>作用：给数组按照升序或者降序排列</li>
-<li>参数：回调函数</li>
-<li>返回值：如果回调函数return a - b 就返回升序排列后的数组</li>
-<li>如果回调函数return b - a，返回降序排列后的数组；</li>
-<li>原数组是否改变：是</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary21 = [<span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> r21 = ary21.sort(<span class="function"><span class="keyword">function</span> (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a - b</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> r22 = ary21.sort(<span class="function"><span class="keyword">function</span> (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> b - a;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(ary21, r21, r22);</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>reverse()</li>
-</ol>
-<ul>
-<li>作用：让数组翻转过来排列</li>
-<li>参数：无</li>
-<li>返回值：翻转过后的数组</li>
-<li>原数组是否改变：是</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re = ary21.reverse();</span><br><span class="line"><span class="built_in">console</span>.log(ary21, re);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>VI 数组的遍历方法（遍历：就是把数组里面的每一项都取出来）</li>
-</ul>
-<ul>
-<li><ol>
-<li>forEach(function (item, index) {<br>在回调函数里可以操作这些值<br>})</li>
-</ol>
-</li>
-<li><p>作用：遍历数组</p>
-</li>
-<li><p>参数：回调函数（回调函数的参数：item是遍历时每一个数组项，index是这个数组项的索引）</p>
-</li>
-<li><p>返回值：无</p>
-</li>
-<li><p>原数组是否改变：否</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary23 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> r23 = ary23.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item, index</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(item, index);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(ary23, r23);</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>=&gt; map(function (item, index) {})</li>
-</ol>
-<ul>
-<li>作用：将原数组映射成一个新数组</li>
-<li>参数：回调函数（回调函数的参数同forEach）</li>
-<li>返回值：由回调函数的返回值组成的新数组</li>
-<li>原数组是否改变：否</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary24 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">var</span> r24 = ary24.map(<span class="function"><span class="keyword">function</span> (<span class="params">item, index</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> item  <span class="number">2</span>;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(ary24, r24);</span><br></pre></td></tr></table></figure>
-
-<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行<div>
-</div></div>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/30/JavaScript基础教程5/" data-id="ck2flmc990005v4ppd6iscd4b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/27/JavaScript基础教程6/" data-id="ck3vgncmz0005xspp2qwpfqxc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1797,7 +1569,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
     </div>
   </div>
 
@@ -1807,7 +1579,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
     </div>
   </div>
 
@@ -1816,7 +1588,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
     </div>
   </div>
 
@@ -1827,6 +1599,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/12/07/webpack4.x掠影/">webpack 4.x 走着</a>
+          </li>
         
           <li>
             <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 16. PromiseA+</a>
@@ -1842,10 +1618,6 @@
         
           <li>
             <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 13. ajax的前世今生</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 12. DOM 事件扩展-发布订阅</a>
           </li>
         
       </ul>

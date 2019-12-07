@@ -67,6 +67,346 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaScript基础教程5" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/30/JavaScript基础教程5/" class="article-date">
+  <time datetime="2018-05-30T13:47:34.000Z" itemprop="datePublished">2018-05-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/30/JavaScript基础教程5/">基础教程 5. arguments、递归和函数表达式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、函数的实参集合-arguments"><a href="#一、函数的实参集合-arguments" class="headerlink" title="一、函数的实参集合-arguments"></a>一、函数的实参集合-arguments</h2><ul>
+<li><p>现在有个需求，需要写一个方法，求10数的和。</p>
+<p>代码如下：</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b, c, d, e, f, g, h, i, j</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> total = a + b + c + d + e + f + g + h + i + j;</span><br><span class="line">  <span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>函数形参的局限性：</p>
+</blockquote>
+<ol>
+<li>因为形参和实参是一一对应的，如果想要多少传递多少实参，就要设置多少形参，这很不方便，现在是10个，如果是100个，就要设置100个形参。</li>
+<li>如果实参个数不固定，可能10个可能2个，还可能100个，所以此时形参无法设置。</li>
+</ol>
+<ul>
+<li>需求2：需要写一个方法，实现可以求任意多个数字之和；</li>
+</ul>
+<p><code>任意多个实参，此时形参不固定了。咋办？</code></p>
+<blockquote>
+<p>为了解决上面的形参的种种限制，浏览器为函数内置一个arguments对象；</p>
+</blockquote>
+<blockquote>
+<p>arguments：arguments叫做内置的实参集合，这个对象里面包含了函数执行时传递进来的所有实参（内置：函数天生自带的机制，不管是否设置了形参，也不管你是否传递了实参，arguments一直都存在）。</p>
+</blockquote>
+<p>使用arguments：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum2</span>(<span class="params">n, m</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(n, m);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</span><br><span class="line"></span><br><span class="line">   <span class="built_in">arguments</span>它是一个类数组（不是数组，不能直接使用数组中的方法）</span><br><span class="line">   即使设置形参变量，形参该是什么还是什么，但是<span class="built_in">arguments</span>存储的是所有传进来的实参，所以<span class="built_in">arguments</span>被称为 实参集合</span><br><span class="line">   我们发现它有索引，有length，可以用<span class="keyword">for</span>循环遍历</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="number">0</span>: <span class="number">1</span>,</span><br><span class="line">     <span class="number">1</span>: <span class="number">2</span>,</span><br><span class="line">     <span class="number">2</span>: <span class="number">5</span>,</span><br><span class="line">     <span class="number">3</span>: <span class="number">7</span>,</span><br><span class="line">     <span class="number">4</span>: <span class="number">8</span></span><br><span class="line">     length: <span class="number">5</span>,</span><br><span class="line">     callee: 存储的当前函数本身 <span class="built_in">arguments</span>.callee == sum2 -&gt; <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sum2(<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">8</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="ES6-不定参数"><a href="#ES6-不定参数" class="headerlink" title="ES6 不定参数"></a>ES6 不定参数</h3><ul>
+<li>ES6中提供了一个功能和arguments的功能相似的功能——不定参数</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">...arg</span>) </span>&#123;</span><br><span class="line">   ...叫做展开运算符</span><br><span class="line">   arg 是一个形参变量</span><br><span class="line">  <span class="built_in">console</span>.log(arg);  arg是一个数组</span><br><span class="line">&#125;</span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>arguments 和 不定参数的不同</li>
+</ul>
+<ol>
+<li>arguments是函数天生自带的属性不需要声明，而不定参数需要声明</li>
+<li>arguments是类数组，而不定参数是数组</li>
+</ol>
+<h3 id="任意数求和："><a href="#任意数求和：" class="headerlink" title="任意数求和："></a>任意数求和：</h3><p>思路：</p>
+<ol>
+<li>既然是任意数，那么肯定使用函数的arguments</li>
+<li>arguments里面存储着所有的实参，我们需要把这些实参一个一个的取出来（遍历），然后加给一个基础值上</li>
+<li>把结果return出去</li>
+</ol>
+<blockquote>
+<p>基础版:</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum3</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="number">1.</span> 设立初始值</span><br><span class="line">  <span class="keyword">var</span> total = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">   <span class="number">2.</span> 遍历<span class="built_in">arguments</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="built_in">arguments</span>.length;i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> item = <span class="built_in">arguments</span>[i];</span><br><span class="line">    total += item;</span><br><span class="line">  &#125;</span><br><span class="line">   <span class="number">3.</span> 把计算结果返回</span><br><span class="line">  <span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> result = sum3(<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>升级版：为了提高代码的健壮性，我们累加的时候需要判断一下我们传进来的实参是不是一个数字，如果不是数字，我们先给它转成数字，然后再看转换后是不是有效数字，如果是再加，如果不是就不加了。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum4</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="number">1.</span> 设立初始值</span><br><span class="line">  <span class="keyword">var</span> total = <span class="number">0</span>;</span><br><span class="line">   <span class="number">2.</span> 遍历<span class="built_in">arguments</span>对象，取出每一项</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="built_in">arguments</span>.length; i++) &#123;</span><br><span class="line">     <span class="number">3.</span> 不管你传进来的是不是数字，都转一次</span><br><span class="line">    <span class="keyword">var</span> item = <span class="built_in">Number</span>(<span class="built_in">arguments</span>[i]);</span><br><span class="line">     <span class="number">4.</span> 判断转换后的结果是不是有效数字累加，非有效数字直接跳过</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">isNaN</span>(item)) &#123;</span><br><span class="line">       如果不是<span class="literal">NaN</span>就让total加等于item</span><br><span class="line">      total += item;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(sum4(<span class="number">10</span>, <span class="string">'20'</span>, <span class="string">'aa'</span>));  <span class="number">30</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二、函数表达式"><a href="#二、函数表达式" class="headerlink" title="二、函数表达式"></a>二、函数表达式</h2><ul>
+<li>函数分类：</li>
+</ul>
+<ol>
+<li>实名函数：有函数名的</li>
+<li>匿名函数：没有函数名的<br>2.1 函数表达式：把函数当做赋值给变量或者元素对象的事件属性<br>2.2 自执行函数：创建和执行一起完成的</li>
+</ol>
+<ul>
+<li>函数表达式：</li>
+</ul>
+<ol>
+<li><p>把函数当成一个值赋值给变量或者对象的属性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'我是一个函数表达式'</span>);</span><br><span class="line">&#125;;</span><br><span class="line">fn();  fn是一个变量名，它代表的也是一个函数</span><br><span class="line"></span><br><span class="line"> 赋值给元素对象的事件属性：</span><br><span class="line">oBox.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"> 普通对象的属性值：</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  getName: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'江外琉璃'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.getName();  因为obj.getName 是一个函数，因此也可以执行</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自执行函数：函数的定义和声明都放在一起了</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">   第一部分是函数定义</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'i 是'</span>, i);</span><br><span class="line">&#125;)(<span class="number">10</span>); 后面的小括号放在函数后面就是让函数执行的</span><br><span class="line"></span><br><span class="line"> 以下都是自执行函数</span><br><span class="line">~<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">+<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">!<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、函数递归"><a href="#三、函数递归" class="headerlink" title="三、函数递归"></a>三、函数递归</h2><blockquote>
+<p>函数：分为定义部分和执行部分</p>
+</blockquote>
+<h3 id="函数递归（recursion）：在函数体内部，调用函数自身，达到重复某一行为的目的。"><a href="#函数递归（recursion）：在函数体内部，调用函数自身，达到重复某一行为的目的。" class="headerlink" title="函数递归（recursion）：在函数体内部，调用函数自身，达到重复某一行为的目的。"></a>函数递归（recursion）：在函数体内部，调用函数自身，达到重复某一行为的目的。</h3><ul>
+<li>需求：写一个方法求出 1-10之间所有数的数字之和</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rSum</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (num === <span class="number">10</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">10</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> num + rSum(num + <span class="number">1</span>)</span><br><span class="line">   如果函数的返回值遇到一个表达式，那么函数会等着这个表达式求值完成最后把这个值返回出去。</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + rSum(<span class="number">2</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + rSum(<span class="number">3</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + rSum(<span class="number">4</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + rSum(<span class="number">5</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + rSum(<span class="number">6</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + rSum(<span class="number">7</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + <span class="number">7</span> + rSum(<span class="number">8</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + <span class="number">7</span> + <span class="number">8</span> + rSum(<span class="number">9</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + <span class="number">7</span> + <span class="number">8</span> + <span class="number">9</span> + rSum(<span class="number">10</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + <span class="number">7</span> + <span class="number">8</span> + <span class="number">9</span> + <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(rSum(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>需求：求1-10中的是3的倍数的所有数之和。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rSum2</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (num === <span class="number">10</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (num % <span class="number">3</span> === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> num + rSum2(num + <span class="number">1</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> rSum2(num + <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">   <span class="keyword">return</span> rSum2(<span class="number">2</span>)</span><br><span class="line">   <span class="keyword">return</span> rSum2(<span class="number">3</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + rSum2(<span class="number">4</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + rSum2(<span class="number">5</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + rSum2(<span class="number">6</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + <span class="number">6</span> + rSum2(<span class="number">7</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + <span class="number">6</span> + rSum2(<span class="number">8</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + <span class="number">6</span> + rSum2(<span class="number">9</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + <span class="number">6</span> + <span class="number">9</span> + rSum(<span class="number">10</span>)</span><br><span class="line">   <span class="keyword">return</span> <span class="number">3</span> + <span class="number">6</span> + <span class="number">9</span> + <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(rSum2(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：递归和for循环一样，在使用时考虑好递归终止的条件。不然就会造成死循环，导致栈内存溢出（stack overflow）</p>
+</blockquote>
+<h2 id="四、数组常用方法"><a href="#四、数组常用方法" class="headerlink" title="四、数组常用方法"></a>四、数组常用方法</h2><ul>
+<li>I 数组的删除和追加</li>
+</ul>
+<ol>
+<li>=&gt; push</li>
+</ol>
+<ul>
+<li>作用：向数组末尾追加项（可以多项，多项直接用逗号分隔）</li>
+<li>参数：需要添加到数组的项</li>
+<li>返回值：数组追加项之后的长度</li>
+<li>原数组是否改变：是</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> r1 = ary1.push(<span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary1, r1);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>=&gt; pop</li>
+</ol>
+<ul>
+<li>作用：删除数组末尾一项</li>
+<li>参数：无</li>
+<li>返回值：被删除的数组项</li>
+<li>原数组是否改变：是</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary2 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> r2 = ary2.pop();</span><br><span class="line"><span class="built_in">console</span>.log(ary2, r2);</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>=&gt; unshift</li>
+</ol>
+<ul>
+<li>作用：向数组开头添加项</li>
+<li>参数：需要追加到开头的项</li>
+<li>返回值：追加完内容后的数组新长度</li>
+<li>原数组是否改变：是</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary3 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> r3 = ary3.unshift(<span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary3, r3);</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>=&gt; shift</li>
+</ol>
+<ul>
+<li>作用：删除数组起始一项</li>
+<li>参数：无</li>
+<li>返回值：被删除的项</li>
+<li>原数组是否改变：是</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary4 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> r4 = ary4.shift();</span><br><span class="line"><span class="built_in">console</span>.log(ary4, r4);</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>=&gt; splice(n, m)</li>
+</ol>
+<ul>
+<li>作用：从索引为n开始删除m个</li>
+<li>参数：起始索引n，要删除的个数</li>
+<li>返回值：由删除的项组成新数组</li>
+<li>原数组是否改变：是</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary5 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> r5 = ary.splice(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary5, r5);</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>=&gt; splice(n, m, x)</li>
+</ol>
+<ul>
+<li>作用：从索引n开始删除m个，用x替换删除的部分</li>
+<li>参数：起始索引，删除个数，用来替换的数组项x</li>
+<li>返回值：被删除的项组成的新数组</li>
+<li>原数组是否改变：是</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var ary6 = [1, 2, 3];</span><br><span class="line">var r6 = ary6.splice(1, 1, 5);</span><br><span class="line">console.log(ary6, r6);</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>=&gt; splice(n, 0, x)</li>
+</ol>
+<ul>
+<li>作用：从索引n开始删除0个，把x插入到n的前面</li>
+<li>参数：起始索引，删除个数0，x</li>
+<li>返回值：空数组</li>
+<li>原数组是否改变：是</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> r7 = ary.splice(<span class="number">1</span>, <span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line"><span class="keyword">var</span> ary7 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="built_in">console</span>.log(ary7, r7);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>II. 数组复制、拼接</li>
+</ul>
+<ol>
+<li>slice(n, m)</li>
+</ol>
+<ul>
+<li>作用：从索引n开始复制到索引m（不包括m）</li>
+<li>参数：起始索引n，终点索引m; 注意：m不写就是复制到最后一项，如果n和m都不写也是从开头复制到末尾</li>
+<li>返回值：复制的项组成的新数组</li>
+<li>原数组是否改变：否</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary8 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">var</span> r8 = ary8.slice(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line"><span class="keyword">var</span> r9 = ary8.slice(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">var</span> r10 = ary8.slice();</span><br><span class="line"><span class="keyword">var</span> r11 = ary.slice(<span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(r8);</span><br><span class="line"><span class="built_in">console</span>.log(r9);</span><br><span class="line"><span class="built_in">console</span>.log(r10);</span><br><span class="line"><span class="built_in">console</span>.log(r11);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>=&gt; concat()</li>
+</ol>
+<ul>
+<li>作用：将数组拼接起来</li>
+<li>参数：需要拼接的数组或者数组项</li>
+<li>返回值：拼接过后的新数组</li>
+<li>原数组是否改变：否</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary12 = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>];</span><br><span class="line"><span class="keyword">var</span> r12 = ary12.concat([<span class="number">9</span>, <span class="number">11</span>]);  参数传递一个数组</span><br><span class="line"><span class="built_in">console</span>.log(ary12, r12);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> r13 = ary12.concat(<span class="number">9</span>, <span class="number">11</span>);  参数传递数组项</span><br><span class="line"><span class="built_in">console</span>.log(ary12, r13);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> r14 = ary12.concat();  一个参数不传相当于把数组复制一份</span><br><span class="line"><span class="built_in">console</span>.log(r14);</span><br><span class="line"><span class="built_in">console</span>.log(r14 === ary12);  <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>III. 数组的转换成字符串</li>
+</ul>
+<ol>
+<li>=&gt; join()</li>
+</ol>
+<ul>
+<li>作用：根据参数指定的分隔符把数组链接成字符串</li>
+<li>参数：分隔符，不指定时默认空字符串</li>
+<li>返回值：拼接过后的字符串</li>
+<li>原数组是否改变：否</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary15 = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>];</span><br><span class="line"><span class="keyword">var</span> str15 = ary15.join(<span class="string">'+'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary15, str15);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>=&gt; toString()</li>
+</ol>
+<ul>
+<li>作用：把数组转换成字符串</li>
+<li>参数：无</li>
+<li>返回值：字符串</li>
+<li>原数组是否改变：否</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary16 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">8</span>];</span><br><span class="line"><span class="keyword">var</span> str16 = ary16.toString();</span><br><span class="line"><span class="built_in">console</span>.log(ary16, str16);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>IV 数组项是否在数组中出现过</li>
+</ul>
+<ol>
+<li>=&gt; indexOf(x)</li>
+</ol>
+<ul>
+<li>作用：数组项x在数组中第一次出现的索引位置</li>
+<li>参数：数组项x</li>
+<li>返回值：如果数组中存在该项，就返回该项第一次出现的索引，如果不存在，则返回 -1</li>
+<li>原数组是否改变：否</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary17 = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>];</span><br><span class="line"><span class="keyword">var</span> r17 = ary17.indexOf(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary17, r17);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> r18= ary17.indexOf(<span class="string">'bingo'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary17, r18);  <span class="number">-1</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>=&gt; lastIndexOf(x)</li>
+</ol>
+<ul>
+<li>作用：数组项x在数组中最后一次出现的索引位置</li>
+<li>参数：数组项x</li>
+<li>返回值：如果数组中存在该项，就返回该项最后一次出现的索引，如果不存在，则返回 -1</li>
+<li>原数组是否改变：否</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary19 = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> r19 = ary19.lastIndexOf(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary19, r19);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> r20 = ary19.lastIndexOf(<span class="string">'bingo'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary19, r20);  <span class="number">-1</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>V. 数组排序和倒序</li>
+</ul>
+<ol>
+<li>=&gt; sort(function (a, b) {<br>return a - b<br>})</li>
+</ol>
+<ul>
+<li>作用：给数组按照升序或者降序排列</li>
+<li>参数：回调函数</li>
+<li>返回值：如果回调函数return a - b 就返回升序排列后的数组</li>
+<li>如果回调函数return b - a，返回降序排列后的数组；</li>
+<li>原数组是否改变：是</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary21 = [<span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> r21 = ary21.sort(<span class="function"><span class="keyword">function</span> (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a - b</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> r22 = ary21.sort(<span class="function"><span class="keyword">function</span> (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> b - a;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(ary21, r21, r22);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>reverse()</li>
+</ol>
+<ul>
+<li>作用：让数组翻转过来排列</li>
+<li>参数：无</li>
+<li>返回值：翻转过后的数组</li>
+<li>原数组是否改变：是</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re = ary21.reverse();</span><br><span class="line"><span class="built_in">console</span>.log(ary21, re);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>VI 数组的遍历方法（遍历：就是把数组里面的每一项都取出来）</li>
+</ul>
+<ul>
+<li><ol>
+<li>forEach(function (item, index) {<br>在回调函数里可以操作这些值<br>})</li>
+</ol>
+</li>
+<li><p>作用：遍历数组</p>
+</li>
+<li><p>参数：回调函数（回调函数的参数：item是遍历时每一个数组项，index是这个数组项的索引）</p>
+</li>
+<li><p>返回值：无</p>
+</li>
+<li><p>原数组是否改变：否</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary23 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> r23 = ary23.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item, index</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(item, index);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(ary23, r23);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>=&gt; map(function (item, index) {})</li>
+</ol>
+<ul>
+<li>作用：将原数组映射成一个新数组</li>
+<li>参数：回调函数（回调函数的参数同forEach）</li>
+<li>返回值：由回调函数的返回值组成的新数组</li>
+<li>原数组是否改变：否</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary24 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">var</span> r24 = ary24.map(<span class="function"><span class="keyword">function</span> (<span class="params">item, index</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> item  <span class="number">2</span>;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(ary24, r24);</span><br></pre></td></tr></table></figure>
+
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行<div>
+</div></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/30/JavaScript基础教程5/" data-id="ck3vgncmw0004xsppjerht359" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JavaScript基础教程4" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/05/08/JavaScript基础教程4/" class="article-date">
@@ -144,7 +484,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/08/JavaScript基础教程4/" data-id="ck2flmc960004v4pp2skzr8e8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/08/JavaScript基础教程4/" data-id="ck3vgncmh0000xsppn3k7l8hz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -348,7 +688,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/15/JavaScript基础教程3/" data-id="ck2flmc940003v4ppefgezgpu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/15/JavaScript基础教程3/" data-id="ck3vgncnr000nxsppcdmqfy8v" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -555,7 +895,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/31/JavaScript基础教程2/" data-id="ck2flmc8q0000v4pp1j4m65lx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/31/JavaScript基础教程2/" data-id="ck3vgncmo0001xsppysil7n9y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -771,7 +1111,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/JavaScript基础教程1/" data-id="ck2flmc8x0001v4pplhepnfcr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/19/JavaScript基础教程1/" data-id="ck3vgncmu0003xspp0cfsn8j5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -831,7 +1171,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/07/vueRender函数（3）/" data-id="ck2flmcbp0027v4ppz5b59dvt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/07/vueRender函数（3）/" data-id="ck3vgncpm002cxsppi6z2wz6t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -923,7 +1263,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/24/vueRender函数（2）/" data-id="ck2flmcbm0025v4ppejv9uvy2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/24/vueRender函数（2）/" data-id="ck3vgncp80021xsppdw18m1o2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -1029,7 +1369,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/02/vueRender函数（1）/" data-id="ck2flmcbk0022v4ppdjowlle0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/02/vueRender函数（1）/" data-id="ck3vgncp2001wxspp8sv4662h" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -1116,7 +1456,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck2flmcb7001qv4ppxqo3g3aw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck3vgncoq001lxsppngwzuo98" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1248,337 +1588,10 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/12/flex布局/" data-id="ck2flmcb0001kv4pp8d4km79u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/12/flex布局/" data-id="ck3vgncov001qxspp0rxerwim" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-prettierOptions" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/24/prettierOptions/" class="article-date">
-  <time datetime="2017-07-24T13:16:37.000Z" itemprop="datePublished">2017-07-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/24/prettierOptions/">prettier的配置选项（参数）官网直译</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>ATTENTION PLEASE:<br>本翻译仅用于学习交流，禁止商业用途。请参考<a href="https://prettier.io/docs/en/options.html" target="_blank" rel="noopener">prettier官网</a></p>
-<p> 我刚刚接触文档翻译，英语自打大学英语六级（CET-6）通过后就在没有提升过，现在基本上都快还给我的英语老师了@_@。直至发稿时，全网（百度）搜索没有发现一片像样的文档，好事心又开始作怪，发出来就当祭天了（估计老天爷都嫌弃文笔差，最近看《明朝那些事儿》才知道祭天得用一种叫做“青词”的专用文章，这事大奸臣严嵩的儿子做得好。。。。。）。好啦，不啰嗦了，如果有大神发现有错误，或者更好的翻译，欢迎带锤子来读（万分感激！）</p>
-<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><p>Prettier工具少数几个可以定制的参数，在CLI命令行和配置文件中均可用。</p>
-<h3 id="Print-Width"><a href="#Print-Width" class="headerlink" title="Print Width"></a>Print Width</h3><p>设置prettier单行输出（不折行）的（最大）长度。</p>
-<p>出于代码的可读性，我们不推荐（单行）超过80个字符的coding方式。</p>
-<p>在代码的书写手册中，单行最大长度常被设置为100或120。但是，人们写代码时，不会刻意的使每行都达到这个上限值。为便于阅读，开发者们通常使用空格将过长的单行变成多行。最佳实践是，每行的平均长度应当小于这个上限值。<br>另一方面，Prettier 会尽力让代码在一行（所以链式调用就都被搞到一行了，不得不吐槽了^~^）。当print width被设置成120时，工具有可能产出过于紧凑的或是其他不尽人意的代码。</p>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>80</td>
-<td>–print-width &nbsp;&lt;int&gt;</td>
-<td>printWidth: &lt;int&gt;</td>
-</tr>
-</tbody></table>
-<p>注：如果在格式markdown时，不想折行，请设置 prose wrap参数来禁止这一行为。</p>
-<h3 id="Tab-Width"><a href="#Tab-Width" class="headerlink" title="Tab Width"></a>Tab Width</h3><p>设置工具每一个水平缩进的空格数</p>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2</td>
-<td>–tab-width &nbsp;&lt;int&gt;</td>
-<td>tabWidth: &lt;int&gt;</td>
-</tr>
-</tbody></table>
-<h3 id="Tabs"><a href="#Tabs" class="headerlink" title="Tabs"></a>Tabs</h3><p>使用tab（制表位）缩进而非空格；</p>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>false</td>
-<td>–use-tabs</td>
-<td>useTabs: &lt;bool&gt;</td>
-</tr>
-</tbody></table>
-<h3 id="Semicolons"><a href="#Semicolons" class="headerlink" title="Semicolons"></a>Semicolons</h3><p>在语句末尾添加分号；</p>
-<p>有效参数：</p>
-<ul>
-<li>true - 在每一条语句后面添加分号</li>
-<li>false - 只在有可能导致ASI错误的行首添加分号</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>true</td>
-<td>–mo-semi</td>
-<td>semi: &lt;bool&gt;</td>
-</tr>
-</tbody></table>
-<h3 id="Quotes"><a href="#Quotes" class="headerlink" title="Quotes"></a>Quotes</h3><p>使用单引号而非双引号；</p>
-<p>提示：</p>
-<ul>
-<li>在JSX语法中，所有引号均为双引号，该设置在JSX中被自动忽略</li>
-<li>在字符串中，如果一种引号在数量上超过另一种引号，数量少的引号，将被用于格式化字符串；示例：&quot;I &apos;m double quoted &quot;被格式化后是：&quot;I &apos;m double quoted &quot;(我觉得这里好像有点问题，但是亲测例子结果就是这样，按理说被较少使用的是单引号，但是例子就是双引号包裹的，尊重原文吧) ；再例：&quot;This \&quot;example\&quot; is single quoted &quot;格式化过后：&apos;This &quot;example&quot; is single quoted &apos;</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>false</td>
-<td>–single-quote</td>
-<td>singleQuote: &lt;bool&gt;</td>
-</tr>
-</tbody></table>
-<h3 id="Trailing-Commas-尾逗号-a-b-c-d-数组项d后面的逗号就是尾逗号"><a href="#Trailing-Commas-尾逗号-a-b-c-d-数组项d后面的逗号就是尾逗号" class="headerlink" title="Trailing Commas (尾逗号[a,b,c,d,] 数组项d后面的逗号就是尾逗号)"></a>Trailing Commas (尾逗号[a,b,c,d,] 数组项d后面的逗号就是尾逗号)</h3><p>在任何可能的多行中输入尾逗号。</p>
-<p>有效参数：</p>
-<ul>
-<li>&nbsp;none&nbsp; - 无尾逗号；</li>
-<li>&nbsp;es5&nbsp; - 添加es5中被支持的尾逗号；</li>
-<li>&nbsp;all&nbsp; - 所有可能的地方都被添加尾逗号；（包括函数参数），这个参数需要安装nodejs8或更高版本；</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>none</td>
-<td>–trailing-comma  &lt;none</td>
-<td>es5</td>
-</tr>
-</tbody></table>
-<h3 id="Bracket-Spacing-括号空格"><a href="#Bracket-Spacing-括号空格" class="headerlink" title="Bracket Spacing (括号空格)"></a>Bracket Spacing (括号空格)</h3><p>在对象字面量声明所使用的的花括号后（{）和前（}）输出空格</p>
-<p>有效参数：</p>
-<ul>
-<li>true - Example: { &nbsp; foo:&nbsp;bar &nbsp;}</li>
-<li>false - Example: {foo:&nbsp;bar}</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>true</td>
-<td>–none-bracket-spacing</td>
-<td>bracketSpacing: &lt;bool&gt;</td>
-</tr>
-</tbody></table>
-<h3 id="JSX-Bracket上"><a href="#JSX-Bracket上" class="headerlink" title="JSX Bracket上"></a>JSX Bracket上</h3><p>在多行JSX元素最后一行的末尾添加 &gt; 而使 &gt; 单独一行（不适用于自闭和元素）</p>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>false</td>
-<td>–jsx-bracket-same-line</td>
-<td>jsxBracketSameLinte: &lt;bool&gt;</td>
-</tr>
-</tbody></table>
-<h3 id="Arrow-Function-Parentheses-适用于v1-9-0"><a href="#Arrow-Function-Parentheses-适用于v1-9-0" class="headerlink" title="Arrow Function Parentheses (适用于v1.9.0+)"></a>Arrow Function Parentheses (适用于v1.9.0+)</h3><p>为单行箭头函数的参数添加圆括号。</p>
-<p>有效参数：</p>
-<ul>
-<li>&quot; avoid &quot; - 尽可能不添加圆括号，示例：x =&gt; x</li>
-<li>&quot; always &quot; - 总是添加圆括号，示例： (x) =&gt; x</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&quot; avoid &quot;</td>
-<td>–arrow-parens &lt; avoid</td>
-<td>always &gt;</td>
-</tr>
-</tbody></table>
-<h3 id="Range"><a href="#Range" class="headerlink" title="Range"></a>Range</h3><p>只格式化某个文件的一部分；</p>
-<p>这两个参数可以用于从指定起止偏移字符(单独指定开始或结束、两者同时指定、分别指定)格式化代码。<br>一下情况，范围将会扩展：</p>
-<ul>
-<li>回退至包含选中语句的第一行的开始</li>
-<li>向前直到选中语句的末尾</li>
-</ul>
-<p>注意：这些参数不可以同cursorOffset共用；</p>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>–range-start-&lt; int &gt;</td>
-<td>rangeStart: &lt; int &gt;</td>
-</tr>
-<tr>
-<td>Infinity</td>
-<td>–range-end-&lt; int &gt;</td>
-<td>rangeEnd: &lt; int &gt;</td>
-</tr>
-</tbody></table>
-<h3 id="Parser"><a href="#Parser" class="headerlink" title="Parser"></a>Parser</h3><p>指定使用哪一种解析器。</p>
-<p>babylon和flow都支持同一套JavaScript特性（包括Flow）.Prettier将自动根据文件的输入路径选择解析器，如非必要，不要修改该项设置。</p>
-<p>内置的解析器包含：</p>
-<ul>
-<li>babylon</li>
-<li>flow</li>
-<li>typescript v1.4.0+（是指Prettier的版本，并包含该版本，下同）</li>
-<li>postcss v1.4.0+</li>
-<li>json v1.5.0+</li>
-<li>graphql v1.5.0+</li>
-<li>markdown v1.8.0+</li>
-<li>用户自定义解析器 v1.5.0+</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>babylon</td>
-<td>–parser &lt; string  <br> –parser ./my-parser</td>
-<td>parser: &quot; &lt;string&gt; &quot; <br> parser: require(&quot; ./my-parserrr &quot;)</td>
-</tr>
-</tbody></table>
-<h3 id="FilePath"><a href="#FilePath" class="headerlink" title="FilePath"></a>FilePath</h3><p>指定文件的输入路径，这将被用于解析器参照。<br>示例：下面的将使用postcss解析器</p>
-<p><code>cat foo | prettier --stdin-filepath foo.css</code></p>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>None</td>
-<td>–stdin-filepath &lt;string&gt;</td>
-<td>filePath: &quot; &lt;string&gt; &quot;</td>
-</tr>
-</tbody></table>
-<h3 id="Require-pragma-v1-7-0"><a href="#Require-pragma-v1-7-0" class="headerlink" title="Require pragma (v1.7.0+)"></a>Require pragma (v1.7.0+)</h3><p>Prettier可以严格按照按照文件顶部的一些特殊的注释格式化代码，这些注释称为“require pragma”(必须杂注)。这在逐步格式化一些大型、未经格式化过的代码是十分有用的。<br>例如，一个带有下面注释的文件将在执行带有 –require-pragma的cli指令（api配置文件亦可）时被格式化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    /**</span><br><span class="line">    *@prettier</span><br><span class="line">    */</span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">    *@format</span><br><span class="line">    */</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>false</td>
-<td>–require-pragma</td>
-<td>requirePragma: &lt;bool&gt;</td>
-</tr>
-</tbody></table>
-<h3 id="Insert-Pragma-v1-8-0"><a href="#Insert-Pragma-v1-8-0" class="headerlink" title="Insert Pragma (v1.8.0+)"></a>Insert Pragma (v1.8.0+)</h3><p>Prettier可以在文件的顶部插入一个 @format的特殊注释，以表明改文件已经被Prettier格式化过了。在使用 –require-pragma参数处理一连串的文件时这个功能将十分有用。如果文件顶部已经有一个doclock，这个选项将新建一行注释，并打上@format标记。</p>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>false</td>
-<td>–insert-pragma</td>
-<td>insertPragma: &lt;bool&gt;</td>
-</tr>
-</tbody></table>
-<h3 id="Prose-Wrap-v1-8-2"><a href="#Prose-Wrap-v1-8-2" class="headerlink" title="Prose Wrap(v1.8.2+)"></a>Prose Wrap(v1.8.2+)</h3><p>默认情况下，Prettier会因为使用了一些折行敏感型的渲染器（如GitHub comment 和 BitBucket）而按照markdown文本样式进行折行，但在某些情况下，你可能只是希望这个文本在编译器或查看器中soft-wrapping（是当屏幕放不下时发生的软折行），所以这一参数允许设置为 &quot; never &quot;</p>
-<p>有效参数：</p>
-<ul>
-<li>&quot; always &quot; - 当超出print width（上面有这个参数）时就折行</li>
-<li>&quot; never &quot; - 不折行</li>
-<li>&quot; perserve &quot; - 按照文件原样折行 （v1.9.0+）</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>默认值</th>
-<th>CLI(命令行参数)重写（覆盖）默认值</th>
-<th>API重写(配置文件)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&quot; preserve &quot;</td>
-<td>–prose-wrap &lt;always</td>
-<td>never</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck2flmcb9001sv4pp5t56i01k" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
 
     </footer>
   </div>
@@ -1605,7 +1618,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
     </div>
   </div>
 
@@ -1615,7 +1628,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
     </div>
   </div>
 
@@ -1624,7 +1637,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
     </div>
   </div>
 
@@ -1635,6 +1648,10 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/12/07/webpack4.x掠影/">webpack 4.x 走着</a>
+          </li>
         
           <li>
             <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 16. PromiseA+</a>
@@ -1650,10 +1667,6 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
         
           <li>
             <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 13. ajax的前世今生</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 12. DOM 事件扩展-发布订阅</a>
           </li>
         
       </ul>

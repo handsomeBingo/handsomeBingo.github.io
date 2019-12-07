@@ -67,6 +67,333 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-prettierOptions" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/24/prettierOptions/" class="article-date">
+  <time datetime="2017-07-24T13:16:37.000Z" itemprop="datePublished">2017-07-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/24/prettierOptions/">prettier的配置选项（参数）官网直译</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ATTENTION PLEASE:<br>本翻译仅用于学习交流，禁止商业用途。请参考<a href="https://prettier.io/docs/en/options.html" target="_blank" rel="noopener">prettier官网</a></p>
+<p> 我刚刚接触文档翻译，英语自打大学英语六级（CET-6）通过后就在没有提升过，现在基本上都快还给我的英语老师了@_@。直至发稿时，全网（百度）搜索没有发现一片像样的文档，好事心又开始作怪，发出来就当祭天了（估计老天爷都嫌弃文笔差，最近看《明朝那些事儿》才知道祭天得用一种叫做“青词”的专用文章，这事大奸臣严嵩的儿子做得好。。。。。）。好啦，不啰嗦了，如果有大神发现有错误，或者更好的翻译，欢迎带锤子来读（万分感激！）</p>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><p>Prettier工具少数几个可以定制的参数，在CLI命令行和配置文件中均可用。</p>
+<h3 id="Print-Width"><a href="#Print-Width" class="headerlink" title="Print Width"></a>Print Width</h3><p>设置prettier单行输出（不折行）的（最大）长度。</p>
+<p>出于代码的可读性，我们不推荐（单行）超过80个字符的coding方式。</p>
+<p>在代码的书写手册中，单行最大长度常被设置为100或120。但是，人们写代码时，不会刻意的使每行都达到这个上限值。为便于阅读，开发者们通常使用空格将过长的单行变成多行。最佳实践是，每行的平均长度应当小于这个上限值。<br>另一方面，Prettier 会尽力让代码在一行（所以链式调用就都被搞到一行了，不得不吐槽了^~^）。当print width被设置成120时，工具有可能产出过于紧凑的或是其他不尽人意的代码。</p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>80</td>
+<td>–print-width &nbsp;&lt;int&gt;</td>
+<td>printWidth: &lt;int&gt;</td>
+</tr>
+</tbody></table>
+<p>注：如果在格式markdown时，不想折行，请设置 prose wrap参数来禁止这一行为。</p>
+<h3 id="Tab-Width"><a href="#Tab-Width" class="headerlink" title="Tab Width"></a>Tab Width</h3><p>设置工具每一个水平缩进的空格数</p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2</td>
+<td>–tab-width &nbsp;&lt;int&gt;</td>
+<td>tabWidth: &lt;int&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Tabs"><a href="#Tabs" class="headerlink" title="Tabs"></a>Tabs</h3><p>使用tab（制表位）缩进而非空格；</p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>false</td>
+<td>–use-tabs</td>
+<td>useTabs: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Semicolons"><a href="#Semicolons" class="headerlink" title="Semicolons"></a>Semicolons</h3><p>在语句末尾添加分号；</p>
+<p>有效参数：</p>
+<ul>
+<li>true - 在每一条语句后面添加分号</li>
+<li>false - 只在有可能导致ASI错误的行首添加分号</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>true</td>
+<td>–mo-semi</td>
+<td>semi: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Quotes"><a href="#Quotes" class="headerlink" title="Quotes"></a>Quotes</h3><p>使用单引号而非双引号；</p>
+<p>提示：</p>
+<ul>
+<li>在JSX语法中，所有引号均为双引号，该设置在JSX中被自动忽略</li>
+<li>在字符串中，如果一种引号在数量上超过另一种引号，数量少的引号，将被用于格式化字符串；示例：&quot;I &apos;m double quoted &quot;被格式化后是：&quot;I &apos;m double quoted &quot;(我觉得这里好像有点问题，但是亲测例子结果就是这样，按理说被较少使用的是单引号，但是例子就是双引号包裹的，尊重原文吧) ；再例：&quot;This \&quot;example\&quot; is single quoted &quot;格式化过后：&apos;This &quot;example&quot; is single quoted &apos;</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>false</td>
+<td>–single-quote</td>
+<td>singleQuote: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Trailing-Commas-尾逗号-a-b-c-d-数组项d后面的逗号就是尾逗号"><a href="#Trailing-Commas-尾逗号-a-b-c-d-数组项d后面的逗号就是尾逗号" class="headerlink" title="Trailing Commas (尾逗号[a,b,c,d,] 数组项d后面的逗号就是尾逗号)"></a>Trailing Commas (尾逗号[a,b,c,d,] 数组项d后面的逗号就是尾逗号)</h3><p>在任何可能的多行中输入尾逗号。</p>
+<p>有效参数：</p>
+<ul>
+<li>&nbsp;none&nbsp; - 无尾逗号；</li>
+<li>&nbsp;es5&nbsp; - 添加es5中被支持的尾逗号；</li>
+<li>&nbsp;all&nbsp; - 所有可能的地方都被添加尾逗号；（包括函数参数），这个参数需要安装nodejs8或更高版本；</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>none</td>
+<td>–trailing-comma  &lt;none</td>
+<td>es5</td>
+</tr>
+</tbody></table>
+<h3 id="Bracket-Spacing-括号空格"><a href="#Bracket-Spacing-括号空格" class="headerlink" title="Bracket Spacing (括号空格)"></a>Bracket Spacing (括号空格)</h3><p>在对象字面量声明所使用的的花括号后（{）和前（}）输出空格</p>
+<p>有效参数：</p>
+<ul>
+<li>true - Example: { &nbsp; foo:&nbsp;bar &nbsp;}</li>
+<li>false - Example: {foo:&nbsp;bar}</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>true</td>
+<td>–none-bracket-spacing</td>
+<td>bracketSpacing: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="JSX-Bracket上"><a href="#JSX-Bracket上" class="headerlink" title="JSX Bracket上"></a>JSX Bracket上</h3><p>在多行JSX元素最后一行的末尾添加 &gt; 而使 &gt; 单独一行（不适用于自闭和元素）</p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>false</td>
+<td>–jsx-bracket-same-line</td>
+<td>jsxBracketSameLinte: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Arrow-Function-Parentheses-适用于v1-9-0"><a href="#Arrow-Function-Parentheses-适用于v1-9-0" class="headerlink" title="Arrow Function Parentheses (适用于v1.9.0+)"></a>Arrow Function Parentheses (适用于v1.9.0+)</h3><p>为单行箭头函数的参数添加圆括号。</p>
+<p>有效参数：</p>
+<ul>
+<li>&quot; avoid &quot; - 尽可能不添加圆括号，示例：x =&gt; x</li>
+<li>&quot; always &quot; - 总是添加圆括号，示例： (x) =&gt; x</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&quot; avoid &quot;</td>
+<td>–arrow-parens &lt; avoid</td>
+<td>always &gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Range"><a href="#Range" class="headerlink" title="Range"></a>Range</h3><p>只格式化某个文件的一部分；</p>
+<p>这两个参数可以用于从指定起止偏移字符(单独指定开始或结束、两者同时指定、分别指定)格式化代码。<br>一下情况，范围将会扩展：</p>
+<ul>
+<li>回退至包含选中语句的第一行的开始</li>
+<li>向前直到选中语句的末尾</li>
+</ul>
+<p>注意：这些参数不可以同cursorOffset共用；</p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>–range-start-&lt; int &gt;</td>
+<td>rangeStart: &lt; int &gt;</td>
+</tr>
+<tr>
+<td>Infinity</td>
+<td>–range-end-&lt; int &gt;</td>
+<td>rangeEnd: &lt; int &gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Parser"><a href="#Parser" class="headerlink" title="Parser"></a>Parser</h3><p>指定使用哪一种解析器。</p>
+<p>babylon和flow都支持同一套JavaScript特性（包括Flow）.Prettier将自动根据文件的输入路径选择解析器，如非必要，不要修改该项设置。</p>
+<p>内置的解析器包含：</p>
+<ul>
+<li>babylon</li>
+<li>flow</li>
+<li>typescript v1.4.0+（是指Prettier的版本，并包含该版本，下同）</li>
+<li>postcss v1.4.0+</li>
+<li>json v1.5.0+</li>
+<li>graphql v1.5.0+</li>
+<li>markdown v1.8.0+</li>
+<li>用户自定义解析器 v1.5.0+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>babylon</td>
+<td>–parser &lt; string  <br> –parser ./my-parser</td>
+<td>parser: &quot; &lt;string&gt; &quot; <br> parser: require(&quot; ./my-parserrr &quot;)</td>
+</tr>
+</tbody></table>
+<h3 id="FilePath"><a href="#FilePath" class="headerlink" title="FilePath"></a>FilePath</h3><p>指定文件的输入路径，这将被用于解析器参照。<br>示例：下面的将使用postcss解析器</p>
+<p><code>cat foo | prettier --stdin-filepath foo.css</code></p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>None</td>
+<td>–stdin-filepath &lt;string&gt;</td>
+<td>filePath: &quot; &lt;string&gt; &quot;</td>
+</tr>
+</tbody></table>
+<h3 id="Require-pragma-v1-7-0"><a href="#Require-pragma-v1-7-0" class="headerlink" title="Require pragma (v1.7.0+)"></a>Require pragma (v1.7.0+)</h3><p>Prettier可以严格按照按照文件顶部的一些特殊的注释格式化代码，这些注释称为“require pragma”(必须杂注)。这在逐步格式化一些大型、未经格式化过的代码是十分有用的。<br>例如，一个带有下面注释的文件将在执行带有 –require-pragma的cli指令（api配置文件亦可）时被格式化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    /**</span><br><span class="line">    *@prettier</span><br><span class="line">    */</span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">    *@format</span><br><span class="line">    */</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>false</td>
+<td>–require-pragma</td>
+<td>requirePragma: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Insert-Pragma-v1-8-0"><a href="#Insert-Pragma-v1-8-0" class="headerlink" title="Insert Pragma (v1.8.0+)"></a>Insert Pragma (v1.8.0+)</h3><p>Prettier可以在文件的顶部插入一个 @format的特殊注释，以表明改文件已经被Prettier格式化过了。在使用 –require-pragma参数处理一连串的文件时这个功能将十分有用。如果文件顶部已经有一个doclock，这个选项将新建一行注释，并打上@format标记。</p>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>false</td>
+<td>–insert-pragma</td>
+<td>insertPragma: &lt;bool&gt;</td>
+</tr>
+</tbody></table>
+<h3 id="Prose-Wrap-v1-8-2"><a href="#Prose-Wrap-v1-8-2" class="headerlink" title="Prose Wrap(v1.8.2+)"></a>Prose Wrap(v1.8.2+)</h3><p>默认情况下，Prettier会因为使用了一些折行敏感型的渲染器（如GitHub comment 和 BitBucket）而按照markdown文本样式进行折行，但在某些情况下，你可能只是希望这个文本在编译器或查看器中soft-wrapping（是当屏幕放不下时发生的软折行），所以这一参数允许设置为 &quot; never &quot;</p>
+<p>有效参数：</p>
+<ul>
+<li>&quot; always &quot; - 当超出print width（上面有这个参数）时就折行</li>
+<li>&quot; never &quot; - 不折行</li>
+<li>&quot; perserve &quot; - 按照文件原样折行 （v1.9.0+）</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>默认值</th>
+<th>CLI(命令行参数)重写（覆盖）默认值</th>
+<th>API重写(配置文件)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&quot; preserve &quot;</td>
+<td>–prose-wrap &lt;always</td>
+<td>never</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck3vgncpj0029xspp95hdays3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-es6-3-StringExt" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/06/01/es6-3-StringExt/" class="article-date">
@@ -302,7 +629,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck2flmcay001iv4ppebdqk0ep" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck3vgncon001ixsppymfu9s9v" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -542,7 +869,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck2flmcax001gv4ppmp9egi96" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck3vgncoi001exsppltbiihvx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -684,7 +1011,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck2flmcau001dv4ppo7z68aqb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck3vgncof001bxsppdt2wmrob" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -810,7 +1137,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck2flmcbi0020v4ppybmicrfz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck3vgncpe0025xspp6ji5lrah" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -873,7 +1200,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck2flmcbe001xv4pp5rbsvbe2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck3vgncp6001zxspp3jdnvbr8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -1059,7 +1386,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/14/requirejs/" data-id="ck2flmcbc001vv4ppctyofz9f" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/14/requirejs/" data-id="ck3vgncox001sxsppwdmabuxr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1263,7 +1590,7 @@ Mixins还有一种形式叫做ParametricMixins（混入参数），Less也支持
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/15/LESSS入门教程/" data-id="ck2flmcar001bv4pp10yiarzx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/15/LESSS入门教程/" data-id="ck3vgncod0019xsppvpjf80q4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li></ul>
@@ -1375,7 +1702,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/23/gulp进阶（gulp中的插件的使用）/" data-id="ck2flmcb5001ov4ppvug23nwd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/23/gulp进阶（gulp中的插件的使用）/" data-id="ck3vgncos001nxspptrdz7h1e" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1438,60 +1765,9 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/22/gulp入门/" data-id="ck2flmcb3001nv4ppjd12pxub" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/22/gulp入门/" data-id="ck3vgncp0001uxspphjcu9srr" class="article-share-link">Share</a>
       
       
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-浅析js中常用的四种检测数据类型的方法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/22/浅析js中常用的四种检测数据类型的方法/" class="article-date">
-  <time datetime="2016-10-21T16:00:59.000Z" itemprop="datePublished">2016-10-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/22/浅析js中常用的四种检测数据类型的方法/">浅析js中常用的四种检测数据类型的方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&#160; &#160; &#160; &#160;在js中常用的检测数据类型的方法有四种，在项目开发中，数据类型穿插在每个重要的环节中，如果巧用数据类型检测，常常会起到意想不到的效果。在bug调试过程中，当山穷水尽的时候，如果尝试检测数据类型，往往会有柳暗花明的效果。尤其在nodejs的bug调试中十分有效，因为node在io操作时常常进行数据类型的转换，可以说屡试不爽。<br>&#160; &#160; &#160; &#160;之所以在这篇文章中才讲述，数据类型的检测，是因为数据类型的检测的方法和面向对象有着千丝万缕的联系，如果你有空可以看看前面三篇文章，相信能对数据类型检测有更深的体会，正所谓磨刀不费砍柴功。闲言少叙，奔正题。<br>1、    typeof<br>typeof的应用场景大多是检测基本数据类型或者不需要具体细分的对象数据类型检测亦或者是区分基本数据类型和引用数据类型。<br>typeof的返回值是字符串包裹的被检值对应的数据类型，一共有6个，”number”、”string”、”boolean”、”undefined”、”function”、”null”、”object”。示例:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">console.log(typeof 	5);//”number”</span><br><span class="line">console.log(typeof 	“binary”);//”string”</span><br><span class="line">console.log(typeof 	true);//”boolean”</span><br><span class="line">console.log(typeof 	undefined);//” undefined”</span><br><span class="line">console.log(typeof  function ()&#123;&#125;);//”function”</span><br><span class="line">console.log(typeof 	null);//” object”</span><br><span class="line">console.log(typeof 	&#123;&#125;);//” object”</span><br><span class="line">console.log(typeof 	[]);//” object”</span><br><span class="line">console.log(typeof  /^\d+$/);//” object”</span><br><span class="line">………..</span><br></pre></td></tr></table></figure>
-
-<p>从上面的例子中不难看出typeof有局限性，具体体现在：<br>1）    检测null的时候返回object<br>2）    不能具体细分对象数据类型<br>3）    函数本身不是一种数据类型，但是因为函数有许多特殊之处，这里typeof一个函数时返回一个function也是有道理的<br>2、    instanceof：<br>instanceof操作符是检测某个实例是否属于一个类，检测结果是布尔值，是，则返回true，否则返回false；<br>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var ary=[1m,2m,23];</span><br><span class="line">console.log(ary instanceof Array);//true</span><br><span class="line">console.log(ary instanceof Object);//true</span><br><span class="line">var num=12；</span><br><span class="line">var num2=new Number(12);</span><br><span class="line">console.log(num instanceof Number);//false</span><br><span class="line">console.log(num2  instanceof  Number);//true</span><br></pre></td></tr></table></figure>
-
-<p>但是instanceof也有其局限性，<br>1）    不能检测用字面临创建的基本数据类型的值，这是由于js是弱类型的语言，从这个角度讲，实例创建和字面量创建还是有区别的，只有通过实例创建的才算是对象；<br>2）    只要当前被检值在当前类的原型链上，检测结果就是true；<br>3）    在使用类的继承后，检测结果将不够准确；<br>3、    constructor:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">constructor是来弥补instanceof的不能检测字面量创建的数据的；</span><br><span class="line">var num=12；</span><br><span class="line">console.log(num.constructor===Number);//true</span><br><span class="line">var ary=[1,2,3];</span><br><span class="line">console.log(ary.constructor===Array);//true;</span><br><span class="line">console.log(ary.constructor===Object);//false;</span><br></pre></td></tr></table></figure>
-
-<p>constructor虽然弥补了一部分instanceof的不足，但是其缺点仍然不可忽视:当类的原型被重写时，其原型的constructor很可能被修改，导致检测结果不准确；<br>4、    Object.prototype.toString.call();方法<br>每一种数据类型都自带一个toString()方法，但是功用却不尽相同，如数组的toString是转化成字符串的，而对象的toString是检测数据类型的。该方法返回值是一个字符串，如”[object  数据所属类]“。示例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var num=24;</span><br><span class="line">console.log(Object.prototype.toString.call(num));//”[object Number]”;</span><br><span class="line">var ary=[1,2,3];</span><br><span class="line">console.log(Object.prototype.toString.call(ary));//”[object Array]”;</span><br><span class="line">var reg=/^\w+$/g;</span><br><span class="line">console.log(Object.prototype.toString.call(reg));//”[object RegExp]”</span><br><span class="line">………..</span><br></pre></td></tr></table></figure>
-
-<p>如果要求检测结果精准时推荐使用最后一种方法。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/22/浅析js中常用的四种检测数据类型的方法/" data-id="ck2flmcbs002av4pp412w4b0x" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
-
     </footer>
   </div>
   
@@ -1517,7 +1793,7 @@ gulp.task(&apos;server&apos;,function(){
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
     </div>
   </div>
 
@@ -1527,7 +1803,7 @@ gulp.task(&apos;server&apos;,function(){
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
     </div>
   </div>
 
@@ -1536,7 +1812,7 @@ gulp.task(&apos;server&apos;,function(){
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li></ul>
     </div>
   </div>
 
@@ -1547,6 +1823,10 @@ gulp.task(&apos;server&apos;,function(){
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/12/07/webpack4.x掠影/">webpack 4.x 走着</a>
+          </li>
         
           <li>
             <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 16. PromiseA+</a>
@@ -1562,10 +1842,6 @@ gulp.task(&apos;server&apos;,function(){
         
           <li>
             <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 13. ajax的前世今生</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/19/JavaScript进阶教程12/">进阶教程 12. DOM 事件扩展-发布订阅</a>
           </li>
         
       </ul>
