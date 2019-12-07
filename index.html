@@ -67,9 +67,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-webpack4.xxxxxxx掠影" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-webpack掠影-1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/12/07/webpack4.xxxxxxx掠影/" class="article-date">
+    <a href="/2019/12/07/webpack掠影-1/" class="article-date">
   <time datetime="2019-12-07T10:51:54.000Z" itemprop="datePublished">2019-12-07</time>
 </a>
     
@@ -81,7 +81,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/07/webpack4.xxxxxxx掠影/">webpack 4.x 走着</a>
+      <a class="article-title" href="/2019/12/07/webpack掠影-1/">webpack掠影-1</a>
     </h1>
   
 
@@ -94,7 +94,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack webpack-cli</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-配置使用-webpack"><a href="#2-配置使用-webpack" class="headerlink" title="2. 配置使用 webpack"></a>2. 配置使用 webpack</h2><p>当然，webpack 支持零配置的开箱使用体验，但是学习 webpack 一个十分重要的事情就是学习如何编写 webpack 的配置文件。当然，最终目的是学习 webpack 的原理。当然，学会跑之前，我们先学会走。我们先来看几个 webpack 的重要概念：</p>
-<ul>
+<h3 id="2-1-入口和出口"><a href="#2-1-入口和出口" class="headerlink" title="2.1 入口和出口"></a>2.1 入口和出口</h3><ul>
 <li><p>入口（entry）：指示 webpack 从哪个模块开始构建依赖；简言之，告诉 webpack 哪里是头，从哪儿开始查找依赖关系；</p>
 </li>
 <li><p>出口（output）：告诉 webpack 在哪里输出它打包后的文件（bundles），以及如何命名这些文件；其默认值是 ./dist。</p>
@@ -124,7 +124,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack</span><br></pre></td></tr></table></figure>
 
 <p>当然，我们也可以在 package.json 中配置两个脚本命令，如下的 dev 和 build：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"test"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"index.js"</span>,</span><br><span class="line">  <span class="attr">"license"</span>: <span class="string">"MIT"</span>,</span><br><span class="line">	<span class="attr">"scripts"</span>: &#123;</span><br><span class="line">		<span class="attr">"dev"</span>: <span class="string">"wepback-dev-server"</span>,</span><br><span class="line">		<span class="attr">"build"</span>: <span class="string">"webpack"</span></span><br><span class="line">	&#125;,</span><br><span class="line">  <span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"webpack"</span>: <span class="string">"^4.41.2"</span>,</span><br><span class="line">    <span class="attr">"webpack-cli"</span>: <span class="string">"^3.3.10"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"test"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"index.js"</span>,</span><br><span class="line">  <span class="attr">"license"</span>: <span class="string">"MIT"</span>,</span><br><span class="line">	<span class="attr">"scripts"</span>: &#123;</span><br><span class="line">		<span class="attr">"dev"</span>: <span class="string">"webpack-dev-server"</span>,</span><br><span class="line">		<span class="attr">"build"</span>: <span class="string">"webpack"</span></span><br><span class="line">	&#125;,</span><br><span class="line">  <span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"webpack"</span>: <span class="string">"^4.41.2"</span>,</span><br><span class="line">    <span class="attr">"webpack-cli"</span>: <span class="string">"^3.3.10"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>打包后输出的文件：</li>
@@ -133,12 +133,81 @@
 <ul>
 <li>打包后启动浏览器查看:</li>
 </ul>
-<p><img src="http://47.105.181.88/cdn_assets/webpack-img/wbp1-helloworld.png" alt="webpack-output-file1"></p>
+<p><img src="http://47.105.181.88/cdn_assets/webpack-img/wbp1-helloworld.png" alt="webpack-helloworld"></p>
+<p>经过上面的过程，我们已经发现在项目的 <strong>dist</strong> 目录下已经有一个 bundle.js 的文件，而且运行 html 文件，我们也得到我们预期的效果；但是有一个问题：index.html 的 bundle.js 文件仍然使我们自己引入的，这仍然不方便，所以接着我们需要一个叫做 html-webpack-plugin 的插件，它的作用就是把打包出来的 js 自动引入到 html 文件中；</p>
+<h3 id="2-2-插件"><a href="#2-2-插件" class="headerlink" title="2.2 插件"></a>2.2 插件</h3><p>插件可以扩展 webpack 的功能，让它可以完成跟多的任务，例如上面我们需要的能力，自动把打包后的 js 插入到 HTML 文件；插件大多数都需要安装，也有一部分是 webpack 自带的插件，这些自带的插件随着 webpack 的安装也已经安装好了。</p>
+<ul>
+<li>安装 html-webpack-plugin 插件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install html-webpack-plugin</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用插件需要在 webpack 配置文件中配置 plugins 属性：plugins 是一个数组，数组项是每个插件类的一个实例（new 插件类）:</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line">+ <span class="keyword">const</span> HTMLWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>); <span class="comment">// 插件在使用前需要引入</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),</span><br><span class="line">    filename: <span class="string">'bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">+  plugins: [</span><br><span class="line">+    <span class="keyword">new</span> HTMLWebpackPlugin(&#123;</span><br><span class="line">+      template: <span class="string">'./src/index.html'</span>, <span class="comment">// 需要引入输出文件的 html 文件模板</span></span><br><span class="line">+      hash: <span class="literal">true</span>, <span class="comment">// 给引入的 js 加hash</span></span><br><span class="line">+      filename: <span class="string">'index.html'</span>, <span class="comment">// 输出的 html 文件的名字（插件会把模板 html 复制到输出目录中）</span></span><br><span class="line">+      minify: &#123; <span class="comment">// 压缩优化输出的 html 文件配置</span></span><br><span class="line">+        removeAttributeQuotes: <span class="literal">true</span>, <span class="comment">// 删除行内属性的双引号</span></span><br><span class="line">+        collapseWhitespace: <span class="literal">true</span> <span class="comment">// 删除换行，使内容保持在一行</span></span><br><span class="line">+      &#125;</span><br><span class="line">+    &#125;)</span><br><span class="line">+  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改陪之后，重新执行打包命令：npm run build</p>
+<ul>
+<li>产出的 html 文件：</li>
+</ul>
+<p><img src="http://47.105.181.88/cdn_assets/webpack-img/wbp1-plugin-cp-html-template.png" alt="wbp1-plugin-cp-html-template"></p>
+<ul>
+<li>html 文件详情</li>
+</ul>
+<p><img src="http://47.105.181.88/cdn_assets/webpack-img/wbp1-output-template.png" alt="wbp1-plugin-cp-html-template"></p>
+<p>插件还有很多，包括后面的很多优化都需要依赖插件的功能，我们这里先介绍一个，后面还要有其他功能插件；</p>
+<h3 id="2-4-webpack-dev-server"><a href="#2-4-webpack-dev-server" class="headerlink" title="2.4 webpack-dev-server"></a>2.4 webpack-dev-server</h3><p>我们在开发的过程中，发现每次都执行 npm run build 产出文件，然后再查看效果，这样做很低效。接着，我们介绍一个实用的功能，webpack-dev-server；它可以帮我们打开发环境的包，配置开发代理，文件修改后自动编译，然后通知浏览器刷新等功能；</p>
+<ul>
+<li>安装 webpack-dev-server</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack-dev-server</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置 webpack-dev-server</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> HTMLWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),</span><br><span class="line">    filename: <span class="string">'bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">+  devServer: &#123;</span><br><span class="line">+    <span class="comment">// 开发服务器的配置</span></span><br><span class="line">+    contentBase: <span class="string">'./build'</span>, <span class="comment">// 静态资源文件目录</span></span><br><span class="line">+    port: <span class="number">3000</span>, <span class="comment">// 开发服务器启动的端口</span></span><br><span class="line">+    open: <span class="literal">true</span>, <span class="comment">// 是否自动启动浏览器</span></span><br><span class="line">+    progress: <span class="literal">true</span>, <span class="comment">// 进度条</span></span><br><span class="line">+    proxy: &#123; <span class="comment">// 配置代理</span></span><br><span class="line">+      <span class="string">'/api'</span>: &#123; <span class="comment">// 将带有 /api 的请求，转发值 target 指向的域名</span></span><br><span class="line">+        target: <span class="string">'http://domain.com/somet/api'</span>,</span><br><span class="line">+        changeOrigin: <span class="literal">true</span>,</span><br><span class="line">+        secure: <span class="literal">false</span></span><br><span class="line">+      &#125;</span><br><span class="line">+    &#125;</span><br><span class="line">+  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> HTMLWebpackPlugin(&#123;</span><br><span class="line">      template: <span class="string">'./src/index.html'</span>, <span class="comment">// 需要引入输出文件的 html 文件模板</span></span><br><span class="line">      hash: <span class="literal">true</span>, <span class="comment">// 给引入的 js 加hash</span></span><br><span class="line">      filename: <span class="string">'index.html'</span>, <span class="comment">// 输出的 html 文件的名字（插件会把模板 html 复制到输出目录中）</span></span><br><span class="line">      minify: &#123; <span class="comment">// 压缩优化输出的 html 文件配置</span></span><br><span class="line">        removeAttributeQuotes: <span class="literal">true</span>, <span class="comment">// 删除行内属性的双引号</span></span><br><span class="line">        collapseWhitespace: <span class="literal">true</span> <span class="comment">// 删除换行，使内容保持在一行</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置启动开发服务器<br>需要注意的是，之前我们打包都是执行 npm run build (在 package.json scripts 中配置的)，但是启动开发服务器需要通过命令：webpack-dev-server 命令启动，同样我们将这个命令配置称为一个 script，名为 dev</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>执行命令后为，开始编译，浏览器自动启动；</p>
+<p><img src="http://47.105.181.88/cdn_assets/webpack-img/wbp1-dev-server.png" alt="wbp-dev-server"></p>
+<h3 id="2-4-样式处理和-loader"><a href="#2-4-样式处理和-loader" class="headerlink" title="2.4 样式处理和 loader"></a>2.4 样式处理和 loader</h3><p>webpack 同样可以帮我们处理样式文件，包含 css 和 css 预处理文件；但是 webpack 自身只能理解 JS，所以处理这些非 JS 的文件需要借助 loader 的能力。loader 可以将将非 JS 文件处理成有效的模块，然后利用 webpack 的打包能力对其进行处理；</p>
+<ul>
+<li>我们在 src 目录下新怎 index.css 文件</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">background</span>: deeppink;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">24px</span>;</span><br><span class="line">  <span class="attribute">font-weight</span>: bold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 js 中导入 css 文件</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+ <span class="keyword">import</span> <span class="string">'./index.css'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> div = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">  div.innerHTML = <span class="string">'Hello World'</span>;</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(div);</span><br><span class="line">  div = <span class="literal">null</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装 loader，loader 也需要单独安装；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add css-loader style-loader</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置文件，配置 loader 需要配置 module 字段，module 是一个对象，对象下有一个 rules 字段，是一个数组；数组中每一项又是一个对象，对象中一般有两个字段：<ul>
+<li>test: 表示 loader 要处理文件的扩展名的正则</li>
+<li>loader: 处理对应文件的 loader</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> HTMLWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),</span><br><span class="line">    filename: <span class="string">'bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    <span class="comment">// 开发服务器的配置</span></span><br><span class="line">    contentBase: <span class="string">'./build'</span>, <span class="comment">// 静态资源文件目录</span></span><br><span class="line">    port: <span class="number">3000</span>, <span class="comment">// 开发服务器启动的端口</span></span><br><span class="line">    open: <span class="literal">true</span>, <span class="comment">// 是否自动启动浏览器</span></span><br><span class="line">    progress: <span class="literal">true</span>, <span class="comment">// 进度条</span></span><br><span class="line">    proxy: &#123; <span class="comment">// 配置代理</span></span><br><span class="line">      <span class="string">'/api'</span>: &#123; <span class="comment">// 将带有 /api 的请求，转发值 target 指向的域名</span></span><br><span class="line">        target: <span class="string">'http://domain.com/somet/api'</span>,</span><br><span class="line">        changeOrigin: <span class="literal">true</span>,</span><br><span class="line">        secure: <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">+  <span class="built_in">module</span>: &#123;</span><br><span class="line">+    rules: [</span><br><span class="line">+      &#123;</span><br><span class="line">+        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">+        loader: [<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>] <span class="comment">// 顺序不可颠倒，loader 在执行时是从右向左执行的</span></span><br><span class="line">+      &#125;</span><br><span class="line">+    ]</span><br><span class="line">+  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> HTMLWebpackPlugin(&#123;</span><br><span class="line">      template: <span class="string">'./src/index.html'</span>, <span class="comment">// 需要引入输出文件的 html 文件模板</span></span><br><span class="line">      hash: <span class="literal">true</span>, <span class="comment">// 给引入的 js 加hash</span></span><br><span class="line">      filename: <span class="string">'index.html'</span>, <span class="comment">// 输出的 html 文件的名字（插件会把模板 html 复制到输出目录中）</span></span><br><span class="line">      minify: &#123; <span class="comment">// 压缩优化输出的 html 文件配置</span></span><br><span class="line">        removeAttributeQuotes: <span class="literal">true</span>, <span class="comment">// 删除行内属性的双引号</span></span><br><span class="line">        collapseWhitespace: <span class="literal">true</span> <span class="comment">// 删除换行，使内容保持在一行</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>打包结果</li>
+</ul>
+<p><img src="http://47.101.181.88/cdn_assets/webpack-img/wbp-loader-css.png" alt="wbp-loader-css"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/12/07/webpack4.xxxxxxx掠影/" data-id="ck3vh8mtn0000zsppysbq4e8t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/12/07/webpack掠影-1/" data-id="ck3vrzj0r002a9cpp41yj8ftl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -182,7 +251,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/25/JavaScript进阶教程16/" data-id="ck3vh5djn000tx4ppau6hfyqe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/25/JavaScript进阶教程16/" data-id="ck3vrziz6000t9cpp1qon4cci" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -283,7 +352,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/06/JavaScript进阶教程15/" data-id="ck3vh5djl000rx4ppqs5tmbfn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/06/JavaScript进阶教程15/" data-id="ck3vrziz5000r9cppxohrt9vn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -352,7 +421,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/15/JavaScript进阶教程14/" data-id="ck3vh5djj000px4ppb1lybh2y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/09/15/JavaScript进阶教程14/" data-id="ck3vrziz3000p9cppuv480qkd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -541,7 +610,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/29/JavaScript进阶教程13/" data-id="ck3vh5djh000nx4ppu9dcf49p" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/29/JavaScript进阶教程13/" data-id="ck3vrziz1000n9cppxzp8tzgf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -607,7 +676,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/19/JavaScript进阶教程12/" data-id="ck3vh5djc000jx4ppvon24dcf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/19/JavaScript进阶教程12/" data-id="ck3vrziyy000l9cppmlw6n4rk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -808,7 +877,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/16/JavaScript进阶教程11/" data-id="ck3vh5dja000hx4ppqo9knq93" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/16/JavaScript进阶教程11/" data-id="ck3vrziyv000j9cppb0dot7vi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -924,7 +993,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/20/JavaScript进阶教程10/" data-id="ck3vh5dj6000fx4ppd56q0jq4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/20/JavaScript进阶教程10/" data-id="ck3vrziys000h9cpptanypnn1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1113,7 +1182,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/15/JavaScript进阶教程9/" data-id="ck3vh5djy0015x4ppy6oj1by5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/15/JavaScript进阶教程9/" data-id="ck3vrzizp001b9cpppjn4ao5t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1237,7 +1306,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/22/JavaScript进阶教程8/" data-id="ck3vh5dlb002ix4pplkklyz3b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/22/JavaScript进阶教程8/" data-id="ck3vrzizk00179cpp1743sxc8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1299,7 +1368,7 @@
       <ul>
         
           <li>
-            <a href="/2019/12/07/webpack4.xxxxxxx掠影/">webpack 4.x 走着</a>
+            <a href="/2019/12/07/webpack掠影-1/">webpack掠影-1</a>
           </li>
         
           <li>
