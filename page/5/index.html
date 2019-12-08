@@ -67,6 +67,210 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-LESSS入门教程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/15/LESSS入门教程/" class="article-date">
+  <time datetime="2017-01-15T14:21:34.000Z" itemprop="datePublished">2017-01-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/15/LESSS入门教程/">LESS入门教程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="LESS入门教程"><a href="#LESS入门教程" class="headerlink" title="LESS入门教程"></a>LESS入门教程</h1><h3 id="为什么学习LESS"><a href="#为什么学习LESS" class="headerlink" title="为什么学习LESS"></a>为什么学习LESS</h3><p>　　说实话，起初我特别反感写LESS这种需要编译的东西，因此一直心怀抵触，但这过程中我没放弃学习这些技术，原因很简单，辩证来看，这种技术如果真像我厌恶的样子它怎么会流行？我厌恶，说明是我还没真正窥见她的美。当你讨厌的时候，你有数不清的理由，但是你爱上她，你发现根本没有理由。<br><br>　　我的leader就用LESS开发，也要求过我用，我一直反对，直到后来一些我未曾预见的问题找上门——官网改版，新老版共存，CSS类名经常发生冲突，让我异常崩溃；我的leader再次推荐LESS，我才正式的运用这项技术。我才发现LESS写出的css样式代码真的很美，分享这项技术我觉得不一定是重点，重点是心路历程。一项技术的诞生都是为了解决一些问题或者能够提升开发效率。</p>
+<hr>
+<div id="backToTop"></div>
+
+<h3 id="初学LESS我们需要掌握什么"><a href="#初学LESS我们需要掌握什么" class="headerlink" title="初学LESS我们需要掌握什么"></a>初学LESS我们需要掌握什么</h3><p>　　首先，我们需要知道它就是css样式代码。但是初学，我们需要了解只有以下几点</p>
+<ul>
+<li><a href="#installation">安装</a></li>
+<li><a href="#variety">变量思想</a> 【块级作用域（变量查找机制）】</li>
+<li><a href="#levelAndNested">层级与嵌套</a> 【后代则直接嵌套、&amp;与伪类】</li>
+<li><a href="#function">函数化css</a>【函数调用样式、@arguments、默认值、Mixin、继承样式、复用子级样式】</li>
+</ul>
+<hr>
+<div id="installation">
+<h3>安装LESS</h3>
+这里推荐使用<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">NODEJS + LESS</span>的学习方式；<br>
+1.安装nodejs<br>
+2.安装LESS <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">npm install -g less</span>
+
+</div>
+
+<hr>
+<div id="variety">
+<h3>LESS变量</h3>
+　　LESS的变量思想类似JS的变量（值类型变量）。LESS的变量只能是值类型，可以使色值、字体等等；<br>
+　　LESS声明变量使用<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">@</span>符号<br>
+　　LESS的变量和JS的变量很类似，存在作用域和作用域链机制。在LESS中，选择器后面的花括号即块级作用域（私有作用域），所以，未在选择器后的花括号内声明的变量都是全局变量，可以在任何的位置访问，在选择器后的花括号内声明的变量都是私有变量，只能在当前块级作用域中使用；<br>
+　　块级作用域是一个命名空间——场景-当我们拥有了大量的选择器的时候，特别是团队协同开发时，如何保证选择器之间重名问题：LESS采用了命名空间的方法来来避免重名问题；
+
+
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+@width: 900px;//全局变量
+@bgColor: blue;//全局变量
+.contentHeart {
+    @bgColor: #00b38a;
+    width: @width;
+    background:  @bgColor;//使用私有变量，在LESS中，变量查找也是采取就近原则，如果当前作用域中存在该变量，则直接取该作用域下的值，如果没有则向上查找
+}
+//编译之后的css样式
+.contentHeart {
+    width: 900px;
+    background: #00b38a;
+}
+</code>
+</pre>
+<p><a href="#backToTop">回顶部</a></p>
+</div>
+
+<div id="levelAndNested">
+<h3>设置嵌套HTML结构样式</h3>
+　　在LESS中如果设置被嵌套的样式，则直接在父级元素样式的花括号内继续写欲设置的子级元素的选择器样式，示例：
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+//html
+&lt;div id="home" &gt;
+    &lt;div id="top"&gt;top&lt;/div&gt;
+    &lt;div id="center">
+        &lt;div id="left">left&lt;/div&gt;
+        &lt;div id="right">right&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+<p>//LESS样式，在LESS中，关于HTML嵌套，我们采用从外到内的选择器嵌套定义，要么采用给特定元素加class或id<br>#home {//父级<br>  color: blue;<br>  width: 600px;<br>  height: 500px;<br>  border: outset;<br>  #top {//子级<br>    border: outset;<br>    width: 90%;<br>  }<br>  #center {//子级<br>    border: outset;<br>    height: 300px;<br>    width: 90%;<br>    #left {//子级的子级<br>      border: outset;<br>      float: left;<br>      width: 40%<br>    }<br>    #right {//子级的子级<br>      border: outset;<br>      float: left;<br>      width: 40%;<br>    }<br>  }<br>}<br>//编译之后的css样式<br>#home {<br>  color: blue;<br>  width: 600px;<br>  height: 500px;<br>  border: outset;<br>}<br>#home #top {<br>  border: outset;<br>  width: 90%;<br>}<br>#home #center {<br>  border: outset;<br>  height: 300px;<br>  width: 90%;<br>}<br>#home #center #left {<br>  border: outset;<br>  float: left;<br>  width: 40%;<br>}<br>#home #center #right {<br>  border: outset;<br>  float: left;<br>  width: 40%;<br>}<br></p></code><br></pre><p></p>
+<p>如果你要复用div#home下的div#top的样式，只需要在其他选择器中这样写：</p>
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+.copyStyle {
+    #home>#top;
+}
+</code>
+</pre>
+
+<p>在嵌套中最值得一提的是伪类，在嵌套中 有 <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">&amp;</span>时解析的是同一个元素或此元素的伪类；没有 <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">&amp;</span> 时，解析的是后代元素；示例：</p>
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+//设置a：hover样式
+a {
+  color: red;
+  text-decoration: none;
+  &:hover { //有 & 时解析的是同一个元素或此元素的伪类；没有 & 时，解析的是后代元素
+    color: #000;
+    text-decoration: underline;
+  }
+}
+//编译后的样式
+a {
+  color: red;
+  text-decoration: none;
+}
+a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+</code>
+</pre>
+<p><a href="#backToTop">回顶部</a></p>
+</div>
+
+<hr>
+<div id="function">
+<h3>在LESS中使用函数</h3>
+LESS还有一个更为强大的功能——函数；这里我们不讨论LESS支持的表达式及色值的计算函数；只是类似JS函数的一种用法；<br>
+Mixins——Mixins其实是一种嵌套，它允许将一个类嵌入到另外一个类中使用，被嵌入的类也可以称作变量，简单的讲，Mixins其实是规则级别的复用。说通俗一些，就是直接把一个选择器直接放到新的块级作用域中即可；
+Mixins还有一种形式叫做ParametricMixins（混入参数），Less也支持这一特性
+示例：
+
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+//定义一个样式选择器选择器函数
+.roundedCorners(@radius: 5px) {// 5px是一个默认值
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+//在另外的样式选择器中使用
+#header {
+  .roundedCorners;//不传参，则使用默认值5px；同时这也是一个Mixins
+}
+#footer {
+  .roundedCorners(10px);//传参则使用实参10px；同时这也是带参数的Mixins
+}
+
+//编译后代码
+#header {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+#footer {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+</code>
+</pre>
+
+<p>@arguments——在LESS的函数中，同样也有一个类似JS函数中arguments的东东，就是@arguments，他同样包含着函数所有的参数，与JS的arguments不同的是，@arguments是值的传递；示例：</p>
+<pre style="background: #00b38a;">
+<code lang="css" style="color: yellow;background: #00b38a;">
+//定义一个函数，这个函数参数众多
+.boxShadow(@x: 0, @y: 0, @blur: 1px, @color: #000) {
+  -webkit-box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+
+//使用
+#header {
+  .boxShadow(2px, 2px, 3px, #f36);
+}
+
+//编译后的样式代码
+#header {
+  -webkit-box-shadow: 2px 2px 3px #f36;
+  -moz-box-shadow: 2px 2px 3px #f36;
+  box-shadow: 2px 2px 3px #f36;
+}
+
+</code>
+</pre>
+<p><a href="#backToTop">回顶部</a></p>
+</div>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/01/15/LESSS入门教程/" data-id="ck3x5xk470017g0ppeypek9ir" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-gulp进阶（gulp中的插件的使用）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/23/gulp进阶（gulp中的插件的使用）/" class="article-date">
@@ -167,7 +371,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/23/gulp进阶（gulp中的插件的使用）/" data-id="ck3x0qfrr001oj4ppmyqozmoi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/23/gulp进阶（gulp中的插件的使用）/" data-id="ck3x5xk4l001kg0ppsuge5kuf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -230,7 +434,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/22/gulp入门/" data-id="ck3x0qfrp001nj4pp8c13gukk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/22/gulp入门/" data-id="ck3x5xk4q001ng0pp215adt6w" class="article-share-link">Share</a>
       
       
     </footer>
@@ -279,7 +483,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/22/浅析js中常用的四种检测数据类型的方法/" data-id="ck3x0qfsq002hj4pp2d9uneth" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/22/浅析js中常用的四种检测数据类型的方法/" data-id="ck3x5xk5p002kg0ppbtuoqfh8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -352,7 +556,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/04/浅析js中的面向对象（三）/" data-id="ck3x0qfsv002lj4pphg3xalyq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/04/浅析js中的面向对象（三）/" data-id="ck3x5xk5u002og0pp8ud5g08f" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -419,7 +623,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/25/浅析js中的面向对象（二）/" data-id="ck3x0qftb002uj4pp1kcz1ssv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/09/25/浅析js中的面向对象（二）/" data-id="ck3x5xk69002xg0ppsn9sno7o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -492,7 +696,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/10/浅析js中的面向对象/" data-id="ck3x0qfss002jj4ppz010zcl2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/09/10/浅析js中的面向对象/" data-id="ck3x5xk5r002lg0ppvaeyx4z2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -532,7 +736,7 @@ gulp.task(&apos;server&apos;,function(){
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 17.5px;">Vue</a> <a href="/tags/es6/" style="font-size: 12.5px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 15px;">webpack</a>
     </div>
   </div>
 
@@ -554,6 +758,10 @@ gulp.task(&apos;server&apos;,function(){
       <ul>
         
           <li>
+            <a href="/2019/12/08/webpack掠影-4/">webpack掠影-4</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/08/webpack掠影-3/">webpack掠影-3</a>
           </li>
         
@@ -567,10 +775,6 @@ gulp.task(&apos;server&apos;,function(){
         
           <li>
             <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 16. PromiseA+</a>
-          </li>
-        
-          <li>
-            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 15. Promise 用法详解</a>
           </li>
         
       </ul>

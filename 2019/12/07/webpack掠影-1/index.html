@@ -7,13 +7,13 @@
   
   <title>webpack掠影-1 | Bin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="0. webpackwebpack 是一个现代的 JS 的应用程序的静态模块打包器。当 webpack 处理应用程序时，它会递归的建立一个依赖关系图，其中包含应用程序需要的每个模块，然后将这些模块打包到一个或者多个 bundle （扒自官方文档，并不是我懒，担心总结的没有官方到位…..）。    很显然官方文档说的很清楚，webpack 是用来打包的，还有一个重要的作用就是管理应用程序的模块依赖关">
+  <meta name="description" content="webpack 掠影-代码 0. webpackwebpack 是一个现代的 JS 的应用程序的静态模块打包器。当 webpack 处理应用程序时，它会递归的建立一个依赖关系图，其中包含应用程序需要的每个模块，然后将这些模块打包到一个或者多个 bundle （扒自官方文档，并不是我懒，担心总结的没有官方到位…..）。    很显然官方文档说的很清楚，webpack 是用来打包的，还有一个重要的作用">
 <meta name="keywords" content="webpack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="webpack掠影-1">
 <meta property="og:url" content="http://yoursite.com/2019/12/07/webpack掠影-1/index.html">
 <meta property="og:site_name" content="Bin">
-<meta property="og:description" content="0. webpackwebpack 是一个现代的 JS 的应用程序的静态模块打包器。当 webpack 处理应用程序时，它会递归的建立一个依赖关系图，其中包含应用程序需要的每个模块，然后将这些模块打包到一个或者多个 bundle （扒自官方文档，并不是我懒，担心总结的没有官方到位…..）。    很显然官方文档说的很清楚，webpack 是用来打包的，还有一个重要的作用就是管理应用程序的模块依赖关">
+<meta property="og:description" content="webpack 掠影-代码 0. webpackwebpack 是一个现代的 JS 的应用程序的静态模块打包器。当 webpack 处理应用程序时，它会递归的建立一个依赖关系图，其中包含应用程序需要的每个模块，然后将这些模块打包到一个或者多个 bundle （扒自官方文档，并不是我懒，担心总结的没有官方到位…..）。    很显然官方文档说的很清楚，webpack 是用来打包的，还有一个重要的作用">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://47.105.181.88/cdn_assets/webpack-img/wbp1-output1.png">
 <meta property="og:image" content="http://47.105.181.88/cdn_assets/webpack-img/wbp1-helloworld.png">
@@ -21,10 +21,10 @@
 <meta property="og:image" content="http://47.105.181.88/cdn_assets/webpack-img/wbp1-output-template.png">
 <meta property="og:image" content="http://47.105.181.88/cdn_assets/webpack-img/wbp1-dev-server.png">
 <meta property="og:image" content="http://47.105.181.88/cdn_assets/webpack-img/wbp1-loader-css.png">
-<meta property="og:updated_time" content="2019-12-08T09:21:14.025Z">
+<meta property="og:updated_time" content="2019-12-08T15:28:46.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack掠影-1">
-<meta name="twitter:description" content="0. webpackwebpack 是一个现代的 JS 的应用程序的静态模块打包器。当 webpack 处理应用程序时，它会递归的建立一个依赖关系图，其中包含应用程序需要的每个模块，然后将这些模块打包到一个或者多个 bundle （扒自官方文档，并不是我懒，担心总结的没有官方到位…..）。    很显然官方文档说的很清楚，webpack 是用来打包的，还有一个重要的作用就是管理应用程序的模块依赖关">
+<meta name="twitter:description" content="webpack 掠影-代码 0. webpackwebpack 是一个现代的 JS 的应用程序的静态模块打包器。当 webpack 处理应用程序时，它会递归的建立一个依赖关系图，其中包含应用程序需要的每个模块，然后将这些模块打包到一个或者多个 bundle （扒自官方文档，并不是我懒，担心总结的没有官方到位…..）。    很显然官方文档说的很清楚，webpack 是用来打包的，还有一个重要的作用">
 <meta name="twitter:image" content="http://47.105.181.88/cdn_assets/webpack-img/wbp1-output1.png">
   
     <link rel="alternate" href="/atom.xml" title="Bin" type="application/atom+xml">
@@ -98,7 +98,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="0-webpack"><a href="#0-webpack" class="headerlink" title="0. webpack"></a>0. webpack</h2><p>webpack 是一个现代的 JS 的应用程序的静态模块打包器。当 webpack 处理应用程序时，它会递归的建立一个依赖关系图，其中包含应用程序需要的每个模块，然后将这些模块打包到一个或者多个 bundle （扒自官方文档，并不是我懒，担心总结的没有官方到位…..）。<br>    很显然官方文档说的很清楚，webpack 是用来打包的，还有一个重要的作用就是管理应用程序的模块依赖关系，而且是递归的构建依赖关系。为什么说这个呢，如果你是一个出生在工程化时代的 FE，自然不会懂得手动去管理 script 标签时代的我们是如何痛苦。举个很简单的例子，如果库 A 的运行需要，库 B ，那么一定要保证在 A 之前通过 script 引入 B，否则 A 不能正常运行。如果有个几十个，岂是苦不堪言可以形容；而有了 webpack就不用了，因为 webpack 实现了模块化，我们通过对应的模块化方式使用模块即可，至于谁先谁后，这个工作交给 wepback 去做；<br>    当然，人家的功能很多，我们先用用再说</p>
+        <p><a href="https://github.com/handsomeBingo/exercise-webpack" title="webpack 掠影" target="_blank" rel="noopener">webpack 掠影-代码</a></p>
+<h2 id="0-webpack"><a href="#0-webpack" class="headerlink" title="0. webpack"></a>0. webpack</h2><p>webpack 是一个现代的 JS 的应用程序的静态模块打包器。当 webpack 处理应用程序时，它会递归的建立一个依赖关系图，其中包含应用程序需要的每个模块，然后将这些模块打包到一个或者多个 bundle （扒自官方文档，并不是我懒，担心总结的没有官方到位…..）。<br>    很显然官方文档说的很清楚，webpack 是用来打包的，还有一个重要的作用就是管理应用程序的模块依赖关系，而且是递归的构建依赖关系。为什么说这个呢，如果你是一个出生在工程化时代的 FE，自然不会懂得手动去管理 script 标签时代的我们是如何痛苦。举个很简单的例子，如果库 A 的运行需要，库 B ，那么一定要保证在 A 之前通过 script 引入 B，否则 A 不能正常运行。如果有个几十个，岂是苦不堪言可以形容；而有了 webpack就不用了，因为 webpack 实现了模块化，我们通过对应的模块化方式使用模块即可，至于谁先谁后，这个工作交给 wepback 去做；<br>    当然，人家的功能很多，我们先用用再说</p>
 <h2 id="1-安装-webpack"><a href="#1-安装-webpack" class="headerlink" title="1. 安装 webpack"></a>1. 安装 webpack</h2><p>webpack 4.x 的版本在安装 webpack 的同时还需要安装 webpack-cli；</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack webpack-cli</span><br></pre></td></tr></table></figure>
 
@@ -217,7 +218,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/12/07/webpack掠影-1/" data-id="ck3x0qfso002fj4ppsjb9dsau" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/12/07/webpack掠影-1/" data-id="ck3x5xk5g002ag0ppslqw0iv1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -269,7 +270,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 17.5px;">Vue</a> <a href="/tags/es6/" style="font-size: 12.5px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 15px;">webpack</a>
     </div>
   </div>
 
@@ -291,6 +292,10 @@
       <ul>
         
           <li>
+            <a href="/2019/12/08/webpack掠影-4/">webpack掠影-4</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/08/webpack掠影-3/">webpack掠影-3</a>
           </li>
         
@@ -304,10 +309,6 @@
         
           <li>
             <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 16. PromiseA+</a>
-          </li>
-        
-          <li>
-            <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 15. Promise 用法详解</a>
           </li>
         
       </ul>
