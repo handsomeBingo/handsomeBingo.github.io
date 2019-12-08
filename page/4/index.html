@@ -67,6 +67,138 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-flex布局" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/12/flex布局/" class="article-date">
+  <time datetime="2017-08-12T01:27:47.000Z" itemprop="datePublished">2017-08-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/12/flex布局/">flex布局</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="flex布局是什么？"><a href="#flex布局是什么？" class="headerlink" title="flex布局是什么？"></a>flex布局是什么？</h2><p>Flex是Flexible box的缩写，意为“弹性布局”，用来为盒子模型提供最大的灵活性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    display: flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*行内元素也可以使用flex布局*/</span><br><span class="line">.box &#123;</span><br><span class="line">    display: inline-flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*webkit内核浏览器*/</span><br><span class="line">.box &#123;</span><br><span class="line">    display: -webkit-flex;</span><br><span class="line">    display: flex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>采用flex布局的元素称为flex容器（被设置了display: flex/inline-flex;属性的元素），其所有子元素自动成为容器成员，称为 flex item(简称项目)<br>容器默认存在水平的主轴（main axis）和垂直于主轴的交叉轴（cross axis）。主轴的开始位置（与边框的交叉点）叫做 main start ，结束位置叫做 main end；交叉轴的开始位置叫做cross start，结束位置叫做cross end。默认沿主轴排列。单个项目占据的主轴空间叫做 main size，占据的交叉轴的空间叫做cross size。</p>
+<h2 id="容器属性"><a href="#容器属性" class="headerlink" title="容器属性"></a>容器属性</h2><p>以下6个属性设置在容器上</p>
+<ul>
+<li>flex-direction</li>
+<li>flex-wrap</li>
+<li>flex-flow</li>
+<li>justify-content</li>
+<li>align-items</li>
+<li>align-content</li>
+</ul>
+<h3 id="flex-direction"><a href="#flex-direction" class="headerlink" title="flex-direction"></a>flex-direction</h3><p>flex-direction属性决定主轴方向（子元素的排列方向），flex-direction有4个可选值</p>
+<ul>
+<li>row（默认值）：主轴为水平方向，起点在左端</li>
+<li>row-reverse：主轴为水平防线，起点在右端</li>
+<li>column：主轴为垂直方向，起点在上沿</li>
+<li>column：主轴为垂直方向，起点在下沿</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    flex-direction: row | row-reverse | column | column-reverse;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="flex-wrap"><a href="#flex-wrap" class="headerlink" title="flex-wrap"></a>flex-wrap</h3><p>默认情况下，项目都排列在一条线（又称“轴线”）上。flex-wrap属性定义，如果一条轴线排不下，如何换行。flex-wrap有3个可选值：</p>
+<ul>
+<li>nowrap（默认）：不换行</li>
+<li>wrap：换行，第一行在上方</li>
+<li>wrap-reverse：换行，第一行在下方</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    flex-wrap: no-wrap | wrap | wrap-reverse;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="flex-flow"><a href="#flex-flow" class="headerlink" title="flex-flow"></a>flex-flow</h3><p>flex-flow属性是flex-direction属性和flex-wrap属性的简写形式。默认值为 row nowrap。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    flex-flow: &lt;flex-direction&gt; | &lt;flex-wrap&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="justify-content"><a href="#justify-content" class="headerlink" title="justify-content"></a>justify-content</h3><p>justify-content属性定义了项目在主轴上的对齐方式，有5个可选值：</p>
+<ul>
+<li>flex-start（默认值）：左对齐</li>
+<li>flex-end：右对齐</li>
+<li>center：居中</li>
+<li>space-between：两端对齐，项目之间的间隔相等。</li>
+<li>space-around：每个项目两侧的间距相等。所以，项目之间的间隔比项目与边框的间隔大一倍。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    justify-content: flex-start | flex-end | center | space-around | space-between;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="align-items-属性"><a href="#align-items-属性" class="headerlink" title="align-items 属性"></a>align-items 属性</h3><p>align-items属性定义项目在交叉轴上如何对齐，有五个可选值。</p>
+<ul>
+<li>flex-start：交叉轴的起点对齐。</li>
+<li>flex-end：交叉轴的终点对齐。</li>
+<li>center：交叉轴的终点对齐。</li>
+<li>baseline：项目的第一行文字的基线对齐</li>
+<li>stretch（默认值）：如果项目未设置高度或设置为auto，将占满整个容器的高度。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    align-items: flex-start | flex-end | center | baseline | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="align-content-属性"><a href="#align-content-属性" class="headerlink" title="align-content 属性"></a>align-content 属性</h3><p>align-content 属性定义了多根轴线的对齐方式（交叉轴方向）。如果项目只有一根轴线，该属性不起作用。有6个可选值：</p>
+<ul>
+<li>flex-start：与交叉轴的起点对齐。</li>
+<li>flex-end：与交叉轴的终点对齐。</li>
+<li>center：与交叉轴的中点对齐。</li>
+<li>space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。</li>
+<li>space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框之间的距离大一倍。</li>
+<li>stretch（默认值）：轴线占满整个交叉轴</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">    align-content: flex-start | flex-end | center | space-between | space-around | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="项目属性"><a href="#项目属性" class="headerlink" title="项目属性"></a>项目属性</h2><p>以下6个属性设置在项目上</p>
+<ul>
+<li>order</li>
+<li>flex-grow</li>
+<li>flex-shrink</li>
+<li>flex-basis</li>
+<li>flex</li>
+<li>align-self</li>
+</ul>
+<h3 id="order属性"><a href="#order属性" class="headerlink" title="order属性"></a>order属性</h3><p>order属性定义项目的排列顺序。数值越小，排序越靠前，默认值为0.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">    order: &lt;integer&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="flex-grow属性"><a href="#flex-grow属性" class="headerlink" title="flex-grow属性"></a>flex-grow属性</h3><p>flex-grow属性定义项目的放大比例，默认为0，即如果剩余空间，也不放大。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">    flex-grow: &lt;integer&gt;; /*default 0*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果所有的项目的flex-grow属性都为1，则他们将等分剩余空间（如果有的话）。如果项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。</p>
+<h3 id="flex-shrink-属性定义了项目缩小的比例，默认为1，即如果空间不足，该项目将缩小。"><a href="#flex-shrink-属性定义了项目缩小的比例，默认为1，即如果空间不足，该项目将缩小。" class="headerlink" title="flex-shrink 属性定义了项目缩小的比例，默认为1，即如果空间不足，该项目将缩小。"></a>flex-shrink 属性定义了项目缩小的比例，默认为1，即如果空间不足，该项目将缩小。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">    flex-shrink: &lt;number&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果所有的项目的flex-shrink属性都为1，当空间不足时，都将等比缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。负值对该属性无效。</p>
+<h3 id="flex-basis-属性"><a href="#flex-basis-属性" class="headerlink" title="flex-basis 属性"></a>flex-basis 属性</h3><p>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。他的默认为auto，即项目本来大小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">    flex-basis: &lt;length&gt; | auto;/*default auto*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它可以设为跟width或height属性一样的值，（比如350px），则项目将占据固定空间。</p>
+<h3 id="flex属性"><a href="#flex属性" class="headerlink" title="flex属性"></a>flex属性</h3><p>flex属性是flex-grow，flex-shrink和flex-basis的简写，默认值为 0&nbsp;1&nbsp;auto。后两个属性可选</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">    flex: none | [&lt;&apos;flex-grow&apos;&gt; &lt;&apos;flex-shrink&apos;&gt;? || &lt;&apos;flex-basis&apos;&gt;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该属性有两个快捷值：auto（1&nbsp;1&nbsp;auto）和none（0&nbsp;0&nbsp;auto）。<br>建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
+<h3 id="align-self-属性"><a href="#align-self-属性" class="headerlink" title="align-self 属性"></a>align-self 属性</h3><p>align-self 属性允许单个项目与所有其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。该属性有6个可选值，除了auto，其他都与align-items属性完全一致。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">    align-self: auto | flex-start | flex-end | center | baseline | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/12/flex布局/" data-id="ck3wsxccm001ebkppr9zzip4k" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-prettierOptions" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/07/24/prettierOptions/" class="article-date">
@@ -382,7 +514,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck3vs9yw1001sswpp2hjaldrj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck3wsxccz001qbkppd575nlgr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -629,7 +761,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck3vs9yvo001iswppz6fd281m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck3wsxccp001gbkppc2rjkb07" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -869,7 +1001,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck3vs9yvl001gswpp43217p33" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck3wsxcci001cbkpphghi324g" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -1011,7 +1143,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck3vs9yvi001dswppwuov2obf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck3wsxccc0017bkpptj0pj4i2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -1137,7 +1269,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck3vs9ywf0020swppe924rmev" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck3wsxcdd0022bkppx4wa8e3n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -1200,7 +1332,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck3vs9yw9001xswppu7zw8fpm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck3wsxcel002obkppt2bb2s3p" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -1386,7 +1518,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/14/requirejs/" data-id="ck3vs9yw5001vswppji5dfg0d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/14/requirejs/" data-id="ck3wsxccs001jbkppy5083jlw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1590,7 +1722,7 @@ Mixins还有一种形式叫做ParametricMixins（混入参数），Less也支持
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/15/LESSS入门教程/" data-id="ck3vs9yve001bswpplyhhqrs1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/15/LESSS入门教程/" data-id="ck3wsxccf0019bkppmrao13y4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li></ul>
@@ -1702,70 +1834,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/23/gulp进阶（gulp中的插件的使用）/" data-id="ck3vs9yvw001oswppkylagxe6" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-gulp入门" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/22/gulp入门/" class="article-date">
-  <time datetime="2016-11-22T13:12:20.000Z" itemprop="datePublished">2016-11-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/22/gulp入门/">gulp入门</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&#160; &#160; &#160; &#160;用gulp有一段时间了，有个朋友让我给他说说gulp，所以今天就写一篇关于gulp的文章做做分享。<br>在我的文章中，我在介绍一个东西之前都会说一说这个东西诞生的背景，亦或者说这个东西诞生是为了解决什么问题。每次技术的进步都是从未知到已知，从发现问题，到认识问题，最后解决问题的，我之所以介绍这些背景，其实是在理顺这些思路，是在为后面的逻辑铺路，在学习一门新的技术的时候，我们也应该是这样一种思路：这门技术是解决什么问题的，这门技术又是如何解决的这个问题。所以说每当遇到问题时，要想清楚到底是哪里出了问题，只有这样，靶向解决问题才能指标治本。当然，在解决问题时，难的不是解决，时发现问题的根源所在！我记得我在学习这门语言的时候，我遇到过很多困惑的地方，老师问我到底是哪里不懂，我说：“如果我能说出我哪里不懂，其实距离懂只差一层窗户纸额的距离。”很显然，发现问题的根源远比解决问题更难，希望大家在学习技术的时候，遇到问题，不能理解的时候，或者觉得和自己“以为”的不一样时，千万记得找出你心里的疑惑究竟是在哪儿，只有把这个疑惑解决了，问题才算是真正解决了；好了，说了一大堆，还是回来说说gulp吧。<br>1、    什么是gulp？<br>gulp是可以自动化执行任务的工具 在平时开发的流程里面,一定有一些任务需要手工重复得执行，比如:<br>&#160; &#160; &#160; &#160;    把文件从开发目录拷贝到生产目录<br>&#160; &#160; &#160; &#160;    把多个 JS 或者 CSS 文件合并成一个文件<br>&#160; &#160; &#160; &#160;    对JS文件和CSS进行压缩<br>&#160; &#160; &#160; &#160;    把sass或者less文件编译成CSS<br>&#160; &#160; &#160; &#160;    压缩图像文件<br>&#160; &#160; &#160; &#160;只要你觉得有些动作是要重复去做的,就可以把这些动作创建成一个gulp任务 然后在指定的条件下自动执行 比如在less源文件发生改变后自动编译成css文件；但是这些改变时建立在监视基础之上的，下面将会讲述这一特殊的机制。<br>gulp是基于node.js的，建议大家在阅读这篇文章的时候，对nodejs有一定的了解，如果你还不是很了解，建议阅读前面的有关nodejs基础和node.js进阶的一些知识，因为gulp大多是文件的IO操作，大家在看node.js的基础的时候，重点记忆有关于fs模块、fs中的流。<br>2、gulp的特点<br>&#160; &#160; &#160; &#160;利用 node.js 流的威力，你可以快速构建项目并减少频繁的 IO 操作。前一级的输出，直接变成后一级的输入，使得在操作上非常简单。此外gulp还提供了高质量的插件， Gulp 严格的插件指南确保插件如你期望的那样简洁地工作。<br>这里要提出注意的地方是gulp的流（Stream）又和node.js中的流（Stream）不大一样，因为node中的流逝二进制流，gulp的流是文件流，文件流不仅仅包含了文件的内容，还包含了文件的的文件名和路径。但是这两种流都是分为可读流和可写流；<br>此外，gulp最大的优势在于其类似jquery的链式写法，上一级操作的输出，直接变成下一级的输入，后面将为大家展示。<br>3、实现思路：<br>&#160; &#160; &#160; &#160;gulp的核心原理就是先创建一个可读流，然后通过pipe方法导出，然乎经过各个插件的加工，最后创建一个可写流，写入硬盘；<br>4、gulp的核心API<br>&#160; &#160; &#160; &#160;gulp只有四个核心API，也正是这四个方法使得原来的复杂的任务简化起来，也正是由于其API简单，所以很易学。但是插件的API又是五花八门的，当然，只有需要使用插件的地方，我们在引入插件；</p>
-<p>1）、<br>gulp.src(glob,[,options]);创建一个可读流<br>参数：<br>&#160; &#160; &#160; &#160;•    globs 参数是文件匹配模式(类似正则表达式)，用来匹配文件路径(包括文件名)，当然这里也可以直接指定某个具体的文件路径。当有多个匹配模式时，该参数可以为一个数组；<br>&#160; &#160; &#160; &#160;•    options 为可选参数。通常情况下我们不需要用到<br>2）、<br>gulp.dest(path[,options]) 是用来向硬盘写入文件的；<br>&#160; &#160; &#160; &#160;•    path 为写入文件的路径<br>&#160; &#160; &#160; &#160;•    options 为一个可选的参数对象，通常我们不需要用到<br>&#160; &#160; &#160; &#160;要想使用好gulp.dest()这个方法，就要理解给它传入的路径参数与最终生成的文件的关系。gulp.dest()传入的路径参数只能用来指定要生成的文件的目录,而不能指定生成文件的文件名 它生成文件的文件名使用的是导入到它的文件流自身的文件名 所以生成的文件名是由导入到它的文件流决定的<br>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">  gulp.src(&apos;script/jquery.js&apos;)</span><br><span class="line">  .pipe(gulp.dest(&apos;dist/jquery.js&apos;));</span><br><span class="line">//最终生成的文件路径为 dist/jquery.js/jquery.js,而不是dist/jquery.js</span><br></pre></td></tr></table></figure>
-
-
-<p>3）、gulp.task(name[, deps], fn);gulp.task方法用来定义任务;<br>&#160; &#160; &#160; &#160;•    name 为任务名称<br>&#160; &#160; &#160; &#160;•    deps 是当前定义的任务需要依赖的其他任务，为一个数组。当前定义的任务会在所有依赖的任务执行完毕后才开始执行。如果没有依赖，则可省略这个参数<br>•    fn 为任务定义函数，我们把任务要执行的代码都写在里面。该参数也是可选的。<br>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&apos;mytask&apos;, \[&apos;array&apos;, &apos;of&apos;, &apos;task&apos;, &apos;names&apos;\],</span><br><span class="line">function() &#123; //定义一个有依赖的任务</span><br><span class="line">      // Do something</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-
-<p>如果某个任务所依赖的任务是异步的，就要注意了，gulp并不会等待那个所依赖的异步任务完成，而是会接着执行后续的任务<br>//two任务虽然依赖于one任务,但并不会等到one任务中的异步操作完成后再执行；<br>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&apos;one&apos;,function()&#123;</span><br><span class="line">      //one是一个异步执行的任务</span><br><span class="line">      setTimeout(function()&#123;</span><br><span class="line">        console.log(&apos;one is done&apos;)</span><br><span class="line">      &#125;,5000);</span><br><span class="line">    &#125;);</span><br><span class="line"> gulp.task(&apos;two&apos;,[&apos;one&apos;],function()&#123;</span><br><span class="line">      console.log(&apos;two is done&apos;);</span><br><span class="line">    &#125;);</span><br><span class="line">//先打印two is done然后打印one is done；</span><br></pre></td></tr></table></figure>
-
-<p>4）、 gulp.watch(glob[, opts], tasks);//用来监视文件的变化，当文件发生变化后，我们可以利用它来执行相应的任务，例如文件拷贝等。<br>•    glob 为要监视的文件匹配模式，规则和用法与gulp.src()方法中的 glob 相同。<br>•    opts 为一个可选的配置对象，通常不需要用到<br>•    tasks 为文件变化后要执行的任务，为一个数组</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&apos;uglify&apos;,function()&#123;</span><br><span class="line">    //do something</span><br><span class="line">  &#125;);</span><br><span class="line">gulp.task(&apos;reload&apos;,function()&#123;</span><br><span class="line">    //do something</span><br><span class="line">&#125;);</span><br><span class="line"> gulp.watch(&apos;js/\*\*/\*.js&apos;, \[&apos;uglify&apos;,&apos;reload&apos;\]);</span><br></pre></td></tr></table></figure>
-
-<p>另外一种使用方式：<br>    gulp.watch(glob[, opts, cb])<br>•    glob和 opts 参数与第一种用法相同<br>•    cb参数为一个函数。每当监视的文件发生变化时，就会调用这个函数,并且会给它传入一个对象，该对象包含了文件变化的一些信息 type属性为变化的类型，可以是 added、changed、deleted和path属性为发生变化的文件的路径<br>  gulp.watch(‘js/**/*.js’, function(event){<br>    //变化类型 added为新增,deleted为删除，changed为改变<br>    console.log(event.type);<br>   //变化的文件的路径<br>    console.log(event.path);<br>  });<br>练习：<br>1）写一个复制单个文件的方法；<br>//实现逻辑：先获取一个可读流（调用gulp.src()方法），通过管道（可读流的pipe()方法）输送到一个可写流中（调用gulp.dest()方法）；<br>代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var gulp=require(“gulp”);</span><br><span class="line">gulp.task(“copy”,function()&#123;</span><br><span class="line">gulp.src(“./app/index.html”).pipe(gulp.dest(“dist/html”))&#125;);</span><br><span class="line">//打开命令窗口输入 gulp copy 回车；即可执行任务；此时的dist/html目录下多出一个index.html文件，该方法便成功了；</span><br></pre></td></tr></table></figure>
-
-<p>2）写一个复制多个文件的方法，练习glob语法中的* **</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var gulp=require(“gulp”);</span><br><span class="line">gulp.task(“copy-imgs”,function()&#123;</span><br><span class="line">gulp.src(“app/img/*.&#123;jpg,png&#125;”)</span><br><span class="line">.pipe(gulp.dest(“dist/img”));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>//1、{}可以指定多个拓展名；<br>//2、* 可以匹配除路径分隔符 /以外的所有字符，“app/img/<em>.{jpg,png}”表示app/img第一级目录下的所有拓展名为jpg和png的文件；app/img/*</em>/.{jpg,png} 表示app/img/下所有目录（含子孙目录）中所有的拓展名为jpg和png的文件；</p>
-<p>3）组合任务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">gulp.task(&apos;copy-html&apos;,function()&#123;</span><br><span class="line">   return gulp.src(&apos;app/index.html&apos;).pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(&apos;copy-images&apos;,function()&#123;</span><br><span class="line">   return gulp.src(&apos;app/imgs/**/*.&#123;jpg,png&#125;&apos;).pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(&apos;copy-other&apos;,function()&#123;</span><br><span class="line">    return gulp.src([&apos;app/css/*.css&apos;,&apos;app/js/*.js&apos;,&apos;app/js/*.tmp.js&apos;],&#123;base:&apos;app&apos;&#125;)</span><br><span class="line">.pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(&apos;default&apos;,[&apos;copy-html&apos;,&apos;copy-images&apos;,&apos;copy-other&apos;],function()&#123;</span><br><span class="line">    console.log(&apos;全部拷贝任务执行完毕!&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>4） 监听任务<br>使用 gulp 的 watch 这个方法，我们可以去监视一些文件，当这些文件发生变化的时候，立即去执行一些指定的任务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;copy-html&apos;,function()&#123;</span><br><span class="line">        return gulp.src(&apos;app/index.html&apos;)</span><br><span class="line">        .pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;copy-images&apos;,function()&#123;</span><br><span class="line">        return gulp.src(&apos;app/imgs/**/*.&#123;jpg,png&#125;&apos;,&#123;base:&apos;app&apos;&#125;)</span><br><span class="line">        .pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;copy-other&apos;,function()&#123;</span><br><span class="line">        return gulp.src([&apos;app/css/*.css&apos;,&apos;app/js/*.js&apos;</span><br><span class="line">        ,&apos;app/js/*.tmp.js&apos;],&#123;base:&apos;app&apos;&#125;).pipe(gulp.dest(&apos;dist&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    //在执行watch的时候会监控index.html文件的变化，发生变化后可以执行拷贝html的任务</span><br><span class="line">    gulp.task(&apos;default&apos;,function()&#123;</span><br><span class="line">        gulp.watch(&apos;app/index.html&apos;,[&apos;copy-html&apos;]);</span><br><span class="line">        gulp.watch(&apos;app/imgs/**/*.&#123;jpg,png&#125;&apos;,[&apos;copy-images&apos;]);</span><br><span class="line">        gulp.watch([&apos;app/css/*.css&apos;,&apos;app/js/*.js&apos;</span><br><span class="line">        ,&apos;app/js/*.tmp.js&apos;],[&apos;copy-other&apos;]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/22/gulp入门/" data-id="ck3vs9yvu001nswpplwpk7gev" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/23/gulp进阶（gulp中的插件的使用）/" data-id="ck3wsxcdv002ibkpph86ybqxi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1803,7 +1872,7 @@ gulp.task(&apos;server&apos;,function(){
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 17.5px;">Vue</a> <a href="/tags/es6/" style="font-size: 15px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 12.5px;">webpack</a>
     </div>
   </div>
 
@@ -1825,6 +1894,10 @@ gulp.task(&apos;server&apos;,function(){
       <ul>
         
           <li>
+            <a href="/2019/12/08/webpack掠影-2/">webpack掠影-2</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/07/webpack掠影-1/">webpack掠影-1</a>
           </li>
         
@@ -1838,10 +1911,6 @@ gulp.task(&apos;server&apos;,function(){
         
           <li>
             <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 14. 跨域和同源策略</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 13. ajax的前世今生</a>
           </li>
         
       </ul>

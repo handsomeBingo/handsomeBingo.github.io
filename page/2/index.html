@@ -67,6 +67,130 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaScript进阶教程8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/22/JavaScript进阶教程8/" class="article-date">
+  <time datetime="2019-02-22T13:37:42.000Z" itemprop="datePublished">2019-02-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/22/JavaScript进阶教程8/">进阶教程 8. 继承详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、JS中的继承方式："><a href="#一、JS中的继承方式：" class="headerlink" title="一、JS中的继承方式："></a>一、JS中的继承方式：</h3><p>面向对象：（类和实例）</p>
+<ul>
+<li>继承 子类继承父类</li>
+<li>封装 为实例添加方法、为原型增加方法</li>
+<li>多态（重写、重载）</li>
+</ul>
+<blockquote>
+<p>继承：两个类A B ，想让B类的实例使用A类上的属性和方法，就需要让B类继承A类，我们称B类为子类，A类为父类（超类）</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Super</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">A.prototype.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'hello World'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"></span><br><span class="line"> b是B类的实例 想使用A类的属性和方法</span><br><span class="line"><span class="built_in">console</span>.log(b.say);  <span class="literal">undefined</span></span><br><span class="line"></span><br><span class="line"> 为啥是<span class="literal">undefined</span>？对象.属性名 先看自己是否有着私有属性，如果私有属性没有，就去实例所属类的原型查找公有的属性和方法，如果原型上也没有，就根据原型对象的__proto__ 一直找到<span class="built_in">Object</span>基类的原型上为止，如果还没有就返回<span class="literal">undefined</span>；</span><br><span class="line"></span><br><span class="line">现在需要b可以使用A类的say方法，现在就需要继承；</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-原型链继承"><a href="#1-1-原型链继承" class="headerlink" title="1.1 原型链继承"></a>1.1 原型链继承</h4><ul>
+<li>原型继承： 将子 类B的原型对象 重写成父类A的一个实例。<blockquote>
+<p>B.prototype = new A();<br>把父类共有属性和私有属性变成子类的公有属性</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">A.prototype.age = <span class="number">19</span>;</span><br><span class="line">A.prototype.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'来自A类原型的say方法'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">B.prototype = <span class="keyword">new</span> A();  把B类的原型改写成一个A类的实例；</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line"><span class="built_in">console</span>.log(b.__proto__);  &#123;<span class="attr">text</span>: <span class="string">'xxx'</span>, __proto__....&#125;</span><br><span class="line"><span class="built_in">console</span>.log(b.age);</span><br><span class="line"><span class="built_in">console</span>.log(b.say);</span><br></pre></td></tr></table></figure>
+
+<p>把B的原型改写成A类的一个实例，此时通过 b.age 访问b的age属性，首先在私有属性中查找，私有属性中没有age属性，接着去b所属类的原型（B.prototype）上查找，此时原型对象是A的实例对象，在原型对象也没有age属性，然后通过原型对象的<strong>proto</strong>就找到了A.prototype上，A的prototype上有age属性</p>
+<ul>
+<li>原型继承是把子类公有的属性和私有的属性都变成了子类私有的属性；</li>
+<li>缺点：改写子类的原型对象，会导致子类原型对象上的constructor属性被改写，需要重新指定继承后的constructor；</li>
+</ul>
+<h4 id="1-2-借用构造函数继承"><a href="#1-2-借用构造函数继承" class="headerlink" title="1.2 借用构造函数继承"></a>1.2 借用构造函数继承</h4><blockquote>
+<p>借用构造函数：把父类当做普通函数，在子类的函数体中call执行父类的函数；</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.a = <span class="string">'aa'</span>;</span><br><span class="line">	<span class="keyword">this</span>.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'A say'</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">A.prototype.public = <span class="string">'public'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	A.call(<span class="keyword">this</span>);  <span class="keyword">this</span>是B类的一个实例，A.call(<span class="keyword">this</span>) 的意思是把A中的<span class="keyword">this</span>就该成B的实例（而在B的构造函数中<span class="keyword">this</span>就是B的实例）这样在A中通过<span class="keyword">this</span>.xxx = xxx 的方式添加的属性都会添加到B的实例身上。</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"><span class="built_in">console</span>.log(b);  &#123;<span class="attr">a</span>: <span class="string">'aa'</span>, <span class="attr">say</span>: fun.....&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b2 = <span class="keyword">new</span> B();</span><br><span class="line"><span class="built_in">console</span>.log(b2.say === b.say);  <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+
+<p>借用构造函数继承：</p>
+<ul>
+<li>把父类当做普通函数，在子类的函数体里面，通过call方法执行 A.call(this)</li>
+<li>call方法是用来修改this指向的，这样一来就把A中的this修改成了b的实例；在函数A中通过this.xxx = xxx 添加的属性都添加到了B的实例身上；</li>
+<li>特点：只能把父类的私有属性和方法继承为子类的私有属性和方法；</li>
+</ul>
+<h4 id="1-3-组合继承"><a href="#1-3-组合继承" class="headerlink" title="1.3 组合继承"></a>1.3 组合继承</h4><p>组合继承：原型链继承 + 借用构造函数继承</p>
+<ul>
+<li>原型链继承：把父类私有的和共有的继承为子类公有的；</li>
+<li>借用构造函数继承：把父类私有的继承为子类私有的</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.a = <span class="string">'私有的'</span></span><br><span class="line">&#125;</span><br><span class="line">A.prototype.text = <span class="string">'公有'</span>;</span><br><span class="line">A.prototype.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'A公有的say方法'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	A.call(<span class="keyword">this</span>);  借用构造函数继承，继承父类私有的</span><br><span class="line">&#125;</span><br><span class="line">B.prototype = <span class="keyword">new</span> A();  原型链继承，继承父类私有和公有的属性；</span><br><span class="line">B.prototype.constructor = B;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"><span class="built_in">console</span>.log(b.text);  公有的</span><br><span class="line"><span class="built_in">console</span>.log(b.a);  私有的</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>组合继承也并非没有缺点，组合继承会父类的私有继承两次，一份在借用构造函数继承时成为私有的，而另一份是在原型继承时成为公有的；</li>
+</ul>
+<h4 id="1-4-原型式继承"><a href="#1-4-原型式继承" class="headerlink" title="1.4 原型式继承"></a>1.4 原型式继承</h4><p>原型式继承：把父类的公有属性继承为子类的公有属性；</p>
+<p>创建一个新的对象，并且新对象的<strong>proto</strong>指向A.prototype，最后把这个新对象作为B类的原型；</p>
+<ul>
+<li><p>创建一个对象，并且对象的<strong>proto</strong> 指向obj</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.create(obj)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>原型式继承示例</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.private = <span class="string">'private私有'</span>;</span><br><span class="line">&#125;</span><br><span class="line">A.prototype.public = <span class="string">'public公有'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">B.prototype = <span class="built_in">Object</span>.create(A.prototype);  创建一个指定原型的对象 创建一个对象，并且这个对象的__proto__ 指向A.prototype</span><br><span class="line"></span><br><span class="line">B.prototype.constructor = B;  原型式继承同样是修改B类原型的指向，所以需要重新指定构造函数</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"><span class="built_in">console</span>.log(b.public);</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-5-寄生组合式继承"><a href="#1-5-寄生组合式继承" class="headerlink" title="1.5 寄生组合式继承"></a>1.5 寄生组合式继承</h4><ul>
+<li>寄生组合式继承：原型式继承 + 借用构造函数继承</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.private = <span class="string">'私有属性'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">A.prototype.public = <span class="string">'公有属性'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	A.call(<span class="keyword">this</span>);  借用构造函数继承</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'b私有的'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> 原型式继承：把父类公有的 继承为子类实例公有的</span><br><span class="line">B.prototype = <span class="built_in">Object</span>.create(A.prototype);</span><br><span class="line">B.prototype.constructor = B;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();  &#123;<span class="attr">name</span>: <span class="string">'私有的'</span>, <span class="attr">private</span>: <span class="string">'私有属性'</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(b.private);  继承过来的私有属性</span><br><span class="line"><span class="built_in">console</span>.log(b.public);  继承过来到的公有属性</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-6-冒充对象继承"><a href="#1-6-冒充对象继承" class="headerlink" title="1.6 冒充对象继承"></a>1.6 冒充对象继承</h4><blockquote>
+<p>冒充对象继承：在子类的构造函数中生成一个父类的实例，把父类的这个实例进行遍历，把属性都添加子类的实例上；</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.private = <span class="string">'私有属性'</span>;</span><br><span class="line">&#125;</span><br><span class="line">A.prototype.public = <span class="string">'公有属性'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'B私有的属性'</span>;</span><br><span class="line">	<span class="keyword">let</span> tmp = <span class="keyword">new</span> A();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> tmp) &#123;</span><br><span class="line">		<span class="keyword">this</span>[key] = tmp[key];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-7-ES6中的类"><a href="#1-7-ES6中的类" class="headerlink" title="1.7 ES6中的类"></a>1.7 ES6中的类</h4><ul>
+<li><p>ES5 一个函数就是一个类</p>
+</li>
+<li><p>ES6 借鉴后端语言，增加了class关键字，创建一个类</p>
+</li>
+<li><p>ES5</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Teacher</span>(<span class="params">name, age, subject</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.age = age;</span><br><span class="line">	<span class="keyword">this</span>.subject = subject;</span><br><span class="line">&#125;</span><br><span class="line">Teacher.motor = <span class="string">'传道 授业 解惑'</span>;</span><br><span class="line">Teacher.prototype.teach = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name + <span class="keyword">this</span>.age);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> t = <span class="keyword">new</span> Teacher(<span class="string">'mabin'</span>, <span class="number">19</span>, <span class="string">'js'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ES6</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Teacher</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span> (name, age, subject) &#123;</span><br><span class="line">		 这里面通过<span class="keyword">this</span>.xxx = xxx 是给实例添加私有属性</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">		<span class="keyword">this</span>.subject = subject;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	 添加公有属性</span><br><span class="line">	teach () &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.name + <span class="keyword">this</span>.age + <span class="keyword">this</span>.subject);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	 添加静态方法</span><br><span class="line">	<span class="keyword">static</span> motor = <span class="string">'传道授业解惑'</span>;</span><br><span class="line">	<span class="keyword">static</span> getMotor () &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'We are U'</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> t = <span class="keyword">new</span> Teacher(<span class="string">'马宾'</span>, <span class="number">18</span>, <span class="string">'JS'</span>);</span><br><span class="line">t.teach();</span><br><span class="line"><span class="built_in">console</span>.log(Teacher.motor);</span><br><span class="line">Teacher.getMotor();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="1-7-ES6继承"><a href="#1-7-ES6继承" class="headerlink" title="1.7 ES6继承"></a>1.7 ES6继承</h4><p>ES6继承：extends关键字</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span> (name, age) &#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	 公有方法（添加到原型上）</span><br><span class="line">	say () &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span> say`</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> ES6继承时使用 extends 关键字实现继承</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span> </span>&#123;  B继承A类</span><br><span class="line">	<span class="keyword">constructor</span> (x, y, forName, forAge) &#123;</span><br><span class="line">		 注意：在使用ES6的extends关键字之前，必须使用<span class="keyword">super</span>(); <span class="keyword">super</span>表示父类的构造函数</span><br><span class="line">		<span class="keyword">super</span>(forName, forAge);  注意：</span><br><span class="line">		<span class="keyword">this</span>.x = x;</span><br><span class="line">		<span class="keyword">this</span>.y = y;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B(<span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'mabin'</span>, <span class="number">18</span>);</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line">b.say();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ES6的继承原理是：寄生组合式继承</li>
+</ul>
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】<div>
+</div></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/02/22/JavaScript进阶教程8/" data-id="ck3wsxcca0015bkppvjdzv14h" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JavaScript进阶教程7" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/01/17/JavaScript进阶教程7/" class="article-date">
@@ -167,7 +291,96 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/17/JavaScript进阶教程7/" data-id="ck3vs9yv40015swppabooao7e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/17/JavaScript进阶教程7/" data-id="ck3wsxcc40011bkpp5citi8uk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-JavaScript进阶教程6" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/24/JavaScript进阶教程6/" class="article-date">
+  <time datetime="2018-12-24T12:45:03.000Z" itemprop="datePublished">2018-12-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/24/JavaScript进阶教程6/">进阶教程 6. JS 盒子模型属性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、js盒子模型属性"><a href="#一、js盒子模型属性" class="headerlink" title="一、js盒子模型属性"></a>一、js盒子模型属性</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">		* &#123;</span><br><span class="line">			margin: 0;</span><br><span class="line">			padding: 0;</span><br><span class="line">		&#125;</span><br><span class="line">		.box &#123;</span><br><span class="line">			/* css盒子模型属性： context (内容宽高) + padding + border + margin*/</span><br><span class="line">			/*w3c盒模型：内容宽高是不包含padding和border的*/</span><br><span class="line">			/*IE盒模型：宽度包含padding和border*/</span><br><span class="line">			width: 300px;</span><br><span class="line">			height: 1220px;</span><br><span class="line">			background-color: red;</span><br><span class="line">			padding: 50px;</span><br><span class="line">			border: 20px solid blue;</span><br><span class="line">			margin: 50px auto;</span><br><span class="line">			overflow-y: scroll;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span> <span class="attr">id</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">	【联播+】4月8日，习近平等中央领导同志参加了首都义务植树活动。习近平挥锹铲土，扶苗培土，与广大少先队员和市民们一起劳动。植树现场一片热火朝天景象。</span><br><span class="line"></span><br><span class="line">	“我们的根扎在劳动人民之中。”习近平曾这样发自肺腑地说道。</span><br><span class="line"></span><br><span class="line">	1969年初，不满16岁的习近平来到陕北农村插队，一头扎进最基层。在农村生活的7年间，他什么活儿都干过，乡亲们说他是“吃苦耐劳好后生”。</span><br><span class="line"></span><br><span class="line">	从政之后，习近平不改劳动本色，从贫困山村到基层社区，他走进群众中间，一起种树、打糍粑、炸酥肉……所到之处，都留下了他与人民一同劳动的温暖记忆。</span><br><span class="line"></span><br><span class="line">	央视网用八张海报，带你重温过去，感受习近平总书记与人民同劳动的暖心瞬间。</span><br><span class="line">	【联播+】4月8日，习近平等中央领导同志参加了首都义务植树活动。习近平挥锹铲土，扶苗培土，与广大少先队员和市民们一起劳动。植树现场一片热火朝天景象。</span><br><span class="line"></span><br><span class="line">	“我们的根扎在劳动人民之中。”习近平曾这样发自肺腑地说道。</span><br><span class="line"></span><br><span class="line">	1969年初，不满16岁的习近平来到陕北农村插队，一头扎进最基层。在农村生活的7年间，他什么活儿都干过，乡亲们说他是“吃苦耐劳好后生”。</span><br><span class="line"></span><br><span class="line">	从政之后，习近平不改劳动本色，从贫困山村到基层社区，他走进群众中间，一起种树、打糍粑、炸酥肉……所到之处，都留下了他与人民一同劳动的温暖记忆。</span><br><span class="line"></span><br><span class="line">	央视网用八张海报，带你重温过去，感受习近平总书记与人民同劳动的暖心瞬间。</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/4-js盒子模型属性.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>JS盒模型：通过JS中的属性和方法获取元素的属性信息</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> box = <span class="built_in">document</span>.getElementById(<span class="string">'box'</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="client"><a href="#client" class="headerlink" title="client"></a>client</h4><ol>
+<li>clientWidth / clientHeight<br> clientWidth 内容宽度 + 左右padding<br> clientHeight 内容高度 + 上下padding</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.clientWidth);</span><br><span class="line"><span class="built_in">console</span>.log(box.clientHeight);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>clientLeft / clientTop<br> clientLeft 左边框<br>  clientTop 上边框</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.clientLeft);</span><br><span class="line"><span class="built_in">console</span>.log(box.clientTop);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>offsetWidth / offsetHeight<br> offsetWidth = clientWidth(内容宽+左右padding) + 左右边框<br> offsetHeight = clientHeight(内容高+上下padding) + 上下边框</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.offsetWidth);</span><br><span class="line"><span class="built_in">console</span>.log(box.offsetHeight);</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>scroll系列</p>
+<p> scrollLeft(横向滚动条卷去的距离) / scrollTop(纵向滚动条卷去的距离)<br> 滚动条 卷去的距离，默认是0，具体是多少要看滚动条滚动了多少</p>
+</li>
+</ol>
+<ul>
+<li><p>获取浏览器的窗口滚动的距离</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sc = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line"><span class="built_in">console</span>.log(sc);</span><br></pre></td></tr></table></figure>
+
+<p>  scrollHeight/scrollWidth<br>  没有溢出时，scrollHeight/scrollWidth 等于 clientHeight/clientWidth<br>  内容溢出时：scrollHeight = clientHeight + 溢出内容高度;<br>  内容溢出时：scrollWidth= clientWidth + 溢出内容高度;</p>
+</li>
+<li><p>获取浏览器的窗口的盒模型属性：</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> winW = <span class="built_in">document</span>.documentElement.clientWidth || <span class="built_in">document</span>.body.clientWidth;</span><br><span class="line"><span class="keyword">let</span> winH = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">document</span>.body.clientHeight;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">win</span>(<span class="params">attr, val</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">typeof</span> val !== <span class="string">"undefined"</span>) &#123;</span><br><span class="line">		<span class="built_in">document</span>.documentElement[attr] = <span class="built_in">document</span>.body[attr] = val;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">document</span>.documentElement[attr] || <span class="built_in">document</span>.body[attr];</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(win(<span class="string">'scrollTop'</span>));</span><br><span class="line"><span class="built_in">console</span>.log(win(<span class="string">'screenTop'</span>, <span class="number">1000</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、offsetLeft和offsetTop-偏移值"><a href="#四、offsetLeft和offsetTop-偏移值" class="headerlink" title="四、offsetLeft和offsetTop 偏移值"></a>四、offsetLeft和offsetTop 偏移值</h3><ul>
+<li>offsetLeft / offsetTop</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> outer = <span class="built_in">document</span>.getElementById(<span class="string">'outer'</span>);</span><br><span class="line"><span class="keyword">let</span> inner = <span class="built_in">document</span>.getElementById(<span class="string">'inner'</span>);</span><br><span class="line"><span class="keyword">let</span> center = <span class="built_in">document</span>.getElementById(<span class="string">'center'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(inner.offsetParent); <span class="comment">// div#outer</span></span><br><span class="line"><span class="built_in">console</span>.log(center.offsetLeft);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>父级参照物：距离当前元素最近的有定位属性的父级元素，如果没有的话默认body；</p>
+</li>
+<li><p>一般我们需要的是某个元素距离body的offsetLeft，所以就需要一级一级的向上查找</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">offset</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> left = ele.offsetLeft;</span><br><span class="line">	<span class="keyword">let</span> top = ele.offsetTop;</span><br><span class="line">	<span class="keyword">let</span> parent = ele.offsetParent;</span><br><span class="line">	<span class="comment">// 只要找到的父级参照物存在且该参照物不是body就一直向上查找（一直找到body为止</span></span><br><span class="line">	<span class="keyword">while</span> (parent &amp;&amp; parent.nodeName.toLowerCase() !== <span class="string">'body'</span>) &#123;</span><br><span class="line">		left += parent.offsetLeft + parent.clientLeft;</span><br><span class="line">		top += parent.offsetTop + parent.clientTop;</span><br><span class="line">		parent = parent.offsetParent;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		left,</span><br><span class="line">		top</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(offset(center));</span><br></pre></td></tr></table></figure>
+
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程6/" data-id="ck3wsxcbx000vbkppp7t4mf30" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -447,96 +660,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程5/" data-id="ck3vs9yuy0011swpp7g93706k" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript进阶教程6" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/24/JavaScript进阶教程6/" class="article-date">
-  <time datetime="2018-12-24T12:45:03.000Z" itemprop="datePublished">2018-12-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/24/JavaScript进阶教程6/">进阶教程 6. JS 盒子模型属性</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="一、js盒子模型属性"><a href="#一、js盒子模型属性" class="headerlink" title="一、js盒子模型属性"></a>一、js盒子模型属性</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">		* &#123;</span><br><span class="line">			margin: 0;</span><br><span class="line">			padding: 0;</span><br><span class="line">		&#125;</span><br><span class="line">		.box &#123;</span><br><span class="line">			/* css盒子模型属性： context (内容宽高) + padding + border + margin*/</span><br><span class="line">			/*w3c盒模型：内容宽高是不包含padding和border的*/</span><br><span class="line">			/*IE盒模型：宽度包含padding和border*/</span><br><span class="line">			width: 300px;</span><br><span class="line">			height: 1220px;</span><br><span class="line">			background-color: red;</span><br><span class="line">			padding: 50px;</span><br><span class="line">			border: 20px solid blue;</span><br><span class="line">			margin: 50px auto;</span><br><span class="line">			overflow-y: scroll;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span> <span class="attr">id</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">	【联播+】4月8日，习近平等中央领导同志参加了首都义务植树活动。习近平挥锹铲土，扶苗培土，与广大少先队员和市民们一起劳动。植树现场一片热火朝天景象。</span><br><span class="line"></span><br><span class="line">	“我们的根扎在劳动人民之中。”习近平曾这样发自肺腑地说道。</span><br><span class="line"></span><br><span class="line">	1969年初，不满16岁的习近平来到陕北农村插队，一头扎进最基层。在农村生活的7年间，他什么活儿都干过，乡亲们说他是“吃苦耐劳好后生”。</span><br><span class="line"></span><br><span class="line">	从政之后，习近平不改劳动本色，从贫困山村到基层社区，他走进群众中间，一起种树、打糍粑、炸酥肉……所到之处，都留下了他与人民一同劳动的温暖记忆。</span><br><span class="line"></span><br><span class="line">	央视网用八张海报，带你重温过去，感受习近平总书记与人民同劳动的暖心瞬间。</span><br><span class="line">	【联播+】4月8日，习近平等中央领导同志参加了首都义务植树活动。习近平挥锹铲土，扶苗培土，与广大少先队员和市民们一起劳动。植树现场一片热火朝天景象。</span><br><span class="line"></span><br><span class="line">	“我们的根扎在劳动人民之中。”习近平曾这样发自肺腑地说道。</span><br><span class="line"></span><br><span class="line">	1969年初，不满16岁的习近平来到陕北农村插队，一头扎进最基层。在农村生活的7年间，他什么活儿都干过，乡亲们说他是“吃苦耐劳好后生”。</span><br><span class="line"></span><br><span class="line">	从政之后，习近平不改劳动本色，从贫困山村到基层社区，他走进群众中间，一起种树、打糍粑、炸酥肉……所到之处，都留下了他与人民一同劳动的温暖记忆。</span><br><span class="line"></span><br><span class="line">	央视网用八张海报，带你重温过去，感受习近平总书记与人民同劳动的暖心瞬间。</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/4-js盒子模型属性.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>JS盒模型：通过JS中的属性和方法获取元素的属性信息</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> box = <span class="built_in">document</span>.getElementById(<span class="string">'box'</span>);</span><br></pre></td></tr></table></figure>
-
-<h4 id="client"><a href="#client" class="headerlink" title="client"></a>client</h4><ol>
-<li>clientWidth / clientHeight<br> clientWidth 内容宽度 + 左右padding<br> clientHeight 内容高度 + 上下padding</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.clientWidth);</span><br><span class="line"><span class="built_in">console</span>.log(box.clientHeight);</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>clientLeft / clientTop<br> clientLeft 左边框<br>  clientTop 上边框</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.clientLeft);</span><br><span class="line"><span class="built_in">console</span>.log(box.clientTop);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>offsetWidth / offsetHeight<br> offsetWidth = clientWidth(内容宽+左右padding) + 左右边框<br> offsetHeight = clientHeight(内容高+上下padding) + 上下边框</p>
-</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.offsetWidth);</span><br><span class="line"><span class="built_in">console</span>.log(box.offsetHeight);</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><p>scroll系列</p>
-<p> scrollLeft(横向滚动条卷去的距离) / scrollTop(纵向滚动条卷去的距离)<br> 滚动条 卷去的距离，默认是0，具体是多少要看滚动条滚动了多少</p>
-</li>
-</ol>
-<ul>
-<li><p>获取浏览器的窗口滚动的距离</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sc = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line"><span class="built_in">console</span>.log(sc);</span><br></pre></td></tr></table></figure>
-
-<p>  scrollHeight/scrollWidth<br>  没有溢出时，scrollHeight/scrollWidth 等于 clientHeight/clientWidth<br>  内容溢出时：scrollHeight = clientHeight + 溢出内容高度;<br>  内容溢出时：scrollWidth= clientWidth + 溢出内容高度;</p>
-</li>
-<li><p>获取浏览器的窗口的盒模型属性：</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> winW = <span class="built_in">document</span>.documentElement.clientWidth || <span class="built_in">document</span>.body.clientWidth;</span><br><span class="line"><span class="keyword">let</span> winH = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">document</span>.body.clientHeight;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">win</span>(<span class="params">attr, val</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">typeof</span> val !== <span class="string">"undefined"</span>) &#123;</span><br><span class="line">		<span class="built_in">document</span>.documentElement[attr] = <span class="built_in">document</span>.body[attr] = val;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">document</span>.documentElement[attr] || <span class="built_in">document</span>.body[attr];</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(win(<span class="string">'scrollTop'</span>));</span><br><span class="line"><span class="built_in">console</span>.log(win(<span class="string">'screenTop'</span>, <span class="number">1000</span>));</span><br></pre></td></tr></table></figure>
-
-<h3 id="四、offsetLeft和offsetTop-偏移值"><a href="#四、offsetLeft和offsetTop-偏移值" class="headerlink" title="四、offsetLeft和offsetTop 偏移值"></a>四、offsetLeft和offsetTop 偏移值</h3><ul>
-<li>offsetLeft / offsetTop</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> outer = <span class="built_in">document</span>.getElementById(<span class="string">'outer'</span>);</span><br><span class="line"><span class="keyword">let</span> inner = <span class="built_in">document</span>.getElementById(<span class="string">'inner'</span>);</span><br><span class="line"><span class="keyword">let</span> center = <span class="built_in">document</span>.getElementById(<span class="string">'center'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(inner.offsetParent); <span class="comment">// div#outer</span></span><br><span class="line"><span class="built_in">console</span>.log(center.offsetLeft);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>父级参照物：距离当前元素最近的有定位属性的父级元素，如果没有的话默认body；</p>
-</li>
-<li><p>一般我们需要的是某个元素距离body的offsetLeft，所以就需要一级一级的向上查找</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">offset</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> left = ele.offsetLeft;</span><br><span class="line">	<span class="keyword">let</span> top = ele.offsetTop;</span><br><span class="line">	<span class="keyword">let</span> parent = ele.offsetParent;</span><br><span class="line">	<span class="comment">// 只要找到的父级参照物存在且该参照物不是body就一直向上查找（一直找到body为止</span></span><br><span class="line">	<span class="keyword">while</span> (parent &amp;&amp; parent.nodeName.toLowerCase() !== <span class="string">'body'</span>) &#123;</span><br><span class="line">		left += parent.offsetLeft + parent.clientLeft;</span><br><span class="line">		top += parent.offsetTop + parent.clientTop;</span><br><span class="line">		parent = parent.offsetParent;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		left,</span><br><span class="line">		top</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(offset(center));</span><br></pre></td></tr></table></figure>
-
-<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程6/" data-id="ck3vs9yv10013swpp2rjewzp4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程5/" data-id="ck3wsxcbz000xbkppddjverxp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -656,7 +780,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/22/JavaScript进阶教程4/" data-id="ck3vs9yuw000zswppydez81jn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/22/JavaScript进阶教程4/" data-id="ck3wsxcbv000tbkppjml8edvq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -789,7 +913,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/10/07/JavaScript进阶教程3/" data-id="ck3vs9yut000xswppkzeo35tp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/10/07/JavaScript进阶教程3/" data-id="ck3wsxcbs000rbkppht7nshe1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -951,7 +1075,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程1/" data-id="ck3vs9yu0000fswppykqjdz6l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程1/" data-id="ck3wsxcao0003bkpptk3qd31e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1059,7 +1183,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程2/" data-id="ck3vs9yuq000vswppj953hbil" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程2/" data-id="ck3wsxcd2001tbkppun5ilj3x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1241,7 +1365,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/27/JavaScript基础教程8/" data-id="ck3vs9ytw000dswpp6sdopq50" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/08/27/JavaScript基础教程8/" data-id="ck3wsxcb3000abkpp4qc5us98" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1352,194 +1476,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/09/JavaScript基础教程7/" data-id="ck3vs9yts000aswppnj6ulvgr" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript基础教程6" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/06/27/JavaScript基础教程6/" class="article-date">
-  <time datetime="2018-06-27T15:07:06.000Z" itemprop="datePublished">2018-06-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/27/JavaScript基础教程6/">基础教程 6. 数据去重算法、字符串常用方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、数组去重算法"><a href="#一、数组去重算法" class="headerlink" title="一、数组去重算法"></a>一、数组去重算法</h2><h3 id="I-双for循环去重"><a href="#I-双for循环去重" class="headerlink" title="I 双for循环去重"></a>I 双for循环去重</h3><p>思路：</p>
-<ol>
-<li>依次拿出数组中的每一项（排除最后一项：最后一项后面没有需要比较的内容）</li>
-<li>和当前取出向后面的每一项依次比较</li>
-<li>如果发现有重复的，我们把找到的这个重复项在原有数组中删除（ary.splice）</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">4</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ary.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">  <span class="keyword">var</span> item = ary[i];</span><br><span class="line">  <span class="comment">// item: 依次拿出数组的每一项</span></span><br><span class="line">  <span class="comment">// i 当前拿出来的数组项的索引值</span></span><br><span class="line">  <span class="comment">// =&gt; 用当前项和后面的项比较，所以后面的第一项的索引是 i + 1</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> k = i + <span class="number">1</span>; k &lt; ary.length; k++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (item === ary[k]) &#123;</span><br><span class="line">      <span class="comment">// =&gt; 如果我们从容数组中取出来的项和后面的相等说明后面有重复项，所以需要删除当前项</span></span><br><span class="line">      <span class="comment">// ary.splice(k, 1);</span></span><br><span class="line">      <span class="comment">/*</span></span><br><span class="line"><span class="comment">      * 但是直接这样删除后一个问题，就是数组塌陷；当我们把当前项删除后，后面的每一项都要向前移动一个，也就是 原有数组的索引发生了改变，此时我们的k继续累加1，下一次再拿出来的结果就会跳过一位</span></span><br><span class="line"><span class="comment">      * 原数组 [1, 3, 3, 3, 5, 4]</span></span><br><span class="line"><span class="comment">      * 索引：  0  1  2  3  4 5</span></span><br><span class="line"><span class="comment">      * 循环</span></span><br><span class="line"><span class="comment">      * k = 2 后面有重复的3，删除索引为2的位置上的3，删除之后 数组变成：</span></span><br><span class="line"><span class="comment">      *     [1, 3, 3, 5, 4];</span></span><br><span class="line"><span class="comment">      * 索引：0  1  2  3  4</span></span><br><span class="line"><span class="comment">      * 此时，在不删的情况下，原数组中第二个3的索引是2，但是删除后，原来索引为2的那个3的索引变成了1，当i再++时，i就变成了3，所以就会漏掉一项。</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      * */</span></span><br><span class="line">      ary.splice(k, <span class="number">1</span>);</span><br><span class="line">      k--; <span class="comment">// 删除以后不能让k累加了，所以先给k--，然后再++相当于没加没减</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(ary);</span><br></pre></td></tr></table></figure>
-
-<h3 id="II-对象法去重"><a href="#II-对象法去重" class="headerlink" title="II 对象法去重"></a>II 对象法去重</h3><blockquote>
-<p>原理：基于对象的属性名不能重复，我们可以实现高性能的数组去重</p>
-</blockquote>
-<p>步骤：</p>
-<ol>
-<li>创建一个空对象</li>
-<li>遍历数组中的每一项，把数组每一项存储的值，当做对象的属性名和属性值存储起来。形如 {数组项1：数组项1, 数组项2: 数组项2}<br>第一次遍历时：数组项 1, 对象：{1: 1}<br>第二次遍历时：数组项 3, 对象：{1: 1, 3: 3}</li>
-<li>在存储起来做一个判断，判断当前对象中是否存在这个属性了，如果不存在 对象[属性名] 就是undefined，说明这一个数组项在之前没有出现过，没出现就说明没有重复，然后直接存储在对象里。如果在之前出现过了，此时 对象[属性名] 的值就不是undefined，此时就不要存储到对象中，同时删除这一项。</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ary.length; i++) &#123;</span><br><span class="line">  <span class="keyword">var</span> item = ary[i];</span><br><span class="line">  <span class="keyword">if</span> (obj[item] !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="comment">// ary.splice(i, 1); 这种删除方式不好，如果数组很长，我们删除中间的某一项，后面的所有的索引都会重新计算，非常消耗性能。所以我们采用下面这种删除方式：</span></span><br><span class="line">    <span class="comment">// 1. 用数组的最后一项替换当前项</span></span><br><span class="line">    <span class="comment">// 2. 把数组的最后一项删除</span></span><br><span class="line">    <span class="comment">// 例如：数组var ary = [12, 23, 23, 34, 56]  想删除第二个23</span></span><br><span class="line">    <span class="comment">// 先把第二个23获取到 ary[2]</span></span><br><span class="line">    <span class="comment">// 再把数组的最后一项获取到：ary[ary.length - 1]</span></span><br><span class="line">    <span class="comment">// 然后再把23换成数组最后一项，ary[2] = ary[ary.length - 1]</span></span><br><span class="line">    <span class="comment">// 最后删除最后一项: ary.length--;</span></span><br><span class="line"></span><br><span class="line">    ary[i] = ary[ary.length - <span class="number">1</span>]; <span class="comment">// ary[i] 就是当前项，并且和再此之前已经重复过了</span></span><br><span class="line">    ary.length--;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 否则的情况就是：数组当前项在之前没有重复过，此时需要存储到对象里面</span></span><br><span class="line">    obj[item] = item</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、字符串常用方法"><a href="#二、字符串常用方法" class="headerlink" title="二、字符串常用方法"></a>二、字符串常用方法</h2><h3 id="字符串特点："><a href="#字符串特点：" class="headerlink" title="字符串特点："></a>字符串特点：</h3><blockquote>
-<p>字符串：字符串是被单引号或双引号包裹的零到多个字符。是js中基本数据类型。<br>在字符串中的每个字符，浏览器也都给他们分配了一个索引，第一字符的索引是0，第二字符的索引是1，第三个字符的索引是2…,所以通过 字符串[索引]的方式可以获取对应索引位置的字符。<br>字符串也是有length属性的，代表字符串中字符的个数;</p>
-</blockquote>
-<p><code>tips: 有长度、有索引是不是可以用通过for 循环遍历它？</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'江外琉璃EverestTraining'</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="字符串常用方法"><a href="#字符串常用方法" class="headerlink" title="字符串常用方法"></a>字符串常用方法</h3><h4 id="I-通过制定索引获取字符或ASCII"><a href="#I-通过制定索引获取字符或ASCII" class="headerlink" title="I 通过制定索引获取字符或ASCII"></a>I 通过制定索引获取字符或ASCII</h4><ul>
-<li>1.1 charAt(index) 获取字符串中索引为index的字符。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = str.charAt(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">console</span>.log(s);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>1.2 charCodeAt(index) 获取字符串中指定索引位置的字符的Unicode编码值，返回的是一个 0 - 65535的整数</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> code = str.charCodeAt(<span class="number">5</span>); <span class="comment">// 69</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="II-复制和截取字符串"><a href="#II-复制和截取字符串" class="headerlink" title="II 复制和截取字符串"></a>II 复制和截取字符串</h4><ul>
-<li>2.1 substr(n, m); 从n开始截取m个，若不写m，则截取到末尾。如果n和m都不写，这截取全部；</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s1 = str.substr(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"><span class="keyword">var</span> s2 = str.substr(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">var</span> s3 = str.substr();</span><br><span class="line"><span class="built_in">console</span>.log(s1, s2, s3);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>2.2 substring(n, m); 从索引n开始截取，截取到索引为m结束（不包含m），如果只写n，是从n开始截取到末尾；如果一个都不写，那就是截取全部；</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> s4 = str.substring(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line"><span class="keyword">var</span> s5 = str.substring(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">var</span> s6 = str.substr();</span><br><span class="line"><span class="built_in">console</span>.log(s4, s5, s6);</span><br></pre></td></tr></table></figure>
-
-<h3 id="III-转换大小写（只能转英文字母）"><a href="#III-转换大小写（只能转英文字母）" class="headerlink" title="III. 转换大小写（只能转英文字母）"></a>III. 转换大小写（只能转英文字母）</h3><ul>
-<li>3.1 大写转成小写 toLowerCase()</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s7 = <span class="string">'A'</span>.toLocaleLowerCase();</span><br><span class="line"><span class="built_in">console</span>.log(s7);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>3.2 小写转大写 toUpperCase()</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s8 = <span class="string">'a'</span>.toUpperCase();</span><br><span class="line"><span class="built_in">console</span>.log(s8);</span><br></pre></td></tr></table></figure>
-
-<h4 id="IV-获取指定字符在字符串中出现的位置"><a href="#IV-获取指定字符在字符串中出现的位置" class="headerlink" title="IV. 获取指定字符在字符串中出现的位置"></a>IV. 获取指定字符在字符串中出现的位置</h4><ul>
-<li>4.1 indexOf() 获取字符在字符串中首次出现的位置，如果字符串中不包含这个字符，则返回-1</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> idx1 = str.indexOf(<span class="string">'珠'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(idx1);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>4.2 lastIndexOf() 获取字符在字符串中最后一次出现的位置，如果字符串中不包含这个字符，则返回-1</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> idx2 = str.indexOf(<span class="string">'E'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(idx2);</span><br></pre></td></tr></table></figure>
-
-<h4 id="V-split-按照指定的分隔符把字符串拆分成数组-数组中的join方法这个相反，join是根据指定的分隔符数组项拼接成字符串"><a href="#V-split-按照指定的分隔符把字符串拆分成数组-数组中的join方法这个相反，join是根据指定的分隔符数组项拼接成字符串" class="headerlink" title="V. split() 按照指定的分隔符把字符串拆分成数组(数组中的join方法这个相反，join是根据指定的分隔符数组项拼接成字符串)"></a>V. split() 按照指定的分隔符把字符串拆分成数组(数组中的join方法这个相反，join是根据指定的分隔符数组项拼接成字符串)</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str2 = <span class="string">'I am a Front-end Engineer'</span>;</span><br><span class="line"><span class="keyword">var</span> ary = str2.split(<span class="string">' '</span>); <span class="comment">// 根据空格把 str2 拆分成一个数组</span></span><br><span class="line"><span class="built_in">console</span>.log(ary);</span><br></pre></td></tr></table></figure>
-
-<h4 id="VI-replace-字符串替换"><a href="#VI-replace-字符串替换" class="headerlink" title="VI. replace() 字符串替换"></a>VI. replace() 字符串替换</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str3 = <span class="string">'zhufeng培训'</span>;</span><br><span class="line"><span class="comment">// 5.1 replace(old, new)</span></span><br><span class="line"><span class="keyword">var</span> s9 = str3.replace(<span class="string">'zhufeng'</span>, <span class="string">'江外'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(s9);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5.2 replace(old, function () &#123; return new&#125;)</span></span><br><span class="line"><span class="keyword">var</span> s10 = str3.replace(<span class="string">'zhufeng'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'江外'</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(s10);</span><br></pre></td></tr></table></figure>
-
-<h4 id="VII-match-匹配，如果匹配到，就返回一个数组，如果匹配不到就返回null"><a href="#VII-match-匹配，如果匹配到，就返回一个数组，如果匹配不到就返回null" class="headerlink" title="VII. match() 匹配，如果匹配到，就返回一个数组，如果匹配不到就返回null"></a>VII. match() 匹配，如果匹配到，就返回一个数组，如果匹配不到就返回null</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str4 = <span class="string">'abcdefabcggg'</span>;</span><br><span class="line"><span class="keyword">var</span> ary2 = str4.match(<span class="string">'abc'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary2);</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、Math对象"><a href="#三、Math对象" class="headerlink" title="三、Math对象"></a>三、Math对象</h2><blockquote>
-<p>Math对象，是浏览器中内置的专门处理数学计算的对象，Math内置了很多的数学方法。</p>
-</blockquote>
-<h4 id="1-Math-abs-获取绝对值"><a href="#1-Math-abs-获取绝对值" class="headerlink" title="1. Math.abs(); 获取绝对值"></a>1. Math.abs(); 获取绝对值</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m1 = <span class="built_in">Math</span>.abs(<span class="number">-12.5</span>);</span><br><span class="line"><span class="keyword">var</span> m2 = <span class="built_in">Math</span>.abs(<span class="number">12.5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(m1, m2);</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-Math-floor-向下取整"><a href="#2-Math-floor-向下取整" class="headerlink" title="2. Math.floor();  向下取整"></a>2. Math.floor();  向下取整</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m3 = <span class="built_in">Math</span>.abs(<span class="number">12.5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(m3);</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-Math-ceil-向上取整"><a href="#3-Math-ceil-向上取整" class="headerlink" title="3. Math.ceil(); 向上取整"></a>3. Math.ceil(); 向上取整</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m4 = <span class="built_in">Math</span>.ceil(<span class="number">12.5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(m4);</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-Math-round-四舍五入"><a href="#4-Math-round-四舍五入" class="headerlink" title="4. Math.round() 四舍五入"></a>4. Math.round() 四舍五入</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m5 = <span class="built_in">Math</span>.round(<span class="number">2.3</span>);</span><br><span class="line"><span class="keyword">var</span> m6 = <span class="built_in">Math</span>.round(<span class="number">3.7</span>);</span><br><span class="line"><span class="comment">// 注意：负数是四舍六入</span></span><br><span class="line"><span class="keyword">var</span> m7 = <span class="built_in">Math</span>.round(<span class="number">-2.4</span>);</span><br><span class="line"><span class="keyword">var</span> m8 = <span class="built_in">Math</span>.round(<span class="number">-2.6</span>);</span><br><span class="line"><span class="built_in">console</span>.log(m5, m6, m7, m8);</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-Math-random-生成一个0-1之间的随机小数"><a href="#5-Math-random-生成一个0-1之间的随机小数" class="headerlink" title="5. Math.random() 生成一个0-1之间的随机小数"></a>5. Math.random() 生成一个0-1之间的随机小数</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m9 = <span class="built_in">Math</span>.random();</span><br><span class="line"><span class="built_in">console</span>.log(m9);</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-2-生成一个n-m之间的随机数，不包含m。-n-m-【左开右闭区间】的随机数"><a href="#5-2-生成一个n-m之间的随机数，不包含m。-n-m-【左开右闭区间】的随机数" class="headerlink" title="5.2 生成一个n-m之间的随机数，不包含m。[n,m) 【左开右闭区间】的随机数"></a>5.2 生成一个n-m之间的随机数，不包含m。[n,m) 【左开右闭区间】的随机数</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n, m;</span><br><span class="line"><span class="keyword">var</span> ran = <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random() * (m - n) + n);</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>思考：如何获取一个字符串里随机的一个字符？</p>
-</blockquote>
-<h4 id="6-Math-sqrt-n-获取的n的算术平方根"><a href="#6-Math-sqrt-n-获取的n的算术平方根" class="headerlink" title="6. Math.sqrt(n) 获取的n的算术平方根"></a>6. Math.sqrt(n) 获取的n的算术平方根</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m10 = <span class="built_in">Math</span>.sqrt(<span class="number">9</span>);</span><br><span class="line"><span class="built_in">console</span>.log(m10); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="7-Math-PI-获取圆周率"><a href="#7-Math-PI-获取圆周率" class="headerlink" title="7. Math.PI 获取圆周率"></a>7. Math.PI 获取圆周率</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pi = <span class="built_in">Math</span>.PI();</span><br><span class="line"><span class="built_in">console</span>.log(pi);</span><br><span class="line"><span class="built_in">console</span>.log(pi.toFixed(<span class="number">2</span>)); <span class="comment">//给Math.PI() 保留2位小数； toFixed(x)是number的方法，作用：保留x位小数</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="四、随即验证码"><a href="#四、随即验证码" class="headerlink" title="四、随即验证码"></a>四、随即验证码</h2><h3 id="基础版"><a href="#基础版" class="headerlink" title="基础版"></a>基础版</h3><ul>
-<li>需求：</li>
-</ul>
-<ol>
-<li>生成一个4位的随机验证码</li>
-<li>把验证码插入到页面中展示出来<br>原理：<br>分析需求：</li>
-<li>我们学习过的能够随机的只有随机数，我们需要通过数字和字符连接起来。</li>
-<li>而字符串和数字有关联的就是索引和length，而字符和索引数字是一一对应的，我们要是生成一个随机数字，然后通过字符串索引取得这个随机数对应的字符，就可以达到随机字符的目的，既然是</li>
-<li>我们需要4个，就是说上面的事情需要干4回，显然需要一个for循环</li>
-</ol>
-<ul>
-<li>具体步骤：</li>
-</ul>
-<ol>
-<li>准备随机范围A-Z a-z 0-9</li>
-<li>设置一空字符串，后面得到的字符都拼接到这个空字符串上</li>
-<li>设置for循环，循环四次</li>
-<li>获取页面中的div元素对象</li>
-<li>通过设置div的innerHTML属性，把验证码插入到页面中</li>
-</ol>
-<p>HTML代码：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>江外-随机验证码<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"codeBox"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/7-随机验证码while循环版.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> strbase = <span class="string">'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> code = <span class="string">''</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">  <span class="comment">// 1.</span></span><br><span class="line">  <span class="keyword">var</span> ran = <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random() * (strbase.length - <span class="number">0</span>) + <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">var</span> char = strbase[ran];</span><br><span class="line">  code += char;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> codeBox = <span class="built_in">document</span>.getElementById(<span class="string">'codeBox'</span>);</span><br><span class="line">codeBox.innerHTML = code;</span><br></pre></td></tr></table></figure>
-
-<h3 id="不重复验证码"><a href="#不重复验证码" class="headerlink" title="不重复验证码"></a>不重复验证码</h3><ul>
-<li><p>需求：不重复验证码，A和a算重复</p>
-</li>
-<li><p>分析：</p>
-</li>
-</ul>
-<ol>
-<li>我们之所以会重复，是因为随机出字符串后拼接之前没有检查在已有的验证码中是否已经存在相同字符；所以我们需要在拼接之前需要检查当前字符在已有的验证码字符串中是否放出现过（indexOf）</li>
-<li>如何解决大小写也算重复呢？这样解决，我们把已经有的验证码全部转成大写，然后把我们本次获得字符也转成大写（toUpperCase）然后再判断是否出现过。如果没有出现过再拼接，如果出现过就不拼接。</li>
-<li>如果出现过了，对于for循环来说已经跑了一轮了，此时不能给i ++，因为我们本轮没有获得有效的字符。如果++了就会导致如果出现重复了，有一次的字符没有拼接，最后循环四次只有三个字符。</li>
-<li>为了解决3中中说的问题，我们不是直接在for循环中i++了，我们在满足拼接条件，成功拼接后i++</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validateCode</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> strbase = <span class="string">'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789'</span>;</span><br><span class="line">  <span class="keyword">var</span> code = <span class="string">''</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>;) &#123;</span><br><span class="line">    <span class="comment">// 1.</span></span><br><span class="line">    <span class="keyword">var</span> ran = <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random() * (strbase.length - <span class="number">0</span>) + <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">var</span> char = strbase[ran];</span><br><span class="line">    <span class="keyword">var</span> upperChar = char.toUpperCase();</span><br><span class="line">    <span class="keyword">var</span> upperCode = code.toUpperCase();</span><br><span class="line">    <span class="keyword">if</span> (upperCode.indexOf(upperChar) === <span class="number">-1</span>) &#123;</span><br><span class="line">      code += char;</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> code;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ranCode = validateCode();</span><br><span class="line"><span class="keyword">var</span> codeBox = <span class="built_in">document</span>.getElementById(<span class="string">'codeBox'</span>);</span><br><span class="line">codeBox.innerHTML = ranCode;</span><br></pre></td></tr></table></figure>
-
-<h3 id="不重复验证码while循环版"><a href="#不重复验证码while循环版" class="headerlink" title="不重复验证码while循环版"></a>不重复验证码while循环版</h3><h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><blockquote>
-<p>js中还有一种循环，就是while循环， while单词的意思是当…的时候一直做某件事情，一直到条件不成立。</p>
-</blockquote>
-<blockquote>
-<p>所以while循环表示只要条件成立就会执行循环体里面的代码。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (循环的条件) &#123;</span><br><span class="line">    循环体</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p> 思考：while循环的条件时什么？只要不满足什么条件我们就该一直循环？<br>? 我们循环干什么？获取验证码<br>? 验证码有什么要求？4位不重复的<br>? 我们在循环中判断重复与否，如果不重复，就拼接给code字符串，这个时候相当于获取到一个有效的字符串。如果我们获得字符串在之前已经存在过，这相当于我们没有获取到有效字符，所以就需要继续再来一次。重复执行这个操作，直到什么时候就不再找了？是已经获取到了4位验证码了。所以此时就该停止循环了</p>
-</blockquote>
-<blockquote>
-<p>所以停止的条件是 code.length &lt; 4 即只要code的字符串个数小于4就该接着随机</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validateCode</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> strbase = <span class="string">'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789'</span>;</span><br><span class="line">  <span class="keyword">var</span> code = <span class="string">''</span>;</span><br><span class="line">  <span class="keyword">while</span> (code.length &lt; <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ran = <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random() * (strbase.length - <span class="number">0</span>) + <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">var</span> char = strbase[ran];</span><br><span class="line">    <span class="keyword">var</span> upperChar = char.toUpperCase();</span><br><span class="line">    <span class="keyword">var</span> upperCode = code.toUpperCase();</span><br><span class="line">    <span class="keyword">if</span> (upperCode.indexOf(upperChar) === <span class="number">-1</span>) &#123;</span><br><span class="line">      code += char;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> code;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> codeBox = <span class="built_in">document</span>.getElementById(<span class="string">'codeBox'</span>);</span><br><span class="line">codeBox.innerHTML = validateCode();</span><br></pre></td></tr></table></figure>
-
-<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行</div>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/27/JavaScript基础教程6/" data-id="ck3vs9ytj0005swpp5f7w7tii" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/09/JavaScript基础教程7/" data-id="ck3wsxcb9000fbkpp8goq97dx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1579,7 +1516,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 17.5px;">Vue</a> <a href="/tags/es6/" style="font-size: 15px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 12.5px;">webpack</a>
     </div>
   </div>
 
@@ -1601,6 +1538,10 @@
       <ul>
         
           <li>
+            <a href="/2019/12/08/webpack掠影-2/">webpack掠影-2</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/07/webpack掠影-1/">webpack掠影-1</a>
           </li>
         
@@ -1614,10 +1555,6 @@
         
           <li>
             <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 14. 跨域和同源策略</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/29/JavaScript进阶教程13/">进阶教程 13. ajax的前世今生</a>
           </li>
         
       </ul>
