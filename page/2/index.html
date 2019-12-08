@@ -67,6 +67,195 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaScript进阶教程9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/15/JavaScript进阶教程9/" class="article-date">
+  <time datetime="2019-03-15T11:55:12.000Z" itemprop="datePublished">2019-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/15/JavaScript进阶教程9/">进阶教程 9. DOM 事件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="DOM事件"><a href="#DOM事件" class="headerlink" title="DOM事件"></a>DOM事件</h2><h3 id="事件及常见的事件"><a href="#事件及常见的事件" class="headerlink" title="事件及常见的事件"></a>事件及常见的事件</h3><blockquote>
+<p>事件：文档（html元素及document）或者浏览器的窗口发生的一些特定的交互瞬间；可以监听这些事件，来实现在事件发生时执行特定的操作；</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> btn = <span class="built_in">document</span>.querySelector(<span class="string">'.btn'</span>);</span><br><span class="line"><span class="keyword">let</span> box = <span class="built_in">document</span>.querySelector(<span class="string">'.box'</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="常见的事件："><a href="#常见的事件：" class="headerlink" title="常见的事件："></a>常见的事件：</h4><ul>
+<li><p>1.1 鼠标事件：鼠标动作时触发的事件</p>
+<ul>
+<li>元素.onclick = function() {} 单击事件</li>
+<li>元素.ondbclick = function () {} 双击事件</li>
+<li>元素.onmouseenter = function () {} 鼠标移入</li>
+<li>元素.onmouseleave = function () {} 鼠标移出</li>
+<li>元素.onmouseover = function () {} 鼠标滑过</li>
+<li>元素.onmouseout = function () {} 鼠标划出</li>
+<li>元素.onmousemove = function () {} 鼠标移动</li>
+<li>元素.onmousedown = function () {} 鼠标按下</li>
+<li>元素.onmmouseup = function () {} 鼠标抬起</li>
+<li>元素.onmousewheel = function () {} 鼠标滚轮滚动</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">box.onmouseover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">1111</span>)</span><br><span class="line">&#125;;</span><br><span class="line">box.onmouseout = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">2222</span>)</span><br><span class="line">&#125;;</span><br><span class="line">box.onmousedown = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'3333'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">box.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">4444</span>)</span><br><span class="line">&#125;;</span><br><span class="line">box.onmousewheel = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">555</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.2  键盘事件：一般inputtextareadocument.bodydocumentwindowdocument.documentElement监听键盘事件<ul>
+<li>元素.onkeydown = function() {} 键盘按下</li>
+<li>元素.onkeyup = function () {} 键盘抬起</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> input = <span class="built_in">document</span>.querySelector(<span class="string">'#input'</span>);</span><br><span class="line">input.onkeydown = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'123'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">document</span>.onkeyup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'keyup'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.onkeydown = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'window key down'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.3 表单元素事件<ul>
+<li>onfocus 获取焦点（光标）事件</li>
+<li>onblur 失去焦点时触发</li>
+<li>onchange 事件，表单的值（value）发生改变时触发</li>
+<li>oninput input、textarea等元素的输入事件</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">input.onfocus = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'获取焦点'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">input.onblur = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'失去焦点'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">input.oninput = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.value);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.4 系统事件：<ul>
+<li>window.onload 页面中所有的资源全部加载完触发</li>
+<li>window.onresize 当前窗口尺寸发生改变时触发</li>
+<li>window.onsroll 滚动条滚动时触发</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onresize = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'变了、变了'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>1.5 移动端事件`<br>ontouchstart 触摸元素时触发<br>ontouchend 离开元素时触发<br>ontouchmove 滑动时触发</p>
+</li>
+<li><p>移动端使用click大概有300ms的延迟</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">box.ontouchstart = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'start'</span>);</span><br><span class="line">&#125;;</span><br><span class="line">box.ontouchend = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'end'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-事件对象"><a href="#1-2-事件对象" class="headerlink" title="1.2 事件对象"></a>1.2 事件对象</h4><blockquote>
+<p>在事件触发时，浏览器传递给事件函数的实参；其中包含了本次事件触发的具体信息；</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> box = <span class="built_in">document</span>.querySelector(<span class="string">'.box'</span>);</span><br><span class="line"></span><br><span class="line">box.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(e);  MouseEvent e一般称为事件对象，</span><br><span class="line">	 e.clientX 鼠标点击的位置相对于当前浏览器可视窗口的 左偏移值</span><br><span class="line">	 e.clientY 鼠标点击位置相对于当前浏览器可视窗口的 上偏移值</span><br><span class="line">	 e.pageX 鼠标点击位置相对于body左边缘的偏移值</span><br><span class="line">	 e.pageY 鼠标点击位置相对于body上边缘的偏移值</span><br><span class="line">	 e.target 触发事件的元素（点击事件中是点击的元素）对象，称为事件源</span><br><span class="line"></span><br><span class="line">	 IE事件触发时把事件信息挂载在<span class="built_in">window</span>.event  这个属性上</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.onkeydown = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	 键盘事件 KeyboardEvent </span><br><span class="line">	<span class="built_in">console</span>.log(e);</span><br><span class="line">	<span class="built_in">console</span>.log(e.keyCode);</span><br><span class="line">	 e.keyCode 键码：键盘上每个键对应一个键码，当keydown事件触发时，</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-默认事件和默认行为"><a href="#1-3-默认事件和默认行为" class="headerlink" title="1.3 默认事件和默认行为"></a>1.3 默认事件和默认行为</h4><blockquote>
+<p>有些元素时由默认行为的，如a标签点击会跳转。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> baidu = <span class="built_in">document</span>.getElementById(<span class="string">'baidu'</span>);</span><br><span class="line"> 阻止默认行为：</span><br><span class="line">baidu.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	alert(<span class="number">111</span>);</span><br><span class="line">	e.preventDefault();  阻止元素的事件默认行为</span><br><span class="line">	 IE 低版本：e.returnValue = <span class="literal">false</span></span><br><span class="line">	 <span class="keyword">return</span> <span class="literal">false</span>;  <span class="keyword">return</span> <span class="literal">false</span>也可以阻止默认行为</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-4-事件传播："><a href="#1-4-事件传播：" class="headerlink" title="1.4 事件传播："></a>1.4 事件传播：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> $ = <span class="function">(<span class="params">selector</span>) =&gt;</span> <span class="built_in">document</span>.querySelector(selector);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> outer = $(<span class="string">'.outer'</span>);</span><br><span class="line"><span class="keyword">let</span> inner = $(<span class="string">'.inner'</span>);</span><br><span class="line"><span class="keyword">let</span> center = $(<span class="string">'.center'</span>);</span><br><span class="line"><span class="built_in">document</span>.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'document'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">outer.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">inner.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">center.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'center'</span>);</span><br><span class="line">	e.stopPropagation();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>点击center会触发center的点击事件，同时inner和outer的以及更高层级的元素的点击事件也会被触发。这种现象称为事件的冒泡机制；</li>
+</ul>
+<p>事件的触发过程：事件的触发分为两个三个阶段：捕获阶段、目标阶段、冒泡阶段。在事件触发时，浏览器先从最外层的元素开始找，一直找到事件源的过程称为捕获阶段，触发事件源绑定事件后开始向上冒泡，依次触发父级元素的该事件；</p>
+<ul>
+<li><p>元素.onXXX = func… 绑定的事件都是DOM0级事件，DOM0级事件都是绑定再冒泡阶段的。</p>
+</li>
+<li><p>取消冒泡：e.stopPropagation()</p>
+<ul>
+<li>IE低版本：e.cancelBubble = true;</li>
+<li>取消冒泡后，事件不会再向上传播；更高层级的元素的对应事件不会触发；</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-5-onmouseover和mouseenter"><a href="#1-5-onmouseover和mouseenter" class="headerlink" title="1.5 onmouseover和mouseenter"></a>1.5 onmouseover和mouseenter</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> $ = <span class="function"><span class="params">selector</span> =&gt;</span> <span class="built_in">document</span>.querySelector(selector);</span><br><span class="line"><span class="keyword">let</span> inner = $(<span class="string">'.inner'</span>);</span><br><span class="line"><span class="keyword">let</span> outer = $(<span class="string">'.outer'</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mouseover</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">inner.onmouseover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner over'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">inner.onmouseout = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner out'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">outer.onmouseover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer over'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">outer.onmouseout = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer out'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mouseenter</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">inner.onmousenter = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner enter'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">inner.onmouseleave = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner leave'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">outer.onmouseenter = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer enter'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">outer.onmouseleave = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer leave'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>mouseenter &amp; mouseover的区别：</p>
+<ol>
+<li><p>over属于划过事件，从父元素进入子元素，属于离开了父元素，会触发父元素的out事件，然后触发子元素的over事件；</p>
+</li>
+<li><p>enter属于进入，从父元素进入子元素，不算离开父元素，不会触发父元素的leave事件；</p>
+</li>
+<li><p>enter和leave是阻止了事件冒泡的，而over和out还存在冒泡传播；</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>__ 所以对于父子嵌套的这种情况，使用over会触发很多不可控的情况，使用enter更加简单。__</p>
+<h3 id="二、-onload和DOMContentLoaded"><a href="#二、-onload和DOMContentLoaded" class="headerlink" title="二、 onload和DOMContentLoaded"></a>二、 onload和DOMContentLoaded</h3><ul>
+<li><ol>
+<li>onload事件：加载成功后执行</li>
+</ol>
+</li>
+<li><p>window.onlaod 是页面中所有的资源（css、js、图片等）全部加载完成后才会触发：</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'加载完成了'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol start="2">
+<li>DOMContentLoaded: 只要页面中的DOM结构加载完成后就可以触发</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'DOM结构加载完成了'</span>)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>JS是用来操作DOM的，一般需要在DOM加载结束以后再执行JS。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 以后经常有人会这样写代码，把js这在这个函数中，表示DOM结构加载完成后再执行</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、事件委托"><a href="#三、事件委托" class="headerlink" title="三、事件委托"></a>三、事件委托</h3><ul>
+<li>页面中有10个li，点击哪个li，就弹出该li的文本内容</li>
+</ul>
+<p>let liList = document.querySelectorAll(‘#list &gt; li’);</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; liList.length; i++) &#123;</span><br><span class="line">	liList[i].onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.innerText);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>利用事件委托：把事件绑定给父级元素或者更高级元素，然后根据e.target事件源作出不同操作；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> list = <span class="built_in">document</span>.querySelector(<span class="string">'#list'</span>);</span><br><span class="line">list.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> &#123; target &#125; = e;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 一般根据事件源的tagName来区分当前点击的是哪个元素</span></span><br><span class="line">	<span class="keyword">if</span> (target.tagName.toLowerCase() === <span class="string">'li'</span>) &#123;</span><br><span class="line">		alert(target.innerText);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>循环绑定事件的效率低，而且不适用于动态绑定的数据。</li>
+<li>事件委托：利用的是事件的冒泡传播机制，给里面的每个子元素绑定相同的事件行为，把事件绑定给他们共同的上级元素，然后利用e.target区分具体触发事件的元素，然后做不同的操作；</li>
+</ul>
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/15/JavaScript进阶教程9/" data-id="ck3wwl2u30019s0pp3ariyv7u" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JavaScript进阶教程8" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/02/22/JavaScript进阶教程8/" class="article-date">
@@ -179,7 +368,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/22/JavaScript进阶教程8/" data-id="ck3wwixuq0015mkpp71cxjhwt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/22/JavaScript进阶教程8/" data-id="ck3wwl2u10017s0pp68fe2cnv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -291,7 +480,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/17/JavaScript进阶教程7/" data-id="ck3wwixuo0013mkppbe78gl1k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/17/JavaScript进阶教程7/" data-id="ck3wwl2tz0015s0ppc5zxtcmb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -571,7 +760,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程5/" data-id="ck3wwixuk000zmkppcp0jg714" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程5/" data-id="ck3wwl2tu0011s0pppchsdzqq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -660,7 +849,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程6/" data-id="ck3wwixum0011mkpp21dx8xsi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程6/" data-id="ck3wwl2tw0013s0ppvl3p88pb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -780,7 +969,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/22/JavaScript进阶教程4/" data-id="ck3wwixuj000xmkppi4c21kff" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/22/JavaScript进阶教程4/" data-id="ck3wwl2tt000zs0ppnl8nz8tq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -913,7 +1102,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/10/07/JavaScript进阶教程3/" data-id="ck3wwixug000vmkppmc1h5v29" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/10/07/JavaScript进阶教程3/" data-id="ck3wwl2tp000vs0pp8sk4nwxs" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1075,7 +1264,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程1/" data-id="ck3wwixtr000dmkpp4yhvo7p9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程1/" data-id="ck3wwl2t0000fs0pprydv9vis" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1183,7 +1372,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程2/" data-id="ck3wwixud000tmkppcoehb7tw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程2/" data-id="ck3wwl2tr000xs0pphqe491re" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1365,118 +1554,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/27/JavaScript基础教程8/" data-id="ck3wwixw8002mmkpp3ecmodrz" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript基础教程7" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/07/09/JavaScript基础教程7/" class="article-date">
-  <time datetime="2018-07-09T15:07:06.000Z" itemprop="datePublished">2018-07-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/09/JavaScript基础教程7/">基础教程 6. Date 类型和定时器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、Date类型"><a href="#一、Date类型" class="headerlink" title="一、Date类型"></a>一、Date类型</h2><h3 id="1-js中获去日期时间"><a href="#1-js中获去日期时间" class="headerlink" title="1. js中获去日期时间"></a>1. js中获去日期时间</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>(); <span class="comment">// Date是一个类型，我们通过new操作符获取Date的实例</span></span><br><span class="line"><span class="built_in">console</span>.log(date); <span class="comment">// 这个date是标准的时间格式</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> date); <span class="comment">// date实例是一个对象数据类型的值</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-Date实例方法"><a href="#2-Date实例方法" class="headerlink" title="2. Date实例方法"></a>2. Date实例方法</h3><h4 id="2-1-getFullYear-获取4位年份，返回4位年份"><a href="#2-1-getFullYear-获取4位年份，返回4位年份" class="headerlink" title="2.1 getFullYear() 获取4位年份，返回4位年份"></a>2.1 getFullYear() 获取4位年份，返回4位年份</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> year = date.getFullYear();</span><br><span class="line"><span class="built_in">console</span>.log(year);</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-2-getMonth-获取月份，返回0-11的数字，0代表1月份，11代表12月份"><a href="#2-2-getMonth-获取月份，返回0-11的数字，0代表1月份，11代表12月份" class="headerlink" title="2.2 getMonth() 获取月份，返回0-11的数字，0代表1月份，11代表12月份"></a>2.2 getMonth() 获取月份，返回0-11的数字，0代表1月份，11代表12月份</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> month = date.getMonth();</span><br><span class="line"><span class="built_in">console</span>.log(month);</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-3-getDay-获取星期几，返回0-6的数字-0代表周日，6代表周六"><a href="#2-3-getDay-获取星期几，返回0-6的数字-0代表周日，6代表周六" class="headerlink" title="2.3 getDay() 获取星期几，返回0-6的数字 0代表周日，6代表周六"></a>2.3 getDay() 获取星期几，返回0-6的数字 0代表周日，6代表周六</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> weekday = date.getDay();</span><br><span class="line"><span class="built_in">console</span>.log(weekday);</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-4-getDate-获取今天是几号-今天几号就返回几"><a href="#2-4-getDate-获取今天是几号-今天几号就返回几" class="headerlink" title="2.4 getDate() 获取今天是几号 今天几号就返回几"></a>2.4 getDate() 获取今天是几号 今天几号就返回几</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> today = date.getDate();</span><br><span class="line"><span class="built_in">console</span>.log(today);</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-6-getHours-获取当前几点的小时数，返回0-23的数字，代表0点到23点"><a href="#2-6-getHours-获取当前几点的小时数，返回0-23的数字，代表0点到23点" class="headerlink" title="2.6 getHours() 获取当前几点的小时数，返回0-23的数字，代表0点到23点"></a>2.6 getHours() 获取当前几点的小时数，返回0-23的数字，代表0点到23点</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hour = date.getHours();</span><br><span class="line"><span class="built_in">console</span>.log(hour);</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-7-getMinutes-获取当前几点的分钟数，现在是几分就返回几"><a href="#2-7-getMinutes-获取当前几点的分钟数，现在是几分就返回几" class="headerlink" title="2.7 getMinutes() 获取当前几点的分钟数，现在是几分就返回几"></a>2.7 getMinutes() 获取当前几点的分钟数，现在是几分就返回几</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> min = date.getMinutes();</span><br><span class="line"><span class="built_in">console</span>.log(min);</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-8-getSeconds-获取当前几点的秒数，是几秒就返回几"><a href="#2-8-getSeconds-获取当前几点的秒数，是几秒就返回几" class="headerlink" title="2.8 getSeconds() 获取当前几点的秒数，是几秒就返回几"></a>2.8 getSeconds() 获取当前几点的秒数，是几秒就返回几</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sec = date.getSeconds();</span><br><span class="line"><span class="built_in">console</span>.log(sec);</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-9-getMilliseconds-获取当前时间的毫秒数，是几毫秒就返回几"><a href="#2-9-getMilliseconds-获取当前时间的毫秒数，是几毫秒就返回几" class="headerlink" title="2.9 getMilliseconds() 获取当前时间的毫秒数，是几毫秒就返回几"></a>2.9 getMilliseconds() 获取当前时间的毫秒数，是几毫秒就返回几</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mills = date.getMilliseconds();</span><br><span class="line"><span class="built_in">console</span>.log(mills);</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-10-getTime-获取时间戳，时间戳是当前时刻距离1970年1月1日0时0分0秒的毫秒数"><a href="#2-10-getTime-获取时间戳，时间戳是当前时刻距离1970年1月1日0时0分0秒的毫秒数" class="headerlink" title="2.10 getTime() 获取时间戳，时间戳是当前时刻距离1970年1月1日0时0分0秒的毫秒数"></a>2.10 getTime() 获取时间戳，时间戳是当前时刻距离1970年1月1日0时0分0秒的毫秒数</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timeStamp = date.getTime();</span><br><span class="line"><span class="built_in">console</span>.log(timeStamp);</span><br></pre></td></tr></table></figure>
-
-<h3 id="Date-格式化时间"><a href="#Date-格式化时间" class="headerlink" title="Date 格式化时间"></a>Date 格式化时间</h3><blockquote>
-<p>时间字符串转时间对象：Date的另一个作用是可以把时间格式的字符串转换为时间对象，转换成时间格式对象后就可以调用getFullYear等方法</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'2019-10-10 17:34:23'</span>;</span><br><span class="line"><span class="keyword">var</span> date2 = <span class="keyword">new</span> <span class="built_in">Date</span>(str);</span><br><span class="line"><span class="built_in">console</span>.log(date2);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> date2);</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、定时器"><a href="#二、定时器" class="headerlink" title="二、定时器"></a>二、定时器</h2><blockquote>
-<p>js中的定时器分为两种：</p>
-<ol>
-<li>window.setTimeout() 设置一个事件间隔，等到了这个时间间隔执行一次</li>
-<li>window.setInterval() 每隔时间间隔执行一次</li>
-</ol>
-</blockquote>
-<h3 id="I-设置定时器"><a href="#I-设置定时器" class="headerlink" title="I 设置定时器"></a>I 设置定时器</h3><h4 id="1-1-setTimeout-function-时间到了要执行的代码-时间间隔-，返回定时器id"><a href="#1-1-setTimeout-function-时间到了要执行的代码-时间间隔-，返回定时器id" class="headerlink" title="1.1 setTimeout(function() {时间到了要执行的代码}, 时间间隔)，返回定时器id"></a>1.1 setTimeout(function() {时间到了要执行的代码}, 时间间隔)，返回定时器id</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timer1 = setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'2s到了'</span>);</span><br><span class="line">&#125;, <span class="number">2000</span>);</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-2setInterval-function-时间到了要执行的代码-时间间隔-，返回定时器id"><a href="#1-2setInterval-function-时间到了要执行的代码-时间间隔-，返回定时器id" class="headerlink" title="1.2setInterval(function() {时间到了要执行的代码}, 时间间隔)，返回定时器id"></a>1.2setInterval(function() {时间到了要执行的代码}, 时间间隔)，返回定时器id</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> timer2 = setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'一个2s中到了'</span>);</span><br><span class="line">&#125;, <span class="number">2000</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="II-清除定时器：停止定时器办法就是清除定时器"><a href="#II-清除定时器：停止定时器办法就是清除定时器" class="headerlink" title="II. 清除定时器：停止定时器办法就是清除定时器"></a>II. 清除定时器：停止定时器办法就是清除定时器</h3><h4 id="2-1-clearTimeout-定时器id-清除setTimeout定时器"><a href="#2-1-clearTimeout-定时器id-清除setTimeout定时器" class="headerlink" title="2.1 clearTimeout(定时器id)  清除setTimeout定时器"></a>2.1 clearTimeout(定时器id)  清除setTimeout定时器</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clearTimeout(timer1);</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-2-clearInterval-定时器id-清除setInterval定时器"><a href="#2-2-clearInterval-定时器id-清除setInterval定时器" class="headerlink" title="2.2 clearInterval(定时器id) 清除setInterval定时器"></a>2.2 clearInterval(定时器id) 清除setInterval定时器</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clearInterval(timer2);</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、倒计时案例"><a href="#三、倒计时案例" class="headerlink" title="三、倒计时案例"></a>三、倒计时案例</h2><ul>
-<li>根据所学，完成一个定时器功能。当到达目标时间后，显示00:00:00;</li>
-</ul>
-<p>代码如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">    #timeBox &#123;</span><br><span class="line">      margin: 20px auto;</span><br><span class="line">      height: 100px;</span><br><span class="line">      width: 300px;</span><br><span class="line">      line-height: 100px;</span><br><span class="line">      font-size: 25px;</span><br><span class="line">      text-align: center;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"timeBox"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/3-倒计时.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 1. 获取dom对象</span></span><br><span class="line"><span class="keyword">var</span> timeBox = <span class="built_in">document</span>.getElementById(<span class="string">'timeBox'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 声明一个函数，处理倒计时</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">timeCounter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 2.1 获取当前日期时间信息</span></span><br><span class="line">  <span class="keyword">var</span> curDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.2 获取目标日期时间信息</span></span><br><span class="line">  <span class="keyword">var</span> targetDate = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">'2019-05-11 10:50:55'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.3 获取目标时间和当前时间的毫秒时间差</span></span><br><span class="line">  <span class="keyword">var</span> curStamp = curDate.getTime();</span><br><span class="line">  <span class="keyword">var</span> targetStamp = targetDate.getTime();</span><br><span class="line">  <span class="keyword">var</span> stampSpan = targetStamp - curStamp;</span><br><span class="line">  <span class="keyword">if</span> (stampSpan &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">    timeBox.innerHTML = <span class="string">`00:00:00`</span>;</span><br><span class="line">    clearInterval(timerId);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.4 把这个时间差的毫秒数量换算成剩余多少小时、多少分钟、多少秒</span></span><br><span class="line">  <span class="comment">// 2.4.1 小时</span></span><br><span class="line">  <span class="keyword">var</span> hour = <span class="built_in">Math</span>.floor(stampSpan / (<span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.4.2 分钟</span></span><br><span class="line">  <span class="keyword">var</span> hMs = hour * <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span>; <span class="comment">// 小时数占用的毫秒，需要从stampSpan中减去才是分钟和秒数的</span></span><br><span class="line">  <span class="keyword">var</span> mins = <span class="built_in">Math</span>.floor((stampSpan - hMs) / (<span class="number">1000</span> * <span class="number">60</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.4.3 秒数</span></span><br><span class="line">  <span class="keyword">var</span> minsMs = mins * <span class="number">1000</span> * <span class="number">60</span>;</span><br><span class="line">  <span class="keyword">var</span> secs = <span class="built_in">Math</span>.floor((stampSpan - hMs - minsMs) / <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 因为倒计时的时分秒都是两位数字的，所以当时分秒小于10 的时候就需要补0</span></span><br><span class="line">  hour = hour &lt; <span class="number">10</span> ? <span class="string">`0<span class="subst">$&#123;hour&#125;</span>`</span> : hour;</span><br><span class="line">  mins = mins &lt; <span class="number">10</span> ? <span class="string">`0<span class="subst">$&#123;mins&#125;</span>`</span> : mins;</span><br><span class="line">  secs = secs &lt; <span class="number">10</span> ? <span class="string">`0<span class="subst">$&#123;secs&#125;</span>`</span> : secs;</span><br><span class="line">  timeBox.innerHTML = <span class="string">`<span class="subst">$&#123;hour&#125;</span>:<span class="subst">$&#123;mins&#125;</span>:<span class="subst">$&#123;secs&#125;</span>`</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// timeCounter</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 用倒计时每秒执行一次就算倒计时的方法，就可以实现页面中每秒减去一秒</span></span><br><span class="line"><span class="keyword">var</span> timerId = setInterval(timeCounter, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、数组排序算法"><a href="#四、数组排序算法" class="headerlink" title="四、数组排序算法"></a>四、数组排序算法</h2><h3 id="4-1-冒泡排序"><a href="#4-1-冒泡排序" class="headerlink" title="4.1 冒泡排序"></a>4.1 冒泡排序</h3><blockquote>
-<p>冒泡排序原理：数组相邻两项直接互相比较，如果前一项比后一项大，就交换两项的位置，否则什么也不做；这样比较一轮过后，可以得出本轮的最大值。</p>
-</blockquote>
-<p>示例：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [<span class="number">8</span>, <span class="number">94</span>, <span class="number">15</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">2</span>];</span><br><span class="line"><span class="comment">//轮数 i                  每一轮比较次数 j</span></span><br><span class="line"><span class="comment">// 0 [8, 15, 6, 3, 2, 94]  5</span></span><br><span class="line"><span class="comment">// 1 [8, 6, 3, 2, 15, 94]  4</span></span><br><span class="line"><span class="comment">// 2 [6, 3, 2, 8, 15, 94]  3</span></span><br><span class="line"><span class="comment">// 3 [3, 2, 6, 8, 15, 94]  2</span></span><br><span class="line"><span class="comment">// 4 [2, 3, 6, 8, 15, 94]  1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ?比较轮数: ary.length - 1 轮</span></span><br><span class="line"><span class="comment">// ? 每一轮两两比较的次数 ary.length - 1 - i</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ary.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; ary.length - <span class="number">1</span> - i; j++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (ary[j] &gt; ary[j + <span class="number">1</span>]) &#123;</span><br><span class="line">      <span class="keyword">var</span> temp = ary[j];</span><br><span class="line">      ary[j] = ary[j + <span class="number">1</span>];</span><br><span class="line">      ary[j + <span class="number">1</span>] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(ary);</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-2-快速排序"><a href="#4-2-快速排序" class="headerlink" title="4.2 快速排序"></a>4.2 快速排序</h3><blockquote>
-<p>快速排序的原理：声明两个新数组，分别叫做left(左)和right(右)，获取当前数组的中间相，比中间项小的放在left中，比中间项大的放在right。然后对left和right进行同样的操作，直到当前数组只有一项或者为空时，终止这个过程，然后把所有的left和right以及中间相拼接起来。</p>
-</blockquote>
-<ul>
-<li>示例：</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [<span class="number">12</span>,<span class="number">8</span>,<span class="number">88</span>,<span class="number">97</span>,<span class="number">67</span>,<span class="number">56</span>,<span class="number">78</span>,<span class="number">86</span>,<span class="number">85</span>];</span><br><span class="line"><span class="comment">// left [12, 8, 56] |67| right [88, 97, 78, 86, 85]</span></span><br><span class="line"><span class="comment">// left [] |8| right [12, 56] |67| left [] |78| right [88, 97, 86, 85]</span></span><br><span class="line"><span class="comment">// left [] |8| left [] |12| right [56] |67|78| left [] |left [85] |86| right [88, 97]</span></span><br><span class="line"><span class="comment">// left [] |8| left [] |12| right [56] |67|78| left [] |left [85] |86| left [] |88| right [97]</span></span><br><span class="line"><span class="comment">// 拼接 [8, 12, 56, 67, 78, 85, 86, 88, 97]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// !!!! 使用递归要注意递归终止的条件：当前数组ary只要一项或者为空</span></span><br><span class="line">  <span class="keyword">if</span> (ary.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> ary;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 1. 计算中间相索引</span></span><br><span class="line">  <span class="keyword">var</span> middleIndex = <span class="built_in">Math</span>.floor(ary.length / <span class="number">2</span>);</span><br><span class="line">  <span class="comment">// 2. 获取中间项</span></span><br><span class="line">  <span class="keyword">var</span> middleVal = ary.splice(middleIndex, <span class="number">1</span>)[<span class="number">0</span>];</span><br><span class="line">  <span class="comment">// 3. 声明left和right</span></span><br><span class="line">  <span class="keyword">var</span> left = [];</span><br><span class="line">  <span class="keyword">var</span> right = [];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 4. 循环比较数组项和中间项的大小</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ary.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> cur = ary[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用当前项和中间项比较，如果大就push到right，left</span></span><br><span class="line">    <span class="keyword">if</span> (cur &gt; middleVal) &#123;</span><br><span class="line">      right.push(cur);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      left.push(cur);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> quickSort(left).concat(middleVal, quickSort(right));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sortedAry = quickSort(ary);</span><br><span class="line"><span class="built_in">console</span>.log(sortedAry);</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-3-插入排序"><a href="#4-3-插入排序" class="headerlink" title="4.3 插入排序"></a>4.3 插入排序</h3><blockquote>
-<p>插入排序原理：</p>
-<ol>
-<li>假定第一项是最小值；</li>
-<li>从第二项开始，从该项开始和前面的项进行比较</li>
-<li>如果前面一项比后一项大，则交换位置</li>
-</ol>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertSort</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; ary.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> j = i; j &gt; <span class="number">0</span>; j--) &#123;</span><br><span class="line">      <span class="keyword">if</span> ( ary[j - <span class="number">1</span>] &gt; ary[j]) &#123;</span><br><span class="line">        <span class="keyword">var</span> temp = ary[j];</span><br><span class="line">        ary[j] = ary[j - <span class="number">1</span>];</span><br><span class="line">        ary[j - <span class="number">1</span>] = temp;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ary;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(insertSort(ary));</span><br></pre></td></tr></table></figure>
-
-<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行</div>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/09/JavaScript基础教程7/" data-id="ck3wwixtl000amkppe3mzyj52" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/08/27/JavaScript基础教程8/" data-id="ck3wwl2sx000ds0pp29xn0cm8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1516,7 +1594,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 17.5px;">Vue</a> <a href="/tags/es6/" style="font-size: 15px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 12.5px;">webpack</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a>
     </div>
   </div>
 
@@ -1538,6 +1616,10 @@
       <ul>
         
           <li>
+            <a href="/2019/12/08/webpack掠影-3/">webpack掠影-3</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/08/webpack掠影-2/">webpack掠影-2</a>
           </li>
         
@@ -1551,10 +1633,6 @@
         
           <li>
             <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 15. Promise 用法详解</a>
-          </li>
-        
-          <li>
-            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 14. 跨域和同源策略</a>
           </li>
         
       </ul>

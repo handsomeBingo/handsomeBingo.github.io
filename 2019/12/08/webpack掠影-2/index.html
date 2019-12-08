@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://47.105.181.88/cdn_assets/webpack-img/wbp2-css-preprocesslang.png">
 <meta property="og:image" content="http://47.105.181.88/cdn_assets/webpack-img/wbp2-css-autoprefixer.png">
 <meta property="og:image" content="http://47.105.181.88/cdn_assets/webpack-img/wbp2-process-img.png">
-<meta property="og:updated_time" content="2019-12-08T09:20:41.862Z">
+<meta property="og:updated_time" content="2019-12-08T09:33:02.179Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack掠影-2">
 <meta name="twitter:description" content="前面我们已经学习了如何让 webpack 工作，包含开发时的 webpack-dev-server 和 用于生产环境的 webpack 打包输出文件。今天我们进一步了解 webpack。 1. 抽离 css 文件前面我们通过配置 loader 使 webpack 可以处理 import ‘some.css’，但是我们发现 webpack 是把 css 变成 style 标签插入到 html 文件中">
@@ -176,7 +176,7 @@
 <li>安装 file-loader 和 url-loader</li>
 </ul>
 <p>如果想完成页面中引入图片这个工作，还需要 file-loader 和 url-loader；但是我在写这些例子时，发现 file-loader 升级 5.x 后之前的配置（如下）会报错；所以本例的 file-loader 并没有采用最新版，而是采用的 url-loader 的 2.2.0 和 file-loader 的 4.2.0 版本，这些版本都是之前项目中稳定运行的版本；</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  modules: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">           test: <span class="regexp">/\.(jpeg|png|jpg)$/</span>,</span><br><span class="line">           use: &#123;</span><br><span class="line">             loader: <span class="string">'url-loader'</span>,</span><br><span class="line">             options: &#123;</span><br><span class="line">               limit: <span class="number">200</span> * <span class="number">1024</span>,</span><br><span class="line">               outputPath: <span class="string">'img/'</span>, <span class="comment">// 图片输出到的目录</span></span><br><span class="line">               publicPath: <span class="string">'https://www.dahai.com/'</span> <span class="comment">// 给图片设置单独的 CDN 路径</span></span><br><span class="line">             &#125;</span><br><span class="line">           &#125;</span><br><span class="line">         &#125;,</span><br><span class="line">         &#123;</span><br><span class="line">           test: <span class="regexp">/\.html$/</span>,</span><br><span class="line">           use: <span class="string">'html-withimg-loader'</span> <span class="comment">// 处理 html 中的 img 引用的图片</span></span><br><span class="line">         &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  modules: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">           test: <span class="regexp">/\.(jpeg|png|jpg)$/</span>,</span><br><span class="line">           use: &#123;</span><br><span class="line">             loader: <span class="string">'url-loader'</span>,</span><br><span class="line">             options: &#123;</span><br><span class="line">               limit: <span class="number">200</span> * <span class="number">1024</span>, <span class="comment">// 可以把设置小于某个值的图片或者文件打包成 base64，如果超过这个值自动输出为文件；</span></span><br><span class="line">               outputPath: <span class="string">'img/'</span>, <span class="comment">// 图片输出到的目录</span></span><br><span class="line">               publicPath: <span class="string">'https://www.dahai.com/'</span> <span class="comment">// 给图片设置单独的 CDN 路径</span></span><br><span class="line">             &#125;</span><br><span class="line">           &#125;</span><br><span class="line">         &#125;,</span><br><span class="line">         &#123;</span><br><span class="line">           test: <span class="regexp">/\.html$/</span>,</span><br><span class="line">           use: <span class="string">'html-withimg-loader'</span> <span class="comment">// 处理 html 中的 img 引用的图片</span></span><br><span class="line">         &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>所以，安装指定版本的 url-loader、file-loader</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn ade url-loader@2.2.0 file-loader@4.2.0 -D</span><br></pre></td></tr></table></figure>
@@ -200,7 +200,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/12/08/webpack掠影-2/" data-id="ck3wwixvw002amkppxxtj58ek" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/12/08/webpack掠影-2/" data-id="ck3wwl2v9002cs0pp15ffezzm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -210,6 +210,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2019/12/08/webpack掠影-3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          webpack掠影-3
+        
+      </div>
+    </a>
   
   
     <a href="/2019/12/07/webpack掠影-1/" id="article-nav-older" class="article-nav-link-wrap">
@@ -243,7 +252,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 17.5px;">Vue</a> <a href="/tags/es6/" style="font-size: 15px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 12.5px;">webpack</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a>
     </div>
   </div>
 
@@ -265,6 +274,10 @@
       <ul>
         
           <li>
+            <a href="/2019/12/08/webpack掠影-3/">webpack掠影-3</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/08/webpack掠影-2/">webpack掠影-2</a>
           </li>
         
@@ -278,10 +291,6 @@
         
           <li>
             <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 15. Promise 用法详解</a>
-          </li>
-        
-          <li>
-            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 14. 跨域和同源策略</a>
           </li>
         
       </ul>

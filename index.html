@@ -67,6 +67,101 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-webpack掠影-3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/08/webpack掠影-3/" class="article-date">
+  <time datetime="2019-12-08T09:33:55.000Z" itemprop="datePublished">2019-12-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/08/webpack掠影-3/">webpack掠影-3</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前面我们已经讨论过如何让 webpack 处理 CSS，并提取出文件，以及图片的处理。接着我们讨论一下在 webpack 中配置 babel。babel 是一个平台，可以把高级的 JS 语法转换成低版本的 JS 实现，同时还可以处理 JSX 语法。<br>此外，我们还可以讨论一下 webpack 的常规优化配置项；</p>
+<h2 id="1-配置-babel"><a href="#1-配置-babel" class="headerlink" title="1. 配置 babel"></a>1. 配置 babel</h2><h3 id="1-1-基础配置"><a href="#1-1-基础配置" class="headerlink" title="1.1 基础配置"></a>1.1 基础配置</h3><p>使用 babel 需要安装 babel-loader、@babel/core、@babel/preset-env。如果有更高级的语法还需要安装 preset 或者 babel的插件；</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add babel-loader @babel/core @babel/preset-env @babel/preset-react</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改一下 index.js</li>
+</ul>
+<p>向 index.js 中增加箭头函数和 react 的 jsx（如果不熟悉 react 可以忽略 react 部分内容）；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">+ <span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line">+ <span class="keyword">import</span> &#123; render &#125; <span class="keyword">from</span> <span class="string">'react-dom'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./index.css'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./index.less'</span></span><br><span class="line"></span><br><span class="line">+ <span class="keyword">let</span> a = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">+   <span class="built_in">console</span>.log(<span class="string">'arrow function'</span>)</span><br><span class="line">+ &#125;;</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> div = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">  div.innerHTML = <span class="string">'Hello World'</span>;</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(div);</span><br><span class="line">  div = <span class="literal">null</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">+ <span class="keyword">let</span> p2 = <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一个 jsx 元素<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>;</span><br><span class="line">+ render(p2, <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>效果如图</li>
+</ul>
+<p><img src="http://47.105.181.88/cdn_assets/webpack-img/wbp3-babel.png" alt="wbp-loader-css"></p>
+<h3 id="1-2-使用-ES-提案语法"><a href="#1-2-使用-ES-提案语法" class="headerlink" title="1.2 使用 ES 提案语法"></a>1.2 使用 ES 提案语法</h3><p>在开发的过程中我们经常使用一些 ES 的实验阶段的语法，例如装饰器、class-properties、async/await、generator 函数等；但是 babel 的 preset 中并不包含这些内容，所以还需要额外的配置一些 babel 插件；插件同样需要安装；</p>
+<ul>
+<li>安装插件（以实际项目中为准，用到哪些特性就安装对应特性）：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn add @babel/plugin-proposal-decorators @babel/plugin-proposal-class-properties @babel/plugin-transform</span><br><span class="line">-runtime -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>新增 js 文件 sthjs/a.js</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// decorator</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">target</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(target)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@log</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.test = <span class="string">'test decorator'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// class properties</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123;</span><br><span class="line">  b = <span class="number">1</span>;</span><br><span class="line">  x = <span class="string">'test class properties'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> B();</span><br><span class="line"><span class="built_in">console</span>.log(b.x)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. async/await</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">getImg</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      resolve(<span class="string">'ok'</span>)</span><br><span class="line">    &#125;, <span class="number">2000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getImg();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. generator</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> * <span class="title">gen</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">3</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">4</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> it = gen();</span><br><span class="line"><span class="built_in">console</span>.log(it.next());</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> it) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 index.js 中引入上面的 a.js</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> &#123; render &#125; <span class="keyword">from</span> <span class="string">'react-dom'</span></span><br><span class="line"></span><br><span class="line">+ <span class="keyword">import</span> <span class="string">'./sthjs/a.js'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./index.css'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./index.less'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'arrow function'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> div = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">  div.innerHTML = <span class="string">'Hello World'</span>;</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(div);</span><br><span class="line">  div = <span class="literal">null</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p2 = <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一个 jsx 元素<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>;</span><br><span class="line"></span><br><span class="line">render(p2, <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>效果如图<br><img src="http://47.105.181.88/cdn_assets/webpack-img/wbp3-babel-plugins.png" alt="wbp-loader-css"></li>
+</ul>
+<h2 id="2-压缩-JS-、CSS-文件"><a href="#2-压缩-JS-、CSS-文件" class="headerlink" title="2. 压缩 JS 、CSS 文件"></a>2. 压缩 JS 、CSS 文件</h2><p>webpack 同样支持优化代码，其中包含压缩混淆 JS 、压缩 CSS 等功能，下面我们具体实践一番；优化需要在 webpack 的配置文件中增加 optimization 字段；压缩合并同样依赖于两个插件，所以同样先安装他们；</p>
+<p>在此之前还要说一个配置，mode 字段，该字段有两个值:</p>
+<ul>
+<li><p>development 开发模式，不会压缩混淆代码</p>
+</li>
+<li><p>production 生产模式，会自动混淆代码</p>
+</li>
+<li><p>安装 optimize-css-assets-webpack-plugin 和 uglifyjs-webpack-plugin</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add optimize-css-assets-webpack-plugin uglifyjs-webpack-plugin -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改配置文件</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> HTMLWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> MiniCSSExtractPlugin = <span class="built_in">require</span>(<span class="string">'mini-css-extract-plugin'</span>); <span class="comment">// 抽离 css文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> OptimizeCSSAssetsWebpackPlugin = <span class="built_in">require</span>(<span class="string">'optimize-css-assets-webpack-plugin'</span>); <span class="comment">// 压缩合并 css 文件</span></span><br><span class="line"><span class="keyword">const</span> UglifyjsWebpackPlugin = <span class="built_in">require</span>(<span class="string">'uglifyjs-webpack-plugin'</span>); <span class="comment">// 压缩混淆 js 文件</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">+  mode: <span class="string">'production'</span>, <span class="comment">// 'development' 表示开发模式，不压缩代码；'production' 表示生产模式，压缩混淆代码</span></span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),</span><br><span class="line">    filename: <span class="string">'bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    <span class="comment">// 开发服务器的配置</span></span><br><span class="line">    contentBase: <span class="string">'./dist'</span>, <span class="comment">// 静态资源文件目录</span></span><br><span class="line">    port: <span class="number">3000</span>, <span class="comment">// 开发服务器启动的端口</span></span><br><span class="line">    <span class="comment">// open: true, // 是否自动启动浏览器</span></span><br><span class="line">    progress: <span class="literal">true</span>, <span class="comment">// 进度条</span></span><br><span class="line">    proxy: &#123; <span class="comment">// 配置代理</span></span><br><span class="line">      <span class="string">'/api'</span>: &#123; <span class="comment">// 将带有 /api 的请求，转发值 target 指向的域名</span></span><br><span class="line">        target: <span class="string">'http://domain.com/somet/api'</span>,</span><br><span class="line">        changeOrigin: <span class="literal">true</span>,</span><br><span class="line">        secure: <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(js|jsx)$/</span>,</span><br><span class="line">        use: &#123;</span><br><span class="line">          loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">          options: &#123;</span><br><span class="line">            presets: [<span class="string">'@babel/preset-env'</span>, <span class="string">'@babel/preset-react'</span>],</span><br><span class="line">            plugins: [</span><br><span class="line">              [<span class="string">'@babel/plugin-proposal-decorators'</span>, &#123; <span class="attr">legacy</span>: <span class="literal">true</span> &#125;], <span class="comment">// 使用装饰器</span></span><br><span class="line">              [<span class="string">'@babel/plugin-proposal-class-properties'</span>, &#123; <span class="attr">loose</span>: <span class="literal">true</span> &#125;], <span class="comment">// 使用 class-properties</span></span><br><span class="line">              [<span class="string">'@babel/plugin-transform-runtime'</span>] <span class="comment">// 使用 async/await/generator</span></span><br><span class="line">            ]</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        exclude: <span class="regexp">/node_modules/</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          MiniCSSExtractPlugin.loader,</span><br><span class="line">          <span class="string">'css-loader'</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          MiniCSSExtractPlugin.loader,</span><br><span class="line">          <span class="string">'css-loader'</span>,</span><br><span class="line">          <span class="string">'postcss-loader'</span>,</span><br><span class="line">          <span class="string">'less-loader'</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(jpeg|png|jpg)$/</span>,</span><br><span class="line">        use: &#123;</span><br><span class="line">          loader: <span class="string">'url-loader'</span>,</span><br><span class="line">          options: &#123;</span><br><span class="line">            limit: <span class="number">5</span> * <span class="number">1024</span>,</span><br><span class="line">            outputPath: <span class="string">'/img/'</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(htm|html)$/</span>,</span><br><span class="line">        use:  <span class="string">'html-withimg-loader'</span> <span class="comment">// 处理 html 中的 img 引用的图片</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> HTMLWebpackPlugin(&#123;</span><br><span class="line">      template: <span class="string">'./src/index.html'</span>, <span class="comment">// 需要引入输出文件的 html 文件模板</span></span><br><span class="line">      hash: <span class="literal">true</span>, <span class="comment">// 给引入的 js 加hash</span></span><br><span class="line">      filename: <span class="string">'index.html'</span>, <span class="comment">// 输出的 html 文件的名字（插件会把模板 html 复制到输出目录中）</span></span><br><span class="line">      minify: &#123; <span class="comment">// 压缩优化输出的 html 文件配置</span></span><br><span class="line">        removeAttributeQuotes: <span class="literal">true</span>, <span class="comment">// 删除行内属性的双引号</span></span><br><span class="line">        collapseWhitespace: <span class="literal">true</span> <span class="comment">// 删除换行，使内容保持在一行</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="comment">// 抽离 css 文件</span></span><br><span class="line">    <span class="keyword">new</span> MiniCSSExtractPlugin(&#123;</span><br><span class="line">      filename: <span class="string">'css/main.css'</span></span><br><span class="line">    &#125;)</span><br><span class="line">  ],</span><br><span class="line"></span><br><span class="line">+  <span class="comment">// 配置优化配置项</span></span><br><span class="line">+  optimization: &#123;</span><br><span class="line">+    minimizer: [</span><br><span class="line">+      <span class="keyword">new</span> OptimizeCSSAssetsWebpackPlugin(), <span class="comment">// 压缩 CSS 文件，配置该插件后需要配置如下的 UglifyjsWebpackPlugin</span></span><br><span class="line">+      <span class="keyword">new</span> UglifyjsWebpackPlugin(&#123;</span><br><span class="line">+        cache: <span class="literal">true</span>, <span class="comment">// 是否缓存</span></span><br><span class="line">+        parallel: <span class="literal">true</span>, <span class="comment">// 是否并发打包</span></span><br><span class="line">+        sourceMap: <span class="literal">true</span> <span class="comment">// 是否开启 sourceMap</span></span><br><span class="line">+      &#125;)</span><br><span class="line">+    ]</span><br><span class="line">+  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>效果如图<br><img src="http://47.105.181.88/cdn_assets/webpack-img/wbp3-compress-js&css.png" alt="wbp-loader-css"></li>
+</ul>
+<p>##</p>
+<ul>
+<li>效果如图<br><img src="http://47.105.181.88/cdn_assets/webpack-img/wbp3-compress-js&css.png" alt="wbp-loader-css"></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/12/08/webpack掠影-3/" data-id="ck3wwl2vd002fs0ppkp1padqu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-webpack掠影-2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/12/08/webpack掠影-2/" class="article-date">
@@ -169,7 +264,7 @@
 <li>安装 file-loader 和 url-loader</li>
 </ul>
 <p>如果想完成页面中引入图片这个工作，还需要 file-loader 和 url-loader；但是我在写这些例子时，发现 file-loader 升级 5.x 后之前的配置（如下）会报错；所以本例的 file-loader 并没有采用最新版，而是采用的 url-loader 的 2.2.0 和 file-loader 的 4.2.0 版本，这些版本都是之前项目中稳定运行的版本；</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  modules: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">           test: <span class="regexp">/\.(jpeg|png|jpg)$/</span>,</span><br><span class="line">           use: &#123;</span><br><span class="line">             loader: <span class="string">'url-loader'</span>,</span><br><span class="line">             options: &#123;</span><br><span class="line">               limit: <span class="number">200</span> * <span class="number">1024</span>,</span><br><span class="line">               outputPath: <span class="string">'img/'</span>, <span class="comment">// 图片输出到的目录</span></span><br><span class="line">               publicPath: <span class="string">'https://www.dahai.com/'</span> <span class="comment">// 给图片设置单独的 CDN 路径</span></span><br><span class="line">             &#125;</span><br><span class="line">           &#125;</span><br><span class="line">         &#125;,</span><br><span class="line">         &#123;</span><br><span class="line">           test: <span class="regexp">/\.html$/</span>,</span><br><span class="line">           use: <span class="string">'html-withimg-loader'</span> <span class="comment">// 处理 html 中的 img 引用的图片</span></span><br><span class="line">         &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  modules: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">           test: <span class="regexp">/\.(jpeg|png|jpg)$/</span>,</span><br><span class="line">           use: &#123;</span><br><span class="line">             loader: <span class="string">'url-loader'</span>,</span><br><span class="line">             options: &#123;</span><br><span class="line">               limit: <span class="number">200</span> * <span class="number">1024</span>, <span class="comment">// 可以把设置小于某个值的图片或者文件打包成 base64，如果超过这个值自动输出为文件；</span></span><br><span class="line">               outputPath: <span class="string">'img/'</span>, <span class="comment">// 图片输出到的目录</span></span><br><span class="line">               publicPath: <span class="string">'https://www.dahai.com/'</span> <span class="comment">// 给图片设置单独的 CDN 路径</span></span><br><span class="line">             &#125;</span><br><span class="line">           &#125;</span><br><span class="line">         &#125;,</span><br><span class="line">         &#123;</span><br><span class="line">           test: <span class="regexp">/\.html$/</span>,</span><br><span class="line">           use: <span class="string">'html-withimg-loader'</span> <span class="comment">// 处理 html 中的 img 引用的图片</span></span><br><span class="line">         &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>所以，安装指定版本的 url-loader、file-loader</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn ade url-loader@2.2.0 file-loader@4.2.0 -D</span><br></pre></td></tr></table></figure>
@@ -193,7 +288,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/12/08/webpack掠影-2/" data-id="ck3wwixvw002amkppxxtj58ek" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/12/08/webpack掠影-2/" data-id="ck3wwl2v9002cs0pp15ffezzm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -346,7 +441,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/12/07/webpack掠影-1/" data-id="ck3wwixvu0028mkppmvsm42pu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/12/07/webpack掠影-1/" data-id="ck3wwl2v7002as0ppxxth9bqp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -390,7 +485,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/25/JavaScript进阶教程16/" data-id="ck3wwixub000rmkppkfzg87l6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/25/JavaScript进阶教程16/" data-id="ck3wwl2tm000ts0ppsw6lbhzw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -491,7 +586,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/06/JavaScript进阶教程15/" data-id="ck3wwixu9000pmkppzxb87sss" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/06/JavaScript进阶教程15/" data-id="ck3wwl2tk000rs0ppn48axgh9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -560,7 +655,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/15/JavaScript进阶教程14/" data-id="ck3wwixu7000nmkpp3cx5yrec" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/09/15/JavaScript进阶教程14/" data-id="ck3wwl2ti000ps0ppblb38q9e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -749,7 +844,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/29/JavaScript进阶教程13/" data-id="ck3wwixu5000lmkppyaokaz29" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/29/JavaScript进阶教程13/" data-id="ck3wwl2tg000ns0ppq50uexfa" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -815,7 +910,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/19/JavaScript进阶教程12/" data-id="ck3wwixu2000jmkpp9j96y6o8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/19/JavaScript进阶教程12/" data-id="ck3wwl2td000ls0ppj0rm345o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1016,7 +1111,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/16/JavaScript进阶教程11/" data-id="ck3wwixty000hmkpppbljxhwa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/16/JavaScript进阶教程11/" data-id="ck3wwl2t9000js0ppk2e4gine" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1132,196 +1227,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/20/JavaScript进阶教程10/" data-id="ck3wwixtu000fmkpp1903f18c" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript进阶教程9" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/15/JavaScript进阶教程9/" class="article-date">
-  <time datetime="2019-03-15T11:55:12.000Z" itemprop="datePublished">2019-03-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/15/JavaScript进阶教程9/">进阶教程 9. DOM 事件</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="DOM事件"><a href="#DOM事件" class="headerlink" title="DOM事件"></a>DOM事件</h2><h3 id="事件及常见的事件"><a href="#事件及常见的事件" class="headerlink" title="事件及常见的事件"></a>事件及常见的事件</h3><blockquote>
-<p>事件：文档（html元素及document）或者浏览器的窗口发生的一些特定的交互瞬间；可以监听这些事件，来实现在事件发生时执行特定的操作；</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> btn = <span class="built_in">document</span>.querySelector(<span class="string">'.btn'</span>);</span><br><span class="line"><span class="keyword">let</span> box = <span class="built_in">document</span>.querySelector(<span class="string">'.box'</span>);</span><br></pre></td></tr></table></figure>
-
-<h4 id="常见的事件："><a href="#常见的事件：" class="headerlink" title="常见的事件："></a>常见的事件：</h4><ul>
-<li><p>1.1 鼠标事件：鼠标动作时触发的事件</p>
-<ul>
-<li>元素.onclick = function() {} 单击事件</li>
-<li>元素.ondbclick = function () {} 双击事件</li>
-<li>元素.onmouseenter = function () {} 鼠标移入</li>
-<li>元素.onmouseleave = function () {} 鼠标移出</li>
-<li>元素.onmouseover = function () {} 鼠标滑过</li>
-<li>元素.onmouseout = function () {} 鼠标划出</li>
-<li>元素.onmousemove = function () {} 鼠标移动</li>
-<li>元素.onmousedown = function () {} 鼠标按下</li>
-<li>元素.onmmouseup = function () {} 鼠标抬起</li>
-<li>元素.onmousewheel = function () {} 鼠标滚轮滚动</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">box.onmouseover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">1111</span>)</span><br><span class="line">&#125;;</span><br><span class="line">box.onmouseout = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">2222</span>)</span><br><span class="line">&#125;;</span><br><span class="line">box.onmousedown = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'3333'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">box.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">4444</span>)</span><br><span class="line">&#125;;</span><br><span class="line">box.onmousewheel = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">555</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>1.2  键盘事件：一般inputtextareadocument.bodydocumentwindowdocument.documentElement监听键盘事件<ul>
-<li>元素.onkeydown = function() {} 键盘按下</li>
-<li>元素.onkeyup = function () {} 键盘抬起</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> input = <span class="built_in">document</span>.querySelector(<span class="string">'#input'</span>);</span><br><span class="line">input.onkeydown = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'123'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">document</span>.onkeyup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'keyup'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.onkeydown = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'window key down'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>1.3 表单元素事件<ul>
-<li>onfocus 获取焦点（光标）事件</li>
-<li>onblur 失去焦点时触发</li>
-<li>onchange 事件，表单的值（value）发生改变时触发</li>
-<li>oninput input、textarea等元素的输入事件</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">input.onfocus = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'获取焦点'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">input.onblur = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'失去焦点'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">input.oninput = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.value);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>1.4 系统事件：<ul>
-<li>window.onload 页面中所有的资源全部加载完触发</li>
-<li>window.onresize 当前窗口尺寸发生改变时触发</li>
-<li>window.onsroll 滚动条滚动时触发</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onresize = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'变了、变了'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>1.5 移动端事件`<br>ontouchstart 触摸元素时触发<br>ontouchend 离开元素时触发<br>ontouchmove 滑动时触发</p>
-</li>
-<li><p>移动端使用click大概有300ms的延迟</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">box.ontouchstart = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'start'</span>);</span><br><span class="line">&#125;;</span><br><span class="line">box.ontouchend = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'end'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-2-事件对象"><a href="#1-2-事件对象" class="headerlink" title="1.2 事件对象"></a>1.2 事件对象</h4><blockquote>
-<p>在事件触发时，浏览器传递给事件函数的实参；其中包含了本次事件触发的具体信息；</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> box = <span class="built_in">document</span>.querySelector(<span class="string">'.box'</span>);</span><br><span class="line"></span><br><span class="line">box.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(e);  MouseEvent e一般称为事件对象，</span><br><span class="line">	 e.clientX 鼠标点击的位置相对于当前浏览器可视窗口的 左偏移值</span><br><span class="line">	 e.clientY 鼠标点击位置相对于当前浏览器可视窗口的 上偏移值</span><br><span class="line">	 e.pageX 鼠标点击位置相对于body左边缘的偏移值</span><br><span class="line">	 e.pageY 鼠标点击位置相对于body上边缘的偏移值</span><br><span class="line">	 e.target 触发事件的元素（点击事件中是点击的元素）对象，称为事件源</span><br><span class="line"></span><br><span class="line">	 IE事件触发时把事件信息挂载在<span class="built_in">window</span>.event  这个属性上</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.onkeydown = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	 键盘事件 KeyboardEvent </span><br><span class="line">	<span class="built_in">console</span>.log(e);</span><br><span class="line">	<span class="built_in">console</span>.log(e.keyCode);</span><br><span class="line">	 e.keyCode 键码：键盘上每个键对应一个键码，当keydown事件触发时，</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-3-默认事件和默认行为"><a href="#1-3-默认事件和默认行为" class="headerlink" title="1.3 默认事件和默认行为"></a>1.3 默认事件和默认行为</h4><blockquote>
-<p>有些元素时由默认行为的，如a标签点击会跳转。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> baidu = <span class="built_in">document</span>.getElementById(<span class="string">'baidu'</span>);</span><br><span class="line"> 阻止默认行为：</span><br><span class="line">baidu.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	alert(<span class="number">111</span>);</span><br><span class="line">	e.preventDefault();  阻止元素的事件默认行为</span><br><span class="line">	 IE 低版本：e.returnValue = <span class="literal">false</span></span><br><span class="line">	 <span class="keyword">return</span> <span class="literal">false</span>;  <span class="keyword">return</span> <span class="literal">false</span>也可以阻止默认行为</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-4-事件传播："><a href="#1-4-事件传播：" class="headerlink" title="1.4 事件传播："></a>1.4 事件传播：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> $ = <span class="function">(<span class="params">selector</span>) =&gt;</span> <span class="built_in">document</span>.querySelector(selector);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> outer = $(<span class="string">'.outer'</span>);</span><br><span class="line"><span class="keyword">let</span> inner = $(<span class="string">'.inner'</span>);</span><br><span class="line"><span class="keyword">let</span> center = $(<span class="string">'.center'</span>);</span><br><span class="line"><span class="built_in">document</span>.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'document'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">outer.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">inner.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">center.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'center'</span>);</span><br><span class="line">	e.stopPropagation();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>点击center会触发center的点击事件，同时inner和outer的以及更高层级的元素的点击事件也会被触发。这种现象称为事件的冒泡机制；</li>
-</ul>
-<p>事件的触发过程：事件的触发分为两个三个阶段：捕获阶段、目标阶段、冒泡阶段。在事件触发时，浏览器先从最外层的元素开始找，一直找到事件源的过程称为捕获阶段，触发事件源绑定事件后开始向上冒泡，依次触发父级元素的该事件；</p>
-<ul>
-<li><p>元素.onXXX = func… 绑定的事件都是DOM0级事件，DOM0级事件都是绑定再冒泡阶段的。</p>
-</li>
-<li><p>取消冒泡：e.stopPropagation()</p>
-<ul>
-<li>IE低版本：e.cancelBubble = true;</li>
-<li>取消冒泡后，事件不会再向上传播；更高层级的元素的对应事件不会触发；</li>
-</ul>
-</li>
-</ul>
-<h3 id="1-5-onmouseover和mouseenter"><a href="#1-5-onmouseover和mouseenter" class="headerlink" title="1.5 onmouseover和mouseenter"></a>1.5 onmouseover和mouseenter</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> $ = <span class="function"><span class="params">selector</span> =&gt;</span> <span class="built_in">document</span>.querySelector(selector);</span><br><span class="line"><span class="keyword">let</span> inner = $(<span class="string">'.inner'</span>);</span><br><span class="line"><span class="keyword">let</span> outer = $(<span class="string">'.outer'</span>);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>mouseover</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">inner.onmouseover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner over'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">inner.onmouseout = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner out'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">outer.onmouseover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer over'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">outer.onmouseout = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer out'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>mouseenter</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">inner.onmousenter = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner enter'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">inner.onmouseleave = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'inner leave'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">outer.onmouseenter = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer enter'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">outer.onmouseleave = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'outer leave'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>mouseenter &amp; mouseover的区别：</p>
-<ol>
-<li><p>over属于划过事件，从父元素进入子元素，属于离开了父元素，会触发父元素的out事件，然后触发子元素的over事件；</p>
-</li>
-<li><p>enter属于进入，从父元素进入子元素，不算离开父元素，不会触发父元素的leave事件；</p>
-</li>
-<li><p>enter和leave是阻止了事件冒泡的，而over和out还存在冒泡传播；</p>
-</li>
-</ol>
-</li>
-</ul>
-<p>__ 所以对于父子嵌套的这种情况，使用over会触发很多不可控的情况，使用enter更加简单。__</p>
-<h3 id="二、-onload和DOMContentLoaded"><a href="#二、-onload和DOMContentLoaded" class="headerlink" title="二、 onload和DOMContentLoaded"></a>二、 onload和DOMContentLoaded</h3><ul>
-<li><ol>
-<li>onload事件：加载成功后执行</li>
-</ol>
-</li>
-<li><p>window.onlaod 是页面中所有的资源（css、js、图片等）全部加载完成后才会触发：</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'加载完成了'</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><ol start="2">
-<li>DOMContentLoaded: 只要页面中的DOM结构加载完成后就可以触发</li>
-</ol>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'DOM结构加载完成了'</span>)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>JS是用来操作DOM的，一般需要在DOM加载结束以后再执行JS。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 以后经常有人会这样写代码，把js这在这个函数中，表示DOM结构加载完成后再执行</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="三、事件委托"><a href="#三、事件委托" class="headerlink" title="三、事件委托"></a>三、事件委托</h3><ul>
-<li>页面中有10个li，点击哪个li，就弹出该li的文本内容</li>
-</ul>
-<p>let liList = document.querySelectorAll(‘#list &gt; li’);</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; liList.length; i++) &#123;</span><br><span class="line">	liList[i].onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.innerText);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>利用事件委托：把事件绑定给父级元素或者更高级元素，然后根据e.target事件源作出不同操作；</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> list = <span class="built_in">document</span>.querySelector(<span class="string">'#list'</span>);</span><br><span class="line">list.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> &#123; target &#125; = e;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 一般根据事件源的tagName来区分当前点击的是哪个元素</span></span><br><span class="line">	<span class="keyword">if</span> (target.tagName.toLowerCase() === <span class="string">'li'</span>) &#123;</span><br><span class="line">		alert(target.innerText);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>循环绑定事件的效率低，而且不适用于动态绑定的数据。</li>
-<li>事件委托：利用的是事件的冒泡传播机制，给里面的每个子元素绑定相同的事件行为，把事件绑定给他们共同的上级元素，然后利用e.target区分具体触发事件的元素，然后做不同的操作；</li>
-</ul>
-<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/15/JavaScript进阶教程9/" data-id="ck3wwixut0017mkpp12ubik1v" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/20/JavaScript进阶教程10/" data-id="ck3wwl2t5000hs0ppkww0jrwm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1361,7 +1267,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 17.5px;">Vue</a> <a href="/tags/es6/" style="font-size: 15px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 12.5px;">webpack</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a>
     </div>
   </div>
 
@@ -1383,6 +1289,10 @@
       <ul>
         
           <li>
+            <a href="/2019/12/08/webpack掠影-3/">webpack掠影-3</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/08/webpack掠影-2/">webpack掠影-2</a>
           </li>
         
@@ -1396,10 +1306,6 @@
         
           <li>
             <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 15. Promise 用法详解</a>
-          </li>
-        
-          <li>
-            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 14. 跨域和同源策略</a>
           </li>
         
       </ul>

@@ -67,6 +67,93 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-node-js拼接sql查询语句神器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/15/node-js拼接sql查询语句神器/" class="article-date">
+  <time datetime="2017-08-15T13:31:37.000Z" itemprop="datePublished">2017-08-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/15/node-js拼接sql查询语句神器/">node.js拼接sql查询语句神器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前一阵子被迫分享了一次node.JS，在写sql时真是恼火的不得了。之前写php的时候发现php真是机智，php的双引号是可以识别变量的，而js就惨了，当写sql查询时，写变量得拼字符串，然后sql里本身就有不少的字符串，js的字符串还要单双循环。我真是欲哭无泪啊，写一个稍稍复杂点sql，就要改好几次。从网上找了半天，最后果断写一个。目前只支持增删改查，适合给用nodejs做后台写个小demo的玩家。</p>
+<p>上源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line">var sqlJoin = (function () &#123;</span><br><span class="line">    var whereResolve = function (type, whereSwitch) &#123;</span><br><span class="line">        if (whereSwitch.where) &#123;</span><br><span class="line">            type += &apos; WHERE &apos;;</span><br><span class="line">        &#125;</span><br><span class="line">        var keyAry = (whereSwitch &amp;&amp; whereSwitch.whereProp) ? whereSwitch.whereProp : [];</span><br><span class="line">        if (keyAry.length) &#123;</span><br><span class="line"></span><br><span class="line">            for (let i = 0; i &lt; keyAry.length; i++) &#123;</span><br><span class="line">                let c = keyAry[i];</span><br><span class="line">                if (typeof c == &apos;object&apos;) &#123;</span><br><span class="line">                    for (var key in c) &#123;</span><br><span class="line">                        if (key != &apos;operator&apos;) type += &apos;`&apos; + key + &apos;`&apos; + (c[&apos;operator&apos;] ? c[&apos;operator&apos;] : &apos;=&apos;) + &apos;&apos; + &quot;&apos;&quot; + c[key] + &quot;&apos;&quot;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; else if (/(AND)?(OR)?/.test(c)) &#123;</span><br><span class="line">                    type += &apos; &apos; + c + &apos; &apos;;</span><br><span class="line">                &#125; else if (/(\()?(\))?/.test(c)) &#123;</span><br><span class="line">                    type += c;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        var likeKeyArr = whereSwitch.likeProp ? Object.keys(whereSwitch.likeProp) : [];</span><br><span class="line">        if (likeKeyArr.length) &#123;</span><br><span class="line">            if (likeKeyArr.length &gt; 1) &#123;</span><br><span class="line">                for (let j = 0; j &lt; likeKeyArr.length; j++) &#123;</span><br><span class="line">                    let cur = likeKeyArr[j];</span><br><span class="line">                    if (j == likeKeyArr.length - 1) &#123;</span><br><span class="line">                        type += cur + &apos; LIKE &apos; + &quot;&apos;%&quot; + whereSwitch.likeProp[cur] + &quot;%&apos;&quot;;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        type += cur + &apos; LIKE &apos; + &quot;&apos;%&quot; + whereSwitch.likeProp[cur] + &quot;%&apos;&quot; + &apos; AND &apos;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                for (let key in whereSwitch.likeProp) &#123;</span><br><span class="line">                    type += key + &apos; LIKE &apos; + &quot;&apos;%&quot; + whereSwitch.likeProp[key] + &quot;%&apos;&quot;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return type;</span><br><span class="line">    &#125;;</span><br><span class="line">    /**</span><br><span class="line">     * @param sqlType Object query type-&gt; &apos;INSERT&apos; &apos;DELETE&apos; &apos;UPDATE&apos; &apos;SELECT&apos;</span><br><span class="line">     * @param tableName String the name of the enqueried table</span><br><span class="line">     * @param whereSwitch [,Object] config the WHERE sentence</span><br><span class="line">     * @param limitSwitch [,Object] config the LIMIT sentence</span><br><span class="line">     * @returns String the sql query string joined by sqlJoin function</span><br><span class="line"></span><br><span class="line">    var sqlJoin = function (sqlType, tableName, whereSwitch, limitSwitch) &#123;</span><br><span class="line">        var SELECT = &apos;&apos;,</span><br><span class="line">            UPDATE = &apos;&apos;,</span><br><span class="line">            DELETE = &apos;&apos;,</span><br><span class="line">            INSERT = &apos;&apos;;</span><br><span class="line">        switch (sqlType.type) &#123;</span><br><span class="line">            case &apos;SELECT&apos;:</span><br><span class="line">                SELECT = &apos;SELECT &apos;;</span><br><span class="line">                if (sqlType.distinct) &#123;</span><br><span class="line">                    SELECT += &apos; DISTINCT &apos;</span><br><span class="line">                &#125;</span><br><span class="line">                sqlType.prop = sqlType.prop ? sqlType.prop : [];</span><br><span class="line">                if (sqlType.prop &amp;&amp; sqlType.prop.length) &#123;</span><br><span class="line">                    for (let i = 0; i &lt; sqlType.prop.length; i++) &#123;</span><br><span class="line">                        var cur = sqlType.prop[i];</span><br><span class="line">                        if (i == sqlType.prop.length - 1) &#123;</span><br><span class="line">                            SELECT += &apos;`&apos; + cur + &apos;`&apos;;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            SELECT += &apos;`&apos; + cur + &apos;`,&apos;;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    SELECT += &apos; *&apos;</span><br><span class="line">                &#125;</span><br><span class="line">                SELECT += &apos; FROM &apos; + &apos;`&apos; + tableName + &apos;`&apos;;</span><br><span class="line">                if (whereSwitch) &#123;</span><br><span class="line">                    SELECT = whereResolve(SELECT, whereSwitch);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                var orderArr = sqlType.orderProp ? Object.keys(sqlType.orderProp) : [];</span><br><span class="line">                if (orderArr.length) &#123;</span><br><span class="line">                    SELECT += &apos; ORDER BY &apos;;</span><br><span class="line">                    for (let m = 0; m &lt; orderArr.length; m++) &#123;</span><br><span class="line">                        let c = orderArr[m];</span><br><span class="line">                        if (m == orderArr.length - 1) &#123;</span><br><span class="line">                            if (sqlType.orderProp[c]) &#123;</span><br><span class="line">                                SELECT += c + &apos; ASC&apos;</span><br><span class="line">                            &#125; else &#123;</span><br><span class="line">                                SELECT += c + &apos; DESC&apos;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            if (sqlType.orderProp[c]) &#123;</span><br><span class="line">                                SELECT += c + &apos; ASC, &apos;</span><br><span class="line">                            &#125; else &#123;</span><br><span class="line">                                SELECT += c + &apos; DESC, &apos;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                if (limitSwitch &amp;&amp; limitSwitch.limit) &#123;</span><br><span class="line">                    SELECT += &apos; LIMIT &apos; + limitSwitch.num;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                break;</span><br><span class="line">            case &apos;UPDATE&apos;:</span><br><span class="line">                UPDATE = &apos;UPDATE &apos;;</span><br><span class="line">                UPDATE += tableName + &apos; SET &apos;;</span><br><span class="line">                var updatekeys = Object.keys(sqlType.prop);</span><br><span class="line">                for (let i = 0; i &lt; updatekeys.length; i++) &#123;</span><br><span class="line">                    var cur = updatekeys[i];</span><br><span class="line">                    if (i == updatekeys.length - 1) &#123;</span><br><span class="line">                        UPDATE += &apos;`&apos; + cur + &apos;` =&apos; + &quot;&apos;&quot; + sqlType.prop[cur] + &quot;&apos;&quot;;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        UPDATE += &apos;`&apos; + cur + &apos;` =&apos; + &quot;&apos;&quot; + sqlType.prop[cur] + &quot;&apos;, &quot;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                if (whereSwitch &amp;&amp; whereSwitch.where) &#123;</span><br><span class="line">                    UPDATE = whereResolve(UPDATE, whereSwitch);</span><br><span class="line">                &#125;</span><br><span class="line">                if (limitSwitch &amp;&amp; limitSwitch.limit) &#123;</span><br><span class="line">                    UPDATE += &apos; LIMIT &apos; + limitSwitch.num;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            case &apos;DELETE&apos;:</span><br><span class="line">                DELETE = &apos;DELETE FROM &apos; + tableName;</span><br><span class="line">                if (whereSwitch &amp;&amp; whereSwitch.where) &#123;</span><br><span class="line">                    DELETE = whereResolve(DELETE, whereSwitch);</span><br><span class="line">                &#125;</span><br><span class="line">                if (limitSwitch &amp;&amp; limitSwitch.limit) &#123;</span><br><span class="line">                    DELETE += &apos; LIMIT &apos; + limitSwitch.num;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            case &apos;INSERT&apos;:</span><br><span class="line">                INSERT = &apos;INSERT INTO &apos; + tableName;</span><br><span class="line">                var insertProp = Object.keys(sqlType.prop);</span><br><span class="line">                if (insertProp.length) &#123;</span><br><span class="line">                    for (let i = 0, len = insertProp.length; i &lt; len; i++) &#123;</span><br><span class="line">                        var cur = insertProp[i];</span><br><span class="line">                        if (i == 0) &#123;</span><br><span class="line">                            INSERT += &apos;(`&apos; + cur;</span><br><span class="line">                        &#125; else if (i == len - 1) &#123;</span><br><span class="line">                            INSERT += &apos;`&apos; + cur + &apos;`)&apos;;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            INSERT += &apos;`, `&apos; + cur + &apos;`, &apos;;</span><br><span class="line"></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    INSERT += &apos; VALUES &apos;;</span><br><span class="line">                    for (let j = 0, leng = insertProp.length; j &lt; leng; j++) &#123;</span><br><span class="line">                        var curr = insertProp[j];</span><br><span class="line">                        if (j == 0) &#123;</span><br><span class="line">                            INSERT += &quot;(&apos;&quot; + sqlType.prop[curr];</span><br><span class="line">                        &#125; else if (j == leng - 1) &#123;</span><br><span class="line">                            INSERT += &quot;&apos;&quot; + sqlType.prop[curr] + &quot;&apos;)&quot;;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            INSERT += &quot;&apos;,&apos;&quot; + sqlType.prop[curr] + &quot;&apos;, &quot;;</span><br><span class="line"></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">        return &#123;SELECT, UPDATE, DELETE, INSERT&#125;[sqlType.type];</span><br><span class="line">    &#125;;</span><br><span class="line">    return sqlJoin</span><br><span class="line">&#125;)();</span><br><span class="line">exports.sqlJoin = sqlJoin;</span><br></pre></td></tr></table></figure>
+
+<h2 id="用法示例："><a href="#用法示例：" class="headerlink" title="用法示例："></a>用法示例：</h2><ul>
+<li>新增</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;INSERT&apos;, prop: &#123;mNum: 7570, mName: &apos;晓鑫&apos;, points: 14&#125;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;limit: true, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //INSERT INTO members(`mNum`, `mName`, `points`) VALUES (&apos;7570&apos;,&apos;晓鑫&apos;, &apos;14&apos;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;DELETE&apos;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;where: true, whereProp: [&#123;mId: 67&#125;]&#125;,</span><br><span class="line">     &#123;limit: true, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //DELETE FROM members WHERE `mId`=&apos;67&apos; LIMIT 1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;UPDATE&apos;, prop: &#123;points: 14&#125;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&#123;mId: 24&#125;]&#125;,</span><br><span class="line">    &#123;limit: true, num: 1&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//UPDATE members SET `points` =&apos;14&apos; WHERE `mId`=&apos;24&apos; LIMIT 1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询%</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;SELECT&apos;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;where: true, likeProp: &#123;mNum: 75, mName: &apos;刘&apos;, points: 12&#125;&#125;,</span><br><span class="line">     &#123;limit: false, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //SELECT  * FROM `members` WHERE mNum LIKE &apos;%75%&apos; AND mName LIKE &apos;%刘%&apos; AND points LIKE &apos;%12%&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询% + AND/OR</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">     &#123;type: &apos;SELECT&apos;&#125;,</span><br><span class="line">     &apos;members&apos;,</span><br><span class="line">     &#123;where: true, whereProp: [&#123;&apos;mNum&apos;: 7501, operator: &apos;=&apos;&#125;,&apos;OR&apos;, &#123;mName: &apos;刘想&apos;,operator: &apos;=&apos;&#125;, &apos;AND&apos;,&#123;points: 5, operator: &apos;&gt;&apos;&#125;]&#125;,</span><br><span class="line">     &#123;limit: false, num: 1&#125;</span><br><span class="line"> );</span><br><span class="line"> console.log(str);</span><br><span class="line"> //SELECT  * FROM `members` WHERE `mNum`=&apos;7501&apos; OR `mName`=&apos;刘想&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询 % + AND+OR</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&apos;(&apos;, &#123;&apos;mNum&apos;: 7501, operator: &apos;=&apos;&#125;,&apos;OR&apos;, &#123;mName: &apos;刘想&apos;,operator: &apos;=&apos;&#125;,&apos;)&apos;, &apos;AND&apos;,&#123;points: 5, operator: &apos;&gt;&apos;&#125;]&#125;,</span><br><span class="line">    &#123;limit: false, num: 1&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT * FROM `members` WHERE ( `mNum`=&apos;7501&apos; OR `mName`=&apos;刘想&apos; ) AND `points`&gt;&apos;5&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询——DESC/ASC</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//true: ASC,false: DESC</span><br><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;, orderProp: &#123;points:false&#125;&#125;,</span><br><span class="line">    &apos;members&apos;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT  * FROM `members` ORDER BY points DESC</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询——WHERE</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;, prop: [&apos;mName&apos;,&apos;points&apos;,&apos;mNum&apos;], orderProp: &#123;points: true&#125;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&#123;mId: 2, operator: &apos;&gt;&apos;&#125;]&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT `mName`,`points`,`mNum` FROM `members` WHERE `mId`=&apos;24&apos;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询——distinct</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*var str = sqlJoin(</span><br><span class="line">    &#123;type: &apos;SELECT&apos;, distinct: true, prop: [&apos;points&apos;], orderProp: &#123;points: true&#125;&#125;,</span><br><span class="line">    &apos;members&apos;,</span><br><span class="line">    &#123;where: true, whereProp: [&#123;mId: 2, operator: &apos;&gt;&apos;&#125;]&#125;</span><br><span class="line">);</span><br><span class="line">console.log(str);</span><br><span class="line">//SELECT  DISTINCT `points` FROM `members` WHERE `mId`&gt;&apos;2&apos; ORDER BY points ASC</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck3wwl2ul001qs0pphmo90vb9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-flex布局" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/08/12/flex布局/" class="article-date">
@@ -187,7 +274,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/12/flex布局/" data-id="ck3wwixv3001imkppwm00kgyl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/12/flex布局/" data-id="ck3wwl2ue001ks0pphimxmrp3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li></ul>
@@ -514,7 +601,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck3wwixvc001qmkpp77uvhn8x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck3wwl2un001ss0ppzgze5ynv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -761,7 +848,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck3wwixv1001gmkppmg2hk6h4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck3wwl2ua001gs0pp6yb58sik" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -1001,7 +1088,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck3wwixv0001emkppiqj12qdn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck3wwl2u7001ds0pp81623boq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -1143,7 +1230,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck3wwixux001bmkpp28xrttiv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck3wwl2uc001is0ppad6ij7sy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -1269,7 +1356,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck3wwixvk001ymkppf3eiph9t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck3wwl2uv0020s0ppssmcy7l2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -1332,7 +1419,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck3wwixvh001vmkppernw3jf5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck3wwl2us001xs0ppt4vymg0h" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -1518,7 +1605,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/14/requirejs/" data-id="ck3wwixvf001tmkpphat20c7l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/14/requirejs/" data-id="ck3wwl2uq001vs0ppw02v8kdg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1722,121 +1809,11 @@ Mixins还有一种形式叫做ParametricMixins（混入参数），Less也支持
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/15/LESSS入门教程/" data-id="ck3wwixuv0019mkppe1o7x7v2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/15/LESSS入门教程/" data-id="ck3wwl2u5001bs0ppoevy55tf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-gulp进阶（gulp中的插件的使用）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/23/gulp进阶（gulp中的插件的使用）/" class="article-date">
-  <time datetime="2016-11-23T14:40:19.000Z" itemprop="datePublished">2016-11-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/23/gulp进阶（gulp中的插件的使用）/">gulp进阶（gulp中的插件的使用）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在上一篇文章中简单介绍了gulp的基础知识，gulp提供了一些很实用的接口，但本身并不能做太多的事情 可以读取文件、写入文件以及监控文件等一少部分功能 其它实用的功能都是依靠插件来进行扩展的 这些插件可以实现比如<br>编译 Sass：gulp-sass<br>编译 Less：gulp-less<br>合并文件：gulp-concat<br>压缩文件：gulp-uglify<br>重命名js文件：gulp-rename<br>优化图像大小：gulp-imagemin<br>压缩css 文件：gulp-minify-css<br>创建本地服务器：gulp-connect<br>实时预览 gulp-connect<br>1、 使用插件步骤<br>npm install xxx –save-dev 安装插件<br>在 gulpfile.js 顶部引入此插件<br>在创建任务的时候使用此插件<br>2、 gulp-load-plugins<br>这个插件能自动帮你加载package.json文件里的gulp插件。 例如假设你的package.json文件里的依赖是这样的:<br>    “devDependencies”: {<br>       “gulp”: “^3.9.0”,<br>       “gulp-concat”: “^2.6.0”,<br>       “gulp-connect”: “^2.2.0”<br>     }<br>然后我们可以在gulpfile.js中使用gulp-load-plugins来帮我们加载插件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">var $ = require(&apos;gulp-load-plugins&apos;)();</span><br></pre></td></tr></table></figure>
-
-<p>然后我们要使用gulp-concat和gulp-connect这两个插件的时候， 就可以使用$.concat和$.connect来代替了,也就是原始插件名去掉gulp-前缀，之后再转换为驼峰命名。<br>3、插件的使用<br>1）less<br>less插件可以把less文件编译成css</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$    npm install gulp-less --save-dev</span><br><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">    var less = require(&apos;gulp-less&apos;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;less&apos;,function()&#123;</span><br><span class="line">        return gulp.src(&apos;app/less/*.less&apos;)</span><br><span class="line">        .pipe(less())</span><br><span class="line">        .pipe(gulp.dest(&apos;dist/css&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;default&apos;,[&apos;less&apos;]);</span><br></pre></td></tr></table></figure>
-
-<p>2） gulp-concat<br>这个插件可以把几个文件合并到一块</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$    npm install gulp-concat --save-dev</span><br><span class="line">  var gulp = require(&apos;gulp&apos;);</span><br><span class="line">  var concat = require(&apos;gulp-concat&apos;);</span><br><span class="line"></span><br><span class="line">  gulp.task(&apos;concat&apos;,function()&#123;</span><br><span class="line">      return gulp.src(\[&apos;app/js/*.js&apos;,&apos;!app/js/*.tmp.js&apos;])//指定要合并的文件glob</span><br><span class="line">          .pipe(concat(&apos;app.js&apos;))//进行合并并指定合并后的文件名</span><br><span class="line">          .pipe(gulp.dest(&apos;dist/js&apos;));//输出到目标路径</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  gulp.task(&apos;default&apos;,\[&apos;concat&apos;]);</span><br></pre></td></tr></table></figure>
-
-<p>3） gulp-uglify<br>合并后我们可以对JS文件进行压缩,最小化处理</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$  npm install gulp-uglify --save-dev</span><br><span class="line">    var gulp = require(&apos;gulp&apos;);</span><br><span class="line">    var concat = require(&apos;gulp-concat&apos;);</span><br><span class="line">    var uglify = require(&apos;gulp-uglify&apos;)</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;uglify&apos;,function()&#123;</span><br><span class="line">        return gulp.src([&apos;app/js/*.js&apos;,&apos;!app/js/*.tmp.js&apos;])</span><br><span class="line">            .pipe(concat(&apos;app.js&apos;)) //把多个JS文件合并成一个文件</span><br><span class="line">            .pipe(uglify()) //对合并后的app.js文件进行压缩</span><br><span class="line">            .pipe(gulp.dest(&apos;dist/js&apos;)); //输出到目的地</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;default&apos;,[&apos;uglify&apos;]);</span><br></pre></td></tr></table></figure>
-
-<p>4） gulp-rename<br>在把处理好的文件存放到指定的位置之前，我们可以先去重新命名一下它</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ npm install gulp-rename --save-dev</span><br><span class="line">    var gulp = require(&apos;gulp&apos;);</span><br><span class="line">    var concat = require(&apos;gulp-concat&apos;);</span><br><span class="line">    var uglify = require(&apos;gulp-uglify&apos;);</span><br><span class="line">    var rename = require(&apos;gulp-rename&apos;);</span><br><span class="line">    gulp.task(&apos;uglify&apos;,function()&#123;</span><br><span class="line">        return gulp.src([&apos;app/js/*.js&apos;,&apos;!app/js/*.tmp.js&apos;])//指定要处理的文件</span><br><span class="line">            .pipe(concat(&apos;app.js&apos;))//合并成一个文件</span><br><span class="line">            .pipe(gulp.dest(&apos;dist/js&apos;))//保存此文件</span><br><span class="line">            .pipe(uglify())//进行压缩</span><br><span class="line">            .pipe(rename(&apos;app.min.js&apos;))//对此文件进行重命名</span><br><span class="line">            .pipe(gulp.dest(&apos;dist/js&apos;));//再输出一次</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    gulp.task(&apos;default&apos;,[&apos;uglify&apos;]);</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">5） gulp-minify-css</span><br><span class="line">压缩css</span><br></pre></td></tr></table></figure>
-
-<p>$    npm install gulp-minify-css –save-dev<br>   var gulp = require(‘gulp’);<br>    var less = require(‘gulp-less’);<br>    var minify = require(‘gulp-minify-css’);//在文件的顶部去包含这个插件，起个名字，叫做 minify<br>    var rename = require(‘gulp-rename’);<br>    gulp.task(‘minify’,function(){<br>        return gulp.src(‘app/less/page.less’)//指定 less文件<br>            .pipe(less())//把less编译成css<br>            .pipe(gulp.dest(‘dist/css’))//输出到目的地<br>            .pipe(minify())//对 css再进行压缩<br>            .pipe(rename(‘page.min.css’))//重命名<br>            .pipe(gulp.dest(‘dist/css’));//输出到目的地<br>    });</p>
-<pre><code>gulp.task(&apos;default&apos;,[&apos;less&apos;]);</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">6） gulp-minify-html</span><br><span class="line">html文件压缩</span><br></pre></td></tr></table></figure>
-
-<p>$ npm install gulp-minify-html –save-dev<br>    var gulp = require(‘gulp’),<br>        minifyHtml = require(“gulp-minify-html”);</p>
-<pre><code>gulp.task(&apos;minify-html&apos;, function () {
-    gulp.src(&apos;src/*.html&apos;) // 要压缩的html文件
-    .pipe(minifyHtml())    //压缩
-    .pipe(gulp.dest(&apos;dist/html&apos;));//输出到目的地
-});</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">7） gulp-imagemin</span><br><span class="line">如果要想在保证不改变图像质量的情况下，让图像文件的体积变得更小一点,我们可以使用gulp-imagemin</span><br></pre></td></tr></table></figure>
-
-<p>$ npm install gulp-imagemin –save-dev<br> var gulp = require(‘gulp’);<br> var imagemin = require(‘gulp-imagemin’);</p>
-<p> gulp.task(‘copy-images’,function(){<br>     return gulp.src(‘app/imgs/<em>*/</em>.{jpg,png}’)//指定要压缩的图片<br>         .pipe(imagemin()) //进行图片压缩<br>         .pipe(gulp.dest(‘dist’));//输出目的地<br> });</p>
-<p>  gulp.task(‘default’,[‘copy-images’]);</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">8） gulp-connect</span><br><span class="line">有些时候我们需要把文件放到本地服务器上去预览，gulp-connect可以帮我们创建一个本地服务器去运行我们的项目</span><br></pre></td></tr></table></figure>
-
-<pre><code> npm install gulp-connect --save-dev
-var gulp = require(&apos;gulp&apos;);
-var connect = require(&apos;gulp-connect&apos;);
-
-gulp.task(&apos;server&apos;,function(){
-   connect.server({
-       root:&apos;dist&apos;,//服务器的根目录
-       port:8080 //服务器的地址，没有此配置项默认也是 8080
-   });
-});
-
-gulp.task(&apos;default&apos;,[&apos;server&apos;]); //运行此任务的时候会在8080上启动服务器，</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">9） 自动刷新</span><br><span class="line">我们希望当文件变化的时候浏览器可以自动刷新，这样我们就不需要文件修改后手动去刷新浏览器了</span><br></pre></td></tr></table></figure>
-
-<pre><code>var gulp = require(&apos;gulp&apos;);
-var connect = require(&apos;gulp-connect&apos;);
-
-gulp.task(&apos;copy-html&apos;,function(){
-     gulp.src(&apos;app/index.html&apos;)//指定源文件
-         .pipe(gulp.dest(&apos;dist&apos;))//拷贝到dist目录
-         .pipe(connect.reload());//通知浏览器重启
-});
-
-gulp.task(&apos;watch&apos;,function(){
-    gulp.watch(&apos;app/index.html&apos;,[&apos;copy-html&apos;]);//当index.html文件变化时执行copy-html任务
-});
-
-gulp.task(&apos;server&apos;,function(){
-    connect.server({
-        root:&apos;dist&apos;,//服务器的根目录
-        port:8080, //服务器的地址，没有此配置项默认也是 8080
-        livereload:true//启用实时刷新的功能
-    });
-});</code></pre><p>gulp.task(‘default’,[‘server’,’watch’]);//运行此任务的时候会在8080上启动服务器；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10）gulp-inject </span><br><span class="line">自动向html中插入经过gulp编译、压缩、合并后的js、css文件，这个功能需要在html中写注释配合才行</span><br><span class="line">html中注释：（格式和内容是写死的）；</span><br><span class="line">注入css：</span><br></pre></td></tr></table></figure>
-
-<!--inject:css-->;
-<!--endinject-->;
-<p>注入js：</p>
-<!--inject:js-->;
-<!--endinject-->;
-<p>gulp代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var gulp=require(“gulp”);</span><br><span class="line">var inject=require(“gulp- inject”);</span><br><span class="line">gulp.task(“inject”,function()&#123;</span><br><span class="line">var target=gulp.src(“app/index.html”), /target指定向哪个文件中插入css和js</span><br><span class="line"></span><br><span class="line">	source=gulp.src([“dist/css/all.min.css”,”dist/js/all.min.js”]);// //source是向指定的html插入什么文件</span><br><span class="line">target.pipe(inject(source,&#123;ignorePaht:”/dist/”,addRootSlash:false&#125;)&#125;).pipe(gulp.dest(“dist”));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>注意：inject的第二参数：<br>ignorePath：因在定义这个任务时，gulp.src方法都是参照gulpfile.js为参照物去寻找文件，但是css和js插入到html的link和script标签中的时候，这时候的相对路径的参照物就应该是html了，所以在给插入到html中的css和js文件拼接路径时要将一段路径去掉；<br>addRootSlash:在拼接路径的时候，gulp默认会在link的href和script的src的路径中添加一个默认根目录的/，但是这不是我们想要的，一般不用；</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/23/gulp进阶（gulp中的插件的使用）/" data-id="ck3wwixv8001mmkppx3638eyj" class="article-share-link">Share</a>
-      
-      
     </footer>
   </div>
   
@@ -1872,7 +1849,7 @@ gulp.task(&apos;server&apos;,function(){
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 17.5px;">Vue</a> <a href="/tags/es6/" style="font-size: 15px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 12.5px;">webpack</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a>
     </div>
   </div>
 
@@ -1894,6 +1871,10 @@ gulp.task(&apos;server&apos;,function(){
       <ul>
         
           <li>
+            <a href="/2019/12/08/webpack掠影-3/">webpack掠影-3</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/08/webpack掠影-2/">webpack掠影-2</a>
           </li>
         
@@ -1907,10 +1888,6 @@ gulp.task(&apos;server&apos;,function(){
         
           <li>
             <a href="/2019/10/06/JavaScript进阶教程15/">进阶教程 15. Promise 用法详解</a>
-          </li>
-        
-          <li>
-            <a href="/2019/09/15/JavaScript进阶教程14/">进阶教程 14. 跨域和同源策略</a>
           </li>
         
       </ul>
