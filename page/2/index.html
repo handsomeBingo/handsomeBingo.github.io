@@ -67,6 +67,207 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaScript进阶教程11" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/16/JavaScript进阶教程11/" class="article-date">
+  <time datetime="2019-06-16T13:34:02.000Z" itemprop="datePublished">2019-06-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/16/JavaScript进阶教程11/">进阶教程 10. 本地存储、http协议基础</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、本地存储"><a href="#一、本地存储" class="headerlink" title="一、本地存储"></a>一、本地存储</h2><h3 id="为什么要本地存储？"><a href="#为什么要本地存储？" class="headerlink" title="为什么要本地存储？"></a>为什么要本地存储？</h3><ul>
+<li>真实项目中经常需要在一个网站的多个页面间共享数据，如果登录状态，购物车信息等</li>
+</ul>
+<p>但是浏览器打开页面时首先形成一个顶层的作用域window，每次页面打开都会形成一个单独的作用域，页面之间是不可以互通访问变量的；但是项目中经常会用到页面间传递数据的要求；</p>
+<p>每个页面又都是在浏览器中打开的，如果可以把值存储到浏览器中，让浏览器作为一个中介，  A页面把值存到浏览器中，B页面从从浏览器中把A存储的值取出来；</p>
+<h3 id="本地存储解决方案："><a href="#本地存储解决方案：" class="headerlink" title="本地存储解决方案："></a>本地存储解决方案：</h3><ul>
+<li>cookie</li>
+<li>localStorage</li>
+<li>sessionStorage</li>
+</ul>
+<h3 id="localStorage-和-sessionStorage"><a href="#localStorage-和-sessionStorage" class="headerlink" title="localStorage 和 sessionStorage"></a>localStorage 和 sessionStorage</h3><p>HTML5提供了本地存储方式：</p>
+<ul>
+<li>localStorage 永久存储（如果手动触发删除或者用户清除）</li>
+<li>sessionStorage 会话存储</li>
+</ul>
+<h4 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.localStorage 对象</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.localStorage);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>localStorage.setItem(key, value) 存储数据</li>
+</ul>
+<ul>
+<li>localStorage 存储数据时键值的形式存储的；</li>
+<li>key 键</li>
+<li>value 值</li>
+<li>key和value都需要是字符串类型，如果不是字符串类型，浏览器会隐式调用toString将其转换为字符串；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localStorage.setItem(&#123;<span class="attr">name</span>: <span class="number">1</span>&#125;, &#123;<span class="attr">name</span>: <span class="number">2</span>&#125;);</span><br><span class="line">localStorage.setItem(<span class="number">1</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果不会有两个相同的key，如果key相同后面的值会覆盖前面的值；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localStorage.setItem(<span class="string">'user'</span>, <span class="string">'mabin'</span>);</span><br><span class="line">localStorage.setItem(<span class="string">'user'</span>, <span class="string">'mabin2'</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>如果批量存储数据太麻烦，直接存储JSON字符串</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ary = &#123;</span><br><span class="line">	code: <span class="number">0</span>,</span><br><span class="line">	data: &#123;</span><br><span class="line">		page: <span class="number">1</span>,</span><br><span class="line">		limit: <span class="number">10</span>,</span><br><span class="line">		list: [</span><br><span class="line">			&#123;</span><br><span class="line">				course: <span class="number">18</span>,</span><br><span class="line">				subject: <span class="number">15</span>,</span><br><span class="line">				fire: <span class="number">3</span>,</span><br><span class="line">				price: <span class="number">180</span></span><br><span class="line">			&#125;,</span><br><span class="line">			&#123;</span><br><span class="line">				course: <span class="number">18</span>,</span><br><span class="line">				subject: <span class="number">15</span>,</span><br><span class="line">				fire: <span class="number">3</span>,</span><br><span class="line">				price: <span class="number">180</span></span><br><span class="line">			&#125;,</span><br><span class="line">			&#123;</span><br><span class="line">				course: <span class="number">18</span>,</span><br><span class="line">				subject: <span class="number">15</span>,</span><br><span class="line">				fire: <span class="number">3</span>,</span><br><span class="line">				price: <span class="number">180</span></span><br><span class="line">			&#125;,</span><br><span class="line">			&#123;</span><br><span class="line">				course: <span class="number">18</span>,</span><br><span class="line">				subject: <span class="number">15</span>,</span><br><span class="line">				fire: <span class="number">3</span>,</span><br><span class="line">				price: <span class="number">180</span></span><br><span class="line">			&#125;</span><br><span class="line">		]</span><br><span class="line">	&#125;,</span><br><span class="line">	msg: <span class="string">'ok'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">localStorage.setItem(<span class="string">'someJson'</span>, <span class="built_in">JSON</span>.stringify(ary));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>localStorage.getItem(key) 获取ls中存储的数据。</p>
+</li>
+</ul>
+<p><strong>获取回来的都是字符串类型的</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> json = localStorage.getItem(<span class="string">'someJson'</span>);</span><br><span class="line"><span class="keyword">let</span> uk = localStorage.getItem(<span class="string">'uk'</span>); <span class="literal">null</span></span><br><span class="line"><span class="built_in">console</span>.log(uk); 获取不存在的key返回<span class="literal">null</span></span><br><span class="line"><span class="built_in">console</span>.log(json);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> json); string</span><br><span class="line"></span><br><span class="line">localStorage.removeItem(key) 删除</span><br><span class="line">localStorage.removeItem(<span class="string">'user'</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>sessionStorage 会话存储，</p>
+</li>
+<li><p>setItem(key, value)</p>
+</li>
+<li><p>getItem(key)</p>
+</li>
+<li><p>removeItem(key)</p>
+</li>
+<li><p>sessionStorage.setItem(‘ok’, ‘0’);</p>
+</li>
+<li><p>localStorage和sessionStorage的区别：</p>
+</li>
+</ul>
+<p>localStorage是永久存储，如果不删除或者用户不清除就会一直有。而sessionStorage只是会话存储，只要页面不关闭有，如果页面关闭了，就消失了。</p>
+<h2 id="二、发布网站"><a href="#二、发布网站" class="headerlink" title="二、发布网站"></a>二、发布网站</h2><ul>
+<li><p>项目：<br>前后端开发的项目代码</p>
+</li>
+<li><p>域名：<br>需要在万网（被阿里云收购）上买域名，每个域名项身份证号一样，是不会重复的，一旦被注册，就不能再次进行购买；</p>
+</li>
+<li><p>服务器：<br>存储项目代码的一台电脑。每个服务器都会对应一个对应的ip地址（一个门牌号），如果想让我们开发的项目代码为用户提供服务需要把项目代码部署在服务器上(虚拟服务器)。</p>
+</li>
+</ul>
+<ul>
+<li><p>DNS (Domain Name System)：<br>DNS服务由DNS服务器提供，DNS服务是将域名和IP地址进行绑定；</p>
+</li>
+<li><p>ftp(file transfer protocol)上传: ftp工具或者脚本把代码上传到服务器上；</p>
+</li>
+<li><p>端口：<br>一个服务器可以提供多个服务，每个服务器上可以有很多小房间（端口），这些小房间编号0-65535，每个端口可以提供一个服务；</p>
+</li>
+</ul>
+<p>+webstorm的localhost:63342/xxx/ccc.html 是在本机上启动了一个服务器程序，此时我们的电脑相当于服务器。我自己的电脑上访问localhost:xxx/cc.html时是不需要网络的</p>
+<ul>
+<li>搜索爬虫：每个做搜索的，公司如百度，都会有一个用来收集各大网站的程序，这个程序称为搜索爬虫。它会把最火的关键词或者网站上的关键字收录到自己的搜索库中；当我们进到百度时，查找某些东西时，百度的服务器会去自己的搜索库中和我们输入的内容最接近的内容，然后返回给我们</li>
+</ul>
+<h2 id="三、http协议"><a href="#三、http协议" class="headerlink" title="三、http协议"></a>三、http协议</h2><h3 id="什么事http协议？"><a href="#什么事http协议？" class="headerlink" title="什么事http协议？"></a>什么事http协议？</h3><p>http(HyperText Transfer Protocol):<br>超文本传输协议：在客户端和服务器端不仅可以进行文本传输，还可以传递图片，音视频；是浏览器和服务器端之间约定好了的一种规范；双方按照规范传递和接受数据；</p>
+<ul>
+<li>https:  加密的传输协议；更安全，在协议中增加了秘钥，不容易被拦截和篡改，大多数对安全有要求的都会使用https；</li>
+</ul>
+<p>http: 就像运行在客户端和服务端的快递小哥，可以把客户端的信息传递给服务器（请求: request），然后把服务器整理好的数据通过http协议发送给服务端（响应response）;</p>
+<h3 id="前后端交互模型"><a href="#前后端交互模型" class="headerlink" title="前后端交互模型"></a>前后端交互模型</h3><p>+在浏览器总输入一个url，到用户看到页面都经过了什么？</p>
+<ul>
+<li>http 请求阶段</li>
+</ul>
+<ol>
+<li>浏览器得到地址栏中的地址，发送给DNS服务器</li>
+<li>DNS服务器进行域名解析，找到域名对应的IP地址</li>
+<li>把客户端的请求发送给上一步查出来的服务器地址</li>
+</ol>
+<ul>
+<li>http 响应阶段</li>
+</ul>
+<ol start="4">
+<li>服务器接收到请求后，根据请求的信息，进行资源的整理，并且把响应的资源通过http返回给客户端（数据或者html、js、css文件等）；</li>
+<li>根据资源的类型不同，浏览器会进行不同的操作，如html和css进行解析渲染，js进行解析并执行；</li>
+</ol>
+<ul>
+<li>浏览器的渲染阶段</li>
+</ul>
+<ol>
+<li>解析html文件形成DOM树根据节点间关系组织树的节点关系；</li>
+<li>解析CSS形成CSS树</li>
+<li>把DOM树和CSS树组合形成render树</li>
+<li>接下来交给显卡，绘制成页面；</li>
+</ol>
+<h2 id="四、http的三次握手和四次挥手"><a href="#四、http的三次握手和四次挥手" class="headerlink" title="四、http的三次握手和四次挥手"></a>四、http的三次握手和四次挥手</h2><blockquote>
+<p>http 协议建立和断开连接时不是一次就完成的，连接时而是通过三次握手，断开时要经历4次挥手；</p>
+</blockquote>
+<ul>
+<li>三次握手</li>
+</ul>
+<ul>
+<li><p>第一次握手：客户端发送syn码数据包给服务器，客户端要求和服务器建立连接；</p>
+</li>
+<li><p>第二次握手：服务端接收到连接请求后，会发送ack码数据到客户端，表示你的连接请求已经收到，再次询问客户端是否确认建立连接</p>
+</li>
+<li><p>第三次握手：客户端收到服务器的ack码后，检验是否正确，如果正确则再次发送ack给服务器，表示确认连接；</p>
+</li>
+<li><p>三次握手如果成功，客户端和服务端的连接成功建立，才会开始传递数据；</p>
+</li>
+</ul>
+<ul>
+<li>四次挥手：</li>
+</ul>
+<ol>
+<li>当客户端发送数据结束后，会发送fin告知服务器，客户端要给服务器的数据传输完了；</li>
+<li>服务端返回给客户端一个ack码，告知客户端已经知道数据传递完成。客户端收到ack，就会把发送到服务端的通道关闭；</li>
+<li>服务端数据传输结束后，也会发送fin给客户端；</li>
+<li>当客户端收到fin后，会发送ack给服务端，表示客户端知道服务端已经发送完毕，服务器收到ack后就可以放心的关闭数据传输通道；</li>
+</ol>
+<h2 id="五、uri-urn-url"><a href="#五、uri-urn-url" class="headerlink" title="五、uri/urn/url"></a>五、uri/urn/url</h2><ul>
+<li><p>URI: 统一资源标识符</p>
+</li>
+<li><p>URN: 同一资源成名</p>
+</li>
+<li><p>URL: 同一资源定位符；</p>
+</li>
+<li><p>一个url的例子：</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//www.dahai.com:443/tech/ai.html?user=mabin&amp;time=1e8239473784#top</span></span><br></pre></td></tr></table></figure>
+
+<p>url各部分代表的意义:</p>
+<ol>
+<li>http  http/https: 协议</li>
+<li><a href="http://www.dahai.com" target="_blank" rel="noopener">www.dahai.com</a> 域名</li>
+<li>:443 端口号 http 协议默认80,https默认443</li>
+<li>/tech/ai.html 路径</li>
+<li>?user=mabin&amp;time=2323456 参数（可以有可以没有）放在?后面的都是告知服务器的数据</li>
+<li>#top 锚点：（哈希）</li>
+</ol>
+<h2 id="六、HTTP报文"><a href="#六、HTTP报文" class="headerlink" title="六、HTTP报文"></a>六、HTTP报文</h2><h3 id="http报文是时候什么？"><a href="#http报文是时候什么？" class="headerlink" title="http报文是时候什么？"></a>http报文是时候什么？</h3><p>HTTP报文用于http协议交互的信息，因为http通信分为请求和响应两个阶段，所以报文分为两种；</p>
+<ul>
+<li>请求报文</li>
+<li>响应报文</li>
+</ul>
+<h3 id="报文的结构："><a href="#报文的结构：" class="headerlink" title="报文的结构："></a>报文的结构：</h3><p>报文分为：报文首部 空行 报文主体；</p>
+<h4 id="请求报文："><a href="#请求报文：" class="headerlink" title="请求报文："></a>请求报文：</h4><p>报文首部：请求首部分为请求行和请求头；请求行中包含 请求方法、协议、版本、URI<br>空行（CR+LF）<br>报文主体：客户端传递给服务端的数据</p>
+<h4 id="响应报文："><a href="#响应报文：" class="headerlink" title="响应报文："></a>响应报文：</h4><p>报文首部：状态行和响应头；状态行包含http协议版本，响应状态码<br>空行（CR+LF）<br>报文主体：响应体（服务端返回给客户端的数据）</p>
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/16/JavaScript进阶教程11/" data-id="ck3yledch000jukppxked12lf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JavaScript进阶教程10" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/20/JavaScript进阶教程10/" class="article-date">
@@ -171,7 +372,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/20/JavaScript进阶教程10/" data-id="ck3x5xk37000hg0pp738rkahb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/20/JavaScript进阶教程10/" data-id="ck3yledce000hukppxx75ltj2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -360,7 +561,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/15/JavaScript进阶教程9/" data-id="ck3x5xk4j001jg0ppdsoxv781" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/15/JavaScript进阶教程9/" data-id="ck3yledd70019ukppsqg9h7x5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -484,7 +685,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/22/JavaScript进阶教程8/" data-id="ck3x5xk4s001pg0pp8ieqyc04" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/22/JavaScript进阶教程8/" data-id="ck3yledd50017ukpp8kezzg4z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -596,7 +797,96 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/17/JavaScript进阶教程7/" data-id="ck3x5xk420013g0ppeqhh96t6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/17/JavaScript进阶教程7/" data-id="ck3yledd30015ukppallez1ab" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-JavaScript进阶教程6" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/24/JavaScript进阶教程6/" class="article-date">
+  <time datetime="2018-12-24T12:45:03.000Z" itemprop="datePublished">2018-12-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/24/JavaScript进阶教程6/">进阶教程 6. JS 盒子模型属性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、js盒子模型属性"><a href="#一、js盒子模型属性" class="headerlink" title="一、js盒子模型属性"></a>一、js盒子模型属性</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">		* &#123;</span><br><span class="line">			margin: 0;</span><br><span class="line">			padding: 0;</span><br><span class="line">		&#125;</span><br><span class="line">		.box &#123;</span><br><span class="line">			/* css盒子模型属性： context (内容宽高) + padding + border + margin*/</span><br><span class="line">			/*w3c盒模型：内容宽高是不包含padding和border的*/</span><br><span class="line">			/*IE盒模型：宽度包含padding和border*/</span><br><span class="line">			width: 300px;</span><br><span class="line">			height: 1220px;</span><br><span class="line">			background-color: red;</span><br><span class="line">			padding: 50px;</span><br><span class="line">			border: 20px solid blue;</span><br><span class="line">			margin: 50px auto;</span><br><span class="line">			overflow-y: scroll;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span> <span class="attr">id</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">	【联播+】4月8日，习近平等中央领导同志参加了首都义务植树活动。习近平挥锹铲土，扶苗培土，与广大少先队员和市民们一起劳动。植树现场一片热火朝天景象。</span><br><span class="line"></span><br><span class="line">	“我们的根扎在劳动人民之中。”习近平曾这样发自肺腑地说道。</span><br><span class="line"></span><br><span class="line">	1969年初，不满16岁的习近平来到陕北农村插队，一头扎进最基层。在农村生活的7年间，他什么活儿都干过，乡亲们说他是“吃苦耐劳好后生”。</span><br><span class="line"></span><br><span class="line">	从政之后，习近平不改劳动本色，从贫困山村到基层社区，他走进群众中间，一起种树、打糍粑、炸酥肉……所到之处，都留下了他与人民一同劳动的温暖记忆。</span><br><span class="line"></span><br><span class="line">	央视网用八张海报，带你重温过去，感受习近平总书记与人民同劳动的暖心瞬间。</span><br><span class="line">	【联播+】4月8日，习近平等中央领导同志参加了首都义务植树活动。习近平挥锹铲土，扶苗培土，与广大少先队员和市民们一起劳动。植树现场一片热火朝天景象。</span><br><span class="line"></span><br><span class="line">	“我们的根扎在劳动人民之中。”习近平曾这样发自肺腑地说道。</span><br><span class="line"></span><br><span class="line">	1969年初，不满16岁的习近平来到陕北农村插队，一头扎进最基层。在农村生活的7年间，他什么活儿都干过，乡亲们说他是“吃苦耐劳好后生”。</span><br><span class="line"></span><br><span class="line">	从政之后，习近平不改劳动本色，从贫困山村到基层社区，他走进群众中间，一起种树、打糍粑、炸酥肉……所到之处，都留下了他与人民一同劳动的温暖记忆。</span><br><span class="line"></span><br><span class="line">	央视网用八张海报，带你重温过去，感受习近平总书记与人民同劳动的暖心瞬间。</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/4-js盒子模型属性.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>JS盒模型：通过JS中的属性和方法获取元素的属性信息</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> box = <span class="built_in">document</span>.getElementById(<span class="string">'box'</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="client"><a href="#client" class="headerlink" title="client"></a>client</h4><ol>
+<li>clientWidth / clientHeight<br> clientWidth 内容宽度 + 左右padding<br> clientHeight 内容高度 + 上下padding</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.clientWidth);</span><br><span class="line"><span class="built_in">console</span>.log(box.clientHeight);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>clientLeft / clientTop<br> clientLeft 左边框<br>  clientTop 上边框</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.clientLeft);</span><br><span class="line"><span class="built_in">console</span>.log(box.clientTop);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>offsetWidth / offsetHeight<br> offsetWidth = clientWidth(内容宽+左右padding) + 左右边框<br> offsetHeight = clientHeight(内容高+上下padding) + 上下边框</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.offsetWidth);</span><br><span class="line"><span class="built_in">console</span>.log(box.offsetHeight);</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>scroll系列</p>
+<p> scrollLeft(横向滚动条卷去的距离) / scrollTop(纵向滚动条卷去的距离)<br> 滚动条 卷去的距离，默认是0，具体是多少要看滚动条滚动了多少</p>
+</li>
+</ol>
+<ul>
+<li><p>获取浏览器的窗口滚动的距离</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sc = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line"><span class="built_in">console</span>.log(sc);</span><br></pre></td></tr></table></figure>
+
+<p>  scrollHeight/scrollWidth<br>  没有溢出时，scrollHeight/scrollWidth 等于 clientHeight/clientWidth<br>  内容溢出时：scrollHeight = clientHeight + 溢出内容高度;<br>  内容溢出时：scrollWidth= clientWidth + 溢出内容高度;</p>
+</li>
+<li><p>获取浏览器的窗口的盒模型属性：</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> winW = <span class="built_in">document</span>.documentElement.clientWidth || <span class="built_in">document</span>.body.clientWidth;</span><br><span class="line"><span class="keyword">let</span> winH = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">document</span>.body.clientHeight;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">win</span>(<span class="params">attr, val</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">typeof</span> val !== <span class="string">"undefined"</span>) &#123;</span><br><span class="line">		<span class="built_in">document</span>.documentElement[attr] = <span class="built_in">document</span>.body[attr] = val;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">document</span>.documentElement[attr] || <span class="built_in">document</span>.body[attr];</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(win(<span class="string">'scrollTop'</span>));</span><br><span class="line"><span class="built_in">console</span>.log(win(<span class="string">'screenTop'</span>, <span class="number">1000</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、offsetLeft和offsetTop-偏移值"><a href="#四、offsetLeft和offsetTop-偏移值" class="headerlink" title="四、offsetLeft和offsetTop 偏移值"></a>四、offsetLeft和offsetTop 偏移值</h3><ul>
+<li>offsetLeft / offsetTop</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> outer = <span class="built_in">document</span>.getElementById(<span class="string">'outer'</span>);</span><br><span class="line"><span class="keyword">let</span> inner = <span class="built_in">document</span>.getElementById(<span class="string">'inner'</span>);</span><br><span class="line"><span class="keyword">let</span> center = <span class="built_in">document</span>.getElementById(<span class="string">'center'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(inner.offsetParent); <span class="comment">// div#outer</span></span><br><span class="line"><span class="built_in">console</span>.log(center.offsetLeft);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>父级参照物：距离当前元素最近的有定位属性的父级元素，如果没有的话默认body；</p>
+</li>
+<li><p>一般我们需要的是某个元素距离body的offsetLeft，所以就需要一级一级的向上查找</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">offset</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> left = ele.offsetLeft;</span><br><span class="line">	<span class="keyword">let</span> top = ele.offsetTop;</span><br><span class="line">	<span class="keyword">let</span> parent = ele.offsetParent;</span><br><span class="line">	<span class="comment">// 只要找到的父级参照物存在且该参照物不是body就一直向上查找（一直找到body为止</span></span><br><span class="line">	<span class="keyword">while</span> (parent &amp;&amp; parent.nodeName.toLowerCase() !== <span class="string">'body'</span>) &#123;</span><br><span class="line">		left += parent.offsetLeft + parent.clientLeft;</span><br><span class="line">		top += parent.offsetTop + parent.clientTop;</span><br><span class="line">		parent = parent.offsetParent;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		left,</span><br><span class="line">		top</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(offset(center));</span><br></pre></td></tr></table></figure>
+
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程6/" data-id="ck3yledcv000xukppp2alatql" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -876,96 +1166,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程5/" data-id="ck3x5xk3z0011g0pp1nd4pf2g" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript进阶教程6" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/24/JavaScript进阶教程6/" class="article-date">
-  <time datetime="2018-12-24T12:45:03.000Z" itemprop="datePublished">2018-12-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/24/JavaScript进阶教程6/">进阶教程 6. JS 盒子模型属性</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="一、js盒子模型属性"><a href="#一、js盒子模型属性" class="headerlink" title="一、js盒子模型属性"></a>一、js盒子模型属性</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">		* &#123;</span><br><span class="line">			margin: 0;</span><br><span class="line">			padding: 0;</span><br><span class="line">		&#125;</span><br><span class="line"><span class="css">		<span class="selector-class">.box</span> &#123;</span></span><br><span class="line"><span class="css">			<span class="comment">/* css盒子模型属性： context (内容宽高) + padding + border + margin*/</span></span></span><br><span class="line"><span class="css">			<span class="comment">/*w3c盒模型：内容宽高是不包含padding和border的*/</span></span></span><br><span class="line"><span class="css">			<span class="comment">/*IE盒模型：宽度包含padding和border*/</span></span></span><br><span class="line">			width: 300px;</span><br><span class="line">			height: 1220px;</span><br><span class="line">			background-color: red;</span><br><span class="line">			padding: 50px;</span><br><span class="line">			border: 20px solid blue;</span><br><span class="line">			margin: 50px auto;</span><br><span class="line">			overflow-y: scroll;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span> <span class="attr">id</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">	【联播+】4月8日，习近平等中央领导同志参加了首都义务植树活动。习近平挥锹铲土，扶苗培土，与广大少先队员和市民们一起劳动。植树现场一片热火朝天景象。</span><br><span class="line"></span><br><span class="line">	“我们的根扎在劳动人民之中。”习近平曾这样发自肺腑地说道。</span><br><span class="line"></span><br><span class="line">	1969年初，不满16岁的习近平来到陕北农村插队，一头扎进最基层。在农村生活的7年间，他什么活儿都干过，乡亲们说他是“吃苦耐劳好后生”。</span><br><span class="line"></span><br><span class="line">	从政之后，习近平不改劳动本色，从贫困山村到基层社区，他走进群众中间，一起种树、打糍粑、炸酥肉……所到之处，都留下了他与人民一同劳动的温暖记忆。</span><br><span class="line"></span><br><span class="line">	央视网用八张海报，带你重温过去，感受习近平总书记与人民同劳动的暖心瞬间。</span><br><span class="line">	【联播+】4月8日，习近平等中央领导同志参加了首都义务植树活动。习近平挥锹铲土，扶苗培土，与广大少先队员和市民们一起劳动。植树现场一片热火朝天景象。</span><br><span class="line"></span><br><span class="line">	“我们的根扎在劳动人民之中。”习近平曾这样发自肺腑地说道。</span><br><span class="line"></span><br><span class="line">	1969年初，不满16岁的习近平来到陕北农村插队，一头扎进最基层。在农村生活的7年间，他什么活儿都干过，乡亲们说他是“吃苦耐劳好后生”。</span><br><span class="line"></span><br><span class="line">	从政之后，习近平不改劳动本色，从贫困山村到基层社区，他走进群众中间，一起种树、打糍粑、炸酥肉……所到之处，都留下了他与人民一同劳动的温暖记忆。</span><br><span class="line"></span><br><span class="line">	央视网用八张海报，带你重温过去，感受习近平总书记与人民同劳动的暖心瞬间。</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/4-js盒子模型属性.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>JS盒模型：通过JS中的属性和方法获取元素的属性信息</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> box = <span class="built_in">document</span>.getElementById(<span class="string">'box'</span>);</span><br></pre></td></tr></table></figure>
-
-<h4 id="client"><a href="#client" class="headerlink" title="client"></a>client</h4><ol>
-<li>clientWidth / clientHeight<br> clientWidth 内容宽度 + 左右padding<br> clientHeight 内容高度 + 上下padding</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.clientWidth);</span><br><span class="line"><span class="built_in">console</span>.log(box.clientHeight);</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>clientLeft / clientTop<br> clientLeft 左边框<br>  clientTop 上边框</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.clientLeft);</span><br><span class="line"><span class="built_in">console</span>.log(box.clientTop);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>offsetWidth / offsetHeight<br> offsetWidth = clientWidth(内容宽+左右padding) + 左右边框<br> offsetHeight = clientHeight(内容高+上下padding) + 上下边框</p>
-</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.offsetWidth);</span><br><span class="line"><span class="built_in">console</span>.log(box.offsetHeight);</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><p>scroll系列</p>
-<p> scrollLeft(横向滚动条卷去的距离) / scrollTop(纵向滚动条卷去的距离)<br> 滚动条 卷去的距离，默认是0，具体是多少要看滚动条滚动了多少</p>
-</li>
-</ol>
-<ul>
-<li><p>获取浏览器的窗口滚动的距离</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sc = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line"><span class="built_in">console</span>.log(sc);</span><br></pre></td></tr></table></figure>
-
-<p>  scrollHeight/scrollWidth<br>  没有溢出时，scrollHeight/scrollWidth 等于 clientHeight/clientWidth<br>  内容溢出时：scrollHeight = clientHeight + 溢出内容高度;<br>  内容溢出时：scrollWidth= clientWidth + 溢出内容高度;</p>
-</li>
-<li><p>获取浏览器的窗口的盒模型属性：</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> winW = <span class="built_in">document</span>.documentElement.clientWidth || <span class="built_in">document</span>.body.clientWidth;</span><br><span class="line"><span class="keyword">let</span> winH = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">document</span>.body.clientHeight;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">win</span>(<span class="params">attr, val</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">typeof</span> val !== <span class="string">"undefined"</span>) &#123;</span><br><span class="line">		<span class="built_in">document</span>.documentElement[attr] = <span class="built_in">document</span>.body[attr] = val;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">document</span>.documentElement[attr] || <span class="built_in">document</span>.body[attr];</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(win(<span class="string">'scrollTop'</span>));</span><br><span class="line"><span class="built_in">console</span>.log(win(<span class="string">'screenTop'</span>, <span class="number">1000</span>));</span><br></pre></td></tr></table></figure>
-
-<h3 id="四、offsetLeft和offsetTop-偏移值"><a href="#四、offsetLeft和offsetTop-偏移值" class="headerlink" title="四、offsetLeft和offsetTop 偏移值"></a>四、offsetLeft和offsetTop 偏移值</h3><ul>
-<li>offsetLeft / offsetTop</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> outer = <span class="built_in">document</span>.getElementById(<span class="string">'outer'</span>);</span><br><span class="line"><span class="keyword">let</span> inner = <span class="built_in">document</span>.getElementById(<span class="string">'inner'</span>);</span><br><span class="line"><span class="keyword">let</span> center = <span class="built_in">document</span>.getElementById(<span class="string">'center'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(inner.offsetParent); <span class="comment">// div#outer</span></span><br><span class="line"><span class="built_in">console</span>.log(center.offsetLeft);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>父级参照物：距离当前元素最近的有定位属性的父级元素，如果没有的话默认body；</p>
-</li>
-<li><p>一般我们需要的是某个元素距离body的offsetLeft，所以就需要一级一级的向上查找</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">offset</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> left = ele.offsetLeft;</span><br><span class="line">	<span class="keyword">let</span> top = ele.offsetTop;</span><br><span class="line">	<span class="keyword">let</span> parent = ele.offsetParent;</span><br><span class="line">	<span class="comment">// 只要找到的父级参照物存在且该参照物不是body就一直向上查找（一直找到body为止</span></span><br><span class="line">	<span class="keyword">while</span> (parent &amp;&amp; parent.nodeName.toLowerCase() !== <span class="string">'body'</span>) &#123;</span><br><span class="line">		left += parent.offsetLeft + parent.clientLeft;</span><br><span class="line">		top += parent.offsetTop + parent.clientTop;</span><br><span class="line">		parent = parent.offsetParent;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		left,</span><br><span class="line">		top</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(offset(center));</span><br></pre></td></tr></table></figure>
-
-<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程6/" data-id="ck3x5xk440015g0ppc5zhsu88" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程5/" data-id="ck3yledd10013ukpp9w5jpuv1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1085,7 +1286,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/22/JavaScript进阶教程4/" data-id="ck3x5xk3x000zg0pps2k29d6g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/22/JavaScript进阶教程4/" data-id="ck3yledcz0011ukpp2frdvzwa" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1218,7 +1419,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/10/07/JavaScript进阶教程3/" data-id="ck3x5xk3u000xg0ppgoaedtax" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/10/07/JavaScript进阶教程3/" data-id="ck3yledct000vukpp6vfqh3jt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1380,115 +1581,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程1/" data-id="ck3x5xk33000fg0ppvpd3het4" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript进阶教程2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/09/17/JavaScript进阶教程2/" class="article-date">
-  <time datetime="2018-09-17T14:33:28.000Z" itemprop="datePublished">2018-09-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/17/JavaScript进阶教程2/">进阶教程 2. 变量提升</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h2><h3 id="变量提升（预解释）"><a href="#变量提升（预解释）" class="headerlink" title="变量提升（预解释）"></a>变量提升（预解释）</h3><ul>
-<li>在js代码执行之前，对所有声明的变量 进行提前带var和带function变量进行提前声明和定义（赋值）；</li>
-<li>对于带var的进行提前声明，不赋值（变量声明时不赋值，变量的默认值是undefined），只是浏览器知道有这么个变量。</li>
-<li>对于带function的进行提前声明 并且赋值为函数定义本身<br>变量提升结束后，代码才会从上到下执行。</li>
-<li>当执行到var 变量 = 值；时，此时才会对变量进行赋值，即在此之后变量才代表这个值本身，在此之前是undefined；</li>
-<li>而当执行到function 函数名… 时，跳过，因为在变量提升阶段就已经完成了对变量的赋值过程。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// undefined 因为代码执行到这里时，num只是经过了变量提升阶段的声明，但是没有完成赋值，所以是undefined；</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">100</span>; <span class="comment">// 代码执行过这一行后完成了赋值，所以num是100</span></span><br><span class="line"><span class="built_in">console</span>.log(num);  <span class="comment">// 100</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(fe); <span class="comment">// 函数体本身，因为fe这个变量在函数执行时就已经赋值完成了，所以无论在函数声明前还是后使用都是函数本身</span></span><br><span class="line">fe(); <span class="comment">// 因为fe在变量提升阶段就已经完成了赋值，所以fe是一个函数，所以可以成功执行</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'We are Front-end Engineer'</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="变量提升和js运行机制"><a href="#变量提升和js运行机制" class="headerlink" title="变量提升和js运行机制"></a>变量提升和js运行机制</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">12</span>; <span class="comment">// 赋值操作，只在执行到这一行时，num才被赋值为12；</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	name: <span class="string">"江外"</span>,</span><br><span class="line">	age: <span class="string">'10'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(zf);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">zf</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> age = <span class="number">10</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(str, age);</span><br><span class="line">&#125;</span><br><span class="line">zf(<span class="string">'江外'</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="js的运行机制及原理："><a href="#js的运行机制及原理：" class="headerlink" title="js的运行机制及原理："></a>js的运行机制及原理：</h3><h4 id="js运行的环境（栈内存）：作用域"><a href="#js运行的环境（栈内存）：作用域" class="headerlink" title="js运行的环境（栈内存）：作用域"></a>js运行的环境（栈内存）：作用域</h4><p>作用域是js运行的环境，另外一个功能是保存基本数据类型。在js中作用域分为：</p>
-<pre><code>+全局作用域 ：当页面打开时，首先形成一个全局作用域，执行全局中的代码，全局作用域是window；
-+私有作用域（函数作用域）当函数执行时，会形成一个函数作用域，这个作用域用来保存函数中的基本数据类型同时执行函数代码；
-+块级作用域（类似私有作用域 ES6）</code></pre><h4 id="js运行过程"><a href="#js运行过程" class="headerlink" title="js运行过程"></a>js运行过程</h4><ul>
-<li>在js代码执行前，浏览器会开辟一个全局作用域，然后执行变量提升，完成变量提升操作后，代码开始从上到下开始执行；</li>
-<li>当执行时，如果遇到基本数据类型，就在作用域中存储该基本数据类型；</li>
-<li>如果遇到引用数据类型，则浏览器会再次分配一个堆内存，然后把引用数据类型的内容存储到堆内存中，接下来再把这个堆内存的地址赋值给变量（此时这个地址是存储在作用域内存中的）；</li>
-<li>遇到函数执行时，会经历以下几步：<ol>
-<li>浏览器开辟一个私有作用域；</li>
-<li>形参赋值，把执行时的实参赋值给函数形参变量；</li>
-<li>私有作用域中变量提升</li>
-<li>函数代码从上到下执行</li>
-</ol>
-</li>
-</ul>
-<h4 id="私有变量和全局变量"><a href="#私有变量和全局变量" class="headerlink" title="私有变量和全局变量"></a>私有变量和全局变量</h4><ul>
-<li>全局变量：在全局作用域中声明的变量</li>
-<li>私有变量：函数的形参以及在函数私有作用域中声明的变量</li>
-</ul>
-<h4 id="预解释只发生在当前作用域，如果函数不执行时，函数中的变量不会进行变量提升。"><a href="#预解释只发生在当前作用域，如果函数不执行时，函数中的变量不会进行变量提升。" class="headerlink" title="预解释只发生在当前作用域，如果函数不执行时，函数中的变量不会进行变量提升。"></a>预解释只发生在当前作用域，如果函数不执行时，函数中的变量不会进行变量提升。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> num = <span class="number">13</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// 报错：因为预解释发生在当前作用域中，而当前作用域没有num的变量，num是fn的私有变量。</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="重复声明的问题"><a href="#重复声明的问题" class="headerlink" title="重复声明的问题"></a>重复声明的问题</h3><h4 id="1-同名变量只会声明一次，代表的值就是最后一次的值"><a href="#1-同名变量只会声明一次，代表的值就是最后一次的值" class="headerlink" title="1. 同名变量只会声明一次，代表的值就是最后一次的值"></a>1. 同名变量只会声明一次，代表的值就是最后一次的值</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num;</span><br><span class="line"><span class="keyword">var</span> num;</span><br><span class="line"><span class="keyword">var</span> num; <span class="comment">// 这些语句没有赋值操作，当代码执行时会略过</span></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">100</span>; <span class="comment">// num虽然var了4次，但是并不会声明4次，只会声明一次，同时只有这一次才会将num的值赋值成100；</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn(); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="2-变量提升时，function的优先级高于普通变量"><a href="#2-变量提升时，function的优先级高于普通变量" class="headerlink" title="2. 变量提升时，function的优先级高于普通变量"></a>2. 变量提升时，function的优先级高于普通变量</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(fe); <span class="comment">// 函数体</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 当代码执行到这里时，直接忽略，因为函数变量赋值已经在变量</span></span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'我是来自江外的FE'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fe = <span class="number">123</span>; <span class="comment">// 代码执行到这一行时，将变量fe的值修改为123</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="3-如果变量名和函数名同名，在执行到变量的赋值语句之前时，这个名字代表函数，但是当执行过变量赋值语句后，"><a href="#3-如果变量名和函数名同名，在执行到变量的赋值语句之前时，这个名字代表函数，但是当执行过变量赋值语句后，" class="headerlink" title="3. 如果变量名和函数名同名，在执行到变量的赋值语句之前时，这个名字代表函数，但是当执行过变量赋值语句后，"></a>3. 如果变量名和函数名同名，在执行到变量的赋值语句之前时，这个名字代表函数，但是当执行过变量赋值语句后，</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'FE'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fe = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// fe(); // 报错，因为执行到这里的时候fe不再代表一个函数了，而是一个数字</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="变量提升的细节问题"><a href="#变量提升的细节问题" class="headerlink" title="变量提升的细节问题"></a>变量提升的细节问题</h3><h4 id="1-等号右侧的不会进行变量提升，即使右侧是函数也不会进行变量提升"><a href="#1-等号右侧的不会进行变量提升，即使右侧是函数也不会进行变量提升" class="headerlink" title="1. 等号右侧的不会进行变量提升，即使右侧是函数也不会进行变量提升"></a>1. 等号右侧的不会进行变量提升，即使右侧是函数也不会进行变量提升</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fn(); // 报错，</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'来自等号右侧的你'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// console.log(x1); // 报错：x1 is not defined</span></span><br><span class="line"><span class="comment">// console.log(x); // undefined</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="function"><span class="keyword">function</span> <span class="title">x1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(x1);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-条件语句中的变量不管条件成立与否都会参与当前作用域中的变量提升；"><a href="#2-条件语句中的变量不管条件成立与否都会参与当前作用域中的变量提升；" class="headerlink" title="2. 条件语句中的变量不管条件成立与否都会参与当前作用域中的变量提升；"></a>2. 条件语句中的变量不管条件成立与否都会参与当前作用域中的变量提升；</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(n); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">NaN</span> === <span class="built_in">Number</span>(<span class="string">'I Love programming'</span>)) &#123;</span><br><span class="line">	<span class="keyword">var</span> n = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(n); <span class="comment">// undefined，以内条件不成立，所以赋值语句没执行，所以n仍然是undefined</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="3-函数中，return-下面的代码虽然不执行，但仍会进行函数作用域中的变量提升；"><a href="#3-函数中，return-下面的代码虽然不执行，但仍会进行函数作用域中的变量提升；" class="headerlink" title="3. 函数中，return 下面的代码虽然不执行，但仍会进行函数作用域中的变量提升；"></a>3. 函数中，return 下面的代码虽然不执行，但仍会进行函数作用域中的变量提升；</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(n); <span class="comment">// undefined</span></span><br><span class="line">	fe(); <span class="comment">// 执行了</span></span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">	<span class="keyword">var</span> n = <span class="number">123</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'前端工程师从入门到删库跑路'</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">add();</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-函数的返回值不参与变量提升；-return右边的不会参与变量提升"><a href="#4-函数的返回值不参与变量提升；-return右边的不会参与变量提升" class="headerlink" title="4. 函数的返回值不参与变量提升； return右边的不会参与变量提升"></a>4. 函数的返回值不参与变量提升； return右边的不会参与变量提升</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">minus</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(foo);</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'函数的返回值不参与变量提升'</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">minus();</span><br></pre></td></tr></table></figure>
-
-<h3 id="带var和不带var的区别"><a href="#带var和不带var的区别" class="headerlink" title="带var和不带var的区别"></a>带var和不带var的区别</h3><h4 id="1-在全局中，用var和function声明的变量，也相当于给window上添加一个同名属性"><a href="#1-在全局中，用var和function声明的变量，也相当于给window上添加一个同名属性" class="headerlink" title="1. 在全局中，用var和function声明的变量，也相当于给window上添加一个同名属性"></a>1. 在全局中，用var和function声明的变量，也相当于给window上添加一个同名属性</h4><ul>
-<li>全局作用域是一个内置对象 window<br>console.log(window);</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">2019</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.num); <span class="comment">// 2019</span></span><br><span class="line"><span class="built_in">window</span>.num = <span class="number">2020</span>;</span><br><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// 2020 num和window.num是绑定在一起的</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'num'</span> <span class="keyword">in</span> <span class="built_in">window</span>); <span class="comment">// in 运算符 检测对象是否有某个属性，有返回true，否则false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'FE'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.fe();</span><br><span class="line">fe();</span><br></pre></td></tr></table></figure>
-
-<h3 id="不带var-的不会参与变量提升"><a href="#不带var-的不会参与变量提升" class="headerlink" title="不带var 的不会参与变量提升"></a>不带var 的不会参与变量提升</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 报错：</span></span><br><span class="line">b = <span class="number">2</span>; <span class="comment">// 不带var 不会参与变量提升，所以不会提前声明和赋值</span></span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
-
-<h2 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h2><p>js中作用域</p>
-<ul>
-<li>全局作用域</li>
-<li>私有作用域</li>
-<li>块级作用域</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(n);</span><br><span class="line">&#125;</span><br><span class="line">fn(); <span class="comment">// 15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(x)</span><br><span class="line">&#125;</span><br><span class="line">fn3();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn3</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	x = <span class="number">16</span>;</span><br><span class="line">&#125;</span><br><span class="line">fn2();</span><br></pre></td></tr></table></figure>
-
-<h3 id="作用域链：变量的查找机制："><a href="#作用域链：变量的查找机制：" class="headerlink" title="作用域链：变量的查找机制："></a>作用域链：变量的查找机制：</h3><p>当在作用域中查找一个变量的时候，先看当前作用域中是否声明过这个变量，如果声明过，就使用这个变量，如果没有生命过，那么就去上级作用域（上级作用域就是函数声明时所在的作用域）查找，找到就使用，如果没有就一直向上查找，一直找到window为止，如果本次使用变量是赋值，那么就相当于给window上面增加一个属性，如果是引用变量，就会报错;</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123; <span class="comment">// fe 是在全局中定义的，所以fe的上级作用域就是全局作用域</span></span><br><span class="line">  <span class="keyword">var</span> n = <span class="number">200</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 这个function就是在fe的作用域中定义的，所以该函数的上级作用域就是fe的作用域</span></span><br><span class="line">    <span class="built_in">console</span>.log(n) <span class="comment">// 200</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fn = fe();</span><br><span class="line">fn();</span><br></pre></td></tr></table></figure>
-
-<h3 id="上级作用域的确定："><a href="#上级作用域的确定：" class="headerlink" title="上级作用域的确定："></a>上级作用域的确定：</h3><ul>
-<li>如何查找上级作用域，就看这个函数是在哪里定义的。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123; <span class="comment">// fe 是在全局中定义的，所以fe的上级作用域就是全局作用域</span></span><br><span class="line">	<span class="keyword">var</span> n = <span class="number">200</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 这个function就是在fe的作用域中定义的，所以该函数的上级作用域就是fe的作用域</span></span><br><span class="line">		<span class="built_in">console</span>.log(n) <span class="comment">// 200</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fn = fe();</span><br><span class="line">fn();</span><br></pre></td></tr></table></figure>
-
-<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程2/" data-id="ck3x5xk3q000vg0ppa4xpp8jj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程1/" data-id="ck3yledca000fukppc8tyj21g" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1528,7 +1621,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 17.5px;">Vue</a> <a href="/tags/es6/" style="font-size: 12.5px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 15px;">webpack</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 16.67px;">webpack</a>
     </div>
   </div>
 
@@ -1550,6 +1643,10 @@
       <ul>
         
           <li>
+            <a href="/2019/12/09/webpack掠影-5/">webpack掠影-4</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/08/webpack掠影-4/">webpack掠影-4</a>
           </li>
         
@@ -1563,10 +1660,6 @@
         
           <li>
             <a href="/2019/12/07/webpack掠影-1/">webpack掠影-1</a>
-          </li>
-        
-          <li>
-            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 16. PromiseA+</a>
           </li>
         
       </ul>

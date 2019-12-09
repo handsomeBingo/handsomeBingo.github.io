@@ -67,6 +67,98 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-vueRender函数（2）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/24/vueRender函数（2）/" class="article-date">
+  <time datetime="2017-11-24T13:33:11.000Z" itemprop="datePublished">2017-11-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。"><a href="#声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。" class="headerlink" title="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。"></a>声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。</h6><p>前面一篇介绍了Vue的实例属性，在结尾处我们谈及了slot特性。首先提一下，slot不是Vue独有的，如果你属性angular.js的话，你很快就会发现这其实和ng-transclude有异曲同工之妙。如果你属性这个属性，你可以快速浏览便可以通晓，余下的时间，赶快阅读下一篇文章吧，下一站才是render函数的真面目。</p>
+<p>在使用组件的时候，我们经常需要以一个组件（标签）包裹其他组件（标签），或者说是一个组件在渲染完成后，希望保留组件标签原来包裹的内容，甚至这些内容还可以访问这个组件的的作用域。这个时候就需要用到插槽了。vue使用特殊的&lt;slot&gt;元素作为内容的插槽（插槽，插槽，顾名思义就是说有些东西要插入到这个位置，大家先记住这句话，后面将会有更通俗的解释）。除非子组件模板中至少有一个&lt;slot&gt;插口，否则被包裹在这个组件中的内容将会被丢弃。</p>
+<p>注意两点：</p>
+<ul>
+<li>&lt;app&gt;组件不知道他会收到什么内容。这是app的父组件决定的。</li>
+<li>&lt;app&gt;组件很有可能有自己的模板。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;app&gt;</span><br><span class="line"> &lt;app-header&gt;&lt;/app-header&gt;</span><br><span class="line"> &lt;app-footer&gt;&lt;/app-footer&gt;</span><br><span class="line">&lt;/app&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="单个插槽"><a href="#单个插槽" class="headerlink" title="单个插槽"></a>单个插槽</h2><p>当子组件模板中中只有一个没有属性的插槽元素时，父组件传入的整个内容片段将插入到DOM所在位置，并替换掉插槽标签本身。示例：</p>
+<p>my-component组件有如下模板。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h2&gt;我是子组件标题&lt;/h2&gt;</span><br><span class="line">  &lt;slot&gt;</span><br><span class="line">    我只在没有要分发的内容时才显示</span><br><span class="line">  &lt;/slot&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>父组件模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h1&gt;我是父组件的标题&lt;/h1&gt;</span><br><span class="line">  &lt;my-component&gt;</span><br><span class="line">    &lt;p&gt;这是一些初始内容&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;这是更多的初始内容&lt;/p&gt;</span><br><span class="line">  &lt;/my-component&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>渲染结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h1&gt;我是父组件的标题&lt;/h1&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h2&gt;我是子组件的标题&lt;/h2&gt;</span><br><span class="line">    &lt;p&gt;这是一些初始内容&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;这是更多的初始内容&lt;/p&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>值得一提的是，上面的这个单个插槽，可以在子组件的实例属性vm.$slots中获得。</p>
+<h2 id="具名插槽"><a href="#具名插槽" class="headerlink" title="具名插槽"></a>具名插槽</h2><p>&lt;slot&gt;元素可以用一个特殊的属性 name 来进一步配置分发的规则。多个插槽可以有不同的名字，具名差早将匹配内容片段中有slot特性的元素。通俗的说带有slot=a内容，要插入到&lt;slot name=a&gt;&lt;/slot&gt;插槽里。示例：</p>
+<p>例如，假定我们有一个 app-layout 组件，它的模板为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">  &lt;header&gt;</span><br><span class="line">    &lt;slot name=&quot;header&quot;&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/header&gt;</span><br><span class="line">  &lt;main&gt;</span><br><span class="line">    &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/main&gt;</span><br><span class="line">  &lt;footer&gt;</span><br><span class="line">    &lt;slot name=&quot;footer&quot;&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/footer&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>父组件模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;app-layout&gt;</span><br><span class="line">  &lt;h1 slot=&quot;header&quot;&gt;这里可能是一个页面标题&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">  &lt;p&gt;主要内容的一个段落。&lt;/p&gt;</span><br><span class="line">  &lt;p&gt;另一个主要段落。&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">  &lt;p slot=&quot;footer&quot;&gt;这里有一些联系信息&lt;/p&gt;</span><br><span class="line">&lt;/app-layout&gt;</span><br></pre></td></tr></table></figure>
+
+<p>渲染结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">  &lt;header&gt;</span><br><span class="line">    &lt;h1&gt;这里可能是一个页面标题&lt;/h1&gt;</span><br><span class="line">  &lt;/header&gt;</span><br><span class="line">  &lt;main&gt;</span><br><span class="line">    &lt;p&gt;主要内容的一个段落。&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;另一个主要段落。&lt;/p&gt;</span><br><span class="line">  &lt;/main&gt;</span><br><span class="line">  &lt;footer&gt;</span><br><span class="line">    &lt;p&gt;这里有一些联系信息&lt;/p&gt;</span><br><span class="line">  &lt;/footer&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="作用域插槽"><a href="#作用域插槽" class="headerlink" title="作用域插槽"></a>作用域插槽</h2><ul>
+<li>2.1.0 新增</li>
+</ul>
+<p>作用域插槽是一种特殊类型的插槽，用作一个（能被传递数据的）可重用模板，来代替已经渲染好的元素。</p>
+<p>在子组件中，只需要将数据传递到插槽，就像你将prop传递给组件一样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;child&quot;&gt;</span><br><span class="line">  &lt;slot text=&quot;hello from child&quot;&gt;&lt;/slot&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在父级中，具有特殊属性的slot-scope的template元素必须存在，表示他是作用域插槽的模板。slot-scope的值将被用于一个临时变量名，此变量接收从子组件传递过来的prop对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">  &lt;child&gt;</span><br><span class="line">    &lt;template slot-scope=&quot;props&quot;&gt;</span><br><span class="line">      &lt;span&gt;hello from parent&lt;/span&gt;</span><br><span class="line">      &lt;span&gt;&#123;&#123; props.text &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">  &lt;/child&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>渲染结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;child&quot;&gt;</span><br><span class="line">    &lt;span&gt;hello from parent&lt;/span&gt;</span><br><span class="line">    &lt;span&gt;hello from child&lt;/span&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在2.5.0+，slot-scope能被用在任何元素或组件中而不再局限于&lt;template&gt;。示例：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-awesome-list :items=&quot;items&quot;&gt;</span><br><span class="line">  &lt;!-- 作用域插槽也可以是具名的 --&gt;</span><br><span class="line">  &lt;li</span><br><span class="line">    slot=&quot;item&quot;</span><br><span class="line">    slot-scope=&quot;props&quot;</span><br><span class="line">    class=&quot;my-fancy-item&quot;&gt;</span><br><span class="line">    &#123;&#123; props.text &#125;&#125;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">&lt;/my-awesome-list&gt;</span><br></pre></td></tr></table></figure>
+
+<p>myAweSomeList组件的模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;slot name=&quot;item&quot;</span><br><span class="line">    v-for=&quot;item in items&quot;</span><br><span class="line">    :text=&quot;item.text&quot;&gt;</span><br><span class="line">    &lt;!-- 这里写入备用内容 --&gt;</span><br><span class="line">  &lt;/slot&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+
+<p>回顾一下，上面一共讲述了三种插槽，所谓插槽就是保存组件（标签）所包裹内容的一种机制。具体实施是通过在子组件模板中写&lt;slot&gt;元素作为预留插槽，当使用该组件，且该组件包裹了html片段，这些html片段将会插入到子组件刚刚预留的&lt;slot&gt;的位置，同时该&lt;slot&gt;元素也会被替换。</p>
+<p>本篇文章也没有提及render函数，但是这也是学习render函数必不可省的知识，别心急，下面一篇文章将会讲述render函数了。加油吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/24/vueRender函数（2）/" data-id="ck3yleddy0020ukppjaqcf8z4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-vueRender函数（1）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/10/02/vueRender函数（1）/" class="article-date">
@@ -161,7 +253,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/02/vueRender函数（1）/" data-id="ck3x5xk590023g0ppn44pdmkv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/02/vueRender函数（1）/" data-id="ck3ylede00022ukpp60eqkts8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -248,7 +340,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck3x5xk4v001rg0pp4mzug579" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck3yleddm001oukppwerp3t1k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -380,7 +472,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/12/flex布局/" data-id="ck3x5xk4h001gg0ppymsd18rr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/12/flex布局/" data-id="ck3yleddg001iukpp5cgrmcs1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li></ul>
@@ -707,7 +799,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck3x5xk4x001tg0ppjllf4pyb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck3yleddq001sukppbp9cs24x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -954,7 +1046,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck3x5xk4f001eg0pph6vxbtst" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck3yleder002sukpp2q65f2aa" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -1194,7 +1286,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck3x5xk4c001cg0ppk55bd54o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck3yleddb001dukppns1q2415" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -1336,7 +1428,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck3x5xk490019g0ppf5ii2q4f" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck3yledde001gukppkj6y19fk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -1462,7 +1554,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck3x5xk560020g0ppc4u01qb8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck3yleddv001xukppzotkhgye" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -1525,196 +1617,10 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck3x5xk54001yg0pphwwfgosq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck3yleddt001vukppu3qn3kv4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-requirejs" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/14/requirejs/" class="article-date">
-  <time datetime="2017-02-14T13:20:59.000Z" itemprop="datePublished">2017-02-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/14/requirejs/">三分钟带你入门RequireJs</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="三分钟带你入门RequireJs"><a href="#三分钟带你入门RequireJs" class="headerlink" title="三分钟带你入门RequireJs"></a>三分钟带你入门RequireJs</h1><h3 id="require-js是什么"><a href="#require-js是什么" class="headerlink" title="require.js是什么"></a>require.js是什么</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/datura-lj/RequireJS_demo" target="_blank" rel="noopener">RequireJS</a>遵循AMD，相对于AMD的是CMD通用模块定义的SeaJs。</p>
-<h3 id="为什么要模块化"><a href="#为什么要模块化" class="headerlink" title="为什么要模块化"></a>为什么要模块化</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在不使用模块化之前，文件依赖要手动添加，而且各个依赖顺序不能错乱，一旦顺序错乱将引发错误。其次，模块化有利于团队的协同开发，同时提高了代码的可复用性和可维护性。使用require.js可以为我们带来哪些改变？</p>
-<ol>
-<li>解决文件之间依赖</li>
-<li>自动引入js</li>
-<li>也可以解决命名冲突</li>
-</ol>
-<h3 id="如何使用RequireJs"><a href="#如何使用RequireJs" class="headerlink" title="如何使用RequireJs"></a>如何使用RequireJs</h3><p>1.在html中引入RequireJS。在HTML中，添加这样的 &lt;script&gt; 标签：</p>
-<pre style="background: #00b38a;">
-<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
-&lt;script type="text/javascript" src="require.min.js" data-main="main"&gt;&lt;/script&gt;
-</code>
-</pre>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们如果使用RequireJs的话，不需要我们显式地引入其他依赖的js文件，这些工作交给RequireJs去做，这也正是使用它的重要意义。注意，在我们引入require.js的script标签里有一个data-main属性，requirejs提供的这种功能叫做“主数据”的功能，我们首先创建一个main.js，然后在页面中使用<script data-main="js/main" src="js/require.js"></script>，这个script标签中加入了data-main属性，这个属性指定的js将在加载require.js之后处理，我们把require.config的配置加入到data-main后，就可以使每一个页面都使用这个配置，然后页面中就可以直接使用require来加载所有的短模块名。data-main 还有一个重要的功能，script标签指定data-main属性时，require会默认的data-main指定的js为根路径，即如上面的data-main=’js/main’ 设定后，我们在使用require([‘jquery’])后（不配置jquery的paths），require会自动加载js/jquery.js文件，而不是jquery.js，相当于默认配置了baseUrl（如下示例）：</p>
-<p>全局配置文件的作用：</p>
-<p>1.配置RequireJs项目中用到的其他模块<br>2.引入其他模块的基础路径（baseUrl）</p>
-<p><span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">main.js</span>的代码（部分）</p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-    require.config({
-        paths:{
-            'jquery':['http:libs/baidu.com/jquery/2.0.3/jquery','jquery'],
-            'a':'a'
-        }
-    });
-     require.config({
-         baseUrl:'js'
-     });
-</code>
-</pre>
-<p>2.定义模块；requirejs通过define()方法定义一个模块，在需要的地方通过require()方法加载即可；</p>
-<p>定义不存在依赖的模块<br><span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">fun1.js</span></p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-  define(function (){
-      function fun1(){
-          alert('it works');
-      }
-      fun1();
-  });
-</code>
-</pre>
-
-<p>存在依赖的函数式定义<br>如果模块存在依赖：则第一个参数是依赖的名称数组，第二个参数是函数，在模块的所有依赖加载完毕后，该函数会被调用来定义该模块，因此该模块应该返回一个定义了本模块的object。依赖关系会以参数的形式注入到该函数上，参数列表与依赖名称列表一一对应。<br><span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">cart.js</span></p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-    define(['./cart','./inventory'],function (cart, inventory){
-        return {
-            color: 'blue',
-            size: 'large',
-            addToCart: function (){
-                inventory.decrement(this);
-                cart.add(this);
-            }
-        }
-    });
-</code>
-</pre>
-
-<p>使用第三方模块<br>//通过require加载的模块一般都需要符合AMD规范，即使用define方法来声明模块，但是有的时候需要加载非AMD规范的js，这时候就需要用到另一个功能：shim，shim本意为‘垫’，其实大概也就是一个垫的作用。目前这个方法有两方面的应用：</p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-    //1、非AMD模块输出，将非标准的AMD模块垫成可以应用的模块，例如：在老版本的jquery中，是没有继承AMD规范的，所以不能直接require['jquery']，这时候就需要shim，比如我要是用underscore类库，但是他并没有实现AMD规范，那我们可以这样配置
-    require.config({
-        shim:{
-            'underscore':{
-                export : '_'
-            }
-        }
-    });
-    //经过上面配置，我们就可以在其他模块中引用underscore模块：
-    require(['underscore'],function (_){
-        //_表示加载underscore后，自动注入到后面的回调中，在回调中使用_就是underscore，和jquery 的$ 类似
-        _.each([1,2,3],alert);
-    });
-
-    //插件形式的非AMD模块，我们经常会用到jquer插件，而且这些插件基本都不符合AMD规范，比如jquery.form插件，这时候就需要将form插件'垫'到jquery中：
-    require.config({
-        shim:{
-            'underscore':{
-                exports:'_'
-            },
-            'jquery.form':{
-                deps:['jquery']//deps  depends 依赖
-            }
-        }
-    });
-
-    //简写
-    require.config({
-        shim:{
-
-            'underscore' : {
-                deps: ['angular'],
-                export: '_'
-            },
-            'jquery.form' : ['jquery']
-        }
-    });
-
-    //这样配置之后我们就可以使用加载插件之后的jquery了
-    require(['jquery','jquery.form'],function (){
-        $(function (){
-            $('#form').ajaxSubmit({});
-        });
-    });
-</code>
-</pre>
-
-<h3 id="来个例子"><a href="#来个例子" class="headerlink" title="来个例子"></a>来个例子</h3><p>1.引入require.js<br>2.定义模块<br>定义<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">function1.js</span></p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-    define(function(){
-        return {
-            rnd:function (m,n) {
-                return parseInt(Math.random()*(m-n)+m);
-            }
-        }
-    });
-</code>
-</pre>
-
-<p>定义<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">str.js</span></p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-  define(function(){
-      return '我是一个简单的字符串';
-  });
-</code>
-</pre>
-
-<p>3.定义<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">main.js</span>文件</p>
-<pre style="background: #00b38a;">
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-   require.config({
-       baseUrl:'js'
-   });
-   require(['./function1', './str'], function(function1, str){
-       return {
-            test1: alert(str),
-            test2: console.log(function1(1, 100))
-       }
-   })
-</code>
-</pre>
-
-<p>结果效果：弹窗弹出字符串，控制台（console）输出一个随机数。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/14/requirejs/" data-id="ck3x5xk51001wg0ppp2kc8omf" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
 
     </footer>
   </div>
@@ -1751,7 +1657,7 @@ console.log(ar2);//[0, 0]
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 17.5px;">Vue</a> <a href="/tags/es6/" style="font-size: 12.5px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 15px;">webpack</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 16.67px;">webpack</a>
     </div>
   </div>
 
@@ -1773,6 +1679,10 @@ console.log(ar2);//[0, 0]
       <ul>
         
           <li>
+            <a href="/2019/12/09/webpack掠影-5/">webpack掠影-4</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/08/webpack掠影-4/">webpack掠影-4</a>
           </li>
         
@@ -1786,10 +1696,6 @@ console.log(ar2);//[0, 0]
         
           <li>
             <a href="/2019/12/07/webpack掠影-1/">webpack掠影-1</a>
-          </li>
-        
-          <li>
-            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 16. PromiseA+</a>
           </li>
         
       </ul>

@@ -67,6 +67,114 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaScript进阶教程2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/17/JavaScript进阶教程2/" class="article-date">
+  <time datetime="2018-09-17T14:33:28.000Z" itemprop="datePublished">2018-09-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/17/JavaScript进阶教程2/">进阶教程 2. 变量提升</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h2><h3 id="变量提升（预解释）"><a href="#变量提升（预解释）" class="headerlink" title="变量提升（预解释）"></a>变量提升（预解释）</h3><ul>
+<li>在js代码执行之前，对所有声明的变量 进行提前带var和带function变量进行提前声明和定义（赋值）；</li>
+<li>对于带var的进行提前声明，不赋值（变量声明时不赋值，变量的默认值是undefined），只是浏览器知道有这么个变量。</li>
+<li>对于带function的进行提前声明 并且赋值为函数定义本身<br>变量提升结束后，代码才会从上到下执行。</li>
+<li>当执行到var 变量 = 值；时，此时才会对变量进行赋值，即在此之后变量才代表这个值本身，在此之前是undefined；</li>
+<li>而当执行到function 函数名… 时，跳过，因为在变量提升阶段就已经完成了对变量的赋值过程。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// undefined 因为代码执行到这里时，num只是经过了变量提升阶段的声明，但是没有完成赋值，所以是undefined；</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">100</span>; <span class="comment">// 代码执行过这一行后完成了赋值，所以num是100</span></span><br><span class="line"><span class="built_in">console</span>.log(num);  <span class="comment">// 100</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(fe); <span class="comment">// 函数体本身，因为fe这个变量在函数执行时就已经赋值完成了，所以无论在函数声明前还是后使用都是函数本身</span></span><br><span class="line">fe(); <span class="comment">// 因为fe在变量提升阶段就已经完成了赋值，所以fe是一个函数，所以可以成功执行</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'We are Front-end Engineer'</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="变量提升和js运行机制"><a href="#变量提升和js运行机制" class="headerlink" title="变量提升和js运行机制"></a>变量提升和js运行机制</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">12</span>; <span class="comment">// 赋值操作，只在执行到这一行时，num才被赋值为12；</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	name: <span class="string">"江外"</span>,</span><br><span class="line">	age: <span class="string">'10'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(zf);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">zf</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> age = <span class="number">10</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(str, age);</span><br><span class="line">&#125;</span><br><span class="line">zf(<span class="string">'江外'</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="js的运行机制及原理："><a href="#js的运行机制及原理：" class="headerlink" title="js的运行机制及原理："></a>js的运行机制及原理：</h3><h4 id="js运行的环境（栈内存）：作用域"><a href="#js运行的环境（栈内存）：作用域" class="headerlink" title="js运行的环境（栈内存）：作用域"></a>js运行的环境（栈内存）：作用域</h4><p>作用域是js运行的环境，另外一个功能是保存基本数据类型。在js中作用域分为：</p>
+<pre><code>+全局作用域 ：当页面打开时，首先形成一个全局作用域，执行全局中的代码，全局作用域是window；
++私有作用域（函数作用域）当函数执行时，会形成一个函数作用域，这个作用域用来保存函数中的基本数据类型同时执行函数代码；
++块级作用域（类似私有作用域 ES6）</code></pre><h4 id="js运行过程"><a href="#js运行过程" class="headerlink" title="js运行过程"></a>js运行过程</h4><ul>
+<li>在js代码执行前，浏览器会开辟一个全局作用域，然后执行变量提升，完成变量提升操作后，代码开始从上到下开始执行；</li>
+<li>当执行时，如果遇到基本数据类型，就在作用域中存储该基本数据类型；</li>
+<li>如果遇到引用数据类型，则浏览器会再次分配一个堆内存，然后把引用数据类型的内容存储到堆内存中，接下来再把这个堆内存的地址赋值给变量（此时这个地址是存储在作用域内存中的）；</li>
+<li>遇到函数执行时，会经历以下几步：<ol>
+<li>浏览器开辟一个私有作用域；</li>
+<li>形参赋值，把执行时的实参赋值给函数形参变量；</li>
+<li>私有作用域中变量提升</li>
+<li>函数代码从上到下执行</li>
+</ol>
+</li>
+</ul>
+<h4 id="私有变量和全局变量"><a href="#私有变量和全局变量" class="headerlink" title="私有变量和全局变量"></a>私有变量和全局变量</h4><ul>
+<li>全局变量：在全局作用域中声明的变量</li>
+<li>私有变量：函数的形参以及在函数私有作用域中声明的变量</li>
+</ul>
+<h4 id="预解释只发生在当前作用域，如果函数不执行时，函数中的变量不会进行变量提升。"><a href="#预解释只发生在当前作用域，如果函数不执行时，函数中的变量不会进行变量提升。" class="headerlink" title="预解释只发生在当前作用域，如果函数不执行时，函数中的变量不会进行变量提升。"></a>预解释只发生在当前作用域，如果函数不执行时，函数中的变量不会进行变量提升。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> num = <span class="number">13</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// 报错：因为预解释发生在当前作用域中，而当前作用域没有num的变量，num是fn的私有变量。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="重复声明的问题"><a href="#重复声明的问题" class="headerlink" title="重复声明的问题"></a>重复声明的问题</h3><h4 id="1-同名变量只会声明一次，代表的值就是最后一次的值"><a href="#1-同名变量只会声明一次，代表的值就是最后一次的值" class="headerlink" title="1. 同名变量只会声明一次，代表的值就是最后一次的值"></a>1. 同名变量只会声明一次，代表的值就是最后一次的值</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num;</span><br><span class="line"><span class="keyword">var</span> num;</span><br><span class="line"><span class="keyword">var</span> num; <span class="comment">// 这些语句没有赋值操作，当代码执行时会略过</span></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">100</span>; <span class="comment">// num虽然var了4次，但是并不会声明4次，只会声明一次，同时只有这一次才会将num的值赋值成100；</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn(); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-变量提升时，function的优先级高于普通变量"><a href="#2-变量提升时，function的优先级高于普通变量" class="headerlink" title="2. 变量提升时，function的优先级高于普通变量"></a>2. 变量提升时，function的优先级高于普通变量</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(fe); <span class="comment">// 函数体</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 当代码执行到这里时，直接忽略，因为函数变量赋值已经在变量</span></span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'我是来自江外的FE'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fe = <span class="number">123</span>; <span class="comment">// 代码执行到这一行时，将变量fe的值修改为123</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-如果变量名和函数名同名，在执行到变量的赋值语句之前时，这个名字代表函数，但是当执行过变量赋值语句后，"><a href="#3-如果变量名和函数名同名，在执行到变量的赋值语句之前时，这个名字代表函数，但是当执行过变量赋值语句后，" class="headerlink" title="3. 如果变量名和函数名同名，在执行到变量的赋值语句之前时，这个名字代表函数，但是当执行过变量赋值语句后，"></a>3. 如果变量名和函数名同名，在执行到变量的赋值语句之前时，这个名字代表函数，但是当执行过变量赋值语句后，</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'FE'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fe = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// fe(); // 报错，因为执行到这里的时候fe不再代表一个函数了，而是一个数字</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="变量提升的细节问题"><a href="#变量提升的细节问题" class="headerlink" title="变量提升的细节问题"></a>变量提升的细节问题</h3><h4 id="1-等号右侧的不会进行变量提升，即使右侧是函数也不会进行变量提升"><a href="#1-等号右侧的不会进行变量提升，即使右侧是函数也不会进行变量提升" class="headerlink" title="1. 等号右侧的不会进行变量提升，即使右侧是函数也不会进行变量提升"></a>1. 等号右侧的不会进行变量提升，即使右侧是函数也不会进行变量提升</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fn(); // 报错，</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'来自等号右侧的你'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// console.log(x1); // 报错：x1 is not defined</span></span><br><span class="line"><span class="comment">// console.log(x); // undefined</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="function"><span class="keyword">function</span> <span class="title">x1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(x1);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-条件语句中的变量不管条件成立与否都会参与当前作用域中的变量提升；"><a href="#2-条件语句中的变量不管条件成立与否都会参与当前作用域中的变量提升；" class="headerlink" title="2. 条件语句中的变量不管条件成立与否都会参与当前作用域中的变量提升；"></a>2. 条件语句中的变量不管条件成立与否都会参与当前作用域中的变量提升；</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(n); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">NaN</span> === <span class="built_in">Number</span>(<span class="string">'I Love programming'</span>)) &#123;</span><br><span class="line">	<span class="keyword">var</span> n = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(n); <span class="comment">// undefined，以内条件不成立，所以赋值语句没执行，所以n仍然是undefined</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-函数中，return-下面的代码虽然不执行，但仍会进行函数作用域中的变量提升；"><a href="#3-函数中，return-下面的代码虽然不执行，但仍会进行函数作用域中的变量提升；" class="headerlink" title="3. 函数中，return 下面的代码虽然不执行，但仍会进行函数作用域中的变量提升；"></a>3. 函数中，return 下面的代码虽然不执行，但仍会进行函数作用域中的变量提升；</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(n); <span class="comment">// undefined</span></span><br><span class="line">	fe(); <span class="comment">// 执行了</span></span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">	<span class="keyword">var</span> n = <span class="number">123</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'前端工程师从入门到删库跑路'</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">add();</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-函数的返回值不参与变量提升；-return右边的不会参与变量提升"><a href="#4-函数的返回值不参与变量提升；-return右边的不会参与变量提升" class="headerlink" title="4. 函数的返回值不参与变量提升； return右边的不会参与变量提升"></a>4. 函数的返回值不参与变量提升； return右边的不会参与变量提升</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">minus</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(foo);</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'函数的返回值不参与变量提升'</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">minus();</span><br></pre></td></tr></table></figure>
+
+<h3 id="带var和不带var的区别"><a href="#带var和不带var的区别" class="headerlink" title="带var和不带var的区别"></a>带var和不带var的区别</h3><h4 id="1-在全局中，用var和function声明的变量，也相当于给window上添加一个同名属性"><a href="#1-在全局中，用var和function声明的变量，也相当于给window上添加一个同名属性" class="headerlink" title="1. 在全局中，用var和function声明的变量，也相当于给window上添加一个同名属性"></a>1. 在全局中，用var和function声明的变量，也相当于给window上添加一个同名属性</h4><ul>
+<li>全局作用域是一个内置对象 window<br>console.log(window);</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">2019</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.num); <span class="comment">// 2019</span></span><br><span class="line"><span class="built_in">window</span>.num = <span class="number">2020</span>;</span><br><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// 2020 num和window.num是绑定在一起的</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'num'</span> <span class="keyword">in</span> <span class="built_in">window</span>); <span class="comment">// in 运算符 检测对象是否有某个属性，有返回true，否则false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'FE'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.fe();</span><br><span class="line">fe();</span><br></pre></td></tr></table></figure>
+
+<h3 id="不带var-的不会参与变量提升"><a href="#不带var-的不会参与变量提升" class="headerlink" title="不带var 的不会参与变量提升"></a>不带var 的不会参与变量提升</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 报错：</span></span><br><span class="line">b = <span class="number">2</span>; <span class="comment">// 不带var 不会参与变量提升，所以不会提前声明和赋值</span></span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
+
+<h2 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h2><p>js中作用域</p>
+<ul>
+<li>全局作用域</li>
+<li>私有作用域</li>
+<li>块级作用域</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(n);</span><br><span class="line">&#125;</span><br><span class="line">fn(); <span class="comment">// 15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(x)</span><br><span class="line">&#125;</span><br><span class="line">fn3();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn3</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	x = <span class="number">16</span>;</span><br><span class="line">&#125;</span><br><span class="line">fn2();</span><br></pre></td></tr></table></figure>
+
+<h3 id="作用域链：变量的查找机制："><a href="#作用域链：变量的查找机制：" class="headerlink" title="作用域链：变量的查找机制："></a>作用域链：变量的查找机制：</h3><p>当在作用域中查找一个变量的时候，先看当前作用域中是否声明过这个变量，如果声明过，就使用这个变量，如果没有生命过，那么就去上级作用域（上级作用域就是函数声明时所在的作用域）查找，找到就使用，如果没有就一直向上查找，一直找到window为止，如果本次使用变量是赋值，那么就相当于给window上面增加一个属性，如果是引用变量，就会报错;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123; <span class="comment">// fe 是在全局中定义的，所以fe的上级作用域就是全局作用域</span></span><br><span class="line">  <span class="keyword">var</span> n = <span class="number">200</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 这个function就是在fe的作用域中定义的，所以该函数的上级作用域就是fe的作用域</span></span><br><span class="line">    <span class="built_in">console</span>.log(n) <span class="comment">// 200</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fn = fe();</span><br><span class="line">fn();</span><br></pre></td></tr></table></figure>
+
+<h3 id="上级作用域的确定："><a href="#上级作用域的确定：" class="headerlink" title="上级作用域的确定："></a>上级作用域的确定：</h3><ul>
+<li>如何查找上级作用域，就看这个函数是在哪里定义的。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123; <span class="comment">// fe 是在全局中定义的，所以fe的上级作用域就是全局作用域</span></span><br><span class="line">	<span class="keyword">var</span> n = <span class="number">200</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 这个function就是在fe的作用域中定义的，所以该函数的上级作用域就是fe的作用域</span></span><br><span class="line">		<span class="built_in">console</span>.log(n) <span class="comment">// 200</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fn = fe();</span><br><span class="line">fn();</span><br></pre></td></tr></table></figure>
+
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程2/" data-id="ck3yledcx000zukppyzkufaib" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JavaScript基础教程8" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/08/27/JavaScript基础教程8/" class="article-date">
@@ -237,7 +345,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/27/JavaScript基础教程8/" data-id="ck3x5xk30000dg0ppavrmtgqo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/08/27/JavaScript基础教程8/" data-id="ck3yledc4000aukppq7soq0em" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -348,7 +456,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/09/JavaScript基础教程7/" data-id="ck3x5xk2w000ag0ppchgaeydu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/09/JavaScript基础教程7/" data-id="ck3yledc8000dukpp3i830ejd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -535,7 +643,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/27/JavaScript基础教程6/" data-id="ck3x5xk2u0008g0ppw759nx0n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/27/JavaScript基础教程6/" data-id="ck3yledc20008ukpp94vwmzkh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -875,7 +983,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/30/JavaScript基础教程5/" data-id="ck3x5xk2p0005g0ppwygjlmy3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/30/JavaScript基础教程5/" data-id="ck3yledby0005ukppsbxqkuly" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -964,7 +1072,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/08/JavaScript基础教程4/" data-id="ck3x5xk2n0004g0pp75wsv4ap" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/08/JavaScript基础教程4/" data-id="ck3yledbt0003ukppm81gvzga" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1168,7 +1276,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/15/JavaScript基础教程3/" data-id="ck3x5xk2k0003g0ppwlnajb28" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/15/JavaScript基础教程3/" data-id="ck3yledbn0001ukpp1ypr4dpp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1375,7 +1483,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/31/JavaScript基础教程2/" data-id="ck3x5xk2e0001g0ppwi8c6gkd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/31/JavaScript基础教程2/" data-id="ck3yledbg0000ukppfaq0benl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1414,7 +1522,7 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">"alert('这是js代码')"</span>&gt;</span>这是一个div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>内嵌式：在html文档中写一个script标签，把我们的js带写在script标签内</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    alert('这是内嵌式js代码')</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    alert(<span class="string">'这是内嵌式js代码'</span>)</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>外链式：在html文档中写一个script标签，并且设置src属性，src的属性值引用一个js文件资源，而js代码写在js文件中；</p>
 </li>
@@ -1591,7 +1699,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/JavaScript基础教程1/" data-id="ck3x5xk260000g0pp8z27bths" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/19/JavaScript基础教程1/" data-id="ck3yledbw0004ukpp0qs98gpm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1651,99 +1759,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/07/vueRender函数（3）/" data-id="ck3x5xk5c0027g0pp5gcs8e48" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-vueRender函数（2）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/11/24/vueRender函数（2）/" class="article-date">
-  <time datetime="2017-11-24T13:33:11.000Z" itemprop="datePublished">2017-11-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/24/vueRender函数（2）/">vueRender函数（2）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h6 id="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。"><a href="#声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。" class="headerlink" title="声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。"></a>声明：文章中部分引用了vue官网的例子和解释，无意侵权，仅做学习交流。</h6><p>前面一篇介绍了Vue的实例属性，在结尾处我们谈及了slot特性。首先提一下，slot不是Vue独有的，如果你属性angular.js的话，你很快就会发现这其实和ng-transclude有异曲同工之妙。如果你属性这个属性，你可以快速浏览便可以通晓，余下的时间，赶快阅读下一篇文章吧，下一站才是render函数的真面目。</p>
-<p>在使用组件的时候，我们经常需要以一个组件（标签）包裹其他组件（标签），或者说是一个组件在渲染完成后，希望保留组件标签原来包裹的内容，甚至这些内容还可以访问这个组件的的作用域。这个时候就需要用到插槽了。vue使用特殊的&lt;slot&gt;元素作为内容的插槽（插槽，插槽，顾名思义就是说有些东西要插入到这个位置，大家先记住这句话，后面将会有更通俗的解释）。除非子组件模板中至少有一个&lt;slot&gt;插口，否则被包裹在这个组件中的内容将会被丢弃。</p>
-<p>注意两点：</p>
-<ul>
-<li>&lt;app&gt;组件不知道他会收到什么内容。这是app的父组件决定的。</li>
-<li>&lt;app&gt;组件很有可能有自己的模板。</li>
-</ul>
-<p>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;app&gt;</span><br><span class="line"> &lt;app-header&gt;&lt;/app-header&gt;</span><br><span class="line"> &lt;app-footer&gt;&lt;/app-footer&gt;</span><br><span class="line">&lt;/app&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="单个插槽"><a href="#单个插槽" class="headerlink" title="单个插槽"></a>单个插槽</h2><p>当子组件模板中中只有一个没有属性的插槽元素时，父组件传入的整个内容片段将插入到DOM所在位置，并替换掉插槽标签本身。示例：</p>
-<p>my-component组件有如下模板。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h2&gt;我是子组件标题&lt;/h2&gt;</span><br><span class="line">  &lt;slot&gt;</span><br><span class="line">    我只在没有要分发的内容时才显示</span><br><span class="line">  &lt;/slot&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<p>父组件模板：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h1&gt;我是父组件的标题&lt;/h1&gt;</span><br><span class="line">  &lt;my-component&gt;</span><br><span class="line">    &lt;p&gt;这是一些初始内容&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;这是更多的初始内容&lt;/p&gt;</span><br><span class="line">  &lt;/my-component&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<p>渲染结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h1&gt;我是父组件的标题&lt;/h1&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h2&gt;我是子组件的标题&lt;/h2&gt;</span><br><span class="line">    &lt;p&gt;这是一些初始内容&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;这是更多的初始内容&lt;/p&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<p>值得一提的是，上面的这个单个插槽，可以在子组件的实例属性vm.$slots中获得。</p>
-<h2 id="具名插槽"><a href="#具名插槽" class="headerlink" title="具名插槽"></a>具名插槽</h2><p>&lt;slot&gt;元素可以用一个特殊的属性 name 来进一步配置分发的规则。多个插槽可以有不同的名字，具名差早将匹配内容片段中有slot特性的元素。通俗的说带有slot=a内容，要插入到&lt;slot name=a&gt;&lt;/slot&gt;插槽里。示例：</p>
-<p>例如，假定我们有一个 app-layout 组件，它的模板为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">  &lt;header&gt;</span><br><span class="line">    &lt;slot name=&quot;header&quot;&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/header&gt;</span><br><span class="line">  &lt;main&gt;</span><br><span class="line">    &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/main&gt;</span><br><span class="line">  &lt;footer&gt;</span><br><span class="line">    &lt;slot name=&quot;footer&quot;&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/footer&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<p>父组件模板：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;app-layout&gt;</span><br><span class="line">  &lt;h1 slot=&quot;header&quot;&gt;这里可能是一个页面标题&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">  &lt;p&gt;主要内容的一个段落。&lt;/p&gt;</span><br><span class="line">  &lt;p&gt;另一个主要段落。&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">  &lt;p slot=&quot;footer&quot;&gt;这里有一些联系信息&lt;/p&gt;</span><br><span class="line">&lt;/app-layout&gt;</span><br></pre></td></tr></table></figure>
-
-<p>渲染结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">  &lt;header&gt;</span><br><span class="line">    &lt;h1&gt;这里可能是一个页面标题&lt;/h1&gt;</span><br><span class="line">  &lt;/header&gt;</span><br><span class="line">  &lt;main&gt;</span><br><span class="line">    &lt;p&gt;主要内容的一个段落。&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;另一个主要段落。&lt;/p&gt;</span><br><span class="line">  &lt;/main&gt;</span><br><span class="line">  &lt;footer&gt;</span><br><span class="line">    &lt;p&gt;这里有一些联系信息&lt;/p&gt;</span><br><span class="line">  &lt;/footer&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="作用域插槽"><a href="#作用域插槽" class="headerlink" title="作用域插槽"></a>作用域插槽</h2><ul>
-<li>2.1.0 新增</li>
-</ul>
-<p>作用域插槽是一种特殊类型的插槽，用作一个（能被传递数据的）可重用模板，来代替已经渲染好的元素。</p>
-<p>在子组件中，只需要将数据传递到插槽，就像你将prop传递给组件一样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;child&quot;&gt;</span><br><span class="line">  &lt;slot text=&quot;hello from child&quot;&gt;&lt;/slot&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<p>在父级中，具有特殊属性的slot-scope的template元素必须存在，表示他是作用域插槽的模板。slot-scope的值将被用于一个临时变量名，此变量接收从子组件传递过来的prop对象：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">  &lt;child&gt;</span><br><span class="line">    &lt;template slot-scope=&quot;props&quot;&gt;</span><br><span class="line">      &lt;span&gt;hello from parent&lt;/span&gt;</span><br><span class="line">      &lt;span&gt;&#123;&#123; props.text &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">  &lt;/child&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<p>渲染结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;child&quot;&gt;</span><br><span class="line">    &lt;span&gt;hello from parent&lt;/span&gt;</span><br><span class="line">    &lt;span&gt;hello from child&lt;/span&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在2.5.0+，slot-scope能被用在任何元素或组件中而不再局限于&lt;template&gt;。示例：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-awesome-list :items=&quot;items&quot;&gt;</span><br><span class="line">  &lt;!-- 作用域插槽也可以是具名的 --&gt;</span><br><span class="line">  &lt;li</span><br><span class="line">    slot=&quot;item&quot;</span><br><span class="line">    slot-scope=&quot;props&quot;</span><br><span class="line">    class=&quot;my-fancy-item&quot;&gt;</span><br><span class="line">    &#123;&#123; props.text &#125;&#125;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">&lt;/my-awesome-list&gt;</span><br></pre></td></tr></table></figure>
-
-<p>myAweSomeList组件的模板：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;slot name=&quot;item&quot;</span><br><span class="line">    v-for=&quot;item in items&quot;</span><br><span class="line">    :text=&quot;item.text&quot;&gt;</span><br><span class="line">    &lt;!-- 这里写入备用内容 --&gt;</span><br><span class="line">  &lt;/slot&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
-
-<p>回顾一下，上面一共讲述了三种插槽，所谓插槽就是保存组件（标签）所包裹内容的一种机制。具体实施是通过在子组件模板中写&lt;slot&gt;元素作为预留插槽，当使用该组件，且该组件包裹了html片段，这些html片段将会插入到子组件刚刚预留的&lt;slot&gt;的位置，同时该&lt;slot&gt;元素也会被替换。</p>
-<p>本篇文章也没有提及render函数，但是这也是学习render函数必不可省的知识，别心急，下面一篇文章将会讲述render函数了。加油吧！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/24/vueRender函数（2）/" data-id="ck3x5xk5b0025g0ppkl0b3qrq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/07/vueRender函数（3）/" data-id="ck3ylede20024ukppaihfsvg1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -1783,7 +1799,7 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 17.5px;">Vue</a> <a href="/tags/es6/" style="font-size: 12.5px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 15px;">webpack</a>
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Vue/" style="font-size: 16.67px;">Vue</a> <a href="/tags/es6/" style="font-size: 13.33px;">es6</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/webpack/" style="font-size: 16.67px;">webpack</a>
     </div>
   </div>
 
@@ -1805,6 +1821,10 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       <ul>
         
           <li>
+            <a href="/2019/12/09/webpack掠影-5/">webpack掠影-4</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/08/webpack掠影-4/">webpack掠影-4</a>
           </li>
         
@@ -1818,10 +1838,6 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
         
           <li>
             <a href="/2019/12/07/webpack掠影-1/">webpack掠影-1</a>
-          </li>
-        
-          <li>
-            <a href="/2019/10/25/JavaScript进阶教程16/">进阶教程 16. PromiseA+</a>
           </li>
         
       </ul>
