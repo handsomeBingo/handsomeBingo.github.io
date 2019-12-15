@@ -67,6 +67,195 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaScript进阶教程13" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/08/29/JavaScript进阶教程13/" class="article-date">
+  <time datetime="2019-08-28T16:23:14.000Z" itemprop="datePublished">2019-08-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/29/JavaScript进阶教程13/">进阶教程 13. ajax的前世今生</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、ajax基础"><a href="#一、ajax基础" class="headerlink" title="一、ajax基础"></a>一、ajax基础</h2><p>浏览器的技术<br>ajax Asynchronous javascript and xml</p>
+<ul>
+<li><p>xml: 是可扩展标记语言，和html一样，可以清楚的表示层级。在ajax刚刚兴起的时候，为了表达数据的结构和层次，数据结构多是使用xml；</p>
+</li>
+<li><p>现在都是是json，json也可以表达数据结构；</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.parse() <span class="comment">// json格式字符串转对象</span></span><br><span class="line"><span class="built_in">JSON</span>.stringify() <span class="comment">// 对象转JSON格式的字符串</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>现在的前端都是前后端分离的，即前端负责数据的绑定和维护；</p>
+</li>
+<li><p>服务端渲染和全局刷新</p>
+</li>
+</ul>
+<p>在很久以前，没有ajax之前，都是前后端不分离的；前后端不分离是前端写好html+css结构，然后把html交给后端，然后利用服务端技术从服务器的数据库中把数据查出来，然后绑定到页面中，然后把绑定好数据的页面直接返回给浏览器，就是说浏览器拿的就是绑定好数据的页面html（服务端渲染SSR(Server-Side-Rendering)）；<br>但是这么干有一个问题，如果我这个页面中只有一部分内容是动态绑定的，如果我需要看到这部分内容，就需要刷新整个页面重新获取才行，因为绑定数据只有在服务器上才能进行。这种体验很不好，这种刷新整个页面获取数据的方式称为全局刷新；</p>
+<ul>
+<li>前后端分离</li>
+</ul>
+<p>后来ajax诞生了，ajax可以直接从服务器获取数据而不用刷新整个页面；发送一个ajax请求，等到请求结束后把数据通过前端手段把数据绑定到页面中（动态创建dom+appendChild或者字符串拼接+innerHTML）。这种用ajax渲染数据的方式是局部刷新的。</p>
+<ul>
+<li>ajax 的实例是可以向服务器发送请求的；</li>
+</ul>
+<h3 id="使用ajax"><a href="#使用ajax" class="headerlink" title="使用ajax"></a>使用ajax</h3><ol>
+<li>创建一个ajax实例对象</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>可以通过XMLHttpRequest原型上的open方法打开一个路径</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xhr.open(<span class="string">'get'</span>, <span class="string">'https://www.easy-mock.com/mock/5d21a1b35b95ef4e9dd1a28c/example/myfirstmock'</span>, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>open方法的参数：</li>
+</ul>
+<ul>
+<li><ol>
+<li>http-method： GET POST</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>url</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>async: true 表示异步，false表示同步</li>
+</ol>
+</li>
+</ul>
+<ol start="3">
+<li>监听ajax实例的onreadystatechange事件，当ajax发送请求时，会触发这个事件行为</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	如果ajax是异步执行的，这个函数会执行三次，三次的readyState分别为x</span><br><span class="line">	<span class="built_in">console</span>.log(xhr.readyState); <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span></span><br><span class="line"></span><br><span class="line">	为了确定拿到数据，我们不仅判断xhr.readyState 判断，还需要根据xhr.status来判断，xhr使用的就是http status，表示当前请求的状态；</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (xhr.readyState === <span class="number">4</span> &amp;&amp; <span class="regexp">/^2\d&#123;2&#125;/</span>.test(xhr.status)) &#123;</span><br><span class="line">		xhr.readyState 为<span class="number">4</span>表示ajax请求完成，xhr.status 是一个以<span class="number">2</span>开头的三位数，表示请求成功，所以可以在获取服务端返回的数据</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>发送请求</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xhr.send(); <span class="comment">// send方法还可以传递参数</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>xhr.readyState 表示当前ajax实例对象的所处的状态</li>
+</ul>
+<ul>
+<li>0: 创建了一个ajax实例对象</li>
+<li>1: 已经调用open方法，打开了路径</li>
+<li>2: 客户端已经接收到服务端的都信息（如果需要获取头信息中某些内容，可以在readyState为2时获取就可以）</li>
+<li><ol start="3">
+<li>客户端正在接受响应主体的数据</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>客户端已经全部接收服务端的数据</li>
+</ol>
+</li>
+</ul>
+<h2 id="二、ajax的请求方式"><a href="#二、ajax的请求方式" class="headerlink" title="二、ajax的请求方式"></a>二、ajax的请求方式</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.open(<span class="string">'get'</span>, <span class="string">'aside.json'</span>, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (xhr.readyState === <span class="number">4</span> &amp;&amp; <span class="regexp">/^2\d&#123;2&#125;/</span>.test(xhr.status)) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(xhr.responseText);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">xhr.send(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">username</span>: <span class="string">'mabin'</span>, <span class="attr">pwd</span>: <span class="string">'1233456'</span>&#125;));</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>xhr.open() 方法的第一个参数用于指定http-method，即http的请求方式：</li>
+</ul>
+<p><strong>一般接口的请求方式由服务端提供，而且会在接口文档中说明</strong></p>
+<h3 id="常见的请求方式："><a href="#常见的请求方式：" class="headerlink" title="常见的请求方式："></a>常见的请求方式：</h3><h4 id="gt-GET-一般用于从服务端获取数据，但是也可以向服务器传递少量的数据；"><a href="#gt-GET-一般用于从服务端获取数据，但是也可以向服务器传递少量的数据；" class="headerlink" title="=&gt; GET: 一般用于从服务端获取数据，但是也可以向服务器传递少量的数据；"></a>=&gt; GET: 一般用于从服务端获取数据，但是也可以向服务器传递少量的数据；</h4><ul>
+<li>get请求方式的特点</li>
+</ul>
+<ol>
+<li>向服务器传递数据的方式：通过向接口末尾添加问号传参的方式传递，如: aside.json?name=mabinpwd=123456</li>
+<li>由于浏览器的url地址是有长度限制的，IE的url一般不超过2k，谷歌的一般在8k，超过的部分会自动被截掉，所以get请求传递的数据很小</li>
+<li>参数直接暴露在url中，安全性低；</li>
+<li>get请求容易产生缓存，为了防止缓存，一般在url末尾拼接一个随机数或者时间戳，因为浏览器发现url变化了，就会重新请求而不是使用之前已经缓存的数据；</li>
+</ol>
+<h4 id="gt-POST-一般用于把数据传递给服务器或者传递大量的数据时"><a href="#gt-POST-一般用于把数据传递给服务器或者传递大量的数据时" class="headerlink" title="=&gt; POST 一般用于把数据传递给服务器或者传递大量的数据时"></a>=&gt; POST 一般用于把数据传递给服务器或者传递大量的数据时</h4><ol>
+<li>post 把需要传递给服务器的数据放在请求体中传递给服务器</li>
+<li>由于post数据放在请求体中，大小没有限制</li>
+<li>post 传递数据时把数据放在请求体中的，相对于get而言比较安全</li>
+<li>post 请求不会默认走缓存</li>
+</ol>
+<h4 id="其他请求方式"><a href="#其他请求方式" class="headerlink" title="其他请求方式"></a>其他请求方式</h4><p>+DELETE: 删除数据<br>+HEAD: 获取响应头，不需要响应体<br>+PUT: 修改某些内容<br>+OPTIONS: 查询服务器的支持的http请求方式<br>+TRACE: 回显服务器收到的请求，一般用于测试<br>+….</p>
+<h2 id="三、ajax的同步和异步"><a href="#三、ajax的同步和异步" class="headerlink" title="三、ajax的同步和异步"></a>三、ajax的同步和异步</h2><ul>
+<li>js是单线程的：每次只能执行一个任务</li>
+<li>浏览器是多线程的，可以同时执行多个任务；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> data = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"></span><br><span class="line">xhr.open(<span class="string">'get'</span>, <span class="string">'aside.json'</span>, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(xhr.readyState); <span class="comment">// false 时只输出 4</span></span><br><span class="line">	<span class="built_in">console</span>.log(xhr.readyState); <span class="comment">// true 时输出2 3 4</span></span><br><span class="line">	data = xhr.responseText;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">xhr.send();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindHTML</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 绑定html的方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="为什么会有异步的ajax？"><a href="#为什么会有异步的ajax？" class="headerlink" title="为什么会有异步的ajax？"></a>为什么会有异步的ajax？</h3><p>如果页面中有5个请求</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 1s</span></span><br><span class="line"><span class="comment">// 2. 2s</span></span><br><span class="line"><span class="comment">// 3. 3s</span></span><br><span class="line"><span class="comment">// 4. 4s</span></span><br><span class="line"><span class="comment">// 5. 5s</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>如果使用同步的，同步任务都是阻塞的，上一个执行不完下一个不能开始，如果这些接口没有必然关系，用户需要15s才能看到，这个用户体验很不好。</p>
+</li>
+<li><p>如果使用异步的，第一个发出后随即就开始第二个，然后第三个，因为异步不是阻塞的，后面的不用等待前面的完成（这样子看起来很像同时发送了5个请求），这样一来用时5s就可以了</p>
+</li>
+</ul>
+<p>所以一般情况下ajax使用异步的；</p>
+<ul>
+<li>但是使用异步的也有一个问题，如果这5个接口是互相依赖的，比如第二个依赖第一个返回的数据，第三个依赖第二个返回的数据这种情况使用异步，顺序是无法保证的，因为异步任务是谁先到达执行条件谁先执行；</li>
+</ul>
+<h2 id="四、jq的ajax"><a href="#四、jq的ajax" class="headerlink" title="四、jq的ajax"></a>四、jq的ajax</h2><ul>
+<li>使用原生的ajax把用户名和密码使用post的请求发方式发送到aide.json</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"uName"</span>&gt;</span>用户名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"uName"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"pwd"</span>&gt;</span>密码：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"pwd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"submit"</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/jquery-3.2.1.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/4-jq的ajax.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>原生js代码：</p>
+<ul>
+<li>获取元素</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> uName = <span class="built_in">document</span>.getElementById(<span class="string">'uName'</span>);</span><br><span class="line"><span class="keyword">let</span> pwd = <span class="built_in">document</span>.getElementById(<span class="string">'pwd'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> uNameValue = uName.value;</span><br><span class="line"><span class="keyword">let</span> pwdValue = pwd.value;</span><br><span class="line"><span class="keyword">let</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'submit'</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>原生js</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">btn.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">	xhr.open(<span class="string">'post'</span>, <span class="string">'aside.json'</span>, <span class="literal">true</span>);</span><br><span class="line">	xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (xhr.readyState === <span class="number">4</span> &amp;&amp; xhr.status === <span class="number">200</span>) &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">'oh yeach'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="comment">// 注意post请求只能发送字符串类型的数据，一边情况下会使用json格式的字符串</span></span><br><span class="line">	xhr.send(<span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">		username: uNameValue,</span><br><span class="line">		pwd: pwdValue</span><br><span class="line">	&#125;));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用jq的ajax</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">	url: <span class="string">'aside.json'</span>,</span><br><span class="line">	type: <span class="string">'post'</span>,</span><br><span class="line">	dataType: <span class="string">'json'</span>,</span><br><span class="line">	cache: <span class="literal">false</span>,</span><br><span class="line">	<span class="keyword">async</span>: <span class="literal">true</span>,</span><br><span class="line">	data: &#123;</span><br><span class="line">		username: uNameValue,</span><br><span class="line">		pwd: pwdValue</span><br><span class="line">	&#125;,</span><br><span class="line">	error(err) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(err)</span><br><span class="line">	&#125;,</span><br><span class="line">	success (data) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(data)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>参数详解</li>
+</ul>
+<ul>
+<li>url: 请求路径</li>
+<li>type: 请求方式</li>
+<li>dataType: 数据类型json</li>
+<li>async: true 默认异步</li>
+<li>cache: false 禁用缓存</li>
+<li>error: 请求失败时执行的回调，参数是具体的报错信息</li>
+<li>success: 请求成功执行的回调，参数是服务端返回的数据</li>
+</ul>
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/08/29/JavaScript进阶教程13/" data-id="ck471o0ax000no4ppd14nr4i6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JavaScript进阶教程12" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/07/19/JavaScript进阶教程12/" class="article-date">
@@ -121,7 +310,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/19/JavaScript进阶教程12/" data-id="ck45lapp9000lxspp56aync6i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/19/JavaScript进阶教程12/" data-id="ck471o0au000lo4ppzqimj4kv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -322,7 +511,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/16/JavaScript进阶教程11/" data-id="ck45lapp7000jxsppednzvwlt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/16/JavaScript进阶教程11/" data-id="ck471o0as000jo4ppigqucalq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -438,7 +627,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/20/JavaScript进阶教程10/" data-id="ck45lapp4000hxspp9yhpxkde" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/20/JavaScript进阶教程10/" data-id="ck471o0ao000ho4ppd2itcxgp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -627,7 +816,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/15/JavaScript进阶教程9/" data-id="ck45lappt0015xsppgjmibpvd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/15/JavaScript进阶教程9/" data-id="ck471o0bh0017o4ppb72fy54e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -751,7 +940,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/22/JavaScript进阶教程8/" data-id="ck45lappx0019xspp51gv844y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/22/JavaScript进阶教程8/" data-id="ck471o0bf0015o4ppr7u1xezc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -863,7 +1052,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/17/JavaScript进阶教程7/" data-id="ck45lappv0017xsppycddl63z" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/17/JavaScript进阶教程7/" data-id="ck471o0bd0013o4pp1anicpy3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1143,7 +1332,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程5/" data-id="ck45lappn000zxspp7kdzlgdj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程5/" data-id="ck471o0bb0011o4pp7v4z7zth" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1177,7 +1366,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="一、js盒子模型属性"><a href="#一、js盒子模型属性" class="headerlink" title="一、js盒子模型属性"></a>一、js盒子模型属性</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">		* &#123;</span><br><span class="line">			margin: 0;</span><br><span class="line">			padding: 0;</span><br><span class="line">		&#125;</span><br><span class="line">		.box &#123;</span><br><span class="line">			/* css盒子模型属性： context (内容宽高) + padding + border + margin*/</span><br><span class="line">			/*w3c盒模型：内容宽高是不包含padding和border的*/</span><br><span class="line">			/*IE盒模型：宽度包含padding和border*/</span><br><span class="line">			width: 300px;</span><br><span class="line">			height: 1220px;</span><br><span class="line">			background-color: red;</span><br><span class="line">			padding: 50px;</span><br><span class="line">			border: 20px solid blue;</span><br><span class="line">			margin: 50px auto;</span><br><span class="line">			overflow-y: scroll;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span> <span class="attr">id</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">	【联播+】4月8日，习近平等中央领导同志参加了首都义务植树活动。习近平挥锹铲土，扶苗培土，与广大少先队员和市民们一起劳动。植树现场一片热火朝天景象。</span><br><span class="line"></span><br><span class="line">	“我们的根扎在劳动人民之中。”习近平曾这样发自肺腑地说道。</span><br><span class="line"></span><br><span class="line">	1969年初，不满16岁的习近平来到陕北农村插队，一头扎进最基层。在农村生活的7年间，他什么活儿都干过，乡亲们说他是“吃苦耐劳好后生”。</span><br><span class="line"></span><br><span class="line">	从政之后，习近平不改劳动本色，从贫困山村到基层社区，他走进群众中间，一起种树、打糍粑、炸酥肉……所到之处，都留下了他与人民一同劳动的温暖记忆。</span><br><span class="line"></span><br><span class="line">	央视网用八张海报，带你重温过去，感受习近平总书记与人民同劳动的暖心瞬间。</span><br><span class="line">	【联播+】4月8日，习近平等中央领导同志参加了首都义务植树活动。习近平挥锹铲土，扶苗培土，与广大少先队员和市民们一起劳动。植树现场一片热火朝天景象。</span><br><span class="line"></span><br><span class="line">	“我们的根扎在劳动人民之中。”习近平曾这样发自肺腑地说道。</span><br><span class="line"></span><br><span class="line">	1969年初，不满16岁的习近平来到陕北农村插队，一头扎进最基层。在农村生活的7年间，他什么活儿都干过，乡亲们说他是“吃苦耐劳好后生”。</span><br><span class="line"></span><br><span class="line">	从政之后，习近平不改劳动本色，从贫困山村到基层社区，他走进群众中间，一起种树、打糍粑、炸酥肉……所到之处，都留下了他与人民一同劳动的温暖记忆。</span><br><span class="line"></span><br><span class="line">	央视网用八张海报，带你重温过去，感受习近平总书记与人民同劳动的暖心瞬间。</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/4-js盒子模型属性.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+        <h3 id="一、js盒子模型属性"><a href="#一、js盒子模型属性" class="headerlink" title="一、js盒子模型属性"></a>一、js盒子模型属性</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">		* &#123;</span><br><span class="line">			margin: 0;</span><br><span class="line">			padding: 0;</span><br><span class="line">		&#125;</span><br><span class="line"><span class="css">		<span class="selector-class">.box</span> &#123;</span></span><br><span class="line"><span class="css">			<span class="comment">/* css盒子模型属性： context (内容宽高) + padding + border + margin*/</span></span></span><br><span class="line"><span class="css">			<span class="comment">/*w3c盒模型：内容宽高是不包含padding和border的*/</span></span></span><br><span class="line"><span class="css">			<span class="comment">/*IE盒模型：宽度包含padding和border*/</span></span></span><br><span class="line">			width: 300px;</span><br><span class="line">			height: 1220px;</span><br><span class="line">			background-color: red;</span><br><span class="line">			padding: 50px;</span><br><span class="line">			border: 20px solid blue;</span><br><span class="line">			margin: 50px auto;</span><br><span class="line">			overflow-y: scroll;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span> <span class="attr">id</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">	【联播+】4月8日，习近平等中央领导同志参加了首都义务植树活动。习近平挥锹铲土，扶苗培土，与广大少先队员和市民们一起劳动。植树现场一片热火朝天景象。</span><br><span class="line"></span><br><span class="line">	“我们的根扎在劳动人民之中。”习近平曾这样发自肺腑地说道。</span><br><span class="line"></span><br><span class="line">	1969年初，不满16岁的习近平来到陕北农村插队，一头扎进最基层。在农村生活的7年间，他什么活儿都干过，乡亲们说他是“吃苦耐劳好后生”。</span><br><span class="line"></span><br><span class="line">	从政之后，习近平不改劳动本色，从贫困山村到基层社区，他走进群众中间，一起种树、打糍粑、炸酥肉……所到之处，都留下了他与人民一同劳动的温暖记忆。</span><br><span class="line"></span><br><span class="line">	央视网用八张海报，带你重温过去，感受习近平总书记与人民同劳动的暖心瞬间。</span><br><span class="line">	【联播+】4月8日，习近平等中央领导同志参加了首都义务植树活动。习近平挥锹铲土，扶苗培土，与广大少先队员和市民们一起劳动。植树现场一片热火朝天景象。</span><br><span class="line"></span><br><span class="line">	“我们的根扎在劳动人民之中。”习近平曾这样发自肺腑地说道。</span><br><span class="line"></span><br><span class="line">	1969年初，不满16岁的习近平来到陕北农村插队，一头扎进最基层。在农村生活的7年间，他什么活儿都干过，乡亲们说他是“吃苦耐劳好后生”。</span><br><span class="line"></span><br><span class="line">	从政之后，习近平不改劳动本色，从贫困山村到基层社区，他走进群众中间，一起种树、打糍粑、炸酥肉……所到之处，都留下了他与人民一同劳动的温暖记忆。</span><br><span class="line"></span><br><span class="line">	央视网用八张海报，带你重温过去，感受习近平总书记与人民同劳动的暖心瞬间。</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/4-js盒子模型属性.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>JS盒模型：通过JS中的属性和方法获取元素的属性信息</p>
@@ -1232,7 +1421,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程6/" data-id="ck45lappp0011xsppc5fepb7l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/24/JavaScript进阶教程6/" data-id="ck471o0d1002po4ppz4558yrg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1352,140 +1541,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/22/JavaScript进阶教程4/" data-id="ck45lappl000xxspplzycbspw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript进阶教程3" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/10/07/JavaScript进阶教程3/" class="article-date">
-  <time datetime="2018-10-07T12:00:23.000Z" itemprop="datePublished">2018-10-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/07/JavaScript进阶教程3/">进阶教程 3. JS 的堆栈内存管理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="javascript中的堆栈内存及释放"><a href="#javascript中的堆栈内存及释放" class="headerlink" title="javascript中的堆栈内存及释放"></a>javascript中的堆栈内存及释放</h2><h3 id="js中的堆内存的创建和释放"><a href="#js中的堆内存的创建和释放" class="headerlink" title="js中的堆内存的创建和释放"></a>js中的堆内存的创建和释放</h3><h3 id="JS引擎中的内存分类："><a href="#JS引擎中的内存分类：" class="headerlink" title="JS引擎中的内存分类："></a>JS引擎中的内存分类：</h3><ul>
-<li>栈内存（作用域）供js代码执行的环境，保存基本数据类型</li>
-<li>堆内存：存储引用数据类型</li>
-</ul>
-<h3 id="堆内存的创建和销毁"><a href="#堆内存的创建和销毁" class="headerlink" title="堆内存的创建和销毁"></a>堆内存的创建和销毁</h3><h4 id="创建："><a href="#创建：" class="headerlink" title="创建："></a>创建：</h4><p><code>创建一个对象、数组、函数、等引用数据类型，浏览器都会分配一块堆内存地址，存储引用数据类型的数据；</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	name: <span class="string">'江外琉璃'</span>,</span><br><span class="line">	age: <span class="number">10</span>,</span><br><span class="line">	courses: [<span class="string">'高级前端是怎样炼成的'</span>, <span class="string">'前端FE师是怎样炼成的'</span>, <span class="string">'UI设计师是怎样炼成的'</span>]</span><br><span class="line">&#125;; <span class="comment">// 每创建一个引用数据类型，浏览器都会开辟一个堆内存，并把这个堆内存地址给obj变量</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 此时obj相当于引用了这一块堆内存，</span></span><br><span class="line"><span class="keyword">var</span> obj2 = obj; <span class="comment">// 此时obj2也引用了这一块堆内存</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="堆内存释放"><a href="#堆内存释放" class="headerlink" title="堆内存释放"></a>堆内存释放</h4><p><code>让所有引用堆内存空间地址的变量赋值为null即可（没有变量占用这个堆内存了，浏览器会在空闲的时候把它释放掉）</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj = <span class="literal">null</span>; <span class="comment">// 将obj指向空对象指针null</span></span><br><span class="line">obj2 = <span class="literal">null</span>; <span class="comment">// 将obj2指向空对象指针null</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="js中的栈内存开辟和释放"><a href="#js中的栈内存开辟和释放" class="headerlink" title="js中的栈内存开辟和释放"></a>js中的栈内存开辟和释放</h3><ul>
-<li>栈内存（作用域）：供js代码执行的环境，也是用来保存基本数据类型的</li>
-</ul>
-<h4 id="栈内存的创建："><a href="#栈内存的创建：" class="headerlink" title="栈内存的创建："></a>栈内存的创建：</h4><ul>
-<li>当浏览器打开时，首先会开辟形成一个顶层的栈内存，就是全局作用域；</li>
-<li>函数执行时，也会开辟一个供函数代码执行的栈内存（私有作用域）</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> total = <span class="number">0</span>;</span><br><span class="line">	total = a + b;</span><br><span class="line">	<span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>函数每一次执行，都会形成一个全新的栈内存，即每次函数执行都是在一个全新的环境里面执行，所以函数每次执行都是互相独立的；</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">add(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">add(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		zf: <span class="string">'zhufeng'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> o1 = fe(); <span class="comment">//</span></span><br><span class="line"><span class="keyword">var</span> o2 = fe();</span><br><span class="line"><span class="built_in">console</span>.log(o1 === o2); <span class="comment">// false fe执行几次，救护创建几个对象，所以o1和o2是两个不同的堆内存，没有任何关系。</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="栈内存销毁："><a href="#栈内存销毁：" class="headerlink" title="栈内存销毁："></a>栈内存销毁：</h4><ul>
-<li>全局栈内存：当页面关闭时才会销毁</li>
-<li>函数的私有作用域：一般函数执行完成后，栈内存自动销毁。但是有一些特殊情况需要注意；</li>
-</ul>
-<h2 id="栈内存不销毁的情形"><a href="#栈内存不销毁的情形" class="headerlink" title="栈内存不销毁的情形"></a>栈内存不销毁的情形</h2><ul>
-<li><p>函数栈内存：正常情况下，函数执行会形成一个栈内存（作用域），当函数执行完成就会自动销毁。</p>
-</li>
-<li><p>但是函数执行完成后，当前形成的栈内存中，某些内容被栈内存以外的变量占用了，此时栈内存不能释放（一旦释放外面找不到原有的内容了）。栈内存不销毁，保存在栈内存中的数据也不会被销毁</p>
-</li>
-</ul>
-<h4 id="1-函数返回值被占用"><a href="#1-函数返回值被占用" class="headerlink" title="1 函数返回值被占用"></a>1 函数返回值被占用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		name: <span class="string">"江外琉璃"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = fe(); <span class="comment">// 函数fe执行形成一个不销毁的栈内存，里面定义的对象被外部obj变量占用，因而作用域不销毁</span></span><br><span class="line"></span><br><span class="line">fe(); <span class="comment">// 他们正常形成栈内存，但是执行后会被销毁</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="2-函数内部的引用数据类型被外部占用，函数执行的作用域不销毁。"><a href="#2-函数内部的引用数据类型被外部占用，函数执行的作用域不销毁。" class="headerlink" title="2.函数内部的引用数据类型被外部占用，函数执行的作用域不销毁。"></a>2.函数内部的引用数据类型被外部占用，函数执行的作用域不销毁。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	x = &#123;</span><br><span class="line">		name: <span class="string">'zf'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">fn(); <span class="comment">// 此时x占用着fn的作用域中对象&#123;name: 'zf'&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="累加计数"><a href="#累加计数" class="headerlink" title="累加计数"></a>累加计数</h3><ul>
-<li>需求：实现一个累加计数的功能，点击一次，让按钮中的数字累加；</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>思路：既然是累加，一定是有一个地方保存着它的上一个值。关键就在于保存在哪里。</li>
-</ul>
-<h4 id="1-把值保存在全局作用域"><a href="#1-把值保存在全局作用域" class="headerlink" title="1. 把值保存在全局作用域"></a>1. 把值保存在全局作用域</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> count = <span class="number">0</span>; <span class="comment">// count保存在全局作用域</span></span><br><span class="line">btn.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	count++; <span class="comment">// 操作全局变量</span></span><br><span class="line">	btn.innerHTML = count;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-自定义不销毁的私有作用域"><a href="#2-自定义不销毁的私有作用域" class="headerlink" title="2. 自定义不销毁的私有作用域"></a>2. 自定义不销毁的私有作用域</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">btn.onclick = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> count = <span class="number">0</span>; <span class="comment">// count的值保存在</span></span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		btn.innerHTML = count;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-自定义不销毁的函数作用域2"><a href="#3-自定义不销毁的函数作用域2" class="headerlink" title="3. 自定义不销毁的函数作用域2"></a>3. 自定义不销毁的函数作用域2</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> count = <span class="number">0</span>; <span class="comment">// count保存在自执行函数形成的私有作用域中</span></span><br><span class="line">	btn.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		count++;</span><br><span class="line">		<span class="keyword">this</span>.innerHTML = count;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-块级作用域"><a href="#4-块级作用域" class="headerlink" title="4. 块级作用域"></a>4. 块级作用域</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="keyword">let</span> count = <span class="number">0</span>; <span class="comment">// let 会把花括号变成块级作用域，等效于私有作用域，count的值保存在块级作用域中</span></span><br><span class="line">	btn.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		count++;</span><br><span class="line">		<span class="keyword">this</span>.innerHTML = count;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="let-amp-const"><a href="#let-amp-const" class="headerlink" title="let &amp; const"></a>let &amp; const</h3><h4 id="let-const-是ES6新增关键字，用于声明变量"><a href="#let-const-是ES6新增关键字，用于声明变量" class="headerlink" title="let const 是ES6新增关键字，用于声明变量"></a>let const 是ES6新增关键字，用于声明变量</h4><ul>
-<li>let 用来声明普通变量</li>
-<li>const 用于声明常量</li>
-</ul>
-<h4 id="let-amp-const-和var的区别"><a href="#let-amp-const-和var的区别" class="headerlink" title="let &amp; const 和var的区别"></a>let &amp; const 和var的区别</h4><ul>
-<li><ol>
-<li>let const不存在变量提升，对于使用let const声明的变量，只能在定义后使用</li>
-</ol>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 报错：a is not defined</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 报错：b is not defined</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="number">12</span>;</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-let-const-不能重复声明变量-重复声明var或者function声明的也不行"><a href="#2-let-const-不能重复声明变量-重复声明var或者function声明的也不行" class="headerlink" title="2. let const 不能重复声明变量(重复声明var或者function声明的也不行)"></a>2. let const 不能重复声明变量(重复声明var或者function声明的也不行)</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> n;</span><br><span class="line"><span class="keyword">var</span> n = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> n = <span class="number">1</span>; <span class="comment">// 报错：a has already been declared</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="3-let-const-在全局声明的变量或者常量不会像window上增加属性"><a href="#3-let-const-在全局声明的变量或者常量不会像window上增加属性" class="headerlink" title="3. let const 在全局声明的变量或者常量不会像window上增加属性"></a>3. let const 在全局声明的变量或者常量不会像window上增加属性</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">100</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'num'</span> <span class="keyword">in</span> <span class="built_in">window</span>); <span class="comment">// true in 运算符，检测对象是否有某个属性</span></span><br><span class="line"><span class="keyword">let</span> css = <span class="string">'css3'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'css'</span> <span class="keyword">in</span> <span class="built_in">window</span>); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="4-let-const-在代码块中会出现，会形成块级作用域，并且出现-暂时性死区；"><a href="#4-let-const-在代码块中会出现，会形成块级作用域，并且出现-暂时性死区；" class="headerlink" title="4. let const 在代码块中会出现，会形成块级作用域，并且出现 暂时性死区；"></a>4. let const 在代码块中会出现，会形成块级作用域，并且出现 暂时性死区；</h4><ul>
-<li>if (condition) { 条件的花括号中使用let const 就会形成块级作用域 }</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> num1 = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">	<span class="keyword">let</span> num1 = <span class="number">4</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(num1); <span class="comment">// 4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>for(…) { for 循环中的代码块 }</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">12</span>; i++) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'var 没有块级作用域'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i); <span class="comment">// var 会把i泄露成全局变量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'let j j不会泄露出去'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(j); <span class="comment">// Uncaught ReferenceError: j is not defined</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>利用 {}形成块级作用域</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(a); <span class="comment">// a是块级作用域中</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">let</span> m = <span class="number">12</span>; <span class="comment">// m所处的块级作用域是下面的块级作用域的上级作用域，同样遵从作用域链的查找规则</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(m);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="暂时性死区（TDZ-temporary-dead-zone）"><a href="#暂时性死区（TDZ-temporary-dead-zone）" class="headerlink" title="暂时性死区（TDZ: temporary dead zone）"></a>暂时性死区（TDZ: temporary dead zone）</h4><p>在代码块中，用let const声明的变量，不能再声明之前使用。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> q = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(q); <span class="comment">// 这个变量q已经被let锁定在块级作用域中，</span></span><br><span class="line">	<span class="keyword">let</span> q = <span class="number">14</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="const-声明变量的细节问题"><a href="#const-声明变量的细节问题" class="headerlink" title="const 声明变量的细节问题"></a>const 声明变量的细节问题</h3><h4 id="1-const声明时必须赋值"><a href="#1-const声明时必须赋值" class="headerlink" title="1. const声明时必须赋值"></a>1. const声明时必须赋值</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> m;</span><br><span class="line"><span class="keyword">var</span> m;</span><br><span class="line"><span class="keyword">const</span> m; <span class="comment">// 报错：Missing initializer in const declaration</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="2-值一旦被定义，不能被修改"><a href="#2-值一旦被定义，不能被修改" class="headerlink" title="2. 值一旦被定义，不能被修改"></a>2. 值一旦被定义，不能被修改</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> num = <span class="number">12</span>;</span><br><span class="line">num = <span class="number">15</span>; 报错：</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-如果const声明的常量是一个引用数据类型，那么常量带表的引用地址不能改变，但是堆内存中的内容是可以修改的。"><a href="#3-如果const声明的常量是一个引用数据类型，那么常量带表的引用地址不能改变，但是堆内存中的内容是可以修改的。" class="headerlink" title="3. 如果const声明的常量是一个引用数据类型，那么常量带表的引用地址不能改变，但是堆内存中的内容是可以修改的。"></a>3. 如果const声明的常量是一个引用数据类型，那么常量带表的引用地址不能改变，但是堆内存中的内容是可以修改的。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">ary.push(<span class="string">'33'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ary = [1, 3, 5]; // 报错：</span></span><br></pre></td></tr></table></figure>
-
-<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/10/07/JavaScript进阶教程3/" data-id="ck45lappj000vxspp1eok975p" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/22/JavaScript进阶教程4/" data-id="ck471o0b9000zo4pprl1et6ib" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1547,6 +1603,10 @@
       <ul>
         
           <li>
+            <a href="/2019/12/14/webpack掠影-7/">webpack掠影-7</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/14/webpack掠影-6/">webpack掠影-6</a>
           </li>
         
@@ -1560,10 +1620,6 @@
         
           <li>
             <a href="/2019/12/08/webpack掠影-3/">webpack掠影-3</a>
-          </li>
-        
-          <li>
-            <a href="/2019/12/08/webpack掠影-2/">webpack掠影-2</a>
           </li>
         
       </ul>

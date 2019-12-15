@@ -67,6 +67,222 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaScript基础教程1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/19/JavaScript基础教程1/" class="article-date">
+  <time datetime="2018-03-19T11:54:07.000Z" itemprop="datePublished">2018-03-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/19/JavaScript基础教程1/">基础教程 1. JS 数据类型和变量</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JS-数据类型和变量"><a href="#JS-数据类型和变量" class="headerlink" title="JS 数据类型和变量"></a>JS 数据类型和变量</h1><h2 id="js引入方式"><a href="#js引入方式" class="headerlink" title="js引入方式"></a>js引入方式</h2><ul>
+<li><p>行内式：通过向html元素行内添加一些js代码，如给div绑定点击事件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">"alert('这是js代码')"</span>&gt;</span>这是一个div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>内嵌式：在html文档中写一个script标签，把我们的js带写在script标签内</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    alert('这是内嵌式js代码')</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>外链式：在html文档中写一个script标签，并且设置src属性，src的属性值引用一个js文件资源，而js代码写在js文件中；</p>
+</li>
+</ul>
+<blockquote>
+<p>使用外链式引入js文件时，script标签里面不能再写js代码了，即使写了也不会执行。</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/1-for.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>无论是内嵌式还是外链式，都建议把script标签写在body结束标签的前面。</p>
+<h2 id="一、-浅谈前端发展史"><a href="#一、-浅谈前端发展史" class="headerlink" title="一、 浅谈前端发展史"></a>一、 浅谈前端发展史</h2><p>第一阶段：C/S （client server） -&gt; B / S （browser server）网页制作<br>技术栈：PhotoShop、HTML、CSS</p>
+<p>第二阶段：从静态到动态，从后端到前端 前端开发工程师<br>    前后端分离：<br>        后端：完成数据的分析和业务逻辑的编写（包含API接口编写）<br>        前端：网页制作、JS交互效果、数据的交互和绑定<br>    技术栈：JavaScript 、 Ajax（以及jsonp等跨域技术）、jQuery …<br>第三阶段：从前端到全端（从PC端到移动端）<br>    技术栈：H5、CSS3、响应式布局开发，Zepto、HybridApp（混合app开发）微信小程序…</p>
+<p>第四阶段：从全端到全栈<br>    全栈开发：前后端都可以开发（严格意义讲，一种语言完成前端后开发）<br>    技术栈：NODE（基于js编程语言开发服务器端程序）、Express/Koa…</p>
+<hr>
+<h2 id="二、关于浏览器的内核和引擎"><a href="#二、关于浏览器的内核和引擎" class="headerlink" title="二、关于浏览器的内核和引擎"></a>二、关于浏览器的内核和引擎</h2><p>webkit（v8引擎）：大部分浏览器<br>gecko：火狐<br>trident：IE<br>…</p>
+<p>W3C：万维网联盟，制定编程语言的规范与标准<br>   开发者按照规范编写代码，浏览器开发商也会开发一套按照规范把代码渲染成页面的东西（这个东西就是内核或者引擎）</p>
+<p>   浏览器内核的作用：按照一定的规范，把代码基于GPU（显卡）绘制出对应的图形和页面等；</p>
+<p>   为啥会出现浏览器兼容：<br>    1. 部分浏览器会提前开发一些更好的功能，后期这些功能会被收录到W3C规范中，但是再收录之前，会存在一定的兼容性<br>    2. 各个浏览器厂商，为了突出自己的独特性，用其他方法实现W3C规范<br>    …</p>
+<hr>
+<h2 id="三、JavaScript"><a href="#三、JavaScript" class="headerlink" title="三、JavaScript"></a>三、JavaScript</h2><p>JS：轻量级的客户端脚本编程语言</p>
+<ol>
+<li>编程语言<br>HTML+CSS 是标记语言<br>编程语言是具备一定逻辑的，拥有自己的编程思想（面向对象【oop】、面向过程编程）</li>
+</ol>
+<ul>
+<li><p>面向对象</p>
+<ul>
+<li>C++</li>
+<li>JAVA</li>
+<li>PHP</li>
+<li>C#</li>
+<li>JS</li>
+<li>…</li>
+</ul>
+</li>
+<li><p>面向过程：</p>
+<ul>
+<li>C</li>
+</ul>
+</li>
+</ul>
+<p>2.目前的JS已经不是客户端语言了，基于NODE可以做服务器端程序，所以JS是全栈编程语言</p>
+<ol start="3">
+<li>学习JS，我们学习它的几部分组成<ul>
+<li>ECMAScript（ES）: js的核心语法</li>
+<li>DOM: Document Object Model文档对象模型，提供各种API（属性和方法）让JS可以获取或者操作页面中的HTML元素（DOM元素）</li>
+<li>BOM：Browser Object Model 浏览器对象模型，提供各种API让js可以操作浏览器</li>
+</ul>
+</li>
+</ol>
+<h2 id="四、ECMAScript"><a href="#四、ECMAScript" class="headerlink" title="四、ECMAScript"></a>四、ECMAScript</h2><p>它是JS的语法规范，JS中的变量、数据类型、语法规范、操作语句，设计模式等等都是ES规定的；</p>
+<p>值得注意的是js的注释方式：注释是一项备注内容，给人看的，代码执行时会忽略注释内容。<br>    + 单行注释： // 两个单斜线<br>    + 多行注释：/<em>多行注释内容写在两个星号之间</em>/</p>
+<hr>
+<h2 id="五、变量（variable）"><a href="#五、变量（variable）" class="headerlink" title="五、变量（variable）"></a>五、变量（variable）</h2><p>它不是具体的值，只是一个用来代表某个值的标识符，因为它表示的值可以改变，所以称为变量。</p>
+<p>基于ES语法规范，在JS中创建变量有以下方式：</p>
+<ul>
+<li>var（ES3) 创建普通变量</li>
+<li>function （ES3）创建函数（函数名也是变量，只不过存储的值是函数类型而已）</li>
+<li>let （ES6）声明变量</li>
+<li>const （ES6）创建常量（常量就是不变的值，如光速就是常量）</li>
+<li>import （ES6）基于ES6的模块规范导出需要的信息</li>
+<li>class （ES6） 基于ES6创建 类</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 语法：</span></span><br><span class="line"><span class="comment">* var 变量名 = 值</span></span><br><span class="line"><span class="comment">* let 变量名 = 值</span></span><br><span class="line"><span class="comment">* const 变量名 = 值</span></span><br><span class="line"><span class="comment">* function 函数名 () &#123;</span></span><br><span class="line"><span class="comment">*  // 函数体</span></span><br><span class="line"><span class="comment">* &#125;</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">13</span>;</span><br><span class="line">n = <span class="number">15</span>;</span><br><span class="line">alert(n + <span class="number">10</span>); <span class="comment">// =&gt; 弹出来25 此时的N代表15</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> m = <span class="number">100</span>;</span><br><span class="line">m = <span class="number">200</span>; <span class="comment">// Uncaught TypeError: Assignment to constant variable (常量存储的值不能被修改，能够被修改的就是变量了)</span></span><br></pre></td></tr></table></figure>
+
+<p>创建变量，命名的时候要遵循一些规范</p>
+<ul>
+<li>严格区分大小写</li>
+<li>遵循驼峰命名法：按照数字、字母、下划线或者$来命名（数字不能作为开头），命名的时候基于英文单词拼接成一个名字（第一个单词字母小写，其余每一个有意义单词的首字母都大写）</li>
+<li>不能使用关键字和保留字：在js中有特殊含义的叫做关键字，未来都可能成为关键字的叫做保留字</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> N = <span class="number">12</span>; <span class="comment">// 变量n和变量N不是同一个变量</span></span><br><span class="line"><span class="keyword">var</span> studentInfo = <span class="string">'xyz'</span>; <span class="comment">// 驼峰命名法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 变量要具有语义化</span></span><br><span class="line">add / create / insert</span><br><span class="line">del (<span class="keyword">delete</span>) / update / remove(rm)</span><br><span class="line">info / detail</span><br><span class="line">log</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、数据类型"><a href="#六、数据类型" class="headerlink" title="六、数据类型"></a>六、数据类型</h2><p>数据类型是一门语言进行生产的材料，JS中包含的值有以下这些类型：</p>
+<ul>
+<li>基本类型：<ul>
+<li>数字 number</li>
+<li>字符串 string</li>
+<li>布尔 boolean</li>
+<li>null</li>
+<li>undefined</li>
+<li>Symbol 表示一个唯一值（ES6新增）</li>
+</ul>
+</li>
+<li>引用数据类型：<ul>
+<li>对象object<ul>
+<li>普通对象</li>
+<li>数组对象</li>
+<li>正则对象</li>
+<li>日期对象</li>
+<li>…</li>
+</ul>
+</li>
+<li>函数function</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [基本数据类型]</span></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">13</span>; <span class="comment">// =&gt; 0 1 -13 13.2都是数字， 此时变量n存储的就是一个数字；中有一个特殊的值：NaN(not a number)，表示不是一个有效的数字，但是仍然是一个数字类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> s = <span class="string">''</span>; <span class="comment">// =&gt;如 '' '13' "13" "name" "age" JS中所有用单引号或者双引号包裹起来的都是字符串，字符串表示的值是当前引号中包裹的值（一个字符串由零到多个字符串组成）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span>  b = <span class="literal">true</span>; <span class="comment">// =&gt; 布尔类型只有两个值 true 真 false表示假</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> empty = <span class="literal">null</span>; <span class="comment">// =&gt; 变量empty表示null空</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> notDefined = <span class="literal">undefined</span>; <span class="comment">// 变量notDefined表示undefined（undefined这个单词的意思就是未定义）；</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Symbol: 用来创建一个唯一值，和谁都不会重复。下面等号右侧虽然长的一样，但是s1和s2变量代表两个不同的值。</span></span><br><span class="line"><span class="keyword">var</span> s1 = <span class="built_in">Symbol</span>(<span class="string">'江外'</span>);</span><br><span class="line"><span class="keyword">var</span> s2 = <span class="built_in">Symbol</span>(<span class="string">'江外'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// [引用数据类型]</span></span><br><span class="line"><span class="comment">// =&gt; 对象</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">name</span>: <span class="string">'江外琉璃'</span>, <span class="attr">age</span>: <span class="number">9</span>&#125;; <span class="comment">// =&gt; 普通对象：由大括号包裹起来，里面包含多组属性名和属性值（name和age叫做属性名（又称键，英文名key），而 '江外琉璃'/9叫做属性值（又称值，英文名value），所以对象又叫做键值对集合或者key/value集合）</span></span><br><span class="line"><span class="keyword">var</span> obj2 = &#123;&#125;; <span class="comment">// =&gt; 变量obj2表示空对象；</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; 数组</span></span><br><span class="line"><span class="keyword">var</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]; <span class="comment">// =&gt; 数组对象：用中括号包裹起来，包含0到多项内容，每一项之间用逗号(英文逗号)分隔。</span></span><br><span class="line"><span class="keyword">var</span> ary2 = []; <span class="comment">// =&gt; 变量ary2表示一个空数组</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; 正则：用来匹配字符串的规则</span></span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^abc$/</span>;  <span class="comment">// =&gt; 两个斜线中间的叫做元字符</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; 函数：需要多次重复使用的代码或者有特定功能的代码可以封装成一个函数；</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;<span class="comment">// =&gt; 函数体&#125;</span></span><br><span class="line"><span class="comment">// function 叫做关键字，用于声明函数变量</span></span><br><span class="line"><span class="comment">// fn 叫做函数名，函数名也需要满足变量声明的条件（本质上函数名也是变量名，只不过这个变量名代表的是一个函数数据类型的值）</span></span><br><span class="line"><span class="comment">// () 【声明函数时】fn后面的这个小括号表示的是形参入口</span></span><br><span class="line"><span class="comment">// &#123;&#125; 写在函数中的&#123;&#125;表示函数体，这里面写需要执行的代码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ....</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、JS代码运行及常用输出方式"><a href="#七、JS代码运行及常用输出方式" class="headerlink" title="七、JS代码运行及常用输出方式"></a>七、JS代码运行及常用输出方式</h2><ul>
+<li>alert方法(函数): 在浏览器中通过弹窗的方式输出（浏览器提示框）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">12</span>;</span><br><span class="line">alert(num); <span class="comment">// alert() 读作：alert方法执行【写在方法名后面的“()”读作 “执行” ，就是把alert函数里面的代码执行一遍】。把想输出的东西放在小括号里；</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> course = <span class="string">'江外琉璃js基础是怎样炼成的'</span>;</span><br><span class="line">alert(course);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>console.log方法：在浏览器控制台输出日志。console是浏览器的开发者工具的一个页卡（在浏览器中按下F12按键【部分电脑需要按下Fn和F12】）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// console.log() 读作console.log方法执行，把想要输出的变量或者内容放在小括号里。</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">'江外琉璃-马宾'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(name);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>innerHTML/innerText属性； 修改元素中的HTML或者文本；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> box = <span class="built_in">document</span>.getElementById(<span class="string">'box'</span>); <span class="comment">// =&gt; 在document（整个HTML文档中）下通查找id为box的元素。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 语法：元素对象.innerHTML/innerText = '想要显示的内容'; 【想要显示的内容必须是一个字符串类型的值】</span></span><br><span class="line">box.innerHTML = <span class="string">'&lt;h1&gt;江外琉璃js基础是怎样炼成的第一周&lt;/h1&gt;'</span>;</span><br><span class="line">box.innerText = <span class="string">'&lt;h1&gt;江外琉璃js基础是怎样炼成的第一周&lt;/h1&gt;'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// box.innerHTML/box.innerText = '字符串' 读作：将box的innerHTML或innerText修改为 '字符串'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; 我们发现同样是包在字符串里面的内容，通过innerHTML的方式浏览器会将&lt;h1&gt;识别成HTML内容；但是innerText不能识别，而是你字符串里面写什么，页面就输出什么；</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="八、有效数字检测、数据类型转换、数据类型检测"><a href="#八、有效数字检测、数据类型转换、数据类型检测" class="headerlink" title="八、有效数字检测、数据类型转换、数据类型检测"></a>八、有效数字检测、数据类型转换、数据类型检测</h2><h3 id="有效数字检测"><a href="#有效数字检测" class="headerlink" title="有效数字检测"></a>有效数字检测</h3><ol>
+<li>有效数字检测 isNaN() 方法；非有效数字：NaN(not a number)</li>
+</ol>
+<p>isNaN(需要检测的值)：检测当前是否是一个有效数字，如果是一个有效数字，isNaN执行后就会得到一个false，否则isNaN执行后得到一个true；（我们得到的这个false或者true称为isNaN函数的返回值【就“结果”的意思】）<br>语法：isNaN(需要检测的值)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> result1 = <span class="built_in">isNaN</span>(<span class="number">12</span>); <span class="comment">// -&gt; 检测num变量存储的值是否为非有效数字，12是数字，所以isNaN执行后得到一个false；</span></span><br><span class="line"><span class="keyword">var</span> result2 = <span class="built_in">isNaN</span>(<span class="string">'13'</span>); <span class="comment">// -&gt; false</span></span><br><span class="line"><span class="keyword">var</span> result3 = <span class="built_in">isNaN</span>(<span class="string">'江外'</span>); <span class="comment">// -&gt; true 因为汉字不是数字</span></span><br><span class="line"><span class="keyword">var</span> result4 = <span class="built_in">isNaN</span>(<span class="literal">false</span>); <span class="comment">// -&gt; false</span></span><br><span class="line"><span class="keyword">var</span> result5 = <span class="built_in">isNaN</span>(<span class="literal">null</span>); <span class="comment">// -&gt; false;</span></span><br><span class="line"><span class="keyword">var</span> result6 = <span class="built_in">isNaN</span>(<span class="literal">undefined</span>); <span class="comment">// -&gt; true</span></span><br><span class="line"><span class="keyword">var</span> result7 = <span class="built_in">isNaN</span>(&#123;<span class="attr">name</span>: <span class="string">'江外琉璃'</span>&#125;); <span class="comment">// -&gt; true</span></span><br><span class="line"><span class="keyword">var</span> result8 = <span class="built_in">isNaN</span>([<span class="number">12</span>, <span class="number">23</span>]); <span class="comment">// -&gt; true</span></span><br><span class="line"><span class="keyword">var</span> result9 = <span class="built_in">isNaN</span>([<span class="number">12</span>]); <span class="comment">// -&gt; false</span></span><br><span class="line"><span class="keyword">var</span> result10 = <span class="built_in">isNaN</span>(<span class="regexp">/^$/</span>); <span class="comment">// -&gt; true</span></span><br><span class="line"><span class="keyword">var</span> result11 = <span class="built_in">isNaN</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;); <span class="comment">// -&gt; true</span></span><br></pre></td></tr></table></figure>
+
+<p>思考：为啥小括号里洗的不是数字也能得到结果？这是isNaN的检测机制：</p>
+<p>1、首先验证当前要检测的值是否为数字类型的，如果不是，浏览器会默认的把值转换为数字类型</p>
+<pre><code>把非数字类型的值转换为数字：
+- 其他基本类型转换为数字：内部隐式调用Number方法
+
+Number(需要转换的值); 是强制转换
+[字符串转数字]：如果字符串里面都是数字，那么返回这个数字，如果有非数字的因素会返回NaN.
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="string">'13'</span>) <span class="comment">// -&gt; 13</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="string">'13px'</span>) <span class="comment">// NaN 字符串中px不是数字</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="string">'13.5'</span>) <span class="comment">// 13.5 可以识别小数点</span></span><br></pre></td></tr></table></figure>
+
+[布尔值转数字]
+Number(true); // -&gt; 1
+Number(false); // -&gt; 0
+
+[null、undefined转数字]
+Number(null); // 0
+Number(undefined); // NaN
+
+- 引用数据类型转数字：先调用引用数据类型值的toString方法将引用数据类型转化为字符串，然后再将字符串转换为数字。
+
+[对象转数字]
+Number({}) // NaN; 其内部机制：({}).toString() -&gt; &apos;[object Object]&apos; -&gt; Number(&apos;[object Object]&apos;) -&gt; NaN
+
+[数组转数字]
+Number([12, 23]) // NaN; 内部机制：[12, 23].toString() -&gt; &apos;12, 23&apos; -&gt; Number(&apos;12, 23&apos;) -&gt; NaN
+
+[正则]
+Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos; -&gt; Number(&apos;/^\d$/&apos;) -&gt; NaN</code></pre><p>2、当前检测的值已经是数字类型，是有效数字就得到一个false，不是就会得到一个true；（在数字类型中只有NaN不是有效数字，其余的都是有效数字）<br>    Number(1); // false<br>    Number(NaN); // true</p>
+<p>3、NaN的比较</p>
+<p>NaN == NaN // 返回false；（ == 是比较运算符，一个等号是赋值；）<br>这是因为啥呢？因为NaN只是表示非数字，字符串 ‘a’ 是非数字，’张三’也是非数字。但是 a 和 张三不相等。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">Number</span>(num) == <span class="literal">NaN</span>) &#123;</span><br><span class="line">    <span class="comment">// if 是js中用来做判断的语言结构，小括号里表示条件，如果条件成立就执行花括号里面的代码</span></span><br><span class="line">    alert(<span class="string">'江外10年，琉璃镶内江'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上面花括号里面的代码永远不会执行，因为Number方法得到的结果只有两种情况，要么是数字，要么是NaN。如果得到一个数字，数字和NaN不相等，如果是NaN，NaN和NaN也不相等。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据类型转换（parseInt、parseFloat方法）"><a href="#数据类型转换（parseInt、parseFloat方法）" class="headerlink" title="数据类型转换（parseInt、parseFloat方法）"></a>数据类型转换（parseInt、parseFloat方法）</h3><p>作用和Number方法相似，都是把非数字类型值转换为数字，区别在于Number方法是强制转换，即要求被转字符串中必须都是数字，如果不满足这一条件直接得到NaN，而parseInt和parseFloat则是非强制转换。</p>
+<ul>
+<li>parseInt：把一个字符串中的整数解析出来</li>
+<li>parseFloat：把一个字符串中整数和小数包含小数点都解析出来</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">'13.5'</span>) <span class="comment">// 13</span></span><br><span class="line"><span class="built_in">parseFloat</span>(<span class="string">'13.5'</span>) <span class="comment">// 13.5</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">'width: 13.5px'</span>); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">parseFloat</span>(<span class="string">'width: 13.5px'</span>); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：无论是parseInt还是parseFloat都是从字符串的最左边开始查找有效数字，直到遇到第一个非有效数字字符就停止查找，如果第一个就不是有效数字，那么直接回返回NaN，并且停止查找。</p>
+<h3 id="数据类型检测："><a href="#数据类型检测：" class="headerlink" title="数据类型检测："></a>数据类型检测：</h3><p>检测数据类型一共有四种方式：</p>
+<ul>
+<li>typeof</li>
+<li>instanceof</li>
+<li>constructor</li>
+<li>Object.prototype.toString.call()</li>
+</ul>
+<p><code>我们这里先讲typeof 运算符</code><br>语法：<code>typeof 被检测的值</code>返回被检测值的数据类型；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="number">1</span>); <span class="comment">// number</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="string">'zhufengpeixun'</span>); <span class="comment">// string</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">true</span>); <span class="comment">// boolean</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">null</span>); <span class="comment">// object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">undefined</span>); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> &#123;&#125;); <span class="comment">// object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> []); <span class="comment">// object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> /^<span class="regexp">/); /</span><span class="regexp">/ object</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 思考？typeof 运算符的返回值是个什么数据类型？</span></span><br><span class="line"><span class="regexp">var result = typeof 1;</span></span><br><span class="line"><span class="regexp">console.log(typeof result); /</span><span class="regexp">/ string</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 面试题</span></span><br><span class="line"><span class="regexp">console.log(typeof typeof 1); /</span><span class="regexp">/ string</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>typeof 是有局限性的，检测基本数据类型时，typeof检测null会返回object，因为null是空对象指针。同时，typeof检测引用数据类型时，不能具体区分是哪一种对象数据类型（对象、数组、正则等）只会统一返回object。</strong></p>
+<div style="text-align: right">【发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/19/JavaScript基础教程1/" data-id="ck471o09q0000o4pp1url56mb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-vueRender函数（3）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/12/07/vueRender函数（3）/" class="article-date">
@@ -115,7 +331,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/07/vueRender函数（3）/" data-id="ck45lapqs0025xsppsl8djf6h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/07/vueRender函数（3）/" data-id="ck471o0ce0023o4ppmn8yf8an" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -207,7 +423,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/24/vueRender函数（2）/" data-id="ck45lapqt0027xsppmh5f0v3a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/24/vueRender函数（2）/" data-id="ck471o0cg0025o4ppt9zztbt8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -313,7 +529,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/02/vueRender函数（1）/" data-id="ck45lapqn0020xsppxkjz73uk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/02/vueRender函数（1）/" data-id="ck471o0cb0020o4pp3tz35me1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -400,7 +616,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck45lapqe001qxspp1kiekjzv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/15/node-js拼接sql查询语句神器/" data-id="ck471o0bz001oo4ppr6b2rl5m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -532,7 +748,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/12/flex布局/" data-id="ck45lapq8001kxsppl66rg55q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/12/flex布局/" data-id="ck471o0bt001io4pp7vcor92w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li></ul>
@@ -859,7 +1075,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck45lapqg001sxsppzpo70g38" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/24/prettierOptions/" data-id="ck471o0c1001qo4pp5achhk76" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1106,7 +1322,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck45lapq5001ixsppoi0ev8s1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/01/es6-3-StringExt/" data-id="ck471o0br001go4pp6m5g07tf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -1346,7 +1562,7 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck45lapq4001gxspppkupoyou" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/20/es6-2-destructing/" data-id="ck471o0bp001eo4ppk6tlkhno" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
@@ -1488,136 +1704,10 @@ console.log(ar2);//[0, 0]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck45lapq1001dxspp36fpv7q4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/12/es6-1-let-cosnt/" data-id="ck471o0bm001bo4pplbn568hu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-vue2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/04/05/vue2/" class="article-date">
-  <time datetime="2017-04-05T14:20:43.000Z" itemprop="datePublished">2017-04-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/05/vue2/">vue从入门到掉进坑里(二)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上篇文章写了一点vue基础的例子，顺便给例子加了一些注释，如果你在看我的文章，代码中的注释请仔细阅读，这些数据才是真正的精华，是个点睛的代码。大家肯定很意外我为什么撕那些写文章分享的人，我不是撕他们的文章。爱分享固然是好事，我还撕人家，显得我不地道。各位读者，你有没有想过，专家会读我们写的博客吗？大牛需要读我们这个档次的博文吗？我们的博文，说好了是一篇文章，读者大多和我们一样的初学者。写给初学者的文章，将自己的逼格定义甚高，初学者读不懂，这篇文章的意义何在？所以我撕他们，反对那些因自己水平不高，反而为了装的有水平而写的晦涩难懂的人。说着说着又撕上了。。。。<br></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这篇文章本来打算讲一个VUE-CLI例子，但是大家可以先看看这篇博客，强烈建议按照博客代码敲上一遍。这个例子图文并茂，是我在学vue-cli的时候见到的最好的教程。上链接  <a href="http://www.jianshu.com/p/1626b8643676" target="_blank" rel="noopener">史上最全入坑教程</a>。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这篇文章说说组件开发，我理解的组件开发，我们习惯一开始就先钻进代码里，迫不及待的看代码。大神自是心领神会，对于一些事情根本不需要说出来，这些大神没有说出来的，正是阻碍我们前进的障碍。所谓组件开发，是一种“拆”的思想或者说是“拼”，是把一个页面，按照某种规则，一般按照功能、复用性，UI样式等规则拆分成若干部分，最不理想的拆还可以掐头去尾留中间。。。。这份工作首先是切图，按照一个完整的网页，把图切好，然后拆成一块一块的，然后由不同的人开发，这就是最通俗的讲法。和拼图或者积木一类的很像。但是拆法是仁者见仁智者见智的时候，从这里能看出水平。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我第一次接触VUE-CLI这个脚手架的时候，眼前一亮，但是同时初次接触vue，这么多 *.vue的文件直接让我懵逼了。现在我走过来了，今天就可以说说这些玩意儿了。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一个让我困惑的问题是父子组件的问题；每一个.vue的文件都是一个组件，在组件中被import的相对于该.vue而言就是子组件（后面须注册）。在学习VUE初期，我对于父子组件一直感到很困惑，因为在VUE中，父子组件和Angular中的父子组件完全不同，Angular的作用域是和DOM平齐的，而父子组件也会因为DOM嵌套关系而天然形成，而VUE组件的父子关系与嵌套无关，而是与注册关系决定的，习惯了这一思路后，我着实是在这里困惑了好久，如果眼前的你也是这样的话，那就赶紧出来吧。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面代码是 <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">point.vue</span> 组件的代码（部分），其中point.vue相对于common-header和mask-layer是父组件，而common-header和mask-layer是子组件。</p>
-<pre style="background: #00b38a;">
-<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
-    &lt;template lang="html"&gt;
-        &lt;common-header :isNotLogin="isNotLogin" :theActive="active"&gt;&lt;/common-header&gt;
-        &lt;mask-layer &gt;&lt;/mask-layer&gt;
-      &lt;/div&gt;
-    &lt;/template&gt;
-</code>
-<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
-    &lt;script&gt;
-      import CommonHeader from '../common/CommonHeader' //导入子组件
-      import MaskLayer from '../common/MaskLayer' //导入子组件
-      export default {
-        name: 'pointOperate',
-        data () {
-          return {
-            newMember: {
-              mName: '',
-              mNum: '',
-              point: ''
-            }
-        },
-        methods: {},
-        components: {
-          CommonHeader, //注册子组件
-          MaskLayer //注册子组件
-        }
-      }
-    &lt;/script&gt;
-</code>
-</pre>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另一个困惑我很久的问题是如何在VUE-CLI中引入自己的静态资源文件，如bootstrap.min.css。写完这些基础内容后，我将分享一个完整的例子，而且，这个例子已经投入使用了（这个积分管理系统是给我女友的奶茶店用的积分管理），现在不多说，继续写基础内容。引入VUE-CLI后，脚手架将自动为我们打包应用，并将打包后的文件自动注入到index.html中，正由于这一操作，如果我们不按照正确的操作方式，我们自己引入的静态文件将失效。正确的做法是：在index.html同级新建一个static文件夹，将我们自己的静态文件放入其中，在index.html中使用相对路径引入即可。下面是<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">index.html</span>的代码：</p>
-<pre style="background: #00b38a;">
-<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
-在head标签中引入index.css和bootstrap.min.css等静态文件
-    &lt;!DOCTYPE html&gt;
-    &lt;html&gt;
-      &lt;head&gt;
-        &lt;meta charset="utf-8"&gt;
-        &lt;title&gt;admin&lt;/title&gt;
-        &lt;meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"&gt;
-        &lt;title&gt;index首页&lt;/title&gt;
-        &lt;link rel="stylesheet" href="./static/bootstrap/dist/css/bootstrap.min.css"&gt;
-        &lt;link rel="shotcut icon" href="./static/favicon.ico"&gt;
-        &lt;link rel="stylesheet" href="./static/index.css"&gt;
-      &lt;/head&gt;
-      &lt;body&gt;
-        &lt;div id="app"&gt;&lt;/div&gt;
-        &lt;!-- built files will be auto injected --&gt;
-      &lt;/body&gt;
-    &lt;/html&gt;
-</code>
-</pre>
-
-<pre style="background: #00b38a;">
-<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
-目录结构
---|project
-    --|build/
-    --|config/
-    --|dist/
-    --|node_modules/
-    --|src/
-    --|static/
-        --|bootstrap/ ==>bootstrap.min.css所在文件夹
-            --|dis/
-            --|fonts/
-            --|...
-        --|index.css
-    --|.babelrc
-    --|.editorconfig
-    --|.gitignore
-    --|.postcsssrc.js
-    --|index.html
-    --|package.json
-    --|README.md
-</code>
-</pre>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第三个让我困惑的问题是关于数据驱动。在写这个系统的时候，我需要一个bootstrap的modal框，这个框用于确认、提示用，在bootstrap中用jquery操作点击事件来实现modal框的显隐，在vue虽然也可以操作dom，但是我最终选择了放弃这一做法，如果这样做了，那还算用框架么？我困惑了很久，其实现在想来特别简单，只需要设置modal框的v-show即可。想通了自然很简单，当时也是初学vue，根本不知道从何入手，初学vue容易只见树木不见森林，我们纠结语法和API，忽略了指导性的核心思想——数据驱动。我们想要实现某个功能时，我们思考的方向是改变某个（些）值（数据）来达到。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck45lapqp0022xspp5p8efkx6" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
 
     </footer>
   </div>
@@ -1676,6 +1766,10 @@ console.log(ar2);//[0, 0]
       <ul>
         
           <li>
+            <a href="/2019/12/14/webpack掠影-7/">webpack掠影-7</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/14/webpack掠影-6/">webpack掠影-6</a>
           </li>
         
@@ -1689,10 +1783,6 @@ console.log(ar2);//[0, 0]
         
           <li>
             <a href="/2019/12/08/webpack掠影-3/">webpack掠影-3</a>
-          </li>
-        
-          <li>
-            <a href="/2019/12/08/webpack掠影-2/">webpack掠影-2</a>
           </li>
         
       </ul>

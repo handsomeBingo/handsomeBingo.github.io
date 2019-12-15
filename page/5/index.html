@@ -67,6 +67,132 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-vue2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/05/vue2/" class="article-date">
+  <time datetime="2017-04-05T14:20:43.000Z" itemprop="datePublished">2017-04-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/05/vue2/">vue从入门到掉进坑里(二)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上篇文章写了一点vue基础的例子，顺便给例子加了一些注释，如果你在看我的文章，代码中的注释请仔细阅读，这些数据才是真正的精华，是个点睛的代码。大家肯定很意外我为什么撕那些写文章分享的人，我不是撕他们的文章。爱分享固然是好事，我还撕人家，显得我不地道。各位读者，你有没有想过，专家会读我们写的博客吗？大牛需要读我们这个档次的博文吗？我们的博文，说好了是一篇文章，读者大多和我们一样的初学者。写给初学者的文章，将自己的逼格定义甚高，初学者读不懂，这篇文章的意义何在？所以我撕他们，反对那些因自己水平不高，反而为了装的有水平而写的晦涩难懂的人。说着说着又撕上了。。。。<br></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这篇文章本来打算讲一个VUE-CLI例子，但是大家可以先看看这篇博客，强烈建议按照博客代码敲上一遍。这个例子图文并茂，是我在学vue-cli的时候见到的最好的教程。上链接  <a href="http://www.jianshu.com/p/1626b8643676" target="_blank" rel="noopener">史上最全入坑教程</a>。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这篇文章说说组件开发，我理解的组件开发，我们习惯一开始就先钻进代码里，迫不及待的看代码。大神自是心领神会，对于一些事情根本不需要说出来，这些大神没有说出来的，正是阻碍我们前进的障碍。所谓组件开发，是一种“拆”的思想或者说是“拼”，是把一个页面，按照某种规则，一般按照功能、复用性，UI样式等规则拆分成若干部分，最不理想的拆还可以掐头去尾留中间。。。。这份工作首先是切图，按照一个完整的网页，把图切好，然后拆成一块一块的，然后由不同的人开发，这就是最通俗的讲法。和拼图或者积木一类的很像。但是拆法是仁者见仁智者见智的时候，从这里能看出水平。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我第一次接触VUE-CLI这个脚手架的时候，眼前一亮，但是同时初次接触vue，这么多 *.vue的文件直接让我懵逼了。现在我走过来了，今天就可以说说这些玩意儿了。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一个让我困惑的问题是父子组件的问题；每一个.vue的文件都是一个组件，在组件中被import的相对于该.vue而言就是子组件（后面须注册）。在学习VUE初期，我对于父子组件一直感到很困惑，因为在VUE中，父子组件和Angular中的父子组件完全不同，Angular的作用域是和DOM平齐的，而父子组件也会因为DOM嵌套关系而天然形成，而VUE组件的父子关系与嵌套无关，而是与注册关系决定的，习惯了这一思路后，我着实是在这里困惑了好久，如果眼前的你也是这样的话，那就赶紧出来吧。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面代码是 <span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">point.vue</span> 组件的代码（部分），其中point.vue相对于common-header和mask-layer是父组件，而common-header和mask-layer是子组件。</p>
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+    &lt;template lang="html"&gt;
+        &lt;common-header :isNotLogin="isNotLogin" :theActive="active"&gt;&lt;/common-header&gt;
+        &lt;mask-layer &gt;&lt;/mask-layer&gt;
+      &lt;/div&gt;
+    &lt;/template&gt;
+</code>
+<code lang="javascript" style="color: yellow;font-size: 12px;background: #00b38a;">
+    &lt;script&gt;
+      import CommonHeader from '../common/CommonHeader' //导入子组件
+      import MaskLayer from '../common/MaskLayer' //导入子组件
+      export default {
+        name: 'pointOperate',
+        data () {
+          return {
+            newMember: {
+              mName: '',
+              mNum: '',
+              point: ''
+            }
+        },
+        methods: {},
+        components: {
+          CommonHeader, //注册子组件
+          MaskLayer //注册子组件
+        }
+      }
+    &lt;/script&gt;
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另一个困惑我很久的问题是如何在VUE-CLI中引入自己的静态资源文件，如bootstrap.min.css。写完这些基础内容后，我将分享一个完整的例子，而且，这个例子已经投入使用了（这个积分管理系统是给我女友的奶茶店用的积分管理），现在不多说，继续写基础内容。引入VUE-CLI后，脚手架将自动为我们打包应用，并将打包后的文件自动注入到index.html中，正由于这一操作，如果我们不按照正确的操作方式，我们自己引入的静态文件将失效。正确的做法是：在index.html同级新建一个static文件夹，将我们自己的静态文件放入其中，在index.html中使用相对路径引入即可。下面是<span style="color: yellow;background: #00b38a;padding:1px 3px;margin:0 5px;border-radius: 6px">index.html</span>的代码：</p>
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+在head标签中引入index.css和bootstrap.min.css等静态文件
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;admin&lt;/title&gt;
+        &lt;meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"&gt;
+        &lt;title&gt;index首页&lt;/title&gt;
+        &lt;link rel="stylesheet" href="./static/bootstrap/dist/css/bootstrap.min.css"&gt;
+        &lt;link rel="shotcut icon" href="./static/favicon.ico"&gt;
+        &lt;link rel="stylesheet" href="./static/index.css"&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;div id="app"&gt;&lt;/div&gt;
+        &lt;!-- built files will be auto injected --&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+</code>
+</pre>
+
+<pre style="background: #00b38a;">
+<code lang="html" style="color: yellow;font-size: 12px;background: #00b38a;">
+目录结构
+--|project
+    --|build/
+    --|config/
+    --|dist/
+    --|node_modules/
+    --|src/
+    --|static/
+        --|bootstrap/ ==>bootstrap.min.css所在文件夹
+            --|dis/
+            --|fonts/
+            --|...
+        --|index.css
+    --|.babelrc
+    --|.editorconfig
+    --|.gitignore
+    --|.postcsssrc.js
+    --|index.html
+    --|package.json
+    --|README.md
+</code>
+</pre>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第三个让我困惑的问题是关于数据驱动。在写这个系统的时候，我需要一个bootstrap的modal框，这个框用于确认、提示用，在bootstrap中用jquery操作点击事件来实现modal框的显隐，在vue虽然也可以操作dom，但是我最终选择了放弃这一做法，如果这样做了，那还算用框架么？我困惑了很久，其实现在想来特别简单，只需要设置modal框的v-show即可。想通了自然很简单，当时也是初学vue，根本不知道从何入手，初学vue容易只见树木不见森林，我们纠结语法和API，忽略了指导性的核心思想——数据驱动。我们想要实现某个功能时，我们思考的方向是改变某个（些）值（数据）来达到。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/05/vue2/" data-id="ck471o0c6001vo4ppt4rsi7rf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-vue1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/14/vue1/" class="article-date">
@@ -118,7 +244,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck45lapql001xxspppe6dg0op" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/14/vue1/" data-id="ck471o0c9001yo4pp12ta3o2f" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
@@ -304,7 +430,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/14/requirejs/" data-id="ck45lapqi001vxsppzri837pl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/14/requirejs/" data-id="ck471o0c4001to4ppe8c4i6ym" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -508,7 +634,7 @@ Mixins还有一种形式叫做ParametricMixins（混入参数），Less也支持
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/15/LESSS入门教程/" data-id="ck45lappy001bxspppwbbfdky" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/15/LESSS入门教程/" data-id="ck471o0bj0019o4pp5a1v7294" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li></ul>
@@ -620,7 +746,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/23/gulp进阶（gulp中的插件的使用）/" data-id="ck45lapqc001oxspp8kp200pe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/23/gulp进阶（gulp中的插件的使用）/" data-id="ck471o0bv001lo4ppn9tb5lsw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -683,7 +809,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/22/gulp入门/" data-id="ck45lapqa001nxsppxixgkkjf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/22/gulp入门/" data-id="ck471o0bx001mo4pp4dmfbhgg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -732,7 +858,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/22/浅析js中常用的四种检测数据类型的方法/" data-id="ck45lapr9002mxspp0wum6o0u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/22/浅析js中常用的四种检测数据类型的方法/" data-id="ck471o0cv002ko4ppycyh9k5r" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -805,7 +931,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/04/浅析js中的面向对象（三）/" data-id="ck45lapre002rxspph3z6sk4a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/04/浅析js中的面向对象（三）/" data-id="ck471o0dt0031o4ppb939p15k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -872,7 +998,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/25/浅析js中的面向对象（二）/" data-id="ck45lapri002uxspppq0pksij" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/09/25/浅析js中的面向对象（二）/" data-id="ck471o0dy0033o4ppeg1i1vqe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -945,7 +1071,7 @@ gulp.task(&apos;server&apos;,function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/10/浅析js中的面向对象/" data-id="ck45laprc002pxsppopk82y6j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/09/10/浅析js中的面向对象/" data-id="ck471o0dp0030o4ppx4rmaaad" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1007,6 +1133,10 @@ gulp.task(&apos;server&apos;,function(){
       <ul>
         
           <li>
+            <a href="/2019/12/14/webpack掠影-7/">webpack掠影-7</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/14/webpack掠影-6/">webpack掠影-6</a>
           </li>
         
@@ -1020,10 +1150,6 @@ gulp.task(&apos;server&apos;,function(){
         
           <li>
             <a href="/2019/12/08/webpack掠影-3/">webpack掠影-3</a>
-          </li>
-        
-          <li>
-            <a href="/2019/12/08/webpack掠影-2/">webpack掠影-2</a>
           </li>
         
       </ul>

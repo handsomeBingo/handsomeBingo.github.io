@@ -67,6 +67,102 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-webpack掠影-7" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/14/webpack掠影-7/" class="article-date">
+  <time datetime="2019-12-14T14:33:09.000Z" itemprop="datePublished">2019-12-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/14/webpack掠影-7/">webpack掠影-7</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://github.com/handsomeBingo/exercise-webpack" title="webpack 掠影" target="_blank" rel="noopener">webpack 掠影-代码</a></p>
+<p>前面的 webpack 掠影系列已经大致讲述了 webpack 的一些配置，这些配置可以应付大部分的工作内容，今天这一篇小札记作为 webpack 掠影的最后一篇，这一周多以来我一直在努力的整理，希望能帮到同样在搞 webpack 的你，虽然看小文章上瘾，但是不要贪多啊，最好的还是官方文档有营养，但是无论如希望这写小札记能预约你的学习路途吧；</p>
+<p>加油，写完这一篇，下一个系列我准备写一些 HTTP 的入门内容，也当督促自己学习了，加油！加油！</p>
+<h2 id="1-模块懒加载"><a href="#1-模块懒加载" class="headerlink" title="1. 模块懒加载"></a>1. 模块懒加载</h2><p>在日常的开发中，很多的模块并不需要立刻就加载，所以这些内容可以作为优化的内容在需要的再去加载，这就是资源的懒加载；webpack 同样支持这一常用的功能，webpack 的懒加载需要使用 ES6 的模块动态加载方法 import() 方法。被懒加载的模块被单独抽离成 js 文件，在需要加载的时候通过 AJAX 向服务器发起请求；import() 方法返回 Promise 实例对象；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'button'</span>);</span><br><span class="line"></span><br><span class="line">btn.onclick = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> sp = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">'./test-hmr'</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(sp.p)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上面的例子，在 btn 的 onclick 时才会触发加载 test-hmr.js 模块，我们使用了一个 async 函数来处理，如果你喜欢使用 .then 的方式来处理这，只需要 import().then() 就可以；<br>一般开发时，我们使用 import() 来异步加载组件，包括 vue 的异步组件或者 react 都支持这一语法，用以减小代码的体积，提升性能；</p>
+<h2 id="2-dllPlugin-动态链接库"><a href="#2-dllPlugin-动态链接库" class="headerlink" title="2. dllPlugin 动态链接库"></a>2. dllPlugin 动态链接库</h2><p>dll（Dynamic-linked-library）动态链接库，由 Microsoft 引入的概念。它提供了一种通过对 bundle 的拆分来实现提升构建速度的方法；这个插件一般配置 dllReferencePlugin 一同使用；</p>
+<p>举一个例子，我们项目开发时，我们使用 react 技术栈，一般情况下，我们使用某一个版本的 react 确定后短时间内不需要更改，但是像这种比较大的库，我们每次打包的时候都会被重新打包，这就导致构建速度十分缓慢，所以我们可以吧 react 和 react-dom 单独抽离出来制成动态链接库，这样一来我们开发业务代码的时候再次打包就不会再打包 react 和 react-dom ，打包速度将会得到明显的提升。</p>
+<h3 id="2-1-首先配置一个打包文件，把像-react、react-dom-这种第三方的库单独打包出来；"><a href="#2-1-首先配置一个打包文件，把像-react、react-dom-这种第三方的库单独打包出来；" class="headerlink" title="2.1 首先配置一个打包文件，把像 react、react-dom 这种第三方的库单独打包出来；"></a>2.1 首先配置一个打包文件，把像 react、react-dom 这种第三方的库单独打包出来；</h3><ul>
+<li>webpack.react.config.js</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">let</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  mode: <span class="string">'production'</span>,</span><br><span class="line">  entry: &#123;</span><br><span class="line">    react: [<span class="string">'react'</span>, <span class="string">'react-dom'</span>]</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'__dll_xx.js'</span>, <span class="comment">// 产生的 js 文件名</span></span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'manifest'</span>),</span><br><span class="line">    library: <span class="string">'__dll_xx'</span>, <span class="comment">// 和下面的 libraryTarget 配合使用；把文件打成一个库，这个字段的值将会成为一个变量，这个变量代表的是上面 entry 的导出内容；可以修改，同样支持 [name] 的方式</span></span><br><span class="line">    libraryTarget: <span class="string">'var'</span> <span class="comment">// 和上面的 library 配合生效；表示用什么方式把 entry 导出的内容赋值给变量，默认值是 var</span></span><br><span class="line">    <span class="comment">// 所以 library 和 libraryTarget 设置的结论就是: var __dll_xx = react+react-dom 导出的内容;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.DllPlugin(&#123;</span><br><span class="line">      name: <span class="string">'__dll_xx'</span>,</span><br><span class="line">      path: path.resolve(__dirname, <span class="string">'manifest'</span>, <span class="string">'manifest.json'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-执行-webpack-命令打包输出-manifest-文件"><a href="#2-2-执行-webpack-命令打包输出-manifest-文件" class="headerlink" title="2.2 执行 webpack 命令打包输出 manifest 文件"></a>2.2 执行 webpack 命令打包输出 manifest 文件</h3><ul>
+<li>在 package.json 中加入命令</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">    "dev": "webpack-dev-server",</span><br><span class="line">    "build": "webpack",</span><br><span class="line">+    "build-react": "webpack --config ./webpack.react.config.js"</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>执行</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build-react</span><br></pre></td></tr></table></figure>
+
+<p>执行命令后，我们会发现在在 dist 目录下生成了两个文件，__dll_xx.js 和 manifest.json。这个 js 就是一个由我们刚刚配置了 DllPlugin 打包输出的库，而这个 manifest.json 就是一个映射表文件；</p>
+<ul>
+<li>生成的文件如图：</li>
+</ul>
+<p>js 文件的名字就是我们配置的 __dll_xx.js<br><img src="http://47.105.181.88/cdn_assets/webpack-img/wbp7-dll1.png" alt="wbp-loader-css"></p>
+<ul>
+<li>__dll_xx.js 代码中的第一个变量如图</li>
+</ul>
+<p>__ var __dll_xx = func…. 就是：libraryTarget 和 library 指定的结果 __</p>
+<p><img src="http://47.105.181.88/cdn_assets/webpack-img/wbp7-dll-library.png" alt="wbp-loader-css"></p>
+<h3 id="2-3-在模板中引入-DLL-库"><a href="#2-3-在模板中引入-DLL-库" class="headerlink" title="2.3 在模板中引入 DLL 库"></a>2.3 在模板中引入 DLL 库</h3><p>我们在模板 other.html 中引入，DLL 库的 js 文件；</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">content</span>=<span class="string">"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root-other-page"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>this is another page <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">+ <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/__dll_xx.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-DllReferencePlugin"><a href="#2-4-DllReferencePlugin" class="headerlink" title="2.4 DllReferencePlugin"></a>2.4 DllReferencePlugin</h3><p>上面我们已经成功创建了 DLL 库，接下来我们需要在我们的业务代码中使用我们的 DLL 库；需要在 webpack 的 plugins 中增加一条插件；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ....</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.DllReferencePlugin(&#123;</span><br><span class="line">      manifest: path.resolve(__dirname, <span class="string">'dist'</span>, <span class="string">'manifest.json'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-happypack-多线程打包"><a href="#3-happypack-多线程打包" class="headerlink" title="3. happypack 多线程打包"></a>3. happypack 多线程打包</h2><p>当项目很大的时候，打包速度很可能会很慢，webpack 支持多线程打包。这个功能依赖于 happypack</p>
+<ul>
+<li>安装 happypack</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add happypack</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>导入 happypack</p>
+</li>
+<li><p>修改配置文件</p>
+<ul>
+<li>修改 loader</li>
+<li>修改 plugins</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> HTMLWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> MiniCSSExtractPlugin = <span class="built_in">require</span>(<span class="string">'mini-css-extract-plugin'</span>); <span class="comment">// 抽离 css文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> OptimizeCSSAssetsWebpackPlugin = <span class="built_in">require</span>(<span class="string">'optimize-css-assets-webpack-plugin'</span>); <span class="comment">// 压缩合并 css 文件</span></span><br><span class="line"><span class="keyword">const</span> UglifyjsWebpackPlugin = <span class="built_in">require</span>(<span class="string">'uglifyjs-webpack-plugin'</span>); <span class="comment">// 压缩混淆 js 文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> webpack= <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; CleanWebpackPlugin &#125; = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> CopyWebpackPlugin = <span class="built_in">require</span>(<span class="string">'copy-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Happypack = <span class="built_in">require</span>(<span class="string">'happypack'</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// entry: './src/index.js',</span></span><br><span class="line">  <span class="comment">// mode: 'development',</span></span><br><span class="line">  mode: <span class="string">'production'</span>,</span><br><span class="line">  devtool: <span class="string">'eval-source-map'</span>,</span><br><span class="line">  entry: &#123;</span><br><span class="line">    home: <span class="string">'./src/index.js'</span>,</span><br><span class="line">    other: <span class="string">'./src/other.js'</span>,</span><br><span class="line">    x: <span class="string">'./src/x.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),</span><br><span class="line">    filename: <span class="string">'[name].[hash].js'</span> <span class="comment">// 配合多页面应用 [name] 表示文件名，  [hash:5] 生成文件名后跟随 5 位 hash 戳记</span></span><br><span class="line">  &#125;,</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    <span class="comment">// 开发服务器的配置</span></span><br><span class="line">    hot: <span class="literal">true</span>, <span class="comment">// 启用 HMR</span></span><br><span class="line">    contentBase: <span class="string">'./dist'</span>, <span class="comment">// 静态资源文件目录</span></span><br><span class="line">    port: <span class="number">8081</span>, <span class="comment">// 开发服务器启动的端口</span></span><br><span class="line">    open: <span class="literal">true</span>, <span class="comment">// 是否自动启动浏览器</span></span><br><span class="line">    progress: <span class="literal">true</span>, <span class="comment">// 进度条</span></span><br><span class="line">    proxy: &#123; <span class="comment">// 配置代理</span></span><br><span class="line">      <span class="string">'/api'</span>: &#123; <span class="comment">// 将带有 /api 的请求，转发值 target 指向的域名</span></span><br><span class="line">        target: <span class="string">'http://domain.com/somet/api'</span>,</span><br><span class="line">        changeOrigin: <span class="literal">true</span>,</span><br><span class="line">        secure: <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">+      &#123;</span><br><span class="line">+        test: <span class="regexp">/\.(js|jsx)$/</span>,</span><br><span class="line">+        use: <span class="string">'happypack/loader?id=js'</span>, <span class="comment">// 使用 happypack 时，需要将 loader 改成 'happypack/loader?id=xx' 这个 xx 是一个标识符，下面的 plugin 还需要用</span></span><br><span class="line">+        exclude: <span class="regexp">/node_modules/</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          MiniCSSExtractPlugin.loader,</span><br><span class="line">          <span class="string">'css-loader'</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          MiniCSSExtractPlugin.loader,</span><br><span class="line">          <span class="string">'css-loader'</span>,</span><br><span class="line">          <span class="string">'postcss-loader'</span>,</span><br><span class="line">          <span class="string">'less-loader'</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(jpeg|png|jpg|ttf|woff(\d?)|eot|svg)$/</span>,</span><br><span class="line">        use: &#123;</span><br><span class="line">          loader: <span class="string">'url-loader'</span>,</span><br><span class="line">          options: &#123;</span><br><span class="line">            limit: <span class="number">5</span> * <span class="number">1024</span>,</span><br><span class="line">            outputPath: <span class="string">'img/'</span>,</span><br><span class="line">            name: <span class="string">'[name].[hash:5].[ext]'</span>,</span><br><span class="line">            publicPath: <span class="string">'/img/'</span> <span class="comment">// 这个 publicPath 可以解决 css 文件中的图片使用相对路径引用时报错的问题，这是因为这个东西会在 图片的引用路径前面拼接这个 publicPath</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(htm|html)$/</span>,</span><br><span class="line">        use:  <span class="string">'html-withimg-loader'</span> <span class="comment">// 处理 html 中的 img 引用的图片</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="built_in">require</span>.resolve(<span class="string">'jquery'</span>),</span><br><span class="line">        use: <span class="string">'expose-loader?$'</span> <span class="comment">// 等效的内联 import $ from 'expose-loader?$!jquery'; ?$!jquery 是传递给 expose-loader 的参数</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> HTMLWebpackPlugin(&#123;</span><br><span class="line">      template: <span class="string">'./src/index.html'</span>,</span><br><span class="line">      filename: <span class="string">"index.html"</span>,</span><br><span class="line">      trunks: [<span class="string">'home'</span>]</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> HTMLWebpackPlugin(&#123;</span><br><span class="line">      template: <span class="string">'./src/other.html'</span>,</span><br><span class="line">      filename: <span class="string">"other.html"</span>,</span><br><span class="line">      trunks: [<span class="string">'other'</span>]</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="comment">// 抽离 css 文件</span></span><br><span class="line">    <span class="keyword">new</span> MiniCSSExtractPlugin(&#123;</span><br><span class="line">      filename: <span class="string">'css/main.[hash:5].css'</span></span><br><span class="line">    &#125;),</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注入模块: key 是模块中可以访问的变量，value 是对应的模块</span></span><br><span class="line">    <span class="keyword">new</span> webpack.ProvidePlugin(&#123;</span><br><span class="line">      $<span class="number">1</span>: <span class="string">'jquery'</span>,</span><br><span class="line">      _: <span class="string">'lodash'</span></span><br><span class="line">    &#125;),</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义数据</span></span><br><span class="line">    <span class="keyword">new</span> webpack.DefinePlugin(&#123;</span><br><span class="line">      <span class="comment">// 在这个对象中 key 将来会变成一个变量，value 就是 js 代码表达式</span></span><br><span class="line">      DEV: <span class="built_in">JSON</span>.stringify(<span class="string">'dev'</span>)</span><br><span class="line">    &#125;),</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 清空打包的内容</span></span><br><span class="line">    <span class="comment">// new CleanWebpackPlugin(),</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 复制文件内容: 接收一个数组，数组项是对象，对象中的 from 表示被复制的目录或者文件，to 表示输出的目录</span></span><br><span class="line">    <span class="keyword">new</span> CopyWebpackPlugin([</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="keyword">from</span>: <span class="string">'./src/doc'</span>,</span><br><span class="line">        to: path.resolve(__dirname, <span class="string">'./dist/doc'</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    ]),</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在打包后的代码中输出必要信息</span></span><br><span class="line">    <span class="keyword">new</span> webpack.BannerPlugin(<span class="string">'发上等愿，结中等缘，享下等福；择高处立，寻平处住，想宽处行'</span>),</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 DLL：配置 manifest 文件的位置</span></span><br><span class="line">    <span class="keyword">new</span> webpack.DllReferencePlugin(&#123;</span><br><span class="line">      manifest: path.resolve(__dirname, <span class="string">'dist'</span>, <span class="string">'manifest.json'</span>)</span><br><span class="line">    &#125;),</span><br><span class="line"></span><br><span class="line">+    <span class="comment">// 使用 happypack 多线程打包 js</span></span><br><span class="line">+    <span class="keyword">new</span> Happypack(&#123;</span><br><span class="line">+      id: <span class="string">'js'</span>, <span class="comment">// 这个 'js' 就是上面配置 loader 时，写在 happypack/loader?id=js 中的 js</span></span><br><span class="line">+      use: [</span><br><span class="line">+        &#123;</span><br><span class="line">+          loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">+          options: &#123;</span><br><span class="line">+            presets: [<span class="string">'@babel/preset-env'</span>, <span class="string">'@babel/preset-react'</span>],</span><br><span class="line">+            plugins: [</span><br><span class="line">+              [<span class="string">'@babel/plugin-proposal-decorators'</span>, &#123; <span class="attr">legacy</span>: <span class="literal">true</span> &#125;], <span class="comment">// 使用装饰器</span></span><br><span class="line">+              [<span class="string">'@babel/plugin-proposal-class-properties'</span>, &#123; <span class="attr">loose</span>: <span class="literal">true</span> &#125;], <span class="comment">// 使用 class-properties</span></span><br><span class="line">+              [<span class="string">'@babel/plugin-transform-runtime'</span>] <span class="comment">// 使用 async/await/generator</span></span><br><span class="line">+            ]</span><br><span class="line">+          &#125;</span><br><span class="line">+        &#125;</span><br><span class="line">+      ]</span><br><span class="line">+    &#125;)</span><br><span class="line"></span><br><span class="line">  ],</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 配置优化配置项</span></span><br><span class="line">  optimization: &#123;</span><br><span class="line">    minimizer: [</span><br><span class="line">      <span class="keyword">new</span> OptimizeCSSAssetsWebpackPlugin(), <span class="comment">// 压缩 CSS 文件，配置该插件后需要配置如下的 UglifyjsWebpackPlugin</span></span><br><span class="line">      <span class="keyword">new</span> UglifyjsWebpackPlugin(&#123;</span><br><span class="line">        cache: <span class="literal">true</span>, <span class="comment">// 是否缓存</span></span><br><span class="line">        parallel: <span class="literal">true</span>, <span class="comment">// 是否并发打包</span></span><br><span class="line">        sourceMap: <span class="literal">true</span> <span class="comment">// 是否开启 sourceMap</span></span><br><span class="line">      &#125;)</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 模块解析规则</span></span><br><span class="line">  resolve: &#123;</span><br><span class="line">    alias: &#123;</span><br><span class="line">      bootstrapCss: <span class="string">'bootstrap/dist/css/bootstrap.min.css'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    extensions: [<span class="string">'.js'</span>, <span class="string">'.css'</span>, <span class="string">'.json'</span>, <span class="string">'.vue'</span>],</span><br><span class="line">    modules: [path.resolve(<span class="string">'node_modules'</span>)] <span class="comment">// 设置 webpack 从当前目录下的 node_modules 查找</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 配置 externals</span></span><br><span class="line">  externals: &#123;</span><br><span class="line">    vue: <span class="string">'Vue'</span> <span class="comment">// import Vue from 'vue' 时，就会寻找 window.vue</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/12/14/webpack掠影-7/" data-id="ck471o0cz002no4ppvtso7ip9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-webpack掠影-6" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/12/14/webpack掠影-6/" class="article-date">
@@ -171,7 +267,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/12/14/webpack掠影-6/" data-id="ck45lapr7002lxspphawr4p5f" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/12/14/webpack掠影-6/" data-id="ck471o0cs002ho4pp249etthq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -246,7 +342,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/12/09/webpack掠影-5/" data-id="ck45lapr2002hxsppp9hs9z81" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/12/09/webpack掠影-5/" data-id="ck471o0cu002jo4ppgg13q6de" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -393,7 +489,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/12/08/webpack掠影-4/" data-id="ck45lapr5002jxsppxrurur3t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/12/08/webpack掠影-4/" data-id="ck471o0cn002do4ppcw6e5hfd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -485,7 +581,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/12/08/webpack掠影-3/" data-id="ck45lapqy002cxsppzoihh4wu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/12/08/webpack掠影-3/" data-id="ck471o0cq002fo4pp00669epv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -624,7 +720,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/12/08/webpack掠影-2/" data-id="ck45lapr0002fxsppqnrf52wd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/12/08/webpack掠影-2/" data-id="ck471o0cl002ao4ppuhquckj9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -778,7 +874,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/12/07/webpack掠影-1/" data-id="ck45lapqw002axsppwexay5h3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/12/07/webpack掠影-1/" data-id="ck471o0ci0028o4pp5le4m3jo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -822,7 +918,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/25/JavaScript进阶教程16/" data-id="ck45lapph000txsppw92obitx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/25/JavaScript进阶教程16/" data-id="ck471o0b3000to4ppioekogyt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -923,7 +1019,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/06/JavaScript进阶教程15/" data-id="ck45lappg000rxsppbsmqhaea" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/06/JavaScript进阶教程15/" data-id="ck471o0b1000ro4pp71zdcc0q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -992,196 +1088,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/15/JavaScript进阶教程14/" data-id="ck45lappe000pxspp5odhm1n9" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript进阶教程13" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/08/29/JavaScript进阶教程13/" class="article-date">
-  <time datetime="2019-08-28T16:23:14.000Z" itemprop="datePublished">2019-08-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/29/JavaScript进阶教程13/">进阶教程 13. ajax的前世今生</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、ajax基础"><a href="#一、ajax基础" class="headerlink" title="一、ajax基础"></a>一、ajax基础</h2><p>浏览器的技术<br>ajax Asynchronous javascript and xml</p>
-<ul>
-<li><p>xml: 是可扩展标记语言，和html一样，可以清楚的表示层级。在ajax刚刚兴起的时候，为了表达数据的结构和层次，数据结构多是使用xml；</p>
-</li>
-<li><p>现在都是是json，json也可以表达数据结构；</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.parse() <span class="comment">// json格式字符串转对象</span></span><br><span class="line"><span class="built_in">JSON</span>.stringify() <span class="comment">// 对象转JSON格式的字符串</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>现在的前端都是前后端分离的，即前端负责数据的绑定和维护；</p>
-</li>
-<li><p>服务端渲染和全局刷新</p>
-</li>
-</ul>
-<p>在很久以前，没有ajax之前，都是前后端不分离的；前后端不分离是前端写好html+css结构，然后把html交给后端，然后利用服务端技术从服务器的数据库中把数据查出来，然后绑定到页面中，然后把绑定好数据的页面直接返回给浏览器，就是说浏览器拿的就是绑定好数据的页面html（服务端渲染SSR(Server-Side-Rendering)）；<br>但是这么干有一个问题，如果我这个页面中只有一部分内容是动态绑定的，如果我需要看到这部分内容，就需要刷新整个页面重新获取才行，因为绑定数据只有在服务器上才能进行。这种体验很不好，这种刷新整个页面获取数据的方式称为全局刷新；</p>
-<ul>
-<li>前后端分离</li>
-</ul>
-<p>后来ajax诞生了，ajax可以直接从服务器获取数据而不用刷新整个页面；发送一个ajax请求，等到请求结束后把数据通过前端手段把数据绑定到页面中（动态创建dom+appendChild或者字符串拼接+innerHTML）。这种用ajax渲染数据的方式是局部刷新的。</p>
-<ul>
-<li>ajax 的实例是可以向服务器发送请求的；</li>
-</ul>
-<h3 id="使用ajax"><a href="#使用ajax" class="headerlink" title="使用ajax"></a>使用ajax</h3><ol>
-<li>创建一个ajax实例对象</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>可以通过XMLHttpRequest原型上的open方法打开一个路径</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xhr.open(<span class="string">'get'</span>, <span class="string">'https://www.easy-mock.com/mock/5d21a1b35b95ef4e9dd1a28c/example/myfirstmock'</span>, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>open方法的参数：</li>
-</ul>
-<ul>
-<li><ol>
-<li>http-method： GET POST</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>url</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>async: true 表示异步，false表示同步</li>
-</ol>
-</li>
-</ul>
-<ol start="3">
-<li>监听ajax实例的onreadystatechange事件，当ajax发送请求时，会触发这个事件行为</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	如果ajax是异步执行的，这个函数会执行三次，三次的readyState分别为x</span><br><span class="line">	<span class="built_in">console</span>.log(xhr.readyState); <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span></span><br><span class="line"></span><br><span class="line">	为了确定拿到数据，我们不仅判断xhr.readyState 判断，还需要根据xhr.status来判断，xhr使用的就是http status，表示当前请求的状态；</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (xhr.readyState === <span class="number">4</span> &amp;&amp; <span class="regexp">/^2\d&#123;2&#125;/</span>.test(xhr.status)) &#123;</span><br><span class="line">		xhr.readyState 为<span class="number">4</span>表示ajax请求完成，xhr.status 是一个以<span class="number">2</span>开头的三位数，表示请求成功，所以可以在获取服务端返回的数据</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>发送请求</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xhr.send(); <span class="comment">// send方法还可以传递参数</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>xhr.readyState 表示当前ajax实例对象的所处的状态</li>
-</ul>
-<ul>
-<li>0: 创建了一个ajax实例对象</li>
-<li>1: 已经调用open方法，打开了路径</li>
-<li>2: 客户端已经接收到服务端的都信息（如果需要获取头信息中某些内容，可以在readyState为2时获取就可以）</li>
-<li><ol start="3">
-<li>客户端正在接受响应主体的数据</li>
-</ol>
-</li>
-<li><ol start="4">
-<li>客户端已经全部接收服务端的数据</li>
-</ol>
-</li>
-</ul>
-<h2 id="二、ajax的请求方式"><a href="#二、ajax的请求方式" class="headerlink" title="二、ajax的请求方式"></a>二、ajax的请求方式</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.open(<span class="string">'get'</span>, <span class="string">'aside.json'</span>, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (xhr.readyState === <span class="number">4</span> &amp;&amp; <span class="regexp">/^2\d&#123;2&#125;/</span>.test(xhr.status)) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(xhr.responseText);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">xhr.send(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">username</span>: <span class="string">'mabin'</span>, <span class="attr">pwd</span>: <span class="string">'1233456'</span>&#125;));</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>xhr.open() 方法的第一个参数用于指定http-method，即http的请求方式：</li>
-</ul>
-<p><strong>一般接口的请求方式由服务端提供，而且会在接口文档中说明</strong></p>
-<h3 id="常见的请求方式："><a href="#常见的请求方式：" class="headerlink" title="常见的请求方式："></a>常见的请求方式：</h3><h4 id="gt-GET-一般用于从服务端获取数据，但是也可以向服务器传递少量的数据；"><a href="#gt-GET-一般用于从服务端获取数据，但是也可以向服务器传递少量的数据；" class="headerlink" title="=&gt; GET: 一般用于从服务端获取数据，但是也可以向服务器传递少量的数据；"></a>=&gt; GET: 一般用于从服务端获取数据，但是也可以向服务器传递少量的数据；</h4><ul>
-<li>get请求方式的特点</li>
-</ul>
-<ol>
-<li>向服务器传递数据的方式：通过向接口末尾添加问号传参的方式传递，如: aside.json?name=mabinpwd=123456</li>
-<li>由于浏览器的url地址是有长度限制的，IE的url一般不超过2k，谷歌的一般在8k，超过的部分会自动被截掉，所以get请求传递的数据很小</li>
-<li>参数直接暴露在url中，安全性低；</li>
-<li>get请求容易产生缓存，为了防止缓存，一般在url末尾拼接一个随机数或者时间戳，因为浏览器发现url变化了，就会重新请求而不是使用之前已经缓存的数据；</li>
-</ol>
-<h4 id="gt-POST-一般用于把数据传递给服务器或者传递大量的数据时"><a href="#gt-POST-一般用于把数据传递给服务器或者传递大量的数据时" class="headerlink" title="=&gt; POST 一般用于把数据传递给服务器或者传递大量的数据时"></a>=&gt; POST 一般用于把数据传递给服务器或者传递大量的数据时</h4><ol>
-<li>post 把需要传递给服务器的数据放在请求体中传递给服务器</li>
-<li>由于post数据放在请求体中，大小没有限制</li>
-<li>post 传递数据时把数据放在请求体中的，相对于get而言比较安全</li>
-<li>post 请求不会默认走缓存</li>
-</ol>
-<h4 id="其他请求方式"><a href="#其他请求方式" class="headerlink" title="其他请求方式"></a>其他请求方式</h4><p>+DELETE: 删除数据<br>+HEAD: 获取响应头，不需要响应体<br>+PUT: 修改某些内容<br>+OPTIONS: 查询服务器的支持的http请求方式<br>+TRACE: 回显服务器收到的请求，一般用于测试<br>+….</p>
-<h2 id="三、ajax的同步和异步"><a href="#三、ajax的同步和异步" class="headerlink" title="三、ajax的同步和异步"></a>三、ajax的同步和异步</h2><ul>
-<li>js是单线程的：每次只能执行一个任务</li>
-<li>浏览器是多线程的，可以同时执行多个任务；</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> data = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"></span><br><span class="line">xhr.open(<span class="string">'get'</span>, <span class="string">'aside.json'</span>, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(xhr.readyState); <span class="comment">// false 时只输出 4</span></span><br><span class="line">	<span class="built_in">console</span>.log(xhr.readyState); <span class="comment">// true 时输出2 3 4</span></span><br><span class="line">	data = xhr.responseText;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">xhr.send();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindHTML</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 绑定html的方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="为什么会有异步的ajax？"><a href="#为什么会有异步的ajax？" class="headerlink" title="为什么会有异步的ajax？"></a>为什么会有异步的ajax？</h3><p>如果页面中有5个请求</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 1s</span></span><br><span class="line"><span class="comment">// 2. 2s</span></span><br><span class="line"><span class="comment">// 3. 3s</span></span><br><span class="line"><span class="comment">// 4. 4s</span></span><br><span class="line"><span class="comment">// 5. 5s</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>如果使用同步的，同步任务都是阻塞的，上一个执行不完下一个不能开始，如果这些接口没有必然关系，用户需要15s才能看到，这个用户体验很不好。</p>
-</li>
-<li><p>如果使用异步的，第一个发出后随即就开始第二个，然后第三个，因为异步不是阻塞的，后面的不用等待前面的完成（这样子看起来很像同时发送了5个请求），这样一来用时5s就可以了</p>
-</li>
-</ul>
-<p>所以一般情况下ajax使用异步的；</p>
-<ul>
-<li>但是使用异步的也有一个问题，如果这5个接口是互相依赖的，比如第二个依赖第一个返回的数据，第三个依赖第二个返回的数据这种情况使用异步，顺序是无法保证的，因为异步任务是谁先到达执行条件谁先执行；</li>
-</ul>
-<h2 id="四、jq的ajax"><a href="#四、jq的ajax" class="headerlink" title="四、jq的ajax"></a>四、jq的ajax</h2><ul>
-<li>使用原生的ajax把用户名和密码使用post的请求发方式发送到aide.json</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"uName"</span>&gt;</span>用户名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"uName"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"pwd"</span>&gt;</span>密码：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"pwd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"submit"</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/jquery-3.2.1.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/4-jq的ajax.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>原生js代码：</p>
-<ul>
-<li>获取元素</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> uName = <span class="built_in">document</span>.getElementById(<span class="string">'uName'</span>);</span><br><span class="line"><span class="keyword">let</span> pwd = <span class="built_in">document</span>.getElementById(<span class="string">'pwd'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> uNameValue = uName.value;</span><br><span class="line"><span class="keyword">let</span> pwdValue = pwd.value;</span><br><span class="line"><span class="keyword">let</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'submit'</span>);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>原生js</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">btn.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">	xhr.open(<span class="string">'post'</span>, <span class="string">'aside.json'</span>, <span class="literal">true</span>);</span><br><span class="line">	xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (xhr.readyState === <span class="number">4</span> &amp;&amp; xhr.status === <span class="number">200</span>) &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">'oh yeach'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="comment">// 注意post请求只能发送字符串类型的数据，一边情况下会使用json格式的字符串</span></span><br><span class="line">	xhr.send(<span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">		username: uNameValue,</span><br><span class="line">		pwd: pwdValue</span><br><span class="line">	&#125;));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>使用jq的ajax</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">	url: <span class="string">'aside.json'</span>,</span><br><span class="line">	type: <span class="string">'post'</span>,</span><br><span class="line">	dataType: <span class="string">'json'</span>,</span><br><span class="line">	cache: <span class="literal">false</span>,</span><br><span class="line">	<span class="keyword">async</span>: <span class="literal">true</span>,</span><br><span class="line">	data: &#123;</span><br><span class="line">		username: uNameValue,</span><br><span class="line">		pwd: pwdValue</span><br><span class="line">	&#125;,</span><br><span class="line">	error(err) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(err)</span><br><span class="line">	&#125;,</span><br><span class="line">	success (data) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(data)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>参数详解</li>
-</ul>
-<ul>
-<li>url: 请求路径</li>
-<li>type: 请求方式</li>
-<li>dataType: 数据类型json</li>
-<li>async: true 默认异步</li>
-<li>cache: false 禁用缓存</li>
-<li>error: 请求失败时执行的回调，参数是具体的报错信息</li>
-<li>success: 请求成功执行的回调，参数是服务端返回的数据</li>
-</ul>
-<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/29/JavaScript进阶教程13/" data-id="ck45lappc000nxsppigzuc93e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/09/15/JavaScript进阶教程14/" data-id="ck471o0az000po4ppqst2d5cf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1243,6 +1150,10 @@
       <ul>
         
           <li>
+            <a href="/2019/12/14/webpack掠影-7/">webpack掠影-7</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/14/webpack掠影-6/">webpack掠影-6</a>
           </li>
         
@@ -1256,10 +1167,6 @@
         
           <li>
             <a href="/2019/12/08/webpack掠影-3/">webpack掠影-3</a>
-          </li>
-        
-          <li>
-            <a href="/2019/12/08/webpack掠影-2/">webpack掠影-2</a>
           </li>
         
       </ul>

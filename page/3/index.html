@@ -67,6 +67,139 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaScript进阶教程3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/07/JavaScript进阶教程3/" class="article-date">
+  <time datetime="2018-10-07T12:00:23.000Z" itemprop="datePublished">2018-10-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/07/JavaScript进阶教程3/">进阶教程 3. JS 的堆栈内存管理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="javascript中的堆栈内存及释放"><a href="#javascript中的堆栈内存及释放" class="headerlink" title="javascript中的堆栈内存及释放"></a>javascript中的堆栈内存及释放</h2><h3 id="js中的堆内存的创建和释放"><a href="#js中的堆内存的创建和释放" class="headerlink" title="js中的堆内存的创建和释放"></a>js中的堆内存的创建和释放</h3><h3 id="JS引擎中的内存分类："><a href="#JS引擎中的内存分类：" class="headerlink" title="JS引擎中的内存分类："></a>JS引擎中的内存分类：</h3><ul>
+<li>栈内存（作用域）供js代码执行的环境，保存基本数据类型</li>
+<li>堆内存：存储引用数据类型</li>
+</ul>
+<h3 id="堆内存的创建和销毁"><a href="#堆内存的创建和销毁" class="headerlink" title="堆内存的创建和销毁"></a>堆内存的创建和销毁</h3><h4 id="创建："><a href="#创建：" class="headerlink" title="创建："></a>创建：</h4><p><code>创建一个对象、数组、函数、等引用数据类型，浏览器都会分配一块堆内存地址，存储引用数据类型的数据；</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	name: <span class="string">'江外琉璃'</span>,</span><br><span class="line">	age: <span class="number">10</span>,</span><br><span class="line">	courses: [<span class="string">'高级前端是怎样炼成的'</span>, <span class="string">'前端FE师是怎样炼成的'</span>, <span class="string">'UI设计师是怎样炼成的'</span>]</span><br><span class="line">&#125;; <span class="comment">// 每创建一个引用数据类型，浏览器都会开辟一个堆内存，并把这个堆内存地址给obj变量</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 此时obj相当于引用了这一块堆内存，</span></span><br><span class="line"><span class="keyword">var</span> obj2 = obj; <span class="comment">// 此时obj2也引用了这一块堆内存</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="堆内存释放"><a href="#堆内存释放" class="headerlink" title="堆内存释放"></a>堆内存释放</h4><p><code>让所有引用堆内存空间地址的变量赋值为null即可（没有变量占用这个堆内存了，浏览器会在空闲的时候把它释放掉）</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj = <span class="literal">null</span>; <span class="comment">// 将obj指向空对象指针null</span></span><br><span class="line">obj2 = <span class="literal">null</span>; <span class="comment">// 将obj2指向空对象指针null</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="js中的栈内存开辟和释放"><a href="#js中的栈内存开辟和释放" class="headerlink" title="js中的栈内存开辟和释放"></a>js中的栈内存开辟和释放</h3><ul>
+<li>栈内存（作用域）：供js代码执行的环境，也是用来保存基本数据类型的</li>
+</ul>
+<h4 id="栈内存的创建："><a href="#栈内存的创建：" class="headerlink" title="栈内存的创建："></a>栈内存的创建：</h4><ul>
+<li>当浏览器打开时，首先会开辟形成一个顶层的栈内存，就是全局作用域；</li>
+<li>函数执行时，也会开辟一个供函数代码执行的栈内存（私有作用域）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> total = <span class="number">0</span>;</span><br><span class="line">	total = a + b;</span><br><span class="line">	<span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>函数每一次执行，都会形成一个全新的栈内存，即每次函数执行都是在一个全新的环境里面执行，所以函数每次执行都是互相独立的；</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">add(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">add(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		zf: <span class="string">'zhufeng'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> o1 = fe(); <span class="comment">//</span></span><br><span class="line"><span class="keyword">var</span> o2 = fe();</span><br><span class="line"><span class="built_in">console</span>.log(o1 === o2); <span class="comment">// false fe执行几次，救护创建几个对象，所以o1和o2是两个不同的堆内存，没有任何关系。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="栈内存销毁："><a href="#栈内存销毁：" class="headerlink" title="栈内存销毁："></a>栈内存销毁：</h4><ul>
+<li>全局栈内存：当页面关闭时才会销毁</li>
+<li>函数的私有作用域：一般函数执行完成后，栈内存自动销毁。但是有一些特殊情况需要注意；</li>
+</ul>
+<h2 id="栈内存不销毁的情形"><a href="#栈内存不销毁的情形" class="headerlink" title="栈内存不销毁的情形"></a>栈内存不销毁的情形</h2><ul>
+<li><p>函数栈内存：正常情况下，函数执行会形成一个栈内存（作用域），当函数执行完成就会自动销毁。</p>
+</li>
+<li><p>但是函数执行完成后，当前形成的栈内存中，某些内容被栈内存以外的变量占用了，此时栈内存不能释放（一旦释放外面找不到原有的内容了）。栈内存不销毁，保存在栈内存中的数据也不会被销毁</p>
+</li>
+</ul>
+<h4 id="1-函数返回值被占用"><a href="#1-函数返回值被占用" class="headerlink" title="1 函数返回值被占用"></a>1 函数返回值被占用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		name: <span class="string">"江外琉璃"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = fe(); <span class="comment">// 函数fe执行形成一个不销毁的栈内存，里面定义的对象被外部obj变量占用，因而作用域不销毁</span></span><br><span class="line"></span><br><span class="line">fe(); <span class="comment">// 他们正常形成栈内存，但是执行后会被销毁</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-函数内部的引用数据类型被外部占用，函数执行的作用域不销毁。"><a href="#2-函数内部的引用数据类型被外部占用，函数执行的作用域不销毁。" class="headerlink" title="2.函数内部的引用数据类型被外部占用，函数执行的作用域不销毁。"></a>2.函数内部的引用数据类型被外部占用，函数执行的作用域不销毁。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	x = &#123;</span><br><span class="line">		name: <span class="string">'zf'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">fn(); <span class="comment">// 此时x占用着fn的作用域中对象&#123;name: 'zf'&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="累加计数"><a href="#累加计数" class="headerlink" title="累加计数"></a>累加计数</h3><ul>
+<li>需求：实现一个累加计数的功能，点击一次，让按钮中的数字累加；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>思路：既然是累加，一定是有一个地方保存着它的上一个值。关键就在于保存在哪里。</li>
+</ul>
+<h4 id="1-把值保存在全局作用域"><a href="#1-把值保存在全局作用域" class="headerlink" title="1. 把值保存在全局作用域"></a>1. 把值保存在全局作用域</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> count = <span class="number">0</span>; <span class="comment">// count保存在全局作用域</span></span><br><span class="line">btn.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	count++; <span class="comment">// 操作全局变量</span></span><br><span class="line">	btn.innerHTML = count;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-自定义不销毁的私有作用域"><a href="#2-自定义不销毁的私有作用域" class="headerlink" title="2. 自定义不销毁的私有作用域"></a>2. 自定义不销毁的私有作用域</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">btn.onclick = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> count = <span class="number">0</span>; <span class="comment">// count的值保存在</span></span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		btn.innerHTML = count;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-自定义不销毁的函数作用域2"><a href="#3-自定义不销毁的函数作用域2" class="headerlink" title="3. 自定义不销毁的函数作用域2"></a>3. 自定义不销毁的函数作用域2</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> count = <span class="number">0</span>; <span class="comment">// count保存在自执行函数形成的私有作用域中</span></span><br><span class="line">	btn.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		count++;</span><br><span class="line">		<span class="keyword">this</span>.innerHTML = count;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-块级作用域"><a href="#4-块级作用域" class="headerlink" title="4. 块级作用域"></a>4. 块级作用域</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="keyword">let</span> count = <span class="number">0</span>; <span class="comment">// let 会把花括号变成块级作用域，等效于私有作用域，count的值保存在块级作用域中</span></span><br><span class="line">	btn.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		count++;</span><br><span class="line">		<span class="keyword">this</span>.innerHTML = count;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="let-amp-const"><a href="#let-amp-const" class="headerlink" title="let &amp; const"></a>let &amp; const</h3><h4 id="let-const-是ES6新增关键字，用于声明变量"><a href="#let-const-是ES6新增关键字，用于声明变量" class="headerlink" title="let const 是ES6新增关键字，用于声明变量"></a>let const 是ES6新增关键字，用于声明变量</h4><ul>
+<li>let 用来声明普通变量</li>
+<li>const 用于声明常量</li>
+</ul>
+<h4 id="let-amp-const-和var的区别"><a href="#let-amp-const-和var的区别" class="headerlink" title="let &amp; const 和var的区别"></a>let &amp; const 和var的区别</h4><ul>
+<li><ol>
+<li>let const不存在变量提升，对于使用let const声明的变量，只能在定义后使用</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 报错：a is not defined</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 报错：b is not defined</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="number">12</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-let-const-不能重复声明变量-重复声明var或者function声明的也不行"><a href="#2-let-const-不能重复声明变量-重复声明var或者function声明的也不行" class="headerlink" title="2. let const 不能重复声明变量(重复声明var或者function声明的也不行)"></a>2. let const 不能重复声明变量(重复声明var或者function声明的也不行)</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> n;</span><br><span class="line"><span class="keyword">var</span> n = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> n = <span class="number">1</span>; <span class="comment">// 报错：a has already been declared</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-let-const-在全局声明的变量或者常量不会像window上增加属性"><a href="#3-let-const-在全局声明的变量或者常量不会像window上增加属性" class="headerlink" title="3. let const 在全局声明的变量或者常量不会像window上增加属性"></a>3. let const 在全局声明的变量或者常量不会像window上增加属性</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">100</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'num'</span> <span class="keyword">in</span> <span class="built_in">window</span>); <span class="comment">// true in 运算符，检测对象是否有某个属性</span></span><br><span class="line"><span class="keyword">let</span> css = <span class="string">'css3'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'css'</span> <span class="keyword">in</span> <span class="built_in">window</span>); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-let-const-在代码块中会出现，会形成块级作用域，并且出现-暂时性死区；"><a href="#4-let-const-在代码块中会出现，会形成块级作用域，并且出现-暂时性死区；" class="headerlink" title="4. let const 在代码块中会出现，会形成块级作用域，并且出现 暂时性死区；"></a>4. let const 在代码块中会出现，会形成块级作用域，并且出现 暂时性死区；</h4><ul>
+<li>if (condition) { 条件的花括号中使用let const 就会形成块级作用域 }</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> num1 = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">	<span class="keyword">let</span> num1 = <span class="number">4</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(num1); <span class="comment">// 4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>for(…) { for 循环中的代码块 }</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">12</span>; i++) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'var 没有块级作用域'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i); <span class="comment">// var 会把i泄露成全局变量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'let j j不会泄露出去'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(j); <span class="comment">// Uncaught ReferenceError: j is not defined</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>利用 {}形成块级作用域</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(a); <span class="comment">// a是块级作用域中</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">let</span> m = <span class="number">12</span>; <span class="comment">// m所处的块级作用域是下面的块级作用域的上级作用域，同样遵从作用域链的查找规则</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(m);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="暂时性死区（TDZ-temporary-dead-zone）"><a href="#暂时性死区（TDZ-temporary-dead-zone）" class="headerlink" title="暂时性死区（TDZ: temporary dead zone）"></a>暂时性死区（TDZ: temporary dead zone）</h4><p>在代码块中，用let const声明的变量，不能再声明之前使用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> q = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(q); <span class="comment">// 这个变量q已经被let锁定在块级作用域中，</span></span><br><span class="line">	<span class="keyword">let</span> q = <span class="number">14</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="const-声明变量的细节问题"><a href="#const-声明变量的细节问题" class="headerlink" title="const 声明变量的细节问题"></a>const 声明变量的细节问题</h3><h4 id="1-const声明时必须赋值"><a href="#1-const声明时必须赋值" class="headerlink" title="1. const声明时必须赋值"></a>1. const声明时必须赋值</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> m;</span><br><span class="line"><span class="keyword">var</span> m;</span><br><span class="line"><span class="keyword">const</span> m; <span class="comment">// 报错：Missing initializer in const declaration</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-值一旦被定义，不能被修改"><a href="#2-值一旦被定义，不能被修改" class="headerlink" title="2. 值一旦被定义，不能被修改"></a>2. 值一旦被定义，不能被修改</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> num = <span class="number">12</span>;</span><br><span class="line">num = <span class="number">15</span>; 报错：</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-如果const声明的常量是一个引用数据类型，那么常量带表的引用地址不能改变，但是堆内存中的内容是可以修改的。"><a href="#3-如果const声明的常量是一个引用数据类型，那么常量带表的引用地址不能改变，但是堆内存中的内容是可以修改的。" class="headerlink" title="3. 如果const声明的常量是一个引用数据类型，那么常量带表的引用地址不能改变，但是堆内存中的内容是可以修改的。"></a>3. 如果const声明的常量是一个引用数据类型，那么常量带表的引用地址不能改变，但是堆内存中的内容是可以修改的。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">ary.push(<span class="string">'33'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ary);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ary = [1, 3, 5]; // 报错：</span></span><br></pre></td></tr></table></figure>
+
+<div style="text-align: right">【发上等愿，结中等缘，享下等福，择高处立，寻平处住，向宽处行】</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/07/JavaScript进阶教程3/" data-id="ck471o0b7000xo4ppi164sz45" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JavaScript进阶教程1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/09/17/JavaScript进阶教程1/" class="article-date">
@@ -217,7 +350,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程1/" data-id="ck45lapp0000fxsppri64pch9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程1/" data-id="ck471o0al000fo4ppouvam43h" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -325,7 +458,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程2/" data-id="ck45lappr0013xspp347xday0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/17/JavaScript进阶教程2/" data-id="ck471o0b5000vo4ppk7tpez5n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -507,7 +640,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/27/JavaScript基础教程8/" data-id="ck45lapoy000dxsppyrna2j2v" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/08/27/JavaScript基础教程8/" data-id="ck471o0ai000do4ppi074094m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -618,7 +751,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/09/JavaScript基础教程7/" data-id="ck45lapos0008xsppn4qnr6tz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/09/JavaScript基础教程7/" data-id="ck471o0af000ao4ppc9eyzpjd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -805,7 +938,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/27/JavaScript基础教程6/" data-id="ck45lapou000axspp2b0a8wdt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/27/JavaScript基础教程6/" data-id="ck471o0ab0008o4ppbam3i95v" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1145,7 +1278,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/30/JavaScript基础教程5/" data-id="ck45lapoo0005xsppozj6w2rj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/30/JavaScript基础教程5/" data-id="ck471o0a70005o4ppsgcagezm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1234,7 +1367,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/08/JavaScript基础教程4/" data-id="ck45lapol0004xsppz64uvxcv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/08/JavaScript基础教程4/" data-id="ck471o0a50004o4ppkcw3oyw0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1438,7 +1571,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/15/JavaScript基础教程3/" data-id="ck45lapoj0003xsppqy8ncv0o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/15/JavaScript基础教程3/" data-id="ck471o0a30003o4ppi1dgvxxz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1645,223 +1778,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/31/JavaScript基础教程2/" data-id="ck45lapoc0001xsppndwh7fys" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript基础教程1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/19/JavaScript基础教程1/" class="article-date">
-  <time datetime="2018-03-19T11:54:07.000Z" itemprop="datePublished">2018-03-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/19/JavaScript基础教程1/">基础教程 1. JS 数据类型和变量</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="JS-数据类型和变量"><a href="#JS-数据类型和变量" class="headerlink" title="JS 数据类型和变量"></a>JS 数据类型和变量</h1><h2 id="js引入方式"><a href="#js引入方式" class="headerlink" title="js引入方式"></a>js引入方式</h2><ul>
-<li><p>行内式：通过向html元素行内添加一些js代码，如给div绑定点击事件</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">"alert('这是js代码')"</span>&gt;</span>这是一个div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>内嵌式：在html文档中写一个script标签，把我们的js带写在script标签内</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    alert('这是内嵌式js代码')</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>外链式：在html文档中写一个script标签，并且设置src属性，src的属性值引用一个js文件资源，而js代码写在js文件中；</p>
-</li>
-</ul>
-<blockquote>
-<p>使用外链式引入js文件时，script标签里面不能再写js代码了，即使写了也不会执行。</p>
-</blockquote>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/1-for.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>无论是内嵌式还是外链式，都建议把script标签写在body结束标签的前面。</p>
-<h2 id="一、-浅谈前端发展史"><a href="#一、-浅谈前端发展史" class="headerlink" title="一、 浅谈前端发展史"></a>一、 浅谈前端发展史</h2><p>第一阶段：C/S （client server） -&gt; B / S （browser server）网页制作<br>技术栈：PhotoShop、HTML、CSS</p>
-<p>第二阶段：从静态到动态，从后端到前端 前端开发工程师<br>    前后端分离：<br>        后端：完成数据的分析和业务逻辑的编写（包含API接口编写）<br>        前端：网页制作、JS交互效果、数据的交互和绑定<br>    技术栈：JavaScript 、 Ajax（以及jsonp等跨域技术）、jQuery …<br>第三阶段：从前端到全端（从PC端到移动端）<br>    技术栈：H5、CSS3、响应式布局开发，Zepto、HybridApp（混合app开发）微信小程序…</p>
-<p>第四阶段：从全端到全栈<br>    全栈开发：前后端都可以开发（严格意义讲，一种语言完成前端后开发）<br>    技术栈：NODE（基于js编程语言开发服务器端程序）、Express/Koa…</p>
-<hr>
-<h2 id="二、关于浏览器的内核和引擎"><a href="#二、关于浏览器的内核和引擎" class="headerlink" title="二、关于浏览器的内核和引擎"></a>二、关于浏览器的内核和引擎</h2><p>webkit（v8引擎）：大部分浏览器<br>gecko：火狐<br>trident：IE<br>…</p>
-<p>W3C：万维网联盟，制定编程语言的规范与标准<br>   开发者按照规范编写代码，浏览器开发商也会开发一套按照规范把代码渲染成页面的东西（这个东西就是内核或者引擎）</p>
-<p>   浏览器内核的作用：按照一定的规范，把代码基于GPU（显卡）绘制出对应的图形和页面等；</p>
-<p>   为啥会出现浏览器兼容：<br>    1. 部分浏览器会提前开发一些更好的功能，后期这些功能会被收录到W3C规范中，但是再收录之前，会存在一定的兼容性<br>    2. 各个浏览器厂商，为了突出自己的独特性，用其他方法实现W3C规范<br>    …</p>
-<hr>
-<h2 id="三、JavaScript"><a href="#三、JavaScript" class="headerlink" title="三、JavaScript"></a>三、JavaScript</h2><p>JS：轻量级的客户端脚本编程语言</p>
-<ol>
-<li>编程语言<br>HTML+CSS 是标记语言<br>编程语言是具备一定逻辑的，拥有自己的编程思想（面向对象【oop】、面向过程编程）</li>
-</ol>
-<ul>
-<li><p>面向对象</p>
-<ul>
-<li>C++</li>
-<li>JAVA</li>
-<li>PHP</li>
-<li>C#</li>
-<li>JS</li>
-<li>…</li>
-</ul>
-</li>
-<li><p>面向过程：</p>
-<ul>
-<li>C</li>
-</ul>
-</li>
-</ul>
-<p>2.目前的JS已经不是客户端语言了，基于NODE可以做服务器端程序，所以JS是全栈编程语言</p>
-<ol start="3">
-<li>学习JS，我们学习它的几部分组成<ul>
-<li>ECMAScript（ES）: js的核心语法</li>
-<li>DOM: Document Object Model文档对象模型，提供各种API（属性和方法）让JS可以获取或者操作页面中的HTML元素（DOM元素）</li>
-<li>BOM：Browser Object Model 浏览器对象模型，提供各种API让js可以操作浏览器</li>
-</ul>
-</li>
-</ol>
-<h2 id="四、ECMAScript"><a href="#四、ECMAScript" class="headerlink" title="四、ECMAScript"></a>四、ECMAScript</h2><p>它是JS的语法规范，JS中的变量、数据类型、语法规范、操作语句，设计模式等等都是ES规定的；</p>
-<p>值得注意的是js的注释方式：注释是一项备注内容，给人看的，代码执行时会忽略注释内容。<br>    + 单行注释： // 两个单斜线<br>    + 多行注释：/<em>多行注释内容写在两个星号之间</em>/</p>
-<hr>
-<h2 id="五、变量（variable）"><a href="#五、变量（variable）" class="headerlink" title="五、变量（variable）"></a>五、变量（variable）</h2><p>它不是具体的值，只是一个用来代表某个值的标识符，因为它表示的值可以改变，所以称为变量。</p>
-<p>基于ES语法规范，在JS中创建变量有以下方式：</p>
-<ul>
-<li>var（ES3) 创建普通变量</li>
-<li>function （ES3）创建函数（函数名也是变量，只不过存储的值是函数类型而已）</li>
-<li>let （ES6）声明变量</li>
-<li>const （ES6）创建常量（常量就是不变的值，如光速就是常量）</li>
-<li>import （ES6）基于ES6的模块规范导出需要的信息</li>
-<li>class （ES6） 基于ES6创建 类</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 语法：</span></span><br><span class="line"><span class="comment">* var 变量名 = 值</span></span><br><span class="line"><span class="comment">* let 变量名 = 值</span></span><br><span class="line"><span class="comment">* const 变量名 = 值</span></span><br><span class="line"><span class="comment">* function 函数名 () &#123;</span></span><br><span class="line"><span class="comment">*  // 函数体</span></span><br><span class="line"><span class="comment">* &#125;</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">13</span>;</span><br><span class="line">n = <span class="number">15</span>;</span><br><span class="line">alert(n + <span class="number">10</span>); <span class="comment">// =&gt; 弹出来25 此时的N代表15</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> m = <span class="number">100</span>;</span><br><span class="line">m = <span class="number">200</span>; <span class="comment">// Uncaught TypeError: Assignment to constant variable (常量存储的值不能被修改，能够被修改的就是变量了)</span></span><br></pre></td></tr></table></figure>
-
-<p>创建变量，命名的时候要遵循一些规范</p>
-<ul>
-<li>严格区分大小写</li>
-<li>遵循驼峰命名法：按照数字、字母、下划线或者$来命名（数字不能作为开头），命名的时候基于英文单词拼接成一个名字（第一个单词字母小写，其余每一个有意义单词的首字母都大写）</li>
-<li>不能使用关键字和保留字：在js中有特殊含义的叫做关键字，未来都可能成为关键字的叫做保留字</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> N = <span class="number">12</span>; <span class="comment">// 变量n和变量N不是同一个变量</span></span><br><span class="line"><span class="keyword">var</span> studentInfo = <span class="string">'xyz'</span>; <span class="comment">// 驼峰命名法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 变量要具有语义化</span></span><br><span class="line">add / create / insert</span><br><span class="line">del (<span class="keyword">delete</span>) / update / remove(rm)</span><br><span class="line">info / detail</span><br><span class="line">log</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="六、数据类型"><a href="#六、数据类型" class="headerlink" title="六、数据类型"></a>六、数据类型</h2><p>数据类型是一门语言进行生产的材料，JS中包含的值有以下这些类型：</p>
-<ul>
-<li>基本类型：<ul>
-<li>数字 number</li>
-<li>字符串 string</li>
-<li>布尔 boolean</li>
-<li>null</li>
-<li>undefined</li>
-<li>Symbol 表示一个唯一值（ES6新增）</li>
-</ul>
-</li>
-<li>引用数据类型：<ul>
-<li>对象object<ul>
-<li>普通对象</li>
-<li>数组对象</li>
-<li>正则对象</li>
-<li>日期对象</li>
-<li>…</li>
-</ul>
-</li>
-<li>函数function</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [基本数据类型]</span></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">13</span>; <span class="comment">// =&gt; 0 1 -13 13.2都是数字， 此时变量n存储的就是一个数字；中有一个特殊的值：NaN(not a number)，表示不是一个有效的数字，但是仍然是一个数字类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> s = <span class="string">''</span>; <span class="comment">// =&gt;如 '' '13' "13" "name" "age" JS中所有用单引号或者双引号包裹起来的都是字符串，字符串表示的值是当前引号中包裹的值（一个字符串由零到多个字符串组成）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span>  b = <span class="literal">true</span>; <span class="comment">// =&gt; 布尔类型只有两个值 true 真 false表示假</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> empty = <span class="literal">null</span>; <span class="comment">// =&gt; 变量empty表示null空</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> notDefined = <span class="literal">undefined</span>; <span class="comment">// 变量notDefined表示undefined（undefined这个单词的意思就是未定义）；</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Symbol: 用来创建一个唯一值，和谁都不会重复。下面等号右侧虽然长的一样，但是s1和s2变量代表两个不同的值。</span></span><br><span class="line"><span class="keyword">var</span> s1 = <span class="built_in">Symbol</span>(<span class="string">'江外'</span>);</span><br><span class="line"><span class="keyword">var</span> s2 = <span class="built_in">Symbol</span>(<span class="string">'江外'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// [引用数据类型]</span></span><br><span class="line"><span class="comment">// =&gt; 对象</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">name</span>: <span class="string">'江外琉璃'</span>, <span class="attr">age</span>: <span class="number">9</span>&#125;; <span class="comment">// =&gt; 普通对象：由大括号包裹起来，里面包含多组属性名和属性值（name和age叫做属性名（又称键，英文名key），而 '江外琉璃'/9叫做属性值（又称值，英文名value），所以对象又叫做键值对集合或者key/value集合）</span></span><br><span class="line"><span class="keyword">var</span> obj2 = &#123;&#125;; <span class="comment">// =&gt; 变量obj2表示空对象；</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; 数组</span></span><br><span class="line"><span class="keyword">var</span> ary = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]; <span class="comment">// =&gt; 数组对象：用中括号包裹起来，包含0到多项内容，每一项之间用逗号(英文逗号)分隔。</span></span><br><span class="line"><span class="keyword">var</span> ary2 = []; <span class="comment">// =&gt; 变量ary2表示一个空数组</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; 正则：用来匹配字符串的规则</span></span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^abc$/</span>;  <span class="comment">// =&gt; 两个斜线中间的叫做元字符</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; 函数：需要多次重复使用的代码或者有特定功能的代码可以封装成一个函数；</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;<span class="comment">// =&gt; 函数体&#125;</span></span><br><span class="line"><span class="comment">// function 叫做关键字，用于声明函数变量</span></span><br><span class="line"><span class="comment">// fn 叫做函数名，函数名也需要满足变量声明的条件（本质上函数名也是变量名，只不过这个变量名代表的是一个函数数据类型的值）</span></span><br><span class="line"><span class="comment">// () 【声明函数时】fn后面的这个小括号表示的是形参入口</span></span><br><span class="line"><span class="comment">// &#123;&#125; 写在函数中的&#123;&#125;表示函数体，这里面写需要执行的代码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ....</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="七、JS代码运行及常用输出方式"><a href="#七、JS代码运行及常用输出方式" class="headerlink" title="七、JS代码运行及常用输出方式"></a>七、JS代码运行及常用输出方式</h2><ul>
-<li>alert方法(函数): 在浏览器中通过弹窗的方式输出（浏览器提示框）</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">12</span>;</span><br><span class="line">alert(num); <span class="comment">// alert() 读作：alert方法执行【写在方法名后面的“()”读作 “执行” ，就是把alert函数里面的代码执行一遍】。把想输出的东西放在小括号里；</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> course = <span class="string">'江外琉璃js基础是怎样炼成的'</span>;</span><br><span class="line">alert(course);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>console.log方法：在浏览器控制台输出日志。console是浏览器的开发者工具的一个页卡（在浏览器中按下F12按键【部分电脑需要按下Fn和F12】）</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// console.log() 读作console.log方法执行，把想要输出的变量或者内容放在小括号里。</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">'江外琉璃-马宾'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(name);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>innerHTML/innerText属性； 修改元素中的HTML或者文本；</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> box = <span class="built_in">document</span>.getElementById(<span class="string">'box'</span>); <span class="comment">// =&gt; 在document（整个HTML文档中）下通查找id为box的元素。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 语法：元素对象.innerHTML/innerText = '想要显示的内容'; 【想要显示的内容必须是一个字符串类型的值】</span></span><br><span class="line">box.innerHTML = <span class="string">'&lt;h1&gt;江外琉璃js基础是怎样炼成的第一周&lt;/h1&gt;'</span>;</span><br><span class="line">box.innerText = <span class="string">'&lt;h1&gt;江外琉璃js基础是怎样炼成的第一周&lt;/h1&gt;'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// box.innerHTML/box.innerText = '字符串' 读作：将box的innerHTML或innerText修改为 '字符串'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// =&gt; 我们发现同样是包在字符串里面的内容，通过innerHTML的方式浏览器会将&lt;h1&gt;识别成HTML内容；但是innerText不能识别，而是你字符串里面写什么，页面就输出什么；</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="八、有效数字检测、数据类型转换、数据类型检测"><a href="#八、有效数字检测、数据类型转换、数据类型检测" class="headerlink" title="八、有效数字检测、数据类型转换、数据类型检测"></a>八、有效数字检测、数据类型转换、数据类型检测</h2><h3 id="有效数字检测"><a href="#有效数字检测" class="headerlink" title="有效数字检测"></a>有效数字检测</h3><ol>
-<li>有效数字检测 isNaN() 方法；非有效数字：NaN(not a number)</li>
-</ol>
-<p>isNaN(需要检测的值)：检测当前是否是一个有效数字，如果是一个有效数字，isNaN执行后就会得到一个false，否则isNaN执行后得到一个true；（我们得到的这个false或者true称为isNaN函数的返回值【就“结果”的意思】）<br>语法：isNaN(需要检测的值)</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> result1 = <span class="built_in">isNaN</span>(<span class="number">12</span>); <span class="comment">// -&gt; 检测num变量存储的值是否为非有效数字，12是数字，所以isNaN执行后得到一个false；</span></span><br><span class="line"><span class="keyword">var</span> result2 = <span class="built_in">isNaN</span>(<span class="string">'13'</span>); <span class="comment">// -&gt; false</span></span><br><span class="line"><span class="keyword">var</span> result3 = <span class="built_in">isNaN</span>(<span class="string">'江外'</span>); <span class="comment">// -&gt; true 因为汉字不是数字</span></span><br><span class="line"><span class="keyword">var</span> result4 = <span class="built_in">isNaN</span>(<span class="literal">false</span>); <span class="comment">// -&gt; false</span></span><br><span class="line"><span class="keyword">var</span> result5 = <span class="built_in">isNaN</span>(<span class="literal">null</span>); <span class="comment">// -&gt; false;</span></span><br><span class="line"><span class="keyword">var</span> result6 = <span class="built_in">isNaN</span>(<span class="literal">undefined</span>); <span class="comment">// -&gt; true</span></span><br><span class="line"><span class="keyword">var</span> result7 = <span class="built_in">isNaN</span>(&#123;<span class="attr">name</span>: <span class="string">'江外琉璃'</span>&#125;); <span class="comment">// -&gt; true</span></span><br><span class="line"><span class="keyword">var</span> result8 = <span class="built_in">isNaN</span>([<span class="number">12</span>, <span class="number">23</span>]); <span class="comment">// -&gt; true</span></span><br><span class="line"><span class="keyword">var</span> result9 = <span class="built_in">isNaN</span>([<span class="number">12</span>]); <span class="comment">// -&gt; false</span></span><br><span class="line"><span class="keyword">var</span> result10 = <span class="built_in">isNaN</span>(<span class="regexp">/^$/</span>); <span class="comment">// -&gt; true</span></span><br><span class="line"><span class="keyword">var</span> result11 = <span class="built_in">isNaN</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;); <span class="comment">// -&gt; true</span></span><br></pre></td></tr></table></figure>
-
-<p>思考：为啥小括号里洗的不是数字也能得到结果？这是isNaN的检测机制：</p>
-<p>1、首先验证当前要检测的值是否为数字类型的，如果不是，浏览器会默认的把值转换为数字类型</p>
-<pre><code>把非数字类型的值转换为数字：
-- 其他基本类型转换为数字：内部隐式调用Number方法
-
-Number(需要转换的值); 是强制转换
-[字符串转数字]：如果字符串里面都是数字，那么返回这个数字，如果有非数字的因素会返回NaN.
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="string">'13'</span>) <span class="comment">// -&gt; 13</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="string">'13px'</span>) <span class="comment">// NaN 字符串中px不是数字</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="string">'13.5'</span>) <span class="comment">// 13.5 可以识别小数点</span></span><br></pre></td></tr></table></figure>
-
-[布尔值转数字]
-Number(true); // -&gt; 1
-Number(false); // -&gt; 0
-
-[null、undefined转数字]
-Number(null); // 0
-Number(undefined); // NaN
-
-- 引用数据类型转数字：先调用引用数据类型值的toString方法将引用数据类型转化为字符串，然后再将字符串转换为数字。
-
-[对象转数字]
-Number({}) // NaN; 其内部机制：({}).toString() -&gt; &apos;[object Object]&apos; -&gt; Number(&apos;[object Object]&apos;) -&gt; NaN
-
-[数组转数字]
-Number([12, 23]) // NaN; 内部机制：[12, 23].toString() -&gt; &apos;12, 23&apos; -&gt; Number(&apos;12, 23&apos;) -&gt; NaN
-
-[正则]
-Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos; -&gt; Number(&apos;/^\d$/&apos;) -&gt; NaN</code></pre><p>2、当前检测的值已经是数字类型，是有效数字就得到一个false，不是就会得到一个true；（在数字类型中只有NaN不是有效数字，其余的都是有效数字）<br>    Number(1); // false<br>    Number(NaN); // true</p>
-<p>3、NaN的比较</p>
-<p>NaN == NaN // 返回false；（ == 是比较运算符，一个等号是赋值；）<br>这是因为啥呢？因为NaN只是表示非数字，字符串 ‘a’ 是非数字，’张三’也是非数字。但是 a 和 张三不相等。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">Number</span>(num) == <span class="literal">NaN</span>) &#123;</span><br><span class="line">    <span class="comment">// if 是js中用来做判断的语言结构，小括号里表示条件，如果条件成立就执行花括号里面的代码</span></span><br><span class="line">    alert(<span class="string">'江外10年，琉璃镶内江'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上面花括号里面的代码永远不会执行，因为Number方法得到的结果只有两种情况，要么是数字，要么是NaN。如果得到一个数字，数字和NaN不相等，如果是NaN，NaN和NaN也不相等。</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="数据类型转换（parseInt、parseFloat方法）"><a href="#数据类型转换（parseInt、parseFloat方法）" class="headerlink" title="数据类型转换（parseInt、parseFloat方法）"></a>数据类型转换（parseInt、parseFloat方法）</h3><p>作用和Number方法相似，都是把非数字类型值转换为数字，区别在于Number方法是强制转换，即要求被转字符串中必须都是数字，如果不满足这一条件直接得到NaN，而parseInt和parseFloat则是非强制转换。</p>
-<ul>
-<li>parseInt：把一个字符串中的整数解析出来</li>
-<li>parseFloat：把一个字符串中整数和小数包含小数点都解析出来</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">'13.5'</span>) <span class="comment">// 13</span></span><br><span class="line"><span class="built_in">parseFloat</span>(<span class="string">'13.5'</span>) <span class="comment">// 13.5</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">'width: 13.5px'</span>); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">parseFloat</span>(<span class="string">'width: 13.5px'</span>); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：无论是parseInt还是parseFloat都是从字符串的最左边开始查找有效数字，直到遇到第一个非有效数字字符就停止查找，如果第一个就不是有效数字，那么直接回返回NaN，并且停止查找。</p>
-<h3 id="数据类型检测："><a href="#数据类型检测：" class="headerlink" title="数据类型检测："></a>数据类型检测：</h3><p>检测数据类型一共有四种方式：</p>
-<ul>
-<li>typeof</li>
-<li>instanceof</li>
-<li>constructor</li>
-<li>Object.prototype.toString.call()</li>
-</ul>
-<p><code>我们这里先讲typeof 运算符</code><br>语法：<code>typeof 被检测的值</code>返回被检测值的数据类型；</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="number">1</span>); <span class="comment">// number</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="string">'zhufengpeixun'</span>); <span class="comment">// string</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">true</span>); <span class="comment">// boolean</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">null</span>); <span class="comment">// object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">undefined</span>); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> &#123;&#125;); <span class="comment">// object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> []); <span class="comment">// object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> /^<span class="regexp">/); /</span><span class="regexp">/ object</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 思考？typeof 运算符的返回值是个什么数据类型？</span></span><br><span class="line"><span class="regexp">var result = typeof 1;</span></span><br><span class="line"><span class="regexp">console.log(typeof result); /</span><span class="regexp">/ string</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 面试题</span></span><br><span class="line"><span class="regexp">console.log(typeof typeof 1); /</span><span class="regexp">/ string</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>typeof 是有局限性的，检测基本数据类型时，typeof检测null会返回object，因为null是空对象指针。同时，typeof检测引用数据类型时，不能具体区分是哪一种对象数据类型（对象、数组、正则等）只会统一返回object。</strong></p>
-<div style="text-align: right">【发上等愿，结中等缘，享下等福；择高处立，寻平处住，向宽处行】</div>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/JavaScript基础教程1/" data-id="ck45lapo50000xsppy7opr71b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/31/JavaScript基础教程2/" data-id="ck471o09w0001o4ppvl9v9y02" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -1923,6 +1840,10 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
       <ul>
         
           <li>
+            <a href="/2019/12/14/webpack掠影-7/">webpack掠影-7</a>
+          </li>
+        
+          <li>
             <a href="/2019/12/14/webpack掠影-6/">webpack掠影-6</a>
           </li>
         
@@ -1936,10 +1857,6 @@ Number(/^\d$/) // NaN; 内部机制：/^\d$/.toString() -&gt; &apos;/^\d$/&apos;
         
           <li>
             <a href="/2019/12/08/webpack掠影-3/">webpack掠影-3</a>
-          </li>
-        
-          <li>
-            <a href="/2019/12/08/webpack掠影-2/">webpack掠影-2</a>
           </li>
         
       </ul>
